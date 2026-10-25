@@ -1,0 +1,416 @@
+[
+  {
+    "dataset": "data/merged_v3",
+    "n_videos_total": 15,
+    "n_videos_train": 15,
+    "n_videos_leaky_crosssplit": 12,
+    "frames_per_split": {
+      "train": 20551,
+      "val": 1779,
+      "test": 1053
+    },
+    "leak_metrics": {
+      "val": {
+        "total_frames": 1779,
+        "frames_from_train_videos": 1779,
+        "pct_leaked": 100.0
+      },
+      "test": {
+        "total_frames": 1053,
+        "frames_from_train_videos": 1053,
+        "pct_leaked": 100.0
+      }
+    },
+    "leaky_videos": [
+      "cantho_CoopMart-8h-8h30",
+      "cantho_CoopMart-8h10-8h30_",
+      "cantho_CoopMart-8h30-9h00",
+      "cantho_camDLHB-13h20---13h57",
+      "soict24_cam_01",
+      "soict24_cam_02",
+      "soict24_cam_04",
+      "soict24_cam_06",
+      "soict24_cam_07",
+      "soict24_cam_09",
+      "soict24_cam_10",
+      "vnv3"
+    ],
+    "per_video": {
+      "cantho_CoopMart-8h-8h30": {
+        "train": 99,
+        "val": 29,
+        "test": 34,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "cantho_CoopMart-8h10-8h30_": {
+        "train": 302,
+        "val": 95,
+        "test": 85,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "cantho_CoopMart-8h30-9h00": {
+        "train": 30,
+        "val": 10,
+        "test": 10,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "cantho_camDLHB-13h20---13h57": {
+        "train": 247,
+        "val": 82,
+        "test": 87,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "soict24_cam_01": {
+        "train": 950,
+        "val": 276,
+        "test": 126,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "soict24_cam_02": {
+        "train": 702,
+        "val": 198,
+        "test": 100,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "soict24_cam_04": {
+        "train": 716,
+        "val": 218,
+        "test": 106,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "soict24_cam_06": {
+        "train": 695,
+        "val": 202,
+        "test": 103,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "soict24_cam_07": {
+        "train": 681,
+        "val": 213,
+        "test": 106,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "soict24_cam_09": {
+        "train": 694,
+        "val": 213,
+        "test": 93,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "soict24_cam_10": {
+        "train": 366,
+        "val": 87,
+        "test": 47,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "soictnight_cam_03": {
+        "train": 5961,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "soictnight_cam_05": {
+        "train": 4876,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "soictnight_cam_08": {
+        "train": 2997,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "vnv3": {
+        "train": 1235,
+        "val": 156,
+        "test": 156,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      }
+    }
+  },
+  {
+    "dataset": "data/merged_v4",
+    "n_videos_total": 17,
+    "n_videos_train": 17,
+    "n_videos_leaky_crosssplit": 12,
+    "frames_per_split": {
+      "train": 49746,
+      "val": 1779,
+      "test": 1053
+    },
+    "leak_metrics": {
+      "val": {
+        "total_frames": 1779,
+        "frames_from_train_videos": 1779,
+        "pct_leaked": 100.0
+      },
+      "test": {
+        "total_frames": 1053,
+        "frames_from_train_videos": 1053,
+        "pct_leaked": 100.0
+      }
+    },
+    "leaky_videos": [
+      "cantho_CoopMart-8h-8h30",
+      "cantho_CoopMart-8h10-8h30_",
+      "cantho_CoopMart-8h30-9h00",
+      "cantho_camDLHB-13h20---13h57",
+      "soict24_cam_01",
+      "soict24_cam_02",
+      "soict24_cam_04",
+      "soict24_cam_06",
+      "soict24_cam_07",
+      "soict24_cam_09",
+      "soict24_cam_10",
+      "vnv3"
+    ],
+    "per_video": {
+      "cantho_CoopMart-8h-8h30": {
+        "train": 99,
+        "val": 29,
+        "test": 34,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "cantho_CoopMart-8h10-8h30_": {
+        "train": 302,
+        "val": 95,
+        "test": 85,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "cantho_CoopMart-8h30-9h00": {
+        "train": 30,
+        "val": 10,
+        "test": 10,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "cantho_camDLHB-13h20---13h57": {
+        "train": 247,
+        "val": 82,
+        "test": 87,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "soict24_cam_01": {
+        "train": 950,
+        "val": 276,
+        "test": 126,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "soict24_cam_02": {
+        "train": 702,
+        "val": 198,
+        "test": 100,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "soict24_cam_04": {
+        "train": 716,
+        "val": 218,
+        "test": 106,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "soict24_cam_06": {
+        "train": 695,
+        "val": 202,
+        "test": 103,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "soict24_cam_07": {
+        "train": 681,
+        "val": 213,
+        "test": 106,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "soict24_cam_09": {
+        "train": 694,
+        "val": 213,
+        "test": 93,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "soict24_cam_10": {
+        "train": 366,
+        "val": 87,
+        "test": 47,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      },
+      "soictnight_cam_03": {
+        "train": 5961,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "soictnight_cam_05": {
+        "train": 4876,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "soictnight_cam_08": {
+        "train": 2997,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "vncctv_test": {
+        "train": 2919,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "vncctv_train": {
+        "train": 26276,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "vnv3": {
+        "train": 1235,
+        "val": 156,
+        "test": 156,
+        "splits_present": [
+          "train",
+          "val",
+          "test"
+        ],
+        "is_leaky": true
+      }
+    }
+  }
+]
