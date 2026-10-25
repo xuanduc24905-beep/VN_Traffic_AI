@@ -57,11 +57,11 @@ def run(weights: str, remap_coco: bool) -> dict:
 
 def main():
     print("[1/2] Baseline (yolov8s.pt COCO)...")
-    bl = run("weights/yolov8s.pt", remap_coco=True)
+    bl = run("weights/pretrained/yolov8s.pt", remap_coco=True)
     bl["report"] = eval_report(bl["pred"], GT)
 
     print("[2/2] Improved (train_v8s_ft_vnv3/best.pt)...")
-    im = run("runs/detect/runs/detect/train_v8s_ft_vnv3/weights/best.pt", remap_coco=False)
+    im = run("runs/detect/train_v8s_ft_vnv3/weights/best.pt", remap_coco=False)
     im["report"] = eval_report(im["pred"], GT)
 
     out = ROOT / "results/tables/eval_counting_2pipelines.json"

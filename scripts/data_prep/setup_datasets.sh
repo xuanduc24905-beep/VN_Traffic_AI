@@ -5,7 +5,7 @@
 # - Import VisDrone nếu đã có ở data/raw/visdrone/.
 # - In stats cuối.
 #
-# Chạy: bash scripts/setup_datasets.sh
+# Chạy: bash scripts/data_prep/setup_datasets.sh
 set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -21,7 +21,7 @@ echo "[1/3] Import UA-DETRAC từ /home/xuand/yolov8_finetune ..."
 if [[ ! -d /home/xuand/yolov8_finetune/data/detrac/labels ]]; then
     echo " [!] Không tìm thấy project cũ. Bỏ qua UA-DETRAC."
 else
-    python scripts/import_ua_detrac.py --out data/merged
+    python scripts/data_prep/import_ua_detrac.py --out data/merged
 fi
 echo ""
 
@@ -37,11 +37,11 @@ if [[ ! -d data/raw/roboflow_vn ]]; then
     3. Cấu trúc cần: data/raw/roboflow_vn/{images,labels}/
     4. Kiểm tra thứ tự class trong dataset gốc, chỉnh
        configs/class_mapping.json > roboflow_vn nếu cần
-    5. Chạy lại: bash scripts/setup_datasets.sh
+    5. Chạy lại: bash scripts/data_prep/setup_datasets.sh
 
 EOF
 else
-    python scripts/merge_datasets.py --sources roboflow_vn --out data/merged
+    python scripts/data_prep/merge_datasets.py --sources roboflow_vn --out data/merged
 fi
 echo ""
 
@@ -54,11 +54,11 @@ if [[ ! -d data/raw/visdrone ]]; then
   Để có dataset này (không bắt buộc cho detection, hữu ích cho tracking test):
     1. https://github.com/VisDrone/VisDrone-Dataset
     2. Tải VisDrone2019-VID-train + val, giải nén vào: data/raw/visdrone/
-    3. Chạy lại: bash scripts/setup_datasets.sh
+    3. Chạy lại: bash scripts/data_prep/setup_datasets.sh
 
 EOF
 else
-    python scripts/merge_datasets.py --sources visdrone --out data/merged
+    python scripts/data_prep/merge_datasets.py --sources visdrone --out data/merged
 fi
 echo ""
 

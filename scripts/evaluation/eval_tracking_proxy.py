@@ -67,12 +67,12 @@ def gen_events(weights: str, out_csv: str, remap_coco: bool) -> None:
 
 def main():
     print("[gen events] baseline (COCO)...")
-    gen_events("weights/yolov8s.pt",
+    gen_events("weights/pretrained/yolov8s.pt",
                "results/tables/proxy_baseline_events.csv",
                remap_coco=True)
 
     print("[gen events] improved (fine-tune)...")
-    gen_events("runs/detect/runs/detect/train_v8s_ft_vnv3/weights/best.pt",
+    gen_events("runs/detect/train_v8s_ft_vnv3/weights/best.pt",
                "results/tables/proxy_improved_events.csv",
                remap_coco=False)
 

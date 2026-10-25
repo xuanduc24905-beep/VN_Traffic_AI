@@ -23,8 +23,8 @@ ROOT = Path(__file__).resolve().parent.parent
 VIDEO = "/tmp/vn_traffic_ai_uploads/Screen Recording 2026-09-19 231332.mp4"
 
 MODELS = {
-    "baseline_yolov8s_coco": ROOT / "weights/yolov8s.pt",
-    "improved_ft_vnv3":      ROOT / "runs/detect/runs/detect/train_v8s_ft_vnv3/weights/best.pt",
+    "baseline_yolov8s_coco": ROOT / "weights/pretrained/yolov8s.pt",
+    "improved_ft_vnv3":      ROOT / "runs/detect/train_v8s_ft_vnv3/weights/best.pt",
 }
 
 COCO_VEHICLE = {2: "car", 3: "motorcycle", 5: "bus", 7: "truck"}

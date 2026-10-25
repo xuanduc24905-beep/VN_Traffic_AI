@@ -28,4 +28,4 @@ echo " tải VisDrone2019-VID train + val, giải nén vào: $RAW_DIR/visdrone/"
 echo ""
 
 echo "Sau khi có đủ 3 dataset, chạy:"
-echo " python scripts/merge_datasets.py"
+echo " python scripts/data_prep/merge_datasets.py"
