@@ -1,0 +1,36 @@
+{
+  "weights": "runs/detect/train_v8s_1round_merged_v2/weights/best.pt",
+  "val_images": 14344,
+  "total_gt": 103085,
+  "total_tp": 84315,
+  "total_fp": 13966,
+  "total_fn": 15423,
+  "total_class_confused": 3347,
+  "precision": 0.8296,
+  "recall": 0.8179,
+  "fn_by_class": {
+    "car": 13504,
+    "truck": 1690,
+    "bus": 195,
+    "motorcycle": 34
+  },
+  "fn_by_size": {
+    "small": 13178,
+    "medium": 2080,
+    "large": 165
+  },
+  "fn_by_source": {
+    "detrac": 15378,
+    "cantho": 45
+  },
+  "fp_by_class": {
+    "car": 13946,
+    "truck": 2938,
+    "bus": 251,
+    "motorcycle": 178
+  },
+  "fp_by_reason": {
+    "no_gt": 13966,
+    "class_confused": 3347
+  }
+}

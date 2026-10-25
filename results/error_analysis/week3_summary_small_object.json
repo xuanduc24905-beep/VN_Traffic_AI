@@ -1,0 +1,174 @@
+{
+  "fix_strategy": "small_object",
+  "baseline_weights": "runs/detect/train_v8s_1round_merged_v2/weights/best.pt",
+  "fix_weights": "runs/detect/train_v8s_fix_small_object/weights/best.pt",
+  "cfg": {
+    "epochs": 20,
+    "batch": 32,
+    "lr0": 0.001,
+    "lrf": 0.1,
+    "patience": 6,
+    "optimizer": "SGD",
+    "close_mosaic": 5,
+    "seed": 0,
+    "workers": 12,
+    "cache": "disk",
+    "amp": true,
+    "imgsz": 640,
+    "scale": 0.3,
+    "copy_paste": 0.3,
+    "mosaic": 1.0
+  },
+  "overall_metrics_baseline": {
+    "TP": 84315,
+    "FP": 13966,
+    "class_confused": 3347,
+    "FN": 15423,
+    "precision": 0.8296,
+    "recall": 0.8179,
+    "f1": 0.8237
+  },
+  "overall_metrics_fix": {
+    "TP": 81623,
+    "FP": 12598,
+    "class_confused": 3171,
+    "FN": 18291,
+    "precision": 0.8381,
+    "recall": 0.7918,
+    "f1": 0.8143
+  },
+  "map_baseline": {
+    "mAP@0.5": 0.8578,
+    "mAP@0.5:0.95": 0.6452,
+    "P": 0.8687,
+    "R": 0.7841,
+    "motorcycle_mAP50": 0.9402,
+    "car_mAP50": 0.8642,
+    "bus_mAP50": 0.898,
+    "truck_mAP50": 0.7289
+  },
+  "map_fix": {
+    "mAP@0.5": 0.8446,
+    "mAP@0.5:0.95": 0.6384,
+    "P": 0.8909,
+    "R": 0.7654,
+    "motorcycle_mAP50": 0.9427,
+    "car_mAP50": 0.8475,
+    "bus_mAP50": 0.8861,
+    "truck_mAP50": 0.7022
+  },
+  "subgroup_top5_improvement": [
+    {
+      "class": "bus",
+      "size": "small",
+      "gt": 8,
+      "base_fn": 8,
+      "base_rate_%": 100.0,
+      "fix_fn": 8,
+      "fix_rate_%": 100.0,
+      "delta_rate_%": 0.0,
+      "delta_fn": 0
+    },
+    {
+      "class": "motorcycle",
+      "size": "medium",
+      "gt": 248,
+      "base_fn": 3,
+      "base_rate_%": 1.21,
+      "fix_fn": 4,
+      "fix_rate_%": 1.61,
+      "delta_rate_%": 0.4,
+      "delta_fn": 1
+    },
+    {
+      "class": "truck",
+      "size": "large",
+      "gt": 3280,
+      "base_fn": 16,
+      "base_rate_%": 0.49,
+      "fix_fn": 31,
+      "fix_rate_%": 0.95,
+      "delta_rate_%": 0.46,
+      "delta_fn": 15
+    },
+    {
+      "class": "motorcycle",
+      "size": "small",
+      "gt": 359,
+      "base_fn": 31,
+      "base_rate_%": 8.64,
+      "fix_fn": 33,
+      "fix_rate_%": 9.19,
+      "delta_rate_%": 0.55,
+      "delta_fn": 2
+    },
+    {
+      "class": "car",
+      "size": "medium",
+      "gt": 49443,
+      "base_fn": 1696,
+      "base_rate_%": 3.43,
+      "fix_fn": 1999,
+      "fix_rate_%": 4.04,
+      "delta_rate_%": 0.61,
+      "delta_fn": 303
+    }
+  ],
+  "subgroup_top5_regression": [
+    {
+      "class": "car",
+      "size": "small",
+      "gt": 21359,
+      "base_fn": 11671,
+      "base_rate_%": 54.64,
+      "fix_fn": 13695,
+      "fix_rate_%": 64.12,
+      "delta_rate_%": 9.48,
+      "delta_fn": 2024
+    },
+    {
+      "class": "bus",
+      "size": "medium",
+      "gt": 754,
+      "base_fn": 175,
+      "base_rate_%": 23.21,
+      "fix_fn": 217,
+      "fix_rate_%": 28.78,
+      "delta_rate_%": 5.57,
+      "delta_fn": 42
+    },
+    {
+      "class": "truck",
+      "size": "small",
+      "gt": 1874,
+      "base_fn": 1468,
+      "base_rate_%": 78.34,
+      "fix_fn": 1545,
+      "fix_rate_%": 82.44,
+      "delta_rate_%": 4.1,
+      "delta_fn": 77
+    },
+    {
+      "class": "bus",
+      "size": "large",
+      "gt": 1663,
+      "base_fn": 12,
+      "base_rate_%": 0.72,
+      "fix_fn": 76,
+      "fix_rate_%": 4.57,
+      "delta_rate_%": 3.85,
+      "delta_fn": 64
+    },
+    {
+      "class": "truck",
+      "size": "medium",
+      "gt": 6634,
+      "base_fn": 206,
+      "base_rate_%": 3.11,
+      "fix_fn": 441,
+      "fix_rate_%": 6.65,
+      "delta_rate_%": 3.54,
+      "delta_fn": 235
+    }
+  ]
+}

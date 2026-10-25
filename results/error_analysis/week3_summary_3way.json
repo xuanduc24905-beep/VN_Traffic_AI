@@ -1,0 +1,227 @@
+{
+  "baseline": {
+    "weights": "runs/detect/train_v8s_1round_merged_v2/weights/best.pt",
+    "overall": {
+      "TP": 84315,
+      "FP": 13966,
+      "class_confused": 3347,
+      "FN": 15423,
+      "precision": 0.8296,
+      "recall": 0.8179,
+      "f1": 0.8237
+    },
+    "map": {
+      "mAP@0.5": 0.8578,
+      "mAP@0.5:0.95": 0.6452,
+      "P": 0.8687,
+      "R": 0.7841,
+      "motorcycle_mAP50": 0.9402,
+      "car_mAP50": 0.8642,
+      "bus_mAP50": 0.898,
+      "truck_mAP50": 0.7289
+    }
+  },
+  "v1_small_object_fail": {
+    "weights": "runs/detect/train_v8s_fix_small_object/weights/best.pt",
+    "cfg": {
+      "epochs": 20,
+      "batch": 32,
+      "lr0": 0.001,
+      "lrf": 0.1,
+      "patience": 6,
+      "optimizer": "SGD",
+      "close_mosaic": 5,
+      "seed": 0,
+      "workers": 12,
+      "cache": "disk",
+      "amp": true,
+      "imgsz": 640,
+      "scale": 0.3,
+      "copy_paste": 0.3,
+      "mosaic": 1.0
+    },
+    "overall": {
+      "TP": 81623,
+      "FP": 12598,
+      "class_confused": 3171,
+      "FN": 18291,
+      "precision": 0.8381,
+      "recall": 0.7918,
+      "f1": 0.8143
+    },
+    "map": {
+      "mAP@0.5": 0.8446,
+      "mAP@0.5:0.95": 0.6384,
+      "P": 0.8909,
+      "R": 0.7654,
+      "motorcycle_mAP50": 0.9427,
+      "car_mAP50": 0.8475,
+      "bus_mAP50": 0.8861,
+      "truck_mAP50": 0.7022
+    },
+    "delta_vs_baseline": {
+      "mAP@0.5": -0.0132,
+      "mAP@0.5:0.95": -0.0068,
+      "P": 0.0222,
+      "R": -0.0187,
+      "motorcycle_mAP50": 0.0025,
+      "car_mAP50": -0.0167,
+      "bus_mAP50": -0.0119,
+      "truck_mAP50": -0.0267
+    }
+  },
+  "v2_small_car_targeted": {
+    "weights": "runs/detect/train_v8s_fix_v2_small_car/weights/best.pt",
+    "cfg": {
+      "epochs": 20,
+      "batch": 20,
+      "imgsz": 512,
+      "lr0": 0.003,
+      "lrf": 0.1,
+      "patience": 6,
+      "optimizer": "SGD",
+      "scale": 0.9,
+      "mosaic": 1.0,
+      "close_mosaic": 0,
+      "multi_scale": true,
+      "mixup": 0.15,
+      "seed": 0,
+      "workers": 8,
+      "cache": "disk",
+      "amp": true
+    },
+    "overall": {
+      "TP": 87818,
+      "FP": 17446,
+      "class_confused": 3433,
+      "FN": 11834,
+      "precision": 0.8079,
+      "recall": 0.8519,
+      "f1": 0.8293
+    },
+    "map": {
+      "mAP@0.5": 0.8665,
+      "mAP@0.5:0.95": 0.6418,
+      "P": 0.8593,
+      "R": 0.7933,
+      "motorcycle_mAP50": 0.9284,
+      "car_mAP50": 0.8931,
+      "bus_mAP50": 0.8953,
+      "truck_mAP50": 0.7493
+    },
+    "delta_vs_baseline": {
+      "mAP@0.5": 0.0087,
+      "mAP@0.5:0.95": -0.0034,
+      "P": -0.0094,
+      "R": 0.0092,
+      "motorcycle_mAP50": -0.0118,
+      "car_mAP50": 0.0289,
+      "bus_mAP50": -0.0027,
+      "truck_mAP50": 0.0204
+    }
+  },
+  "subgroup_3way_top5_v2_improvement": [
+    {
+      "class": "bus",
+      "size": "small",
+      "gt": 8,
+      "base_%": 100.0,
+      "v1_%": 100.0,
+      "v2_%": 50.0,
+      "Δv1": 0.0,
+      "Δv2": -50.0
+    },
+    {
+      "class": "truck",
+      "size": "small",
+      "gt": 1874,
+      "base_%": 78.34,
+      "v1_%": 82.44,
+      "v2_%": 60.57,
+      "Δv1": 4.1,
+      "Δv2": -17.77
+    },
+    {
+      "class": "car",
+      "size": "small",
+      "gt": 21359,
+      "base_%": 54.64,
+      "v1_%": 64.12,
+      "v2_%": 40.97,
+      "Δv1": 9.48,
+      "Δv2": -13.67
+    },
+    {
+      "class": "bus",
+      "size": "medium",
+      "gt": 754,
+      "base_%": 23.21,
+      "v1_%": 28.78,
+      "v2_%": 13.4,
+      "Δv1": 5.57,
+      "Δv2": -9.81
+    },
+    {
+      "class": "truck",
+      "size": "medium",
+      "gt": 6634,
+      "base_%": 3.11,
+      "v1_%": 6.65,
+      "v2_%": 1.85,
+      "Δv1": 3.54,
+      "Δv2": -1.26
+    }
+  ],
+  "subgroup_3way_top5_v2_regression": [
+    {
+      "class": "motorcycle",
+      "size": "medium",
+      "gt": 248,
+      "base_%": 1.21,
+      "v1_%": 1.61,
+      "v2_%": 2.42,
+      "Δv1": 0.4,
+      "Δv2": 1.21
+    },
+    {
+      "class": "bus",
+      "size": "large",
+      "gt": 1663,
+      "base_%": 0.72,
+      "v1_%": 4.57,
+      "v2_%": 1.32,
+      "Δv1": 3.85,
+      "Δv2": 0.6
+    },
+    {
+      "class": "car",
+      "size": "large",
+      "gt": 17463,
+      "base_%": 0.78,
+      "v1_%": 1.39,
+      "v2_%": 1.09,
+      "Δv1": 0.61,
+      "Δv2": 0.31
+    },
+    {
+      "class": "truck",
+      "size": "large",
+      "gt": 3280,
+      "base_%": 0.49,
+      "v1_%": 0.95,
+      "v2_%": 0.7,
+      "Δv1": 0.46,
+      "Δv2": 0.21
+    },
+    {
+      "class": "car",
+      "size": "medium",
+      "gt": 49443,
+      "base_%": 3.43,
+      "v1_%": 4.04,
+      "v2_%": 2.93,
+      "Δv1": 0.61,
+      "Δv2": -0.5
+    }
+  ]
+}
