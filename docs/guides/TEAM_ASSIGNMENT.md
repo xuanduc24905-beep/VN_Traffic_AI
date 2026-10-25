@@ -5,7 +5,7 @@
 **Module:** [src/detection/](../src/detection/)
 
 **Việc cụ thể:**
-- Chuẩn bị dataset gộp bằng `scripts/merge_datasets.py` (phối hợp với Người 4).
+- Chuẩn bị dataset gộp bằng `scripts/data_prep/merge_datasets.py` (phối hợp với Người 4).
 - Train YOLOv8 trên merged data 5 lớp qua `src/detection/train.py`.
 - Đánh giá mAP@0.5 và mAP@0.5:0.95 trên tập test qua `src/detection/evaluate.py`.
 - Tuning `conf` và `iou` threshold, chọn cấu hình tốt nhất bàn giao cho Người 2.
@@ -71,7 +71,7 @@ python -m src.tracking.track \
 
 **Việc cụ thể:**
 - Quay 2-3 video test tại ngã tư/đường VN (5-10 phút mỗi video).
-- Sinh template ground truth bằng `scripts/prepare_test_video.py`.
+- Sinh template ground truth bằng `scripts/data_prep/prepare_test_video.py`.
 - Đếm thủ công phương tiện qua từng line điền vào JSON GT.
 - Chạy pipeline `src/pipeline/run.py` end-to-end.
 - Tính Accuracy, MAE, MAPE bằng `src/evaluation/compare.py`.
@@ -84,7 +84,7 @@ python -m src.tracking.track \
 **Command mẫu:**
 ```bash
 # Tạo template GT
-python scripts/prepare_test_video.py \
+python scripts/data_prep/prepare_test_video.py \
     --video data/test_videos/raw/nga_tu_01.mp4 \
     --out data/test_videos/ground_truth/nga_tu_01.json
 

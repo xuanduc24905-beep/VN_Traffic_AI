@@ -64,7 +64,7 @@ cd data/raw/visdrone
 
 Rồi:
 ```bash
-python scripts/prepare_test_video.py \
+python scripts/data_prep/prepare_test_video.py \
     --video data/test_videos/raw/nga_tu_01.mp4 \
     --out data/test_videos/ground_truth/nga_tu_01.json
 ```
@@ -74,7 +74,7 @@ Mở JSON template, điền tay số lượt cho từng class.
 ## Merge tất cả về data/merged
 
 ```bash
-python scripts/merge_datasets.py
+python scripts/data_prep/merge_datasets.py
 ```
 
 Kiểm tra:

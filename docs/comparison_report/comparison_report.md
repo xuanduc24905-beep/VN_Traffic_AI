@@ -224,7 +224,7 @@ Bài toán yêu cầu **detect + track + count** 4 lớp phương tiện giao th
 
 ## 8. Ghi chú kỹ thuật
 
-- **Class remapping vnv3:** `{0:1, 1:0, 2:3, 3:2}` — script [scripts/import_vnv3.py](../../scripts/import_vnv3.py).
+- **Class remapping vnv3:** `{0:1, 1:0, 2:3, 3:2}` — script [scripts/data_prep/import_vnv3.py](../../scripts/data_prep/import_vnv3.py).
 - **Chỉ merge vào train**, giữ val/test cũ để so sánh mAP công bằng.
 - **Best checkpoint** tự cập nhật vào `runs/.../weights/best.pt` mỗi khi val mAP đạt đỉnh.
 - **Continual fine-tune** với `lr0=0.001` (default 0.01) — quan trọng để không phá kiến thức cũ.
@@ -238,7 +238,7 @@ Bài toán yêu cầu **detect + track + count** 4 lớp phương tiện giao th
 |---|---|
 | Notebook báo cáo | [notebooks/report_baseline_vs_improved.ipynb](../../notebooks/report_baseline_vs_improved.ipynb) |
 | Script sinh báo cáo này | [scripts/gen_comparison_report.py](../../scripts/gen_comparison_report.py) |
-| Script eval counting | [scripts/eval_counting_2pipelines.py](../../scripts/eval_counting_2pipelines.py) |
+| Script eval counting | [scripts/evaluation/eval_counting_2pipelines.py](../../scripts/evaluation/eval_counting_2pipelines.py) |
 | Kết quả eval JSON | [results/tables/eval_counting_2pipelines.json](../../results/tables/eval_counting_2pipelines.json) |
 | Trọng số Improved | `runs/detect/runs/detect/train_v8s_ft_vnv3/weights/best.pt` |
 | Trọng số Baseline | `weights/yolov8s.pt` |

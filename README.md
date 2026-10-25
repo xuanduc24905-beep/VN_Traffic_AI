@@ -50,13 +50,13 @@ vn_traffic_ai/
 │   ├── TEAM_ASSIGNMENT.md
 │   └── DATA_GUIDE.md
 ├── notebooks/
-│   └── report_baseline_vs_improved.ipynb  # NOTEBOOK BÁO CÁO CHÍNH (đã embed 9 chart)
+│   └── vn_traffic_ai_full_project.ipynb   # NOTEBOOK end-to-end (setup → train → eval → count)
 ├── scripts/
-│   ├── import_vnv3.py                 # merge Vietnamese vehicle v3 (remap class)
-│   ├── bench_new_video.py             # benchmark detection thô trên video mới
-│   ├── eval_counting_2pipelines.py    # eval counting baseline vs improved
-│   ├── eval_tracking_proxy.py         # tracking proxy metrics (ID stability)
-│   └── train.sh
+│   ├── data_prep/                     # import, merge, prepare dataset
+│   ├── evaluation/                    # bench + eval counting/tracking
+│   ├── utils/                         # strip_emojis, train.sh (legacy)
+│   ├── week2/                         # experiments: freeze, class_weights, v8m
+│   └── week3/                         # MLOps: mlflow, docker, onnx (sẽ thêm)
 ├── src/
 │   ├── detection/                     # Người 1 — train.py, evaluate.py, infer.py
 │   ├── tracking/                      # Người 2 — track.py, counter.py
@@ -186,10 +186,10 @@ python baseline/10_traffic_counting.py \
 
 ```bash
 # Chạy eval counting 2 pipeline
-python scripts/eval_counting_2pipelines.py
+python scripts/evaluation/eval_counting_2pipelines.py
 
 # Tracking proxy metrics (ID stability)
-PYTHONPATH=. python scripts/eval_tracking_proxy.py
+PYTHONPATH=. python scripts/evaluation/eval_tracking_proxy.py
 ```
 
 Kết quả nằm ở [docs/comparison_report/](docs/comparison_report/).
@@ -201,7 +201,7 @@ Kết quả nằm ở [docs/comparison_report/](docs/comparison_report/).
 **Lỗi:** `ModuleNotFoundError: No module named 'src'`
 → Chạy từ **root project**: `cd /path/to/vn_traffic_ai` rồi thêm `PYTHONPATH=.`:
 ```bash
-PYTHONPATH=. python scripts/eval_counting_2pipelines.py
+PYTHONPATH=. python scripts/evaluation/eval_counting_2pipelines.py
 ```
 
 **Lỗi:** `RuntimeError: CUDA out of memory`
@@ -232,7 +232,7 @@ PYTHONPATH=. python scripts/eval_counting_2pipelines.py
 
 Val: 14,344 ảnh. Chi tiết download: [docs/DATA_GUIDE.md](docs/DATA_GUIDE.md).
 
-**Class remapping vnv3:** vì Roboflow export với class id khác, script [scripts/import_vnv3.py](scripts/import_vnv3.py) tự động remap `{0:1, 1:0, 2:3, 3:2}` trước khi merge.
+**Class remapping vnv3:** vì Roboflow export với class id khác, script [scripts/data_prep/import_vnv3.py](scripts/data_prep/import_vnv3.py) tự động remap `{0:1, 1:0, 2:3, 3:2}` trước khi merge.
 
 ---
 
@@ -277,10 +277,10 @@ python -m src.pipeline.run \
     --out-video results/videos/demo_out.mp4
 
 # 2. Benchmark counting: baseline vs improved
-python scripts/eval_counting_2pipelines.py
+python scripts/evaluation/eval_counting_2pipelines.py
 
 # 3. Tracking proxy metrics (ID stability)
-PYTHONPATH=. python scripts/eval_tracking_proxy.py
+PYTHONPATH=. python scripts/evaluation/eval_tracking_proxy.py
 
 # 4. Chạy Streamlit dashboard (2 mode: single / compare)
 streamlit run ui/streamlit_app.py
@@ -468,7 +468,7 @@ Chỉ hoạt động sau khi chạy pipeline ở Tab 1.
 |---|---|
 | Báo cáo Markdown | [docs/comparison_report/comparison_report.md](docs/comparison_report/comparison_report.md) |
 | Báo cáo Word | [docs/comparison_report/BAO_CAO_BASELINE_VS_IMPROVED.docx](docs/comparison_report/BAO_CAO_BASELINE_VS_IMPROVED.docx) |
-| Notebook báo cáo (đã chạy sẵn) | [notebooks/report_baseline_vs_improved.ipynb](notebooks/report_baseline_vs_improved.ipynb) |
+| Notebook end-to-end | [notebooks/vn_traffic_ai_full_project.ipynb](notebooks/vn_traffic_ai_full_project.ipynb) |
 | 8 chart PPT | [docs/comparison_report/charts/](docs/comparison_report/charts/) |
 | Best weights | `runs/detect/.../train_v8s_ft_vnv3/weights/best.pt` |
 
