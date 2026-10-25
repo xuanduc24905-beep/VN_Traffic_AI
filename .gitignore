@@ -1,21 +1,26 @@
-# Data — không commit
+# Data — không commit (dataset gốc + merged đều lớn, tải/dựng lại được từ script)
 data/raw/
-data/raw_vnv3/
+data/raw_*/
 data/merged/
-data/raw_vn_cantho/
+data/merged_*/
+data/vn_only/
 data/test_videos/raw/
 data/test_videos/frames/
 data/*.zip
+data/*.jpg
+data/*.png
 
-# Weights lớn
+# Weights lớn — repo chỉ giữ README + script dựng, không giữ .pt
 weights/*.pt
 weights/*.onnx
+weights/pretrained/
+weights/trained/
 !weights/.gitkeep
-!weights/best.pt
-!weights/yolov8s.pt
+!weights/README.md
 # Ultralytics tự download về pwd
 /yolo*.pt
 /yolo*.onnx
+scripts/training/*.pt
 
 # Training outputs (nếu muốn commit chart quan trọng, dùng `git add -f`)
 runs/
@@ -33,6 +38,11 @@ results/tables/streamlit_*.csv
 results/tables/compare_*.csv
 results/tables/smoke_*.csv
 results/tables/cmp_*.csv
+
+# Prediction cache lớn (reproducible từ eval scripts)
+results/error_analysis/*.pkl
+results/final_report/videos/*.mp4
+results/final_report/videos/*.avi
 
 # Zip đã có folder đầy đủ commit rồi
 docs/comparison_report.zip
