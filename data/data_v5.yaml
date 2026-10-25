@@ -1,0 +1,16 @@
+# V5 — honest split, video-aware, no leak
+# Sinh tự động bởi scripts/data_prep/rebuild_v5_by_video.py
+# Xem docs/v3_report/leak_audit_summary.md cho rationale split.
+# Schema: {motorcycle, car, bus, truck}
+
+path: /home/xuand/vn_traffic_ai/data/merged_v5
+train: images/train
+val:   images/val
+test:  images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck

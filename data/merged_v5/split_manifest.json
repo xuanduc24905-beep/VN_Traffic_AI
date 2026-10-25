@@ -1,0 +1,107 @@
+{
+  "soictnight_cam_03": {
+    "split": "train",
+    "stride": 10,
+    "frames_total": 5961,
+    "frames_selected": 597,
+    "frames_kept": 597
+  },
+  "soictnight_cam_05": {
+    "split": "train",
+    "stride": 10,
+    "frames_total": 4876,
+    "frames_selected": 488,
+    "frames_kept": 488
+  },
+  "soictnight_cam_08": {
+    "split": "train",
+    "stride": 10,
+    "frames_total": 2997,
+    "frames_selected": 300,
+    "frames_kept": 300
+  },
+  "soict24_cam_01": {
+    "split": "train",
+    "stride": 5,
+    "frames_total": 1352,
+    "frames_selected": 271,
+    "frames_kept": 271
+  },
+  "soict24_cam_02": {
+    "split": "train",
+    "stride": 5,
+    "frames_total": 1000,
+    "frames_selected": 200,
+    "frames_kept": 200
+  },
+  "soict24_cam_04": {
+    "split": "train",
+    "stride": 5,
+    "frames_total": 1040,
+    "frames_selected": 208,
+    "frames_kept": 208
+  },
+  "soict24_cam_06": {
+    "split": "train",
+    "stride": 5,
+    "frames_total": 1000,
+    "frames_selected": 200,
+    "frames_kept": 200
+  },
+  "cantho_CoopMart-8h-8h30": {
+    "split": "train",
+    "stride": 1,
+    "frames_total": 162,
+    "frames_selected": 162,
+    "frames_kept": 162
+  },
+  "cantho_CoopMart-8h10-8h30": {
+    "split": "train",
+    "stride": 5,
+    "frames_total": 482,
+    "frames_selected": 97,
+    "frames_kept": 97
+  },
+  "vnv3": {
+    "split": "train",
+    "stride": 5,
+    "frames_total": 1547,
+    "frames_selected": 310,
+    "frames_kept": 310
+  },
+  "soict24_cam_07": {
+    "split": "val",
+    "stride": 1,
+    "frames_total": 1000,
+    "frames_selected": 1000,
+    "frames_kept": 1000
+  },
+  "cantho_CoopMart-8h30-9h00": {
+    "split": "val",
+    "stride": 1,
+    "frames_total": 50,
+    "frames_selected": 50,
+    "frames_kept": 50
+  },
+  "cantho_camDLHB-13h20---13h57": {
+    "split": "val",
+    "stride": 1,
+    "frames_total": 416,
+    "frames_selected": 416,
+    "frames_kept": 416
+  },
+  "soict24_cam_09": {
+    "split": "test",
+    "stride": 1,
+    "frames_total": 1000,
+    "frames_selected": 1000,
+    "frames_kept": 1000
+  },
+  "soict24_cam_10": {
+    "split": "test",
+    "stride": 1,
+    "frames_total": 500,
+    "frames_selected": 500,
+    "frames_kept": 500
+  }
+}
