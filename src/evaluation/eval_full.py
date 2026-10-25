@@ -13,8 +13,8 @@ Chạy:
     python -m src.evaluation.eval_full
 
     # Tuỳ chọn model list
-    python -m src.evaluation.eval_full --models weights/baseline_detrac4.pt \\
-        runs/detect/runs/detect/train_v8s_50e/weights/best.pt
+    python -m src.evaluation.eval_full --models weights/trained/v1_baseline.pt \\
+        runs/detect/train_v8s_50e/weights/best.pt
 
     # Bỏ tầng A (không val trên test set — nhanh)
     python -m src.evaluation.eval_full --skip-mAP
@@ -32,8 +32,8 @@ from src.evaluation.metrics import report as eval_report
 
 
 DEFAULT_MODELS = [
-    "weights/baseline_detrac4.pt",
-    "runs/detect/runs/detect/train_v8s_4cls/weights/best.pt",
+    "weights/trained/v1_baseline.pt",
+    "weights/v3_vn_best.pt",
 ]
 
 DEFAULT_VIDEO_GT = [

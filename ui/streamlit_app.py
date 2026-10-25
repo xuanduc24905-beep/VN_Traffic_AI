@@ -154,7 +154,7 @@ st.set_page_config(page_title="VN Traffic AI", page_icon="", layout="wide")
 st.sidebar.title(" Cấu hình")
 
 WEIGHTS_DIR = ROOT / "weights"
-available_weights = sorted([str(p.relative_to(ROOT)) for p in WEIGHTS_DIR.glob("*.pt")])
+available_weights = sorted([str(p.relative_to(ROOT)) for p in WEIGHTS_DIR.rglob("*.pt")])
 runs_weights = sorted([str(p.relative_to(ROOT))
                        for p in (ROOT / "runs").rglob("best.pt")]) if (ROOT / "runs").exists() else []
 all_weights = available_weights + runs_weights
@@ -173,10 +173,10 @@ pipeline_choice = st.sidebar.radio(
 )
 pipeline_kind = "improved_pipeline" if pipeline_choice.startswith("Improved") else "baseline_pipeline"
 
-_preferred = ["weights/baseline_detrac4.pt"]
+_preferred = ["weights/v3_vn_best.pt", "weights/trained/v3_vn_best.pt"]
 _default_idx = next((i for i, w in enumerate(all_weights) if w in _preferred), 0)
 weights_path = st.sidebar.selectbox("Model weights", all_weights, index=_default_idx,
-                                    help="baseline_detrac4.pt là model tốt nhất hiện tại (acc 97.7% trên demo).")
+                                    help="v3_vn_best.pt là model tốt nhất hiện tại (mAP50=0.951 val VN).")
 tracker = st.sidebar.radio("Tracker", ["bytetrack.yaml", "botsort.yaml"],
                            help="Chỉ áp dụng cho Improved pipeline. Baseline pipeline dùng ByteTrack mặc định.")
 conf = st.sidebar.slider("Confidence threshold", 0.1, 0.9, 0.3, 0.05)
@@ -246,11 +246,12 @@ with tab_run:
         # ---------- Compare mode ----------
         st.markdown("### Chọn 2 cấu hình để so sánh (pipeline + weights)")
         _bl_default = next((i for i, w in enumerate(all_weights)
-                            if w.endswith("yolov8s.pt")), 0)
+                            if w.endswith("yolov8s.pt")
+                            or w.endswith("pretrained/yolov8s.pt")), 0)
         _im_default = next((i for i, w in enumerate(all_weights)
-                            if "ft_vnv3" in w and w.endswith("best.pt")),
+                            if "v3_vn" in w and w.endswith(".pt")),
                            next((i for i, w in enumerate(all_weights)
-                                 if "4cls" in w and w.endswith("best.pt")), 0))
+                                 if "v2_fix" in w), 0))
         PIPELINE_OPTIONS = [
             "Baseline (giáo viên) — 1 line, không direction, không log event",
             "Improved (nhóm) — nhiều line + direction + log event + stats",

@@ -139,5 +139,5 @@ if __name__ == "__main__":
 # 3. Evaluation 2 tang: mAP tren test set + counting acc vs GT thu cong
 #    -> src/evaluation/eval_full.py
 # 4. Fine-tune YOLOv8s tren merged dataset VN (68k UA-DETRAC + 674 CanTho)
-#    -> src/detection/train.py + scripts/train.sh
+#    -> src/detection/train.py + scripts/utils/train.sh
 # ============================================================

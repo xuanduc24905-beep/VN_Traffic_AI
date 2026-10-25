@@ -47,12 +47,26 @@ def draw_overlay(frame, boxes_xyxy, ids, classes, lines, counter, class_names):
         cv2.putText(frame, f"{ln_name}: {total}", (10, y),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
         y += 22
+
+        # Tổng theo class (cộng gộp mọi direction) — hàng ưu tiên hiển thị
+        per_class_total = {}
+        for direction, per_cls in dirs.items():
+            for cid, n in per_cls.items():
+                per_class_total[cid] = per_class_total.get(cid, 0) + n
+        if per_class_total:
+            for cid, n in sorted(per_class_total.items()):
+                cname = class_names[int(cid)] if class_names else str(cid)
+                cv2.putText(frame, f"  {cname}: {n}", (20, y),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 255, 0), 1)
+                y += 18
+
+        # Theo direction (tổng)
         for direction, per_cls in dirs.items():
             sub = sum(per_cls.values())
             color = _DIR_COLOR.get(direction, (200, 200, 200))
-            cv2.putText(frame, f" {direction}: {sub}", (20, y),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.55, color, 1)
-            y += 20
+            cv2.putText(frame, f"  {direction}: {sub}", (20, y),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
+            y += 16
     return frame
 
 

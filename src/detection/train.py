@@ -20,7 +20,7 @@ from ultralytics import YOLO
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", default="data/data.yaml")
-    ap.add_argument("--pretrained", default="weights/yolov8n.pt")
+    ap.add_argument("--pretrained", default="weights/pretrained/yolov8n.pt")
     ap.add_argument("--epochs", type=int, default=50)
     ap.add_argument("--imgsz", type=int, default=640)
     ap.add_argument("--batch", type=int, default=16)
