@@ -1,0 +1,11 @@
+path: /home/xuand/vn_traffic_ai/data/vn_only
+train: images/train
+val:   images/val
+test:  images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck

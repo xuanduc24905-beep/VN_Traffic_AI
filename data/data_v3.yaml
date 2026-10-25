@@ -1,0 +1,17 @@
+# Ultralytics YOLO config — vòng 3 (VN-only, no DETRAC)
+# train: SOICT (18.6k) + VNv3/train (1.2k) + Cantho/train (0.7k) ≈ 20.5k
+# val:   SOICT/valid (1.4k) + VNv3/valid (156) + Cantho/valid (216) ≈ 1.8k
+# test:  SOICT/test (0.7k) + VNv3/test (156) + Cantho/test (216) ≈ 1.0k
+# Schema: {motorcycle, car, bus, truck}
+
+path: /home/xuand/vn_traffic_ai/data/merged_v3
+train: images/train
+val:   images/val
+test:  images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck

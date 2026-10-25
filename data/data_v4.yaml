@@ -1,0 +1,16 @@
+# Ultralytics YOLO config — V4 (V3 + vn_cctv Đà Nẵng CCTV)
+# train: V3 (20.5k) + vn_cctv (29k) ≈ 49.5k
+# val/test: giữ nguyên V3 để so sánh fair V3 vs V4
+# Schema: {motorcycle, car, bus, truck}
+
+path: /home/xuand/vn_traffic_ai/data/merged_v4
+train: images/train
+val:   images/val
+test:  images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck
