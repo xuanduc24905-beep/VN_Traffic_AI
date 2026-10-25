@@ -1,0 +1,8 @@
+{
+  "model": "V5 honest best.pt",
+  "test_set": "DETRAC test subsample 1/50 (car+bus only)",
+  "mAP50": 0.5479729437060079,
+  "mAP50-95": 0.36080331400823856,
+  "precision": 0.6254436424216658,
+  "recall": 0.5339222491723424
+}
