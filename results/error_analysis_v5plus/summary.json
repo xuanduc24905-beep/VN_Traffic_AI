@@ -1,0 +1,36 @@
+{
+  "weights": "runs/detect/train_v8s_v5plus_960/weights/best.pt",
+  "val_images": 1466,
+  "total_gt": 12020,
+  "total_tp": 10165,
+  "total_fp": 2612,
+  "total_fn": 1630,
+  "total_class_confused": 225,
+  "precision": 0.7818,
+  "recall": 0.8457,
+  "fn_by_class": {
+    "motorcycle": 1043,
+    "car": 433,
+    "truck": 135,
+    "bus": 19
+  },
+  "fn_by_size": {
+    "small": 995,
+    "medium": 593,
+    "large": 42
+  },
+  "fn_by_source": {
+    "unknown": 1502,
+    "cantho": 128
+  },
+  "fp_by_class": {
+    "motorcycle": 1433,
+    "truck": 679,
+    "car": 578,
+    "bus": 147
+  },
+  "fp_by_reason": {
+    "no_gt": 2612,
+    "class_confused": 225
+  }
+}

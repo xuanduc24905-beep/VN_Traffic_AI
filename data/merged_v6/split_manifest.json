@@ -1,0 +1,10 @@
+{
+  "counts": {
+    "v5_train": 2833,
+    "v5_val": 1466,
+    "v5_test": 1500,
+    "pseudo_vn_cctv": 402
+  },
+  "total_train": 3235,
+  "pseudo_pct_in_train": 12.43
+}

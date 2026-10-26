@@ -1,0 +1,19 @@
+{
+  "source": "/home/xuand/vn_traffic_ai/data/raw_vn_cctv/train/images",
+  "weights": "/home/xuand/vn_traffic_ai/runs/detect/train_v8s_v5plus_960/weights/best.pt",
+  "conf_threshold": 0.75,
+  "iou_nms": 0.5,
+  "imgsz": 960,
+  "stride": 50,
+  "total_frames_source": 26276,
+  "frames_sampled": 526,
+  "frames_kept": 402,
+  "boxes_kept": 1079,
+  "skipped_empty": 124,
+  "class_distribution": {
+    "car": 867,
+    "motorcycle": 205,
+    "bus": 5,
+    "truck": 2
+  }
+}

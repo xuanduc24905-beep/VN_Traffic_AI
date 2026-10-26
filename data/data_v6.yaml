@@ -1,0 +1,16 @@
+# V6 — V5 clean + pseudo-labeled vn_cctv (self-training round 1)
+# Sinh tự động bởi scripts/data_prep/build_v6_merged.py
+# Val/test giữ nguyên V5 → honest signal (không chứa pseudo-labels)
+# Schema: {motorcycle, car, bus, truck}
+
+path: /home/xuand/vn_traffic_ai/data/merged_v6
+train: images/train
+val:   images/val
+test:  images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck
