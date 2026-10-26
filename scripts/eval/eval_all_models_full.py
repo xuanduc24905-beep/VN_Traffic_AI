@@ -34,6 +34,7 @@ MODELS = {
     "v5_honest":        PROJECT_ROOT / "runs/detect/train_v8s_v5_honest/weights/best.pt",
     "v5_plus_960":      PROJECT_ROOT / "runs/detect/train_v8s_v5plus_960/weights/best.pt",
     "v6_pseudo":        PROJECT_ROOT / "runs/detect/train_v8s_v6_pseudo/weights/best.pt",
+    "v7_detrac_1280":   PROJECT_ROOT / "runs/detect/train_v8s_v7_1280/weights/best.pt",
     "old_detrac_cantho":PROJECT_ROOT / "weights/trained/best.pt",
 }
 
@@ -299,7 +300,12 @@ def main() -> int:
         if not weights.exists():
             print(f"[SKIP] {label}: {weights} chưa tồn tại")
             continue
-        imgsz = 960 if ("v5plus" in str(weights) or "v6_pseudo" in str(weights)) else 640
+        if "v7_1280" in str(weights):
+            imgsz = 1280
+        elif "v5plus" in str(weights) or "v6_pseudo" in str(weights):
+            imgsz = 960
+        else:
+            imgsz = 640
         model_results = {}
         # V5 test (chính)
         try:
