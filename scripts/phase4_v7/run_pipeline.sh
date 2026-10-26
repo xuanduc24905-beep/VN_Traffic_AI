@@ -92,6 +92,39 @@ fi
 P2_END=$(date +%s)
 log "Phase 4b done in $(( P2_END - P2_START )) giây"
 
+# ========== Phase 4b.5: Audit leak merged_v7 (SAFETY NET) ==========
+P25_START=$(date +%s)
+log ""
+log "===== Phase 4b.5: Audit leak merged_v7 (fail hard nếu có leak) ====="
+log ""
+
+$PY scripts/data_prep/audit_leak.py \
+    --datasets data/merged_v7 \
+    --out docs/v3_report/leak_audit_v7.json \
+    2>&1 | tee logs/phase4_025_audit_v7.log
+
+# Parse leak % — fail hard nếu val hoặc test có bất kỳ leak nào
+LEAK_PCT=$($PY -c "
+import json
+with open('docs/v3_report/leak_audit_v7.json') as f:
+    d = json.load(f)[0]
+val_pct = d['leak_metrics']['val']['pct_leaked']
+test_pct = d['leak_metrics']['test']['pct_leaked']
+print(max(val_pct, test_pct))
+" 2>&1)
+
+if [ -z "$LEAK_PCT" ] || [ "$(echo "$LEAK_PCT != 0.0" | bc 2>/dev/null)" = "1" ] || \
+   [ "$LEAK_PCT" != "0.0" ]; then
+    log "ERROR: V7 có leak! val/test max pct=$LEAK_PCT"
+    log "       → DỪNG, không train phí thời gian."
+    log "       Check docs/v3_report/leak_audit_v7.json để debug."
+    exit 1
+fi
+
+log "[OK] V7 leak audit PASS (val=0%, test=0%)"
+P25_END=$(date +%s)
+log "Phase 4b.5 done in $(( P25_END - P25_START )) giây"
+
 # ========== Phase 4c: Train V7 @ 1280 warm từ V5+ ==========
 P3_START=$(date +%s)
 log ""
@@ -146,10 +179,11 @@ log "===== PHASE 4 (V7) PIPELINE DONE ====="
 log "Tổng thời gian: ${TOTAL_H}h $(( TOTAL_MIN % 60 ))m"
 log ""
 log "Breakdown:"
-log "  4a (import DETRAC): $(( (P1_END - P1_START) / 60 )) phút"
-log "  4b (build V7):      $(( P2_END - P2_START )) giây"
-log "  4c (train V7):      ${P3_MIN} phút"
-log "  4d (full eval):     ${P4_MIN} phút"
+log "  4a   (import DETRAC): $(( (P1_END - P1_START) / 60 )) phút"
+log "  4b   (build V7):      $(( P2_END - P2_START )) giây"
+log "  4b.5 (leak audit):    $(( P25_END - P25_START )) giây"
+log "  4c   (train V7):      ${P3_MIN} phút"
+log "  4d   (full eval):     ${P4_MIN} phút"
 log ""
 log "Artifacts:"
 log "  V7 weights:   runs/detect/train_v8s_v7_1280/weights/best.pt"

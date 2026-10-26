@@ -10,7 +10,20 @@ nhỏ vào V5 train, train yolov8s @ imgsz=1280 warm start từ V5+.
 | `import_detrac_bustruck.py` | Phase 4a — audit DETRAC videos, pick top-K bus/van heavy, video-aware subsample, filter class (bỏ car + others), remap bus→2 / van→3 |
 | `build_v7_merged.py` | Phase 4b — merge V5 train (2.8k VN clean) + DETRAC subset (~550 frames) → `data/merged_v7/` |
 | `v7_train_1280.py` | Phase 4c — yolov8s @ 1280, batch 8, warm từ V5+ best.pt, lr 0.002, cos_lr, 40ep |
-| `run_pipeline.sh` | Orchestrator chạy tuần tự 4a→4b→4c→4d với logging + smart resume |
+| `run_pipeline.sh` | Orchestrator chạy tuần tự 4a→4b→4b.5→4c→4d với logging + smart resume |
+
+## Safety net: Phase 4b.5 — leak audit
+
+Sau khi build merged_v7 (Phase 4b), orchestrator chạy `audit_leak.py` lên
+`data/merged_v7/` để xác nhận val/test có 0% leak trước khi train. Nếu
+phát hiện bất kỳ leak nào → **fail hard, không train phí 3h GPU**.
+
+Kết quả audit lưu `docs/v3_report/leak_audit_v7.json` làm bằng chứng
+methodology đúng cho báo cáo.
+
+`audit_leak.py` được update với thêm 2 pattern để nhận DETRAC + pseudo-vn_cctv:
+- `detrac_MVI_<XXXXX>_imgNNNNN` → `detrac_MVI_<XXXXX>` (video DETRAC)
+- `vncctv_pseudo_NNNNNN` → `vncctv_pseudo` (pseudo-labeled vn_cctv)
 
 ## Shared dependencies (không trong folder này)
 

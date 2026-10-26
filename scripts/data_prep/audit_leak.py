@@ -34,6 +34,10 @@ VIDEO_PATTERNS = [
     (re.compile(r"^(vncctv_(?:train|test|val))_\d+$"), lambda m: m.group(1)),
     # vnv3_<NNNN>              → vnv3  (whole set = 1 video)
     (re.compile(r"^vnv3_\d+$"), lambda m: "vnv3"),
+    # DETRAC subset: detrac_MVI_<XXXXX>_img<NNNNN>  → detrac_MVI_<XXXXX>
+    (re.compile(r"^detrac_(MVI_\d+)_img\d+$"), lambda m: f"detrac_{m.group(1)}"),
+    # vn_cctv pseudo-labeled: vncctv_pseudo_<NNNNNN>  → vncctv_pseudo (1 video source)
+    (re.compile(r"^vncctv_pseudo_\d+$"), lambda m: "vncctv_pseudo"),
 ]
 
 
