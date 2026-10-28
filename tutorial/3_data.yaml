@@ -1,0 +1,59 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# File config dataset cho YOLOv8
+# ─────────────────────────────────────────────────────────────────────────────
+# YOLOv8 đọc file .yaml này để biết:
+#   1. Data ở đâu (path, train, val, test)
+#   2. Có bao nhiêu class và tên là gì
+#
+# Trong bước 4 (train.py), ta sẽ truyền file này cho model:
+#   model.train(data="tutorial/3_data.yaml", ...)
+#
+# YAML = YAML Ain't Markup Language. Cú pháp đơn giản:
+#   key: value          # scalar (số, chữ)
+#   key: [a, b, c]      # list
+#   key:                # dict
+#     subkey: value
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+# `path`: thư mục gốc của dataset. Dùng tuyệt đối để không bị lỗi khi chạy từ
+# thư mục khác. Nếu bạn muốn repo dùng được trên nhiều máy, dùng tương đối:
+#    path: ../data/merged_v5
+path: /home/xuand/vn_traffic_ai/data/merged_v5
+
+
+# `train`, `val`, `test`: đường dẫn ảnh — tương đối với `path` ở trên.
+# YOLO tự tìm label tương ứng bằng cách thay "images/" → "labels/" trong path.
+# Ví dụ: images/train/abc.jpg  →  labels/train/abc.txt
+train: images/train
+val:   images/val
+test:  images/test
+
+
+# `nc`: Number of Classes — số class. Phải khớp với số dòng trong `names`.
+nc: 4
+
+
+# `names`: dict {class_id: tên class}.
+# class_id phải khớp với số đầu tiên trong file label .txt
+# Ví dụ nếu abc.txt có "0 0.5 0.5 0.1 0.2" → bbox đó là motorcycle (id=0)
+#
+# Thứ tự quan trọng vì nó cố định mapping class_id → tên. Đổi thứ tự nghĩa là
+# đổi label của toàn bộ dataset — không được làm sau khi đã train.
+names:
+  0: motorcycle    # xe máy — thường chiếm > 50% xe trên đường VN
+  1: car           # ô tô 4-7 chỗ
+  2: bus           # xe buýt + xe khách
+  3: truck         # xe tải (có cả van vì UA-DETRAC gộp van → truck)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Giải thích thêm (optional, dành cho người tò mò):
+#
+# YOLOv8 còn hỗ trợ các field khác (không bắt buộc):
+#   download: URL tải data nếu chưa có (ultralytics tự wget)
+#   kpt_shape: [N, 3] — cho pose estimation (không dùng cho detection)
+#   flip_idx: list — cho augment flip với dataset có bên trái/phải (vd pose)
+#
+# Dataset VN hiện tại không cần — chỉ cần 5 field ở trên là đủ.
+# ─────────────────────────────────────────────────────────────────────────────
