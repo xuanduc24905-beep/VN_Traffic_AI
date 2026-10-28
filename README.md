@@ -1,32 +1,82 @@
 # VN Traffic AI — Phát hiện, theo vết và đếm phương tiện giao thông Việt Nam
 
 Hệ thống end-to-end: **video giao thông VN → detection → tracking → counting → thống kê + đánh giá**.
-Đề tài nhóm, chủ đề 10, dùng chung 1 conda env `yolov8_ft`.
+Đề tài coursework (chủ đề 10) với **methodology research-honest**: video-aware split, phát hiện và sửa data leak, so sánh thẳng thắn các iteration (gồm cả negative result).
+
+Repo: https://github.com/xuanduc24905-beep/VN_Traffic_AI
 
 ---
 
-## Điểm nổi bật (kết quả mới nhất)
+## Câu chuyện dự án (tóm tắt)
 
-- **2 pipeline so sánh trực tiếp:**
-  - **Baseline** — `yolov8s.pt` COCO gốc (80 lớp, filter 4 phương tiện), không huấn luyện.
-  - **Improved** — best.pt sau **2 vòng fine-tune** trên dataset Việt Nam.
-- **Detection val (14,344 ảnh):** mAP@0.5 = **0.850**, mAP@0.5:0.95 = **0.638**.
-  - motorcycle mAP@0.5 = **0.949** (cao nhất 4 class, nhờ boost vnv3).
-  - bus 0.911, car 0.848, truck 0.695.
-- **Tốc độ:** Improved 72.7 FPS vs Baseline 40.7 FPS (**nhanh hơn 1.79×**).
-- **Streamlit dashboard** có 2 chế độ: chạy 1 pipeline hoặc so sánh 2 pipeline side-by-side + video preview H.264 inline.
-- **Đánh giá 3 tầng:** Detection (mAP) + Tracking proxy (ID stability) + Counting (MAE/MAPE).
+Dự án đi qua **7 iteration (V1 → V7)** với một bước ngoặt methodology:
+
+| Giai đoạn | Iteration | mAP50 | Ghi chú |
+|---|---|---|---|
+| **Trước phát hiện leak** | V1–V4 | 0.946–0.954 ❌ | Random split → 100% video-level leak (train/val/test cùng video) |
+| **Sau rebuild honest split** | V5 | **0.665** ✓ | Video-aware split, 0% leak — con số thật |
+| | V5+ (imgsz=960) | **0.782** ⭐ | Winner — +40% so với COCO baseline (0.557) |
+| | V6 (pseudo-label vn_cctv) | 0.761 | **Negative result** — pseudo amplify class bias |
+| | V7 (DETRAC bustruck + imgsz=1280) | 0.756 | Motorcycle best (0.872) nhưng car/truck giảm |
+
+> **Insight chính:** gap 0.289 mAP50 giữa V3 leaky (0.954) và V5 honest (0.665) chính xác là "leak inflation" — model memorize scene/background, không generalize. Report đầy đủ: [docs/report/BAO_CAO_PHAN_TICH_DU_AN.md](docs/report/BAO_CAO_PHAN_TICH_DU_AN.md).
+
+---
+
+## Kết quả cross-evaluation (4 model × 3 test set)
+
+| Model | V5 test (VN urban, honest) | vn_cctv OOD (Đà Nẵng) | DETRAC test (cross-domain) |
+|---|---|---|---|
+| COCO baseline (yolov8s zero-shot) | 0.557 | — | — |
+| V5 honest (imgsz=640) | 0.665 | 0.181 | 0.548 |
+| **V5+ (imgsz=960)** | **0.782** ⭐ | 0.215 | 0.637 |
+| V6 (pseudo vn_cctv) | 0.761 | — | — |
+| V7 (DETRAC + imgsz=1280) | 0.756 | 0.187 | 0.523 |
+
+Chi tiết: [results/v5_cross_eval/FINAL_COMPARISON.md](results/v5_cross_eval/FINAL_COMPARISON.md) · [FINAL_COMPARISON.json](results/v5_cross_eval/FINAL_COMPARISON.json).
+
+**Per-class (V5+ trên V5 test):**
+
+| Class | Precision | Recall | mAP@0.5 | mAP@0.5:0.95 |
+|---|---|---|---|---|
+| motorcycle | 0.78 | 0.80 | 0.841 | 0.47 |
+| car | 0.88 | 0.82 | **0.884** | 0.56 |
+| bus | 0.77 | 0.68 | 0.716 | 0.52 |
+| truck | 0.74 | 0.63 | 0.687 | 0.49 |
+| **all** | 0.79 | 0.73 | **0.782** | 0.51 |
+
+---
+
+## Methodology — Honest split (quan trọng nhất)
+
+### Phát hiện data leak (V1–V4)
+Script [scripts/data_prep/audit_leak.py](scripts/data_prep/audit_leak.py) phát hiện **12/15 video (80%) rò rỉ sang cả 3 split**:
+- SOICT cam 01: train=950 frames, val=276, test=126 — **cùng 1 video**
+- VNv3: 1,235 train + 156 val + 156 test — **cùng 1 video chia 3 phần**
+- Tổng: 1,779 val frames + 1,053 test frames ≡ 100% từ video đã có trong train
+
+→ Model học "nhớ scene" chứ không học "nhận xe".
+
+### Rebuild V5 — Video-aware split
+[scripts/data_prep/rebuild_v5_by_video.py](scripts/data_prep/rebuild_v5_by_video.py) chia theo `video_id`:
+- **Train:** 11 videos (10 SOICT/Cantho + 1 VNv3) → 2,833 frames
+- **Val:** 3 videos (SOICT cam 07, Cantho 2) → 1,466 frames (video chưa thấy)
+- **Test:** 2 videos (SOICT cam 09, 10) → 1,500 frames (video chưa thấy)
+- Verify: `audit_leak.py` fail hard nếu còn overlap. Manifest reproducible ở [data/merged_v5/split_manifest.json](data/merged_v5/split_manifest.json).
+
+### Safety gate (V7)
+V7 pipeline tích hợp **leak audit** thành Phase 4b.5 — training sẽ fail nếu detect leak. Kết quả audit lưu ở [docs/v3_report/leak_audit_v7.json](docs/v3_report/leak_audit_v7.json).
 
 ---
 
 ## Tech stack
 
-- **Detection:** Ultralytics YOLOv8s (11.2M params, 28.6 GFLOPs, imgsz 512-640)
+- **Detection:** Ultralytics YOLOv8s (11.2M params, 28.6 GFLOPs) — imgsz 640 / 960 / 1280 tùy iteration
 - **Tracking:** ByteTrack (default) / BoT-SORT — built-in Ultralytics
-- **Counting:** line/zone crossing, direction (cross-product), ID-based deduplication
+- **Counting:** line/zone crossing + direction (cross-product) + ID-based deduplication
 - **Stats & Viz:** pandas + matplotlib
-- **UI:** Streamlit dashboard (dual pipeline compare mode)
-- **Evaluation:** mAP, Accuracy, MAE, MAPE + tracking proxy (id_stability, overcount_rate)
+- **UI:** Streamlit dashboard (single pipeline / compare 2 pipelines side-by-side)
+- **Evaluation:** mAP + Accuracy/MAE/MAPE + tracking proxy (id_stability, overcount_rate)
 
 ---
 
@@ -34,132 +84,120 @@ Hệ thống end-to-end: **video giao thông VN → detection → tracking → c
 
 ```
 vn_traffic_ai/
-├── baseline/
-│   └── 10_traffic_counting.py         # code baseline (đã đổi sang v8s cho fair)
-├── configs/
-│   └── counting_zones.json            # line/zone đếm cho từng video test
+├── baseline/                              # Code baseline giáo viên
+├── configs/counting_zones.json            # Line/zone đếm per video
 ├── data/
-│   ├── data.yaml                      # schema 4 lớp {motorcycle, car, bus, truck}
-│   ├── merged/                        # dataset gộp UA-DETRAC + CanTho + vnv3 (gitignored)
-│   └── test_videos/                   # video test + ground truth (gitignored)
+│   ├── data.yaml                          # Schema 4 lớp (gốc)
+│   ├── data_v7.yaml                       # Schema V7 (có DETRAC bustruck)
+│   ├── merged_v5/                         # V5 honest split (symlinks)
+│   ├── merged_v7/                         # V7 split (V5 + DETRAC bustruck)
+│   ├── detrac_bustruck_subset/            # DETRAC bus/van only cho V7
+│   ├── pseudo_vn_cctv/                    # V5+ predictions trên vn_cctv (dùng cho V6)
+│   └── raw_*/                             # Dataset gốc (gitignored)
 ├── docs/
-│   ├── comparison_report/             # BÁO CÁO SO SÁNH BASELINE vs IMPROVED
-│   │   ├── comparison_report.md
-│   │   ├── BAO_CAO_BASELINE_VS_IMPROVED.docx
-│   │   └── charts/                    # 8 chart PNG dùng cho PPT
-│   ├── TEAM_ASSIGNMENT.md
-│   └── DATA_GUIDE.md
+│   ├── report/
+│   │   ├── BAO_CAO_PHAN_TICH_DU_AN.md     # Báo cáo 10 chương
+│   │   ├── BAO_CAO_PHAN_TICH_DU_AN.docx
+│   │   └── assets/{diagrams,yolo_format}/ # Sơ đồ pipeline + YOLO format
+│   ├── v3_report/                         # Hồ sơ phát hiện leak + audit
+│   ├── comparison_report/                 # Báo cáo cũ (baseline vs improved)
+│   └── training_report/
 ├── notebooks/
-│   └── vn_traffic_ai_full_project.ipynb   # NOTEBOOK end-to-end (setup → train → eval → count)
+│   ├── error_analysis.ipynb               # V5+ error breakdown (6 chiều)
+│   ├── final_report.ipynb                 # Tổng hợp kết quả
+│   └── full_project.ipynb                 # End-to-end demo
 ├── scripts/
-│   ├── data_prep/                     # import, merge, prepare dataset
-│   ├── evaluation/                    # bench + eval counting/tracking
-│   ├── utils/                         # strip_emojis, train.sh (legacy)
-│   ├── week2/                         # experiments: freeze, class_weights, v8m
-│   └── week3/                         # MLOps: mlflow, docker, onnx (sẽ thêm)
+│   ├── data_prep/                         # import, merge, audit_leak, rebuild_v5
+│   ├── training/
+│   │   ├── v5_honest.py                   # V5 baseline
+│   │   ├── v5_plus_960.py                 # V5+ (imgsz=960) — WINNER
+│   │   └── v6_pseudo_lbl.py               # V6 (pseudo-label — failed)
+│   ├── phase4_v7/                         # V7 pipeline (4a import → 4b build → audit → 4c train → 4d eval)
+│   │   └── run_pipeline.sh
+│   ├── eval/eval_all_models_full.py       # Cross-eval 4 model × 3 test set
+│   ├── report/                            # Render figures cho báo cáo
+│   ├── demo/                              # Demo scripts
+│   └── utils/
 ├── src/
-│   ├── detection/                     # Người 1 — train.py, evaluate.py, infer.py
-│   ├── tracking/                      # Người 2 — track.py, counter.py
-│   ├── stats/                         # Người 3 — aggregator.py, visualize.py
-│   ├── evaluation/                    # Người 4 — metrics.py (+ tracking proxy)
-│   └── pipeline/                      # tích hợp end-to-end: run.py
-├── ui/
-│   └── streamlit_app.py               # dashboard 2 mode: single / compare
+│   ├── detection/                         # train/evaluate/infer
+│   ├── tracking/                          # ByteTrack wrapper + counter
+│   ├── stats/                             # aggregator + visualize
+│   ├── evaluation/                        # metrics (mAP + tracking proxy)
+│   └── pipeline/run.py                    # End-to-end CLI
+├── ui/streamlit_app.py                    # Dashboard (single / compare mode)
 ├── results/
-│   ├── tables/                        # events.csv, eval JSON, benchmark
-│   ├── figures/                       # biểu đồ auto-sinh
-│   └── videos/                        # video output (gitignored, mp4v + H.264)
-├── weights/
-│   └── yolov8s.pt                     # pretrained COCO (baseline)
-├── runs/                              # training outputs (gitignored)
-│   └── detect/.../train_v8s_ft_vnv3/weights/best.pt  # ← model tốt nhất
-└── logs/
+│   ├── v5_cross_eval/                     # Bảng so sánh 4 model × 3 test set
+│   ├── error_analysis_v5plus/             # Predictions pkl cho analysis
+│   ├── tables/                            # Events/eval CSV + JSON
+│   └── figures/
+├── weights/yolov8s.pt                     # COCO pretrained baseline
+├── runs/detect/                           # Training outputs (gitignored)
+│   ├── train_v8s_v5_honest/weights/best.pt
+│   ├── train_v8s_v5plus_960/weights/best.pt  # ⭐ WINNER
+│   ├── train_v8s_v6_pseudo/weights/best.pt
+│   └── train_v8s_v7_1280/weights/best.pt
+├── tests/
+├── requirements.txt
+└── run_all.sh
 ```
 
 ---
 
 ## Cài đặt
 
-### Yêu cầu hệ thống
-- **OS:** Ubuntu 20.04+, Windows 10/11 (WSL2), hoặc macOS 12+
-- **Python:** 3.10 hoặc 3.11 (khuyến nghị dùng conda)
-- **GPU:** NVIDIA GPU với ≥6 GB VRAM (CUDA 11.8+). CPU cũng chạy được nhưng chậm ~30×.
-- **Disk:** ~5 GB cho code + weights + dataset nhỏ (chưa tính raw data 137k ảnh)
+### Yêu cầu
+- Ubuntu 20.04+ / Windows 10/11 WSL2 / macOS 12+
+- Python 3.10 hoặc 3.11
+- NVIDIA GPU ≥6 GB VRAM (CUDA 11.8+); CPU chạy được nhưng chậm ~30×
+- Disk ~10 GB (code + weights + dataset nhỏ, chưa tính raw)
 
-### Bước 1 — Clone repo
+### Setup
 ```bash
-git clone https://github.com/xuanduc24905-beep/BT_Traffic_Detect.git
-cd BT_Traffic_Detect
-```
+git clone https://github.com/xuanduc24905-beep/VN_Traffic_AI.git
+cd VN_Traffic_AI
 
-### Bước 2 — Tạo môi trường Python
-```bash
-# Cách A: dùng conda (khuyến nghị)
+# Conda (khuyến nghị)
 conda create -n yolov8_ft python=3.11 -y
 conda activate yolov8_ft
-
-# Cách B: dùng venv
-python -m venv .venv
-source .venv/bin/activate      # Linux/Mac
-# .venv\Scripts\activate       # Windows
-```
-
-### Bước 3 — Cài dependencies
-```bash
 pip install -r requirements.txt
 
-# ffmpeg (bắt buộc cho Streamlit preview video H.264 inline)
-sudo apt install ffmpeg -y                     # Ubuntu/WSL/Debian
-# brew install ffmpeg                          # macOS
-# choco install ffmpeg                         # Windows (dùng Chocolatey)
+# ffmpeg (bắt buộc cho Streamlit preview H.264 inline)
+sudo apt install ffmpeg -y          # Ubuntu/WSL
+# brew install ffmpeg               # macOS
 ```
 
-### Bước 4 — Kiểm tra CUDA (nếu có GPU)
+### Kiểm tra CUDA
 ```bash
-python -c "import torch; print(f'CUDA: {torch.cuda.is_available()}, GPU: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else \"CPU only\"}')"
+python -c "import torch; print('CUDA:', torch.cuda.is_available())"
 ```
 
-Kết quả mong đợi: `CUDA: True, GPU: NVIDIA RTX ...`
-
-### Bước 5 — Tải trọng số fine-tune (nếu chưa có)
-
-Repo **không commit weights** (dung lượng lớn). Tải riêng:
+### Weights
+Repo **không commit `.pt` file lớn**. Hai cách:
 - **Baseline `yolov8s.pt`** — Ultralytics tự tải khi chạy lần đầu.
-- **Improved `best.pt`** — download từ [Google Drive / release page] hoặc train lại theo hướng dẫn ở mục "Quy trình training" bên dưới.
+- **Best `best.pt` (V5+)** — train lại theo mục "Training" bên dưới (~2h trên RTX 3500 Ada 12GB) hoặc tải từ release.
 
 Đặt vào:
 ```
-weights/yolov8s.pt                                           ← Baseline
-runs/detect/runs/detect/train_v8s_ft_vnv3/weights/best.pt    ← Improved
+weights/yolov8s.pt                                      # Baseline
+runs/detect/train_v8s_v5plus_960/weights/best.pt        # Winner (V5+ 960)
+runs/detect/train_v8s_v7_1280/weights/best.pt           # V7 alt (motorcycle focus)
 ```
 
 ---
 
-## Chạy nhanh (Quick Start)
+## Quick Start
 
-### Cách 1 — Streamlit dashboard (khuyến nghị cho demo)
-
+### Cách 1 — Streamlit dashboard (demo)
 ```bash
 streamlit run ui/streamlit_app.py
 ```
+Mở http://localhost:8501 → upload video → chọn weights → chạy. Chi tiết tab/sidebar ở mục "Streamlit dashboard" bên dưới.
 
-Mở browser: **http://localhost:8501**
-
-Thao tác trong UI:
-1. Chọn **Pipeline** ở sidebar (Improved hoặc Baseline).
-2. Chọn **Model weights**.
-3. Upload video .mp4/.avi/.mov.
-4. Chỉnh conf/iou/imgsz + vị trí line đếm.
-5. Nhấn **Chạy pipeline** → xem video output + bảng thống kê inline.
-
-Chế độ **⚖ So sánh 2 pipeline**: chạy đồng thời baseline + improved side-by-side.
-
-### Cách 2 — Chạy pipeline từ terminal (batch mode)
-
+### Cách 2 — Pipeline từ terminal
 ```bash
 python -m src.pipeline.run \
     --video data/test_videos/raw/demo_traffic.mp4 \
-    --weights runs/detect/runs/detect/train_v8s_ft_vnv3/weights/best.pt \
+    --weights runs/detect/train_v8s_v5plus_960/weights/best.pt \
     --tracker bytetrack.yaml \
     --counting-config configs/counting_zones.json \
     --video-key demo_traffic \
@@ -167,310 +205,165 @@ python -m src.pipeline.run \
     --out-video results/videos/demo_out.mp4
 ```
 
-Output:
-- `results/videos/demo_out.mp4` — video có bbox + line + counter overlay
-- `results/tables/demo_events.csv` — log từng lượt qua line
+### Cách 3 — Cross-eval 4 model × 3 test set
+```bash
+python scripts/eval/eval_all_models_full.py
+```
+Output: `results/v5_cross_eval/FINAL_COMPARISON.{md,json}` + per-model folder.
 
-### Cách 3 — Chạy baseline gốc (code giáo viên)
-
+### Cách 4 — Baseline gốc (code giáo viên)
 ```bash
 python baseline/10_traffic_counting.py \
     --video data/test_videos/raw/demo_traffic.mp4 \
-    --model yolov8s.pt \
-    --line-y 474 \
-    --out-video baseline/baseline_out.mp4 \
-    --no-show
+    --model yolov8s.pt --line-y 474 --no-show
 ```
-
-### Cách 4 — Sinh báo cáo eval
-
-```bash
-# Chạy eval counting 2 pipeline
-python scripts/evaluation/eval_counting_2pipelines.py
-
-# Tracking proxy metrics (ID stability)
-PYTHONPATH=. python scripts/evaluation/eval_tracking_proxy.py
-```
-
-Kết quả nằm ở [docs/comparison_report/](docs/comparison_report/).
 
 ---
 
-## Troubleshooting
+## Dataset
 
-**Lỗi:** `ModuleNotFoundError: No module named 'src'`
-→ Chạy từ **root project**: `cd /path/to/vn_traffic_ai` rồi thêm `PYTHONPATH=.`:
-```bash
-PYTHONPATH=. python scripts/evaluation/eval_counting_2pipelines.py
-```
+**Schema 4 lớp:** `0: motorcycle · 1: car · 2: bus · 3: truck`
 
-**Lỗi:** `RuntimeError: CUDA out of memory`
-→ Giảm `batch` (32 → 16) hoặc `imgsz` (640 → 512).
+**Nguồn (sau khi rebuild V5 honest):**
 
-**Lỗi:** Streamlit video output trắng, không play
-→ Cài `ffmpeg` (xem Bước 3). Streamlit cần H.264 transcode để play inline browser.
+| Nguồn | Vai trò | Train frames | Val/Test |
+|---|---|---|---|
+| SOICT24 (10 cam day + 3 cam night) | Chủ lực VN urban | ~2,100 | cam 07, 09, 10 → 2,966 frames unseen |
+| Vehicle Vietnam-CanTho v19 (Roboflow) | motorcycle VN | 678 | — |
+| Vietnamese vehicle v3 (Roboflow) | boost motorcycle | 1,547 | — |
+| **DETRAC bus/truck subset** (V7 only) | bus/truck cross-domain | +550 | — |
+| **Tổng V5 train** | | **2,833** | **val 1,466 / test 1,500** |
 
-**Lỗi:** `FileNotFoundError: runs/detect/.../best.pt`
-→ Chưa có weights improved. Chọn model khác trong dropdown, hoặc train theo mục "Quy trình training".
+**OOD test set:** vn_cctv (Đà Nẵng, 29k frames, 1 video) — hoàn toàn ngoài training domain.
 
----
-
-## Dataset (schema 4 lớp)
-
-```
-0: motorcycle    1: car    2: bus    3: truck
-```
-
-**3 nguồn hợp nhất → `data/merged/`:**
-
-| Nguồn | Vai trò | Ảnh |
-|---|---|---|
-| **UA-DETRAC** (Trung Quốc) | car, bus, truck | ~68k |
-| **Vehicle Vietnam-CanTho v19** (Roboflow) | motorcycle chính | 1,235 |
-| **Vietnamese vehicle v3** (Roboflow) | boost motorcycle (+2,232 bbox) | 1,547 |
-| **Tổng train** | | ~137k ảnh, ~503k bbox |
-
-Val: 14,344 ảnh. Chi tiết download: [docs/DATA_GUIDE.md](docs/DATA_GUIDE.md).
-
-**Class remapping vnv3:** vì Roboflow export với class id khác, script [scripts/data_prep/import_vnv3.py](scripts/data_prep/import_vnv3.py) tự động remap `{0:1, 1:0, 2:3, 3:2}` trước khi merge.
+Chi tiết: [docs/report/BAO_CAO_PHAN_TICH_DU_AN.md §3-4](docs/report/BAO_CAO_PHAN_TICH_DU_AN.md).
 
 ---
 
-## Quy trình training (Improved model)
+## Training
 
-**Vòng 1 — `train_v8s_4cls`:**
+### V5 honest (baseline — imgsz=640)
 ```bash
-yolo detect train model=yolov8s.pt data=data/data.yaml \
-    epochs=50 batch=32 imgsz=512 lr0=0.01 \
-    project=runs/detect name=train_v8s_4cls
+python scripts/training/v5_honest.py
 ```
-- Init COCO pretrained, reset head 80→4 lớp.
-- Thời gian ~5h 30m trên RTX 3500 Ada 12GB.
-- Best mAP50 = 0.848 (epoch 6).
+Config: yolov8s fresh COCO, imgsz=640, batch=16, 40 epochs. Output: `runs/detect/train_v8s_v5_honest/`.
 
-**Vòng 2 — `train_v8s_ft_vnv3` (continual):**
+### V5+ (winner — imgsz=960)
 ```bash
-yolo detect train model=runs/.../train_v8s_4cls/weights/best.pt \
-    data=data/data.yaml \
-    epochs=25 batch=32 imgsz=512 \
-    lr0=0.001 lrf=0.01 patience=8 \
-    project=runs/detect name=train_v8s_ft_vnv3
+python scripts/training/v5_plus_960.py
 ```
-- Init từ best.pt vòng 1, thêm 1,547 ảnh vnv3.
-- **LR 0.001** (thấp 10×) → tránh catastrophic forgetting.
-- Early stop ở epoch 18, tổng 2h 20m.
-- Best mAP50 = **0.850** (epoch 10).
+Config: yolov8s COCO, imgsz=960, batch=16, cosine LR, 40 epochs (early stop ~26ep). Output: `runs/detect/train_v8s_v5plus_960/`.
 
----
-
-## Quy trình end-to-end
-
+### V6 pseudo-label (negative result, để tham khảo)
 ```bash
-# 1. Chạy pipeline single model
-python -m src.pipeline.run \
-    --video data/test_videos/raw/demo_traffic.mp4 \
-    --weights runs/detect/.../train_v8s_ft_vnv3/weights/best.pt \
-    --tracker bytetrack.yaml \
-    --counting-config configs/counting_zones.json \
-    --video-key demo_traffic \
-    --out-csv results/tables/demo_events.csv \
-    --out-video results/videos/demo_out.mp4
-
-# 2. Benchmark counting: baseline vs improved
-python scripts/evaluation/eval_counting_2pipelines.py
-
-# 3. Tracking proxy metrics (ID stability)
-PYTHONPATH=. python scripts/evaluation/eval_tracking_proxy.py
-
-# 4. Chạy Streamlit dashboard (2 mode: single / compare)
-streamlit run ui/streamlit_app.py
+# Phải chạy V5+ trước để sinh pseudo-label
+python scripts/training/v6_pseudo_lbl.py
 ```
+Kết quả: pseudo-label trên vn_cctv (conf>0.75) nhưng amplify class bias (car 80%, thiếu bus/truck) → V5 test giảm 2.7%.
+
+### V7 DETRAC bustruck (imgsz=1280)
+```bash
+bash scripts/phase4_v7/run_pipeline.sh
+```
+Chạy tuần tự: 4a import DETRAC → 4b filter bustruck → **4b.5 audit leak (fail hard)** → 4c train imgsz=1280 → 4d eval.
 
 ---
 
 ## Đánh giá — 3 tầng
 
-### Tầng 1: Detection (mAP)
-
-Chạy `yolo val` trên val set 14,344 ảnh:
-
-| Class | Precision | Recall | mAP@0.5 | mAP@0.5:0.95 |
-|---|---|---|---|---|
-| motorcycle | 0.858 | **0.917** | **0.949** ⭐ | 0.609 |
-| car | 0.899 | 0.794 | 0.848 | 0.629 |
-| bus | 0.917 | 0.819 | 0.911 | 0.772 |
-| truck | 0.803 | 0.631 | 0.695 | 0.543 |
-| **all** | **0.869** | **0.790** | **0.850** | **0.638** |
+### Tầng 1: Detection (mAP) — Honest cross-eval
+Bảng cross-eval 4 model × 3 test set đã trình bày ở đầu README. Xem [results/v5_cross_eval/FINAL_COMPARISON.md](results/v5_cross_eval/FINAL_COMPARISON.md).
 
 ### Tầng 2: Counting (task-level)
+MAE / MAPE / Overall accuracy trên video thật, so sánh baseline vs best model.
 
-So sánh trên `demo_traffic.mp4` (5.9s, GT=87 xe):
-
-| Chỉ số | Baseline (COCO) | Improved (fine-tune) |
-|---|---|---|
-| Total pred | 71 | 104 |
-| MAE | 4.0 | 5.25 |
-| MAPE (%) | 49.9 | 46.8 |
-| Overall accuracy | 81.6% | 80.5% |
-| **FPS** | 40.7 | **72.7** (1.79× nhanh) |
-
-### Tầng 3: Tracking proxy (không có GT tracking per-frame)
-
-Metric mới trong [src/evaluation/metrics.py](src/evaluation/metrics.py):
+### Tầng 3: Tracking proxy
+Vì không có GT tracking per-frame (label chi phí cao cho scope coursework), dùng proxy metric trong [src/evaluation/metrics.py](src/evaluation/metrics.py):
 - `track_count` — unique track_id qua line
 - `overcount_rate = (pred - gt) / gt`
-- `id_stability = 1 - |overcount_rate|` — proxy cho IDF1
+- `id_stability = 1 - |overcount_rate|` — proxy IDF1
 
-| | Track count | Overcount rate | ID stability |
-|---|---|---|---|
-| Baseline | 71 | **-18.4%** (miss) | 0.816 |
-| Improved | 104 | **+19.5%** (ID switch) | 0.805 |
-
-Insight: 2 pipeline có stability tương đương nhưng bị lỗi ở **khía cạnh khác nhau** — baseline miss, improved đếm dư.
-
-**Chưa có IDF1/MOTA/HOTA chuẩn** vì cần GT tracking per-frame (chi phí label quá cao cho scope coursework).
+→ Phân biệt được pipeline **miss xe** (recall thấp) vs **ID switch** (overcount) — 2 loại lỗi khác nhau.
 
 ---
 
-## Streamlit dashboard — Hướng dẫn chi tiết
+## Error analysis V5+
+
+Notebook: [notebooks/error_analysis.ipynb](notebooks/error_analysis.ipynb) — breakdown 6 chiều: class × size × source.
+
+**Insights chính:**
+- **FN motorcycle small objects** chiếm 61% false negative — xe máy xa camera, bbox <32×32.
+- **FP ở scene dày đặc** — nhiều xe chồng lắp, NMS gộp nhầm.
+- **OOD gap lớn:** V5+ 0.782 trên VN urban → 0.215 trên vn_cctv (Đà Nẵng góc camera khác, chất lượng CCTV thấp hơn).
+
+---
+
+## Streamlit dashboard — hướng dẫn chi tiết
 
 ### Khởi chạy
-
 ```bash
-cd /home/xuand/vn_traffic_ai      # hoặc path tới repo của bạn
-conda activate yolov8_ft          # nếu dùng conda
+conda activate yolov8_ft
 streamlit run ui/streamlit_app.py
 ```
+Mặc định `http://localhost:8501`. Port bị chiếm thì `--server.port 8502`.
 
-Mặc định mở tại `http://localhost:8501`. Nếu port bị chiếm, thêm `--server.port 8502`.
+**Yêu cầu tiên quyết:**
+1. Đã `pip install -r requirements.txt` (streamlit, ultralytics, opencv-python, pandas).
+2. Đã cài `ffmpeg` (transcode H.264 inline).
+3. Có ≥1 file `.pt` ở `weights/` hoặc `runs/detect/*/weights/best.pt`.
 
-> **Yêu cầu tiên quyết:**
-> 1. Đã cài `requirements.txt` (đặc biệt `streamlit`, `ultralytics`, `opencv-python`, `pandas`).
-> 2. Đã cài `ffmpeg` trong PATH (để transcode H.264 preview video inline browser). Nếu thiếu, video vẫn tải về được nhưng preview trong app có thể lỗi.
-> 3. Có ít nhất 1 file `.pt` trong `weights/` hoặc `runs/detect/*/weights/best.pt`. Nếu không có, app sẽ báo lỗi và dừng.
+### Sidebar — cấu hình chung
 
-### Sidebar — Bảng cấu hình chung (áp dụng cho mọi tab)
-
-| Nút / Nhóm | Ý nghĩa | Khi nào chỉnh |
-|---|---|---|
-| **Pipeline** (radio) | Chọn logic pipeline: `Improved (nhóm)` hoặc `Baseline (giáo viên)`. **Chỉ dùng cho chế độ chạy 1 pipeline.** Ở chế độ so sánh, mỗi bên chọn riêng. | Muốn demo pipeline nào |
-| **Model weights** (dropdown) | Chọn file `.pt` — quét cả `weights/` và `runs/detect/*/weights/best.pt`. Mặc định ưu tiên `weights/baseline_detrac4.pt` (model tốt nhất, acc 97.7% trên demo). | Đổi giữa COCO pretrained (`yolov8s.pt`) và fine-tune (`best.pt`) |
-| **Tracker** (radio) | `bytetrack.yaml` hoặc `botsort.yaml`. **Chỉ dùng cho Improved pipeline** (Baseline luôn dùng ByteTrack mặc định của Ultralytics). | ByteTrack nhanh; BoT-SORT chính xác hơn ở cảnh nhiều xe che nhau |
-| **Confidence threshold** (0.1–0.9, mặc định 0.3) | Ngưỡng tin cậy — box có `conf < threshold` sẽ bị lọc. Cao → ít false positive nhưng dễ miss. Thấp → bắt nhiều nhưng có thể có box rác. | Nếu miss xe máy → giảm còn 0.2. Nếu có box rác → tăng lên 0.4 |
-| **IoU threshold (NMS)** (0.1–0.9, mặc định 0.5) | Ngưỡng IoU cho Non-Maximum Suppression — 2 box có IoU vượt ngưỡng thì loại box confidence thấp hơn. | Cảnh xe sát nhau → tăng lên 0.6-0.7 (giữ nhiều box). Ngược lại giảm |
-| **Image size** (dropdown 320/416/512/640/768, mặc định 640) | Resize ảnh input trước khi đưa vào YOLO. Nhỏ → nhanh nhưng miss xe nhỏ. | Video 1080p có xe nhỏ → 640/768. Test nhanh → 416 |
-| **FP16 inference** (checkbox, mặc định bật) | Bật inference dùng half-precision (nhanh 1.3-1.5× trên GPU Ada/Ampere/Turing). | Tắt nếu chạy CPU hoặc GPU cũ (GTX 10xx trở về trước) |
-| **Vị trí line (%)** (slider 10–90, mặc định 50) | Vị trí counting line theo % chiều cao (nếu horizontal) hoặc chiều rộng (nếu vertical). | Đặt ngang giữa video (50%) hoặc điều chỉnh theo góc quay |
-| **Hướng line** (radio) | `horizontal` (kẻ ngang) hoặc `vertical` (kẻ dọc). | Video quay từ trên xuống → horizontal. Camera bên đường → vertical |
-| **Chiều đếm** (radio) | `both` (đếm cả 2 chiều, phân biệt trong output) / `ltr` (chỉ đếm khi cross-product > 0) / `rtl` (< 0). | Ngã tư chỉ muốn đếm 1 chiều → `ltr` hoặc `rtl` |
-
----
-
-### Tab 1: `▶ Chạy pipeline`
-
-**Bước 1 — Upload video:** kéo thả file `.mp4/.avi/.mov` vào ô upload. App hiển thị preview và thông tin `WxH @ FPS · N frames · duration`.
-
-**Bước 2 — Chọn chế độ:**
-
-#### Chế độ A: `▶ Chạy 1 pipeline` (mặc định)
-Dùng cấu hình sidebar → bấm nút `Chạy pipeline`. Có thanh progress theo frame.
-
-Output hiển thị:
-- Video annotated (đã transcode H.264, play inline được)
-- 2 nút tải: video mp4v gốc và video H.264
-- Data tự động chuyển sang **Tab Thống kê** và **Tab Đánh giá**
-
-#### Chế độ B: `⚖ So sánh 2 pipeline (Baseline vs Improved)`
-
-App hiện 2 cột **Side A** và **Side B**, mỗi bên có:
-- **Pipeline** — chọn giữa Baseline (1 line, không direction) và Improved (multi-line + direction + log event)
-- **Weights** — chọn file `.pt` riêng
-
-**Mặc định thông minh**: Side A gợi ý `yolov8s.pt` (COCO gốc), Side B gợi ý `best.pt` fine-tune (tìm `ft_vnv3` trước, không có thì `4cls`).
-
-Bấm `⚖ Chạy so sánh 2 pipeline` → app chạy tuần tự 2 side, mỗi bên có progress bar riêng.
-
-Kết quả side-by-side:
-- 2 video output cạnh nhau
-- Bảng đếm per-class từng side + metric: Tổng đếm / Runtime / FPS
-- Bảng so sánh chỉ số chính (Tổng đếm, Runtime, FPS) + chênh lệch + speedup
-- Bar chart per-class dạng grouped bar (2 màu Baseline vs Improved)
-- Info box tự đọc kết quả bằng chữ
-
-Tab Thống kê và Tab Đánh giá sẽ có thêm radio **"Xem thống kê của pipeline nào?"** để chọn nguồn dữ liệu.
-
----
-
-### Tab 2: `Thống kê`
-
-Chỉ hoạt động sau khi chạy pipeline ở Tab 1.
-
-**Nút chọn nguồn (chỉ có trong compare mode):** radio `Improved (fine-tune)` / `Baseline (COCO)` — quyết định thống kê nào đang xem.
-
-**Chia thời gian theo (dropdown):** `30 giây / 1 phút / 5 phút / 15 phút / 30 phút / 1 giờ` — quyết định bucket cho chart theo thời gian và peak period.
-
-**Các mục hiển thị:**
-
-| Mục | Nội dung |
+| Nhóm | Ý nghĩa |
 |---|---|
-| Metrics tổng | Tổng lượt, số loại xe, loại nhiều nhất, thời lượng video |
-| Tốc độ lưu lượng | `Tổng xe/phút` và `Tổng xe/giờ` + bảng chi tiết per class |
-| Khung giờ cao điểm | Bucket đông nhất + số lượt trong bucket đó (thay đổi theo lựa chọn "Chia thời gian") |
-| Biểu đồ theo bucket | Line chart hoặc Bar chart chồng (toggle radio) |
-| Heatmap | Bảng có gradient màu, hàng = bucket, cột = class |
-| Đếm tích luỹ | Line chart tăng dần theo thời gian |
-| Số lượng theo loại xe | Bar chart tổng |
-| Lưu lượng theo chiều đi | Bảng + bar chart `line × direction` (chỉ Improved) |
-| So sánh giữa các line | Chỉ hiển thị nếu có ≥2 line |
-| Event log | Bảng chi tiết mọi lượt đếm |
-| Nút tải xuống | Events CSV, Summary CSV, Bucket CSV |
+| **Pipeline** (radio) | `Improved (nhóm)` hoặc `Baseline (giáo viên)`. Compare mode mỗi bên chọn riêng. |
+| **Model weights** (dropdown) | Quét `weights/` + `runs/detect/*/weights/best.pt`. Mặc định ưu tiên V5+. |
+| **Tracker** (radio) | `bytetrack.yaml` (nhanh) / `botsort.yaml` (chính xác hơn khi che). |
+| **Confidence** (0.1–0.9, mặc định 0.3) | Thấp → bắt nhiều, có box rác. Cao → ít FP, dễ miss. |
+| **IoU NMS** (0.1–0.9, mặc định 0.5) | Scene xe sát → tăng 0.6-0.7. |
+| **Image size** (320/416/512/640/768/960) | Nhỏ → nhanh; lớn → bắt xe nhỏ (V5+ dùng 960). |
+| **FP16** | Nhanh 1.3-1.5× trên Ada/Ampere/Turing. Tắt nếu CPU/GPU cũ. |
+| **Line position / direction / mode** | % vị trí line + ngang/dọc + both/ltr/rtl. |
+
+### Tab 1 — Chạy pipeline
+Upload `.mp4/.avi/.mov` → chọn chế độ:
+- **A: Chạy 1 pipeline** — dùng config sidebar, progress bar theo frame.
+- **B: So sánh 2 pipeline** — side A/B mỗi bên chọn weights riêng, chạy tuần tự. Mặc định: A=`yolov8s.pt` (COCO), B=`best.pt` V5+/V7. Output: 2 video side-by-side + bảng chênh lệch + bar chart per-class + speedup.
+
+### Tab 2 — Thống kê
+Chia bucket thời gian (30s/1p/5p/15p/30p/1h) → metrics tổng + flow rate (xe/phút, xe/giờ) + peak period + heatmap bucket×class + cumulative line chart + per-class bar + line×direction (chỉ Improved) + event log + download CSV.
+
+### Tab 3 — Đánh giá
+Nhập GT counting bằng 2 cách:
+- **Upload JSON:** `{"counts_by_class": {"motorcycle": 45, "car": 30, ...}}`
+- **Điền tay:** number_input per class (có hiển thị pred bên cạnh)
+
+Output: bảng per-class (Pred/GT/|Err|/Acc) + Overall Accuracy / MAE / MAPE + download eval JSON.
 
 ---
 
-### Tab 3: `Đánh giá`
+## Troubleshooting
 
-Đo độ chính xác của counting so với ground truth (đếm tay).
-
-**Bước 1 — Nhập GT bằng 1 trong 2 cách:**
-
-- **Cách A: Upload JSON.** File có cấu trúc:
-  ```json
-  { "counts_by_class": { "motorcycle": 45, "car": 30, "bus": 3, "truck": 2 } }
-  ```
-- **Cách B: Điền tay.** Các ô `number_input` cho từng class (motorcycle, car, bus, truck, van, others, bicycle). Có hiển thị số model dự đoán bên cạnh để dễ so sánh.
-
-> ⚠️ **Lưu ý:** phải nhập số xe **thật** bạn đếm được từ video, không phải copy số model dự đoán. Để mặc định 0 sẽ không đánh giá đúng.
-
-**Bước 2 — Xem kết quả (tự động khi có GT):**
-- Bảng per-class: `Pred / GT / |Err| / Accuracy`
-- 3 metric: Overall Accuracy, MAE, MAPE (%)
-- Nút tải JSON eval report
+| Lỗi | Fix |
+|---|---|
+| `ModuleNotFoundError: No module named 'src'` | Chạy từ root + `PYTHONPATH=.` |
+| `CUDA out of memory` | Giảm `batch` (16→8) hoặc `imgsz` (960→640) |
+| Streamlit video output trắng | Cài `ffmpeg` |
+| `FileNotFoundError: .../best.pt` | Train lại hoặc chọn model khác trong dropdown |
+| V7 train fail "leak detected" | Audit script phát hiện split overlap — fix split trước khi train (feature intended, không phải bug) |
 
 ---
 
-### Workflow ví dụ (demo giáo viên)
-
-1. Chọn `Improved (nhóm)` trong Pipeline (sidebar)
-2. Chọn weights `runs/.../train_v8s_ft_vnv3/weights/best.pt`
-3. Giữ mặc định: `conf=0.3, iou=0.5, imgsz=640, FP16 on`
-4. Chỉnh line: `Vị trí=50%, Hướng=horizontal, Chiều đếm=both`
-5. Tab 1 → upload `demo_traffic.mp4` → chọn `⚖ So sánh 2 pipeline`
-6. Side A giữ `yolov8s.pt`, Side B giữ `best.pt` fine-tune → bấm chạy
-7. Xem bảng so sánh + bar chart per-class ở cuối tab
-8. Chuyển Tab 2 → xem flow rate, peak hour (thử đổi "Chia thời gian" giữa 1 phút và 5 phút)
-9. Chuyển Tab 3 → điền GT (từ video đếm tay) → xem MAE/MAPE
-
----
-
-## File deliverable chính
+## Deliverable chính
 
 | Loại | Đường dẫn |
 |---|---|
-| Báo cáo Markdown | [docs/comparison_report/comparison_report.md](docs/comparison_report/comparison_report.md) |
-| Báo cáo Word | [docs/comparison_report/BAO_CAO_BASELINE_VS_IMPROVED.docx](docs/comparison_report/BAO_CAO_BASELINE_VS_IMPROVED.docx) |
-| Notebook end-to-end | [notebooks/vn_traffic_ai_full_project.ipynb](notebooks/vn_traffic_ai_full_project.ipynb) |
-| 8 chart PPT | [docs/comparison_report/charts/](docs/comparison_report/charts/) |
-| Best weights | `runs/detect/.../train_v8s_ft_vnv3/weights/best.pt` |
+| Báo cáo đầy đủ (10 chương) | [docs/report/BAO_CAO_PHAN_TICH_DU_AN.md](docs/report/BAO_CAO_PHAN_TICH_DU_AN.md) · [.docx](docs/report/BAO_CAO_PHAN_TICH_DU_AN.docx) |
+| Cross-eval 4 model × 3 test | [results/v5_cross_eval/FINAL_COMPARISON.md](results/v5_cross_eval/FINAL_COMPARISON.md) |
+| Hồ sơ phát hiện leak | [docs/v3_report/DATA_LEAK_FINDINGS.md](docs/v3_report/DATA_LEAK_FINDINGS.md) · [leak_audit_summary.md](docs/v3_report/leak_audit_summary.md) |
+| Notebook error analysis | [notebooks/error_analysis.ipynb](notebooks/error_analysis.ipynb) |
+| Best weights | `runs/detect/train_v8s_v5plus_960/weights/best.pt` |
+| Pipeline V7 (self-contained) | [scripts/phase4_v7/](scripts/phase4_v7/) |
 
 ---
 
@@ -478,33 +371,29 @@ Chỉ hoạt động sau khi chạy pipeline ở Tab 1.
 
 | Người | Module | Deliverable |
 |---|---|---|
-| 1 | `src/detection/` | Train YOLOv8, xuất `best.pt`, đánh giá mAP |
-| 2 | `src/tracking/` | ByteTrack wrapper + line/zone counter |
-| 3 | `src/stats/` | Aggregate events CSV + biểu đồ per class × thời gian |
-| 4 | `src/evaluation/` | Ground truth thủ công + Accuracy/MAE/MAPE + tracking proxy + pipeline integration |
+| 1 | `src/detection/` + `scripts/training/` | Train V5/V5+/V6/V7, mAP, cross-eval |
+| 2 | `src/tracking/` | ByteTrack/BoT-SORT wrapper + line/zone counter |
+| 3 | `src/stats/` | Aggregate CSV + biểu đồ per class × thời gian |
+| 4 | `src/evaluation/` + `scripts/data_prep/` | GT counting + MAE/MAPE + **leak audit** + tracking proxy |
 
 Chi tiết: [docs/TEAM_ASSIGNMENT.md](docs/TEAM_ASSIGNMENT.md).
 
 ---
 
-## Hạn chế đã biết & hướng phát triển
+## Hạn chế đã biết
 
-**Hạn chế:**
-- Motorcycle chỉ 0.85% bbox train → mAP@0.5:0.95 = 0.609 (thấp hơn class khác).
-- Truck confusion cao (mAP 0.695) do UA-DETRAC gộp `van → truck`.
-- Improved model kém generalize ra video out-of-distribution (recall giảm mạnh khi test video screen recording độ phân giải thấp).
-- Chưa đo IDF1/MOTA chuẩn do thiếu GT tracking per-frame.
-
-**Hướng mở rộng:**
-- Fine-tune với `freeze=10` (chỉ train head, giữ backbone COCO) → tăng generalization.
-- Class-balanced sampling / focal loss.
-- Test đa dạng video VN (5-10 phút mỗi video).
-- Deploy edge (Jetson) test real-time.
+- **OOD generalization yếu:** V5+ 0.782 (VN urban) → 0.215 (vn_cctv Đà Nẵng). Mô hình fine-tune hẹp chưa đủ cover domain khác.
+- **Motorcycle small objects:** 61% FN đến từ xe máy xa camera (<32×32 px) — cần imgsz lớn hơn hoặc dataset ảnh HD gần hơn.
+- **Truck/van confusion:** UA-DETRAC gộp van vào truck → mô hình V7 regress trên class truck (-14% so với V5+).
+- **Chưa có IDF1/MOTA chuẩn:** cần GT tracking per-frame, chi phí label quá cao cho scope coursework. Dùng tracking proxy thay thế.
+- **Pseudo-label naive thất bại (V6):** cần cân bằng class trước khi self-training, hoặc dùng confidence-weighted sampling.
 
 ---
 
 ## Bài học chính
 
-> "**Same model, better data → better result**" — cùng kiến trúc YOLOv8s (không đổi params), chỉ thay data + training strategy → mAP xe máy tăng lên 0.949.
+> **Honest methodology > inflated numbers.** V3 leaky 0.954 nhìn đẹp hơn V5 honest 0.665, nhưng V5 là con số thật — V3 chỉ là model memorize scene. Nếu không rebuild split, mọi so sánh sau đó đều vô nghĩa.
 
-Nhưng cần cẩn thận: fine-tune sâu trên dataset hẹp có thể làm **mất generalization** khi test out-of-distribution. Đây là trade-off điển hình của specialist vs generalist model.
+> **Resolution > data volume (trong scope này).** V5 → V5+ chỉ đổi imgsz từ 640 → 960, mAP50 nhảy từ 0.665 → 0.782 (+17.6%). Thêm data (V6 pseudo-label) và cross-domain (V7 DETRAC) đều không bằng.
+
+> **Negative result cũng là result.** V6 fail cho insight quan trọng: pseudo-label naive amplify class bias — document lại để lần sau không lặp lỗi.
