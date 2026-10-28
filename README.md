@@ -5,6 +5,8 @@ Hệ thống end-to-end: **video giao thông VN → detection → tracking → c
 
 Repo: https://github.com/xuanduc24905-beep/VN_Traffic_AI
 
+> ⚠️ **Số liệu dưới đây là con số có điều kiện, không phải "tốt tuyệt đối".** Xem [§ Giới hạn của bộ eval hiện tại](#-giới-hạn-của-bộ-eval-hiện-tại-đọc-trước-khi-tin-số) trước khi trích dẫn mAP50 = 0.782.
+
 ---
 
 ## Câu chuyện dự án (tóm tắt)
@@ -15,7 +17,7 @@ Dự án đi qua **7 iteration (V1 → V7)** với một bước ngoặt methodo
 |---|---|---|---|
 | **Trước phát hiện leak** | V1–V4 | 0.946–0.954 ❌ | Random split → 100% video-level leak (train/val/test cùng video) |
 | **Sau rebuild honest split** | V5 | **0.665** ✓ | Video-aware split, 0% leak — con số thật |
-| | V5+ (imgsz=960) | **0.782** ⭐ | Winner — +40% so với COCO baseline (0.557) |
+| | V5+ (imgsz=960) | **0.782** ⚠️ | "Winner" trong-domain SOICT; xem caveat bên dưới |
 | | V6 (pseudo-label vn_cctv) | 0.761 | **Negative result** — pseudo amplify class bias |
 | | V7 (DETRAC bustruck + imgsz=1280) | 0.756 | Motorcycle best (0.872) nhưng car/truck giảm |
 
@@ -35,6 +37,8 @@ Dự án đi qua **7 iteration (V1 → V7)** với một bước ngoặt methodo
 
 Chi tiết: [results/v5_cross_eval/FINAL_COMPARISON.md](results/v5_cross_eval/FINAL_COMPARISON.md) · [FINAL_COMPARISON.json](results/v5_cross_eval/FINAL_COMPARISON.json).
 
+> **Lưu ý khi đọc bảng:** "V5 test" là 2 video SOICT cam 09+10 — **cùng dataset** với train. Con số 0.782 phản ánh "tốt trong-domain SOICT24", không nên hiểu là "tốt trên giao thông VN nói chung". Số OOD 0.215 (vn_cctv) chỉ từ **1 video Đà Nẵng** → variance cao, n=1. Xem [§ Giới hạn của bộ eval hiện tại](#-giới-hạn-của-bộ-eval-hiện-tại-đọc-trước-khi-tin-số).
+
 **Per-class (V5+ trên V5 test):**
 
 | Class | Precision | Recall | mAP@0.5 | mAP@0.5:0.95 |
@@ -44,6 +48,36 @@ Chi tiết: [results/v5_cross_eval/FINAL_COMPARISON.md](results/v5_cross_eval/FI
 | bus | 0.77 | 0.68 | 0.716 | 0.52 |
 | truck | 0.74 | 0.63 | 0.687 | 0.49 |
 | **all** | 0.79 | 0.73 | **0.782** | 0.51 |
+
+---
+
+## ⚠️ Giới hạn của bộ eval hiện tại (đọc trước khi tin số)
+
+Sau khi sửa video-leak ở V5, bộ eval **vẫn còn mấy loại bias chưa xử lý**. Thừa nhận rõ để người đọc hiểu con số 0.782 có điều kiện gì:
+
+| Vấn đề | Mô tả | Hệ quả |
+|---|---|---|
+| **Same-source bias** | V5 train/val/test đều từ SOICT24 (cam 01-06+08 train, 07 val, 09-10 test). Cùng project ghi hình → cùng camera, encoding, góc, style label. | Cam 09 "unseen" nhưng nhìn vẫn giống cam 01. mAP 0.782 chủ yếu đo "nội suy trong SOICT", không phải generalize ra giao thông VN nói chung. |
+| **Same-labeler bias** | SOICT24 label bởi 1 nhóm với convention cố định (ngưỡng che khuất, có box kính không, v.v.). | Model học style label chứ không chỉ học "xe". |
+| **Test set tuning (p-hacking gián tiếp)** | V5 → V5+ → V6 → V7 đều eval trên **cùng 1 test set**, chọn "V5+ winner" sau khi thử 4 config. | Information từ test set đã leak vào quyết định về model → mAP báo cáo là optimistic. |
+| **OOD n=1** | `vn_cctv` 29k frames nhưng **chỉ 1 video Đà Nẵng**. | Số OOD 0.215 variance rất cao, không có statistical power. |
+| **Author tự chọn split** | Người train model cũng chọn cam nào vào test → unconscious bias (có thể vô tình chọn video "trông quen"). | Không có blinded split. |
+| **Không có confidence interval** | mAP báo cáo là 1 số đơn, không có std / bootstrap CI. | Không biết gap V5+ (0.782) vs V7 (0.756) có significant không, hay chỉ là noise. |
+
+### Nếu muốn eval "công tâm thật sự" (recipe)
+
+Để nâng cấp lên eval chuẩn research, cần:
+
+1. **Blinded split by someone ngoài team train model**. Người đó chia 70/15/15 theo frame count, **stratify theo nguồn** (SOICT day/night/Cantho/VNv3) và **theo class** (≥N bbox mỗi class trong test). Commit `split_manifest.json` + `git tag` trước khi training.
+2. **Lock test set — chỉ chạm 1 lần.** Val tune bao nhiêu lần cũng được; test chỉ eval sau khi đã chốt model cuối cùng. Test set hiện tại đã bị eval 4 lần → **coi như "cháy"**, phải sinh set mới nếu muốn con số sạch.
+3. **≥2 held-out test sources, không 1.**
+   - `test_internal` (SOICT unseen videos — như hiện tại)
+   - `test_external` — **nguồn hoàn toàn khác** (ví dụ YouTube VN tự quay 5-10 phút, hoặc dataset VN khác)
+4. **Multi-seed train.** V5+ train 3 lần với seed khác nhau → báo cáo mean ± std. Nếu std > gap V5+ vs V7 (0.026) thì "V5+ thắng V7" là noise, không phải signal.
+5. **Bootstrap CI** cho mAP (resample test set 1000 lần) → báo cáo `0.78 ± 0.03` thay vì `0.782`.
+6. **Re-label nhỏ** — đưa 100-200 ảnh test cho teammate không train model label lại, đo IoU inter-annotator. Nếu <0.7 thì "label gốc nhiễu ~0.3 mAP" là trần đo được.
+
+**Thực tế cho scope coursework:** chưa làm hết được. **Bắt buộc** nên thừa nhận điểm 1-2 trong báo cáo và pre-register trước iteration tiếp theo.
 
 ---
 
@@ -382,7 +416,11 @@ Chi tiết: [docs/TEAM_ASSIGNMENT.md](docs/TEAM_ASSIGNMENT.md).
 
 ## Hạn chế đã biết
 
-- **OOD generalization yếu:** V5+ 0.782 (VN urban) → 0.215 (vn_cctv Đà Nẵng). Mô hình fine-tune hẹp chưa đủ cover domain khác.
+**Về eval methodology** (xem chi tiết ở [§ Giới hạn của bộ eval hiện tại](#-giới-hạn-của-bộ-eval-hiện-tại-đọc-trước-khi-tin-số)):
+- Same-source bias (SOICT train/test), test set đã bị tuning gián tiếp 4 lần, OOD n=1, không có blinded split, không có confidence interval, không multi-seed.
+
+**Về model performance:**
+- **OOD generalization yếu:** V5+ 0.782 (VN urban SOICT) → 0.215 (vn_cctv Đà Nẵng). Mô hình fine-tune hẹp chưa đủ cover domain khác.
 - **Motorcycle small objects:** 61% FN đến từ xe máy xa camera (<32×32 px) — cần imgsz lớn hơn hoặc dataset ảnh HD gần hơn.
 - **Truck/van confusion:** UA-DETRAC gộp van vào truck → mô hình V7 regress trên class truck (-14% so với V5+).
 - **Chưa có IDF1/MOTA chuẩn:** cần GT tracking per-frame, chi phí label quá cao cho scope coursework. Dùng tracking proxy thay thế.
@@ -393,6 +431,8 @@ Chi tiết: [docs/TEAM_ASSIGNMENT.md](docs/TEAM_ASSIGNMENT.md).
 ## Bài học chính
 
 > **Honest methodology > inflated numbers.** V3 leaky 0.954 nhìn đẹp hơn V5 honest 0.665, nhưng V5 là con số thật — V3 chỉ là model memorize scene. Nếu không rebuild split, mọi so sánh sau đó đều vô nghĩa.
+
+> **Fix 1 bias không có nghĩa là hết bias.** V5 sửa video-leak nhưng vẫn còn same-source, test-tuning, OOD n=1. Thừa nhận trong README còn hơn giấu đi — người đọc có quyền biết con số 0.782 có điều kiện gì (xem [§ Giới hạn của bộ eval hiện tại](#-giới-hạn-của-bộ-eval-hiện-tại-đọc-trước-khi-tin-số)).
 
 > **Resolution > data volume (trong scope này).** V5 → V5+ chỉ đổi imgsz từ 640 → 960, mAP50 nhảy từ 0.665 → 0.782 (+17.6%). Thêm data (V6 pseudo-label) và cross-domain (V7 DETRAC) đều không bằng.
 
