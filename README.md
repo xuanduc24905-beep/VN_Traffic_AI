@@ -206,16 +206,28 @@ python -c "import torch; print('CUDA:', torch.cuda.is_available())"
 ```
 
 ### Weights
-Repo **không commit `.pt` file lớn**. Hai cách:
-- **Baseline `yolov8s.pt`** — Ultralytics tự tải khi chạy lần đầu.
-- **Best `best.pt` (V5+)** — train lại theo mục "Training" bên dưới (~2h trên RTX 3500 Ada 12GB) hoặc tải từ release.
+Repo **không commit `.pt` file lớn** — tải từ [GitHub Releases v1.0-weights](https://github.com/xuanduc24905-beep/VN_Traffic_AI/releases/tag/v1.0-weights):
 
-Đặt vào:
+```bash
+# Baseline COCO (Ultralytics tự tải khi chạy, hoặc download tay)
+wget -O weights/yolov8s.pt https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov8s.pt
+
+# V5+ (best all-around, imgsz=960, 22MB)
+mkdir -p runs/detect/train_v8s_v5plus_960/weights
+wget -O runs/detect/train_v8s_v5plus_960/weights/best.pt \
+    https://github.com/xuanduc24905-beep/VN_Traffic_AI/releases/download/v1.0-weights/best_v5plus_960.pt
+
+# V7 (motorcycle focus, imgsz=1280, 22MB)
+mkdir -p runs/detect/train_v8s_v7_1280/weights
+wget -O runs/detect/train_v8s_v7_1280/weights/best.pt \
+    https://github.com/xuanduc24905-beep/VN_Traffic_AI/releases/download/v1.0-weights/best_v7_1280.pt
 ```
-weights/yolov8s.pt                                      # Baseline
-runs/detect/train_v8s_v5plus_960/weights/best.pt        # Winner (V5+ 960)
-runs/detect/train_v8s_v7_1280/weights/best.pt           # V7 alt (motorcycle focus)
-```
+
+Hoặc train lại theo mục "Training" bên dưới (~2h trên RTX 3500 Ada 12GB).
+
+**SHA256 verify:**
+- `best_v5plus_960.pt`: `b1e9b1e583a3fa0d0dfccdd502fd234e670a46a318998bfb6e81db7ecd6d0a0d`
+- `best_v7_1280.pt`: `199848ec28025b1ee3b76993780d109ccdb40c52a06da9122ef161569230721b`
 
 ---
 
