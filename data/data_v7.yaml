@@ -1,0 +1,16 @@
+# V7 — V5 clean + DETRAC bus/truck subset
+# Sinh tự động bởi scripts/data_prep/build_v7_merged.py
+# Val/test giữ nguyên V5 (unseen VN videos) → honest signal
+# Schema: {motorcycle, car, bus, truck}
+
+path: /home/xuand/vn_traffic_ai/data/merged_v7
+train: images/train
+val:   images/val
+test:  images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck

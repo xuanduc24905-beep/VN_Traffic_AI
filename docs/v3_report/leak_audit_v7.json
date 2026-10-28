@@ -1,0 +1,262 @@
+[
+  {
+    "dataset": "data/merged_v7",
+    "n_videos_total": 26,
+    "n_videos_train": 21,
+    "n_videos_leaky_crosssplit": 0,
+    "frames_per_split": {
+      "train": 3681,
+      "val": 1466,
+      "test": 1500
+    },
+    "leak_metrics": {
+      "val": {
+        "total_frames": 1466,
+        "frames_from_train_videos": 0,
+        "pct_leaked": 0.0
+      },
+      "test": {
+        "total_frames": 1500,
+        "frames_from_train_videos": 0,
+        "pct_leaked": 0.0
+      }
+    },
+    "leaky_videos": [],
+    "per_video": {
+      "cantho_CoopMart-8h-8h30": {
+        "train": 162,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "cantho_CoopMart-8h10-8h30_": {
+        "train": 97,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "cantho_CoopMart-8h30-9h00": {
+        "train": 0,
+        "val": 50,
+        "test": 0,
+        "splits_present": [
+          "val"
+        ],
+        "is_leaky": false
+      },
+      "cantho_camDLHB-13h20---13h57": {
+        "train": 0,
+        "val": 416,
+        "test": 0,
+        "splits_present": [
+          "val"
+        ],
+        "is_leaky": false
+      },
+      "detrac_MVI_20065": {
+        "train": 60,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "detrac_MVI_39781": {
+        "train": 56,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "detrac_MVI_40131": {
+        "train": 83,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "detrac_MVI_40181": {
+        "train": 75,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "detrac_MVI_40191": {
+        "train": 107,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "detrac_MVI_40192": {
+        "train": 93,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "detrac_MVI_40241": {
+        "train": 78,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "detrac_MVI_40751": {
+        "train": 54,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "detrac_MVI_40752": {
+        "train": 70,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "detrac_MVI_40871": {
+        "train": 86,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "detrac_MVI_63521": {
+        "train": 86,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "soict24_cam_01": {
+        "train": 271,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "soict24_cam_02": {
+        "train": 200,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "soict24_cam_04": {
+        "train": 208,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "soict24_cam_06": {
+        "train": 200,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "soict24_cam_07": {
+        "train": 0,
+        "val": 1000,
+        "test": 0,
+        "splits_present": [
+          "val"
+        ],
+        "is_leaky": false
+      },
+      "soict24_cam_09": {
+        "train": 0,
+        "val": 0,
+        "test": 1000,
+        "splits_present": [
+          "test"
+        ],
+        "is_leaky": false
+      },
+      "soict24_cam_10": {
+        "train": 0,
+        "val": 0,
+        "test": 500,
+        "splits_present": [
+          "test"
+        ],
+        "is_leaky": false
+      },
+      "soictnight_cam_03": {
+        "train": 597,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "soictnight_cam_05": {
+        "train": 488,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "soictnight_cam_08": {
+        "train": 300,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      },
+      "vnv3": {
+        "train": 310,
+        "val": 0,
+        "test": 0,
+        "splits_present": [
+          "train"
+        ],
+        "is_leaky": false
+      }
+    }
+  }
+]

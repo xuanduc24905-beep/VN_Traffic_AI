@@ -11,14 +11,15 @@
 
 1. [Giới thiệu dự án và bối cảnh](#chương-1--giới-thiệu-dự-án-và-bối-cảnh)
 2. [Dataset — chúng ta có gì?](#chương-2--dataset--chúng-ta-có-gì)
-3. [Phát hiện vấn đề: con số đẹp bất thường](#chương-3--phát-hiện-vấn-đề-con-số-đẹp-bất-thường)
-4. [Giải thích Data Leakage cho người không chuyên](#chương-4--giải-thích-data-leakage-cho-người-không-chuyên)
-5. [Audit định lượng: đo chính xác mức độ leakage](#chương-5--audit-định-lượng-đo-chính-xác-mức-độ-leakage)
-6. [Giải pháp: Rebuild dataset với Video-Aware Split](#chương-6--giải-pháp-rebuild-dataset-với-video-aware-split)
-7. [Train model honest + validate kết quả thật](#chương-7--train-model-honest--validate-kết-quả-thật)
-8. [Các thử nghiệm mở rộng: V5+, V6, V7](#chương-8--các-thử-nghiệm-mở-rộng-v5-v6-v7)
-9. [Error analysis — model yếu ở đâu?](#chương-9--error-analysis--model-yếu-ở-đâu)
-10. [Tổng kết, bài học và hướng đi tiếp theo](#chương-10--tổng-kết-bài-học-và-hướng-đi-tiếp-theo)
+3. [Triển khai: hiểu format YOLO và cấu trúc dataset](#chương-25--triển-khai-hiểu-format-yolo-và-cấu-trúc-dataset)
+4. [Phát hiện vấn đề: con số đẹp bất thường](#chương-3--phát-hiện-vấn-đề-con-số-đẹp-bất-thường)
+5. [Giải thích Data Leakage cho người không chuyên](#chương-4--giải-thích-data-leakage-cho-người-không-chuyên)
+6. [Audit định lượng: đo chính xác mức độ leakage](#chương-5--audit-định-lượng-đo-chính-xác-mức-độ-leakage)
+7. [Giải pháp: Rebuild dataset với Video-Aware Split](#chương-6--giải-pháp-rebuild-dataset-với-video-aware-split)
+8. [Train model honest + validate kết quả thật](#chương-7--train-model-honest--validate-kết-quả-thật)
+9. [Các thử nghiệm mở rộng: V5+, V6, V7](#chương-8--các-thử-nghiệm-mở-rộng-v5-v6-v7)
+10. [Error analysis — model yếu ở đâu?](#chương-9--error-analysis--model-yếu-ở-đâu)
+11. [Tổng kết, bài học và hướng đi tiếp theo](#chương-10--tổng-kết-bài-học-và-hướng-đi-tiếp-theo)
 
 ---
 
@@ -46,15 +47,9 @@ Giao thông VN có những đặc điểm **rất khác** so với các dataset 
 
 ### Workflow tổng quan
 
-```
-    [COCO yolov8s pretrained]
-             │
-             ▼
-    [Finetune với VN data]  ◄── trọng tâm dự án
-             │
-             ▼
-    [Model phục vụ VN traffic]
-```
+![Workflow tổng quan](assets/diagrams/pipeline_workflow.png)
+
+Trọng tâm dự án nằm ở **finetune + fix data leakage** — vòng bên dưới của diagram.
 
 ### Scope project
 
@@ -124,6 +119,68 @@ Các class khác (bicycle, auto-rickshaw, van, person...) được **drop** ho�
 
 ---
 
+## Chương 2.5 — Triển khai: hiểu format YOLO và cấu trúc dataset
+
+Trước khi vào các vấn đề data leakage, cần nắm rõ **data đang nằm ở đâu, trông như thế nào, model đọc được gì**. Phần này giải thích chi tiết với ví dụ thực tế lấy từ `data/merged_v5/` của dự án.
+
+### 2.5.1 Ultralytics YOLOv8 cần gì ở input?
+
+YOLOv8 (framework Ultralytics) nhận dataset qua **1 file YAML duy nhất** trỏ tới 3 folder ảnh (train/val/test). Mỗi ảnh phải đi kèm 1 file nhãn `.txt` cùng tên trong thư mục nhãn song song.
+
+### 2.5.2 Cấu trúc thư mục dataset
+
+![Cấu trúc thư mục YOLO](assets/yolo_format/yolo_directory_tree.png)
+
+**Hai nguyên tắc bất di bất dịch:**
+
+1. **Song song images/ ↔ labels/** — folder `images/<split>/` và `labels/<split>/` phải có số file bằng nhau, tên khớp 1-1 (chỉ khác đuôi `.jpg` ↔ `.txt`).
+2. **File .txt rỗng cũng phải tồn tại** — nếu ảnh không chứa phương tiện nào, vẫn tạo file `.txt` rỗng để Ultralytics biết đây là **negative sample** (không bỏ qua).
+
+### 2.5.3 File data_v5.yaml — config trỏ tới dataset
+
+![data_v5.yaml](assets/yolo_format/yolo_yaml_explained.png)
+
+Khi gọi `yolo train data=data_v5.yaml ...`, Ultralytics:
+1. Mở YAML, đọc `path` + `train/val/test`
+2. Tự suy ra folder nhãn (`images/` → `labels/`)
+3. Verify từng ảnh có file nhãn tương ứng
+4. Cache ảnh ra file `.cache` (lần train sau nhanh hơn)
+
+### 2.5.4 Format nhãn YOLO — 1 dòng = 1 bounding box
+
+Mỗi file `.txt` có nhiều dòng, mỗi dòng 5 số cách nhau bằng khoảng trắng:
+
+```
+class  cx  cy  w  h
+```
+
+![Ví dụ nhãn YOLO thực](assets/yolo_format/yolo_label_example.png)
+
+Panel ① là ảnh gốc, panel ② là file `.txt` thực của ảnh đó (lấy nguyên văn từ `data/merged_v5/labels/train/`), panel ③ là bbox được vẽ lại từ chính các số trong file `.txt`.
+
+### 2.5.5 Hệ tọa độ chuẩn hóa [0, 1]
+
+Tất cả tọa độ YOLO đều **chuẩn hóa về khoảng [0, 1]** theo kích thước ảnh gốc:
+
+![Hệ tọa độ YOLO](assets/yolo_format/yolo_coord_system.png)
+
+**Lý do chuẩn hóa:**
+- Dataset có ảnh đủ kích cỡ (416×416, 1280×720, 1920×1080...) — chuẩn hóa giúp **tái sử dụng cùng file nhãn** nếu resize ảnh.
+- Loss function của YOLOv8 tính regression trên không gian normalized, convert ngược về pixel chỉ ở bước visualize/inference.
+
+### 2.5.6 Hai lỗi thường gặp khi chuẩn bị dataset
+
+| Lỗi | Hậu quả | Cách phát hiện |
+|---|---|---|
+| Có ảnh nhưng thiếu `.txt` | Ultralytics skip ảnh đó (không warn mặc định) | `python -c "..."` so sánh set tên file |
+| `class_id ≥ nc` | Train crash ngay epoch 1 (IndexError) | Script audit chạy trước train |
+| Tọa độ > 1.0 hoặc < 0 | Loss bất thường, mAP tụt | Validate box có `cx±w/2 ∈ [0,1]` |
+| Format `x1 y1 x2 y2` (COCO) thay vì `cx cy w h` | Model học sai hoàn toàn | Visualize vài sample đầu tiên |
+
+Trong dự án, script [`scripts/data_prep/audit_leak.py`](../../scripts/data_prep/audit_leak.py) kiểm tra **leakage** nhưng cũng kiểm tra song song các constraints trên.
+
+---
+
 ## Chương 3 — Phát hiện vấn đề: con số đẹp bất thường
 
 ### 3.1 Red flags đầu tiên
@@ -181,23 +238,19 @@ Camera CCTV quay 25-30 frames mỗi giây. Giữa 2 frame liên tiếp:
 - **Ánh sáng, thời tiết** giống 100%
 - **Xe cộ** chỉ dịch chuyển vài pixel
 
-```
-Frame 100:  🚗  🏍️        🏍️
-Frame 101:  🚗  🏍️        🏍️   ← gần như giống hệt frame 100
-Frame 102:  🚗  🏍️        🏍️
-```
+Frame 100 và frame 101 trong cùng video khác nhau rất ít — xe chỉ dịch vài pixel. Nếu random split frames: frame 100 → train, frame 101 → val, model nhìn "cảnh y hệt" lúc eval → **memorize chứ không learn**.
 
-**Nếu random split frames:**
-- Frame 100 → train
-- Frame 101 → val
-- Model train bằng frame 100 → eval bằng frame 101 → nhìn "cảnh y hệt" → **memorize chứ không learn**.
+### 4.3 Minh họa cơ chế leak
 
-### 4.3 Minh họa trực quan
+![Cơ chế leak vs honest](assets/diagrams/pipeline_leak_mechanism.png)
+
+Cùng 1 video A gồm 30 frames liên tiếp:
+- **Trái (SAI):** random split rải frames vào cả 3 split → train và val cùng chứa cảnh gần như giống hệt → model nhớ scene, mAP ảo cao.
+- **Phải (ĐÚNG):** cả video A đổ vào train, video B khác đổ vào val → test đo khả năng generalize sang video chưa từng thấy.
+
+Bên dưới là chart cũ hiển thị trực quan hơn mức độ leak before/after khi rebuild V5:
 
 ![Leak before/after](assets/charts/leak_before_after.png)
-
-**Trước (V3):** Mỗi video bị chia frames vào cả 3 split → leak 100%.
-**Sau (V5):** Mỗi video chỉ ở 1 split → không leak.
 
 ### 4.4 Hậu quả của leakage
 
@@ -319,12 +372,17 @@ SPLIT_PLAN = {
 
 ### 6.4 Thực thi rebuild
 
-Script [`rebuild_v5_by_video.py`](../../scripts/data_prep/rebuild_v5_by_video.py) thực hiện:
+![Pipeline rebuild V5](assets/diagrams/pipeline_rebuild_v5.png)
+
+Script [`rebuild_v5_by_video.py`](../../scripts/data_prep/rebuild_v5_by_video.py) thực hiện 6 bước tuần tự:
 1. Pool tất cả frames từ `merged_v3` (ignore split cũ)
-2. Group by video_id
-3. For each video: assign split theo SPLIT_PLAN, apply stride
-4. Tạo **symlink** sang `data/merged_v5/` (tiết kiệm disk)
-5. Save `split_manifest.json` cho reproducibility
+2. Parse `video_id` từ filename bằng regex
+3. Group by video_id (~18 video)
+4. Assign split theo SPLIT_PLAN + apply stride subsample
+5. Tạo **symlink** sang `data/merged_v5/` (tiết kiệm disk)
+6. Save `split_manifest.json` cho reproducibility
+
+Song song đó, bước ⑦ `audit_leak.py` chạy **sau** khi dataset được build xong — nếu detect leak > 0%, pipeline **fail hard**, không cho train tiếp.
 
 **Output:**
 ```
@@ -354,7 +412,13 @@ V5: val 0.0% leak, test 0.0% leak, 0 video overlap
 
 ## Chương 7 — Train model honest + validate kết quả thật
 
-### 7.1 Config training V5 honest
+### 7.1 Pipeline training V5+
+
+![Pipeline training V5+](assets/diagrams/pipeline_training_v5plus.png)
+
+Pipeline nhận 3 input (dataset V5, weights COCO, config YAML), chạy `YOLO.train()` 40 epochs, xuất ra `best.pt` + logs + confusion matrix, rồi cross-eval trên V5 test và OOD vn_cctv_test.
+
+### 7.1b Config training V5 honest
 
 ```python
 # scripts/training/v5_honest.py
@@ -484,6 +548,8 @@ Pseudo-label manifest tiết lộ class distribution:
 **Safety net:** Phase 4b.5 — audit leak trước khi train. Fail hard nếu detect leak.
 
 Pipeline: [`scripts/phase4_v7/run_pipeline.sh`](../../scripts/phase4_v7/run_pipeline.sh)
+
+![Pipeline V7](assets/diagrams/pipeline_v7.png)
 
 Expected: mAP50 ~0.80-0.83.
 
