@@ -1,12 +1,27 @@
 # Tutorial — Train YOLOv8 từ đầu tới cuối
 
-Đây là **tutorial đi từng bước** để train 1 model YOLOv8 phát hiện phương tiện giao thông VN. 7 script số thứ tự, chạy lần lượt sẽ ra được:
+Đây là **tutorial đi từng bước** để train 1 model YOLOv8 phát hiện phương tiện giao thông VN.
+
+## 2 cách học, chọn 1 (nội dung giống nhau)
+
+### 📓 Cách A — Notebook (khuyến nghị cho học, chạy từng cell, thấy output ngay)
+```bash
+jupyter notebook tutorial/train_full_pipeline.ipynb
+# hoặc mở trong VS Code / Cursor
+```
+
+### 💻 Cách B — Script `.py` (chạy từ terminal, dễ automate)
+Chạy 7 script số thứ tự: `1_check_env.py` → ... → `7_plot_results.py` (xem phần "Quy trình 7 bước" bên dưới).
+
+---
+
+Output cuối cùng (cả 2 cách):
 - 1 model `best.pt` đã train
 - Report đánh giá mAP/precision/recall
 - Video demo có bbox overlay
 - Biểu đồ loss + confusion matrix
 
-**Dành cho ai:** biết Python cơ bản (vòng lặp, hàm, import), **chưa biết** ML/DL/YOLO. Mỗi file có comment giải thích khái niệm bên trong code.
+**Dành cho ai:** biết Python cơ bản (vòng lặp, hàm, import), **chưa biết** ML/DL/YOLO. Code có comment giải thích khái niệm từng bước.
 
 ---
 
