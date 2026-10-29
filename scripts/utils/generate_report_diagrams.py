@@ -18,8 +18,11 @@ OUT_YOLO = ROOT / "docs/report/assets/yolo_format"
 OUT_DIAGRAMS.mkdir(parents=True, exist_ok=True)
 OUT_YOLO.mkdir(parents=True, exist_ok=True)
 
-NAMES = {0: "motorcycle", 1: "car", 2: "bus", 3: "truck"}
-CLASS_COLORS = {0: "#06d6a0", 1: "#118ab2", 2: "#ffd166", 3: "#e63946"}
+NAMES_V5 = {0: "motorcycle", 1: "car", 2: "bus", 3: "truck"}
+# vn_cctv raw dùng schema khác: 0=bus, 1=car, 2=motorbike, 3=truck
+NAMES_VNCCTV = {0: "bus", 1: "car", 2: "motorbike", 3: "truck"}
+CLASS_COLORS_V5 = {0: "#06d6a0", 1: "#118ab2", 2: "#ffd166", 3: "#e63946"}
+CLASS_COLORS_VNCCTV = {0: "#ffd166", 1: "#118ab2", 2: "#06d6a0", 3: "#e63946"}
 
 
 # ============================================================
@@ -91,9 +94,13 @@ def make_pipeline_diagram() -> None:
 # 2. YOLO coord system diagram với ảnh VN thực
 # ============================================================
 def make_coord_system_diagram() -> None:
-    img_name = "cantho_CoopMart-8h-8h30_mp4-35_jpg.rf.1d622e4feacce382bfdfd3603d58a706"
-    img_path = ROOT / f"data/merged_v5/images/train/{img_name}.jpg"
-    lbl_path = ROOT / f"data/merged_v5/labels/train/{img_name}.txt"
+    # Dùng ảnh vn_cctv Đà Nẵng (candidate 2): bus trắng ngày + xe máy phụ
+    img_name = "000841_png.rf.3fe3d04ea52d53fb7ad67147da2ff1f1"
+    img_path = ROOT / f"data/raw_vn_cctv/train/images/{img_name}.jpg"
+    lbl_path = ROOT / f"data/raw_vn_cctv/train/labels/{img_name}.txt"
+    # vn_cctv dùng schema khác V5
+    NAMES = NAMES_VNCCTV
+    CLASS_COLORS = CLASS_COLORS_VNCCTV
 
     assert img_path.exists(), f"Thiếu {img_path}"
     assert lbl_path.exists(), f"Thiếu {lbl_path}"
@@ -197,7 +204,8 @@ def make_coord_system_diagram() -> None:
                     bbox=dict(facecolor=color, edgecolor="none", pad=3))
 
     ax.set_title(
-        "Hệ toạ độ YOLO: origin góc trên trái, +X sang phải, +Y xuống dưới\n"
+        "Hệ toạ độ YOLO — ảnh thực VN CCTV Đà Nẵng\n"
+        f"Origin góc trên trái, +X sang phải, +Y xuống dưới; "
         f"(cx, cy, w, h) chuẩn hoá theo kích thước ảnh gốc {W}×{H} px",
         fontsize=13, pad=15,
     )
