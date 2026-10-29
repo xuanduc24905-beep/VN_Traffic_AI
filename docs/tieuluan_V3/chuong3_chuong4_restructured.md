@@ -29,6 +29,8 @@ CSV sự kiện  +  Video chú thích
 
 Ở đây YOLOv8s là mạng CNN chính thực hiện phát hiện; ByteTrack là thuật toán theo vết (không phải mạng CNN thứ hai) chỉ liên kết các detection liên tiếp dựa trên IoU và cosine similarity.
 
+![FIG:Hình 3.1 — Pipeline xử lý video: Video đầu vào → YOLOv8s detect → ByteTrack gán track ID → Counter phát hiện giao cắt vạch → CSV sự kiện và video chú thích](../report/assets/diagrams/pipeline_vn.png)
+
 ## 3.2 Dữ liệu và quy ước nhãn
 
 ### 3.2.1 Nguồn dữ liệu
@@ -45,15 +47,15 @@ Phương pháp đề xuất sử dụng bốn nguồn dữ liệu giao thông Vi
 
 Ngoài bốn nguồn trên, video CCTV Đà Nẵng (29.195 frame, 1 video) được **tách riêng** làm tập dữ liệu ngoài phân phối (out-of-distribution — OOD) để đánh giá khả năng tổng quát hoá của mô hình sang domain CCTV khác địa điểm.
 
-![FIG:Hình 3.1 — Ví dụ ảnh từ bộ dữ liệu SOICT Night (camera đêm Hà Nội)](../report/assets/dataset_samples/01_soictnight_night.jpg)
+![FIG:Hình 3.2 — Ví dụ ảnh từ bộ dữ liệu SOICT Night (camera đêm Hà Nội)](../report/assets/dataset_samples/01_soictnight_night.jpg)
 
-![FIG:Hình 3.2 — Ví dụ ảnh từ bộ dữ liệu SOICT 2024 (camera ngày TP.HCM)](../report/assets/dataset_samples/02_soict24_day.jpg)
+![FIG:Hình 3.3 — Ví dụ ảnh từ bộ dữ liệu SOICT 2024 (camera ngày TP.HCM)](../report/assets/dataset_samples/02_soict24_day.jpg)
 
-![FIG:Hình 3.3 — Ví dụ ảnh từ bộ dữ liệu Cần Thơ](../report/assets/dataset_samples/03_cantho_city.jpg)
+![FIG:Hình 3.4 — Ví dụ ảnh từ bộ dữ liệu Cần Thơ](../report/assets/dataset_samples/03_cantho_city.jpg)
 
-![FIG:Hình 3.4 — Ví dụ ảnh từ bộ dữ liệu VNv3](../report/assets/dataset_samples/04_vnv3.jpg)
+![FIG:Hình 3.5 — Ví dụ ảnh từ bộ dữ liệu VNv3](../report/assets/dataset_samples/04_vnv3.jpg)
 
-![FIG:Hình 3.5 — Ví dụ ảnh từ video CCTV Đà Nẵng (tập OOD)](../report/assets/dataset_samples/05_vncctv_danang.jpg)
+![FIG:Hình 3.6 — Ví dụ ảnh từ video CCTV Đà Nẵng (tập OOD)](../report/assets/dataset_samples/05_vncctv_danang.jpg)
 
 ### 3.2.2 Schema nhãn 4 lớp
 
@@ -77,6 +79,8 @@ class_id  cx  cy  w  h
 ```
 
 trong đó `(cx, cy)` là toạ độ tâm hộp, `(w, h)` là chiều rộng và chiều cao hộp, **đã được chuẩn hoá về khoảng `[0, 1]`** theo kích thước ảnh gốc. Chuẩn hoá cho phép tái sử dụng cùng tệp nhãn với mọi độ phân giải resize.
+
+![FIG:Hình 3.7 — Minh hoạ hệ toạ độ YOLO trên ảnh thực của dự án: origin ở góc trên trái, trục +X sang phải, +Y xuống dưới; tâm bbox (cx, cy) và kích thước (w, h) đều chuẩn hoá trong khoảng [0, 1] theo kích thước ảnh gốc](../report/assets/yolo_format/yolo_coord_system_vn.png)
 
 ### 3.2.4 Chiến lược kiểm tra chất lượng dữ liệu
 
