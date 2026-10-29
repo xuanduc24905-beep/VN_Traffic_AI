@@ -45,6 +45,16 @@ Phương pháp đề xuất sử dụng bốn nguồn dữ liệu giao thông Vi
 
 Ngoài bốn nguồn trên, video CCTV Đà Nẵng (29.195 frame, 1 video) được **tách riêng** làm tập dữ liệu ngoài phân phối (out-of-distribution — OOD) để đánh giá khả năng tổng quát hoá của mô hình sang domain CCTV khác địa điểm.
 
+![FIG:Hình 3.1 — Ví dụ ảnh từ bộ dữ liệu SOICT Night (camera đêm Hà Nội)](../report/assets/dataset_samples/01_soictnight_night.jpg)
+
+![FIG:Hình 3.2 — Ví dụ ảnh từ bộ dữ liệu SOICT 2024 (camera ngày TP.HCM)](../report/assets/dataset_samples/02_soict24_day.jpg)
+
+![FIG:Hình 3.3 — Ví dụ ảnh từ bộ dữ liệu Cần Thơ](../report/assets/dataset_samples/03_cantho_city.jpg)
+
+![FIG:Hình 3.4 — Ví dụ ảnh từ bộ dữ liệu VNv3](../report/assets/dataset_samples/04_vnv3.jpg)
+
+![FIG:Hình 3.5 — Ví dụ ảnh từ video CCTV Đà Nẵng (tập OOD)](../report/assets/dataset_samples/05_vncctv_danang.jpg)
+
 ### 3.2.2 Schema nhãn 4 lớp
 
 Tất cả nguồn dữ liệu được quy đổi về cùng một schema 4 lớp phương tiện phù hợp với đặc thù giao thông Việt Nam:
@@ -429,6 +439,8 @@ Kết quả audit trên `merged_v3` (dataset dùng cho V3) được trình bày 
 
 Kết quả cho thấy **100% frame val/test đều thuộc các video đã có trong train**. Mô hình V3 không học khái niệm phương tiện mà "ghi nhớ cảnh" — đây chính là lý do mAP cao giả tạo.
 
+![FIG:Hình 4.1 — Minh họa phân phối frame theo video giữa random split (gây rò rỉ) và video-aware split (không rò rỉ)](../report/assets/charts/leak_before_after.png)
+
 ### 4.3.4 Rebuild dataset V5 theo video
 
 Theo nguyên tắc chia theo video (§3.3), nhóm xây lại dataset:
@@ -461,6 +473,10 @@ Mô hình YOLOv8s được train lại từ COCO pretrained trên dataset đã s
 **Bảng 4.5 — So sánh V3 "số ảo" và V5 honest "số thật"**
 
 Gap ~0.29 mAP@0.5 chính là **"leak inflation"** — phần số liệu bị thổi phồng do rò rỉ. Số 0.665 của V5 honest tuy thấp hơn 0.95 nhưng mang giá trị khoa học thực.
+
+![FIG:Hình 4.2 — So sánh mAP@0.5 giữa model có rò rỉ (số ảo) và model honest (số thật)](../report/assets/charts/leaky_vs_honest.png)
+
+![FIG:Hình 4.3 — Confusion matrix của V5 honest trên tập validation (mô hình phân biệt lớp tốt, class confusion thấp)](../report/assets/confusion_matrices/v5_honest.png)
 
 ### 4.3.6 Bài học
 
@@ -507,6 +523,10 @@ So với V5 honest, V5+ thay đổi:
 **Bảng 4.7 — Per-class mAP@0.5 V5 honest vs V5+ trên V5 test**
 
 Cải thiện lớn nhất ở **motorcycle (+35%)** và **truck (+30%)** — đây là hai lớp có nhiều object nhỏ, chứng minh imgsz 960 giúp mô hình phát hiện tốt hơn các phương tiện nhỏ ở xa camera.
+
+![FIG:Hình 4.4 — Confusion matrix của V5+ trên tập validation](../report/assets/confusion_matrices/v5plus_960.png)
+
+![FIG:Hình 4.5 — So sánh mAP@0.5 per-class giữa YOLOv8s COCO zero-shot và V5+ finetune](../report/assets/charts/per_class_comparison.png)
 
 ### 4.4.4 Lưu ý về ablation study
 
@@ -664,6 +684,10 @@ Chạy phân tích lỗi của V5+ trên tập val (1.466 ảnh, 12.020 GT boxes
 - Mô hình có **recall mạnh (0.85)** nhưng **precision yếu hơn (0.78)** → bắt được nhiều nhưng cũng predict nhầm nhiều
 - Điểm cải thiện ưu tiên: giảm FP motorcycle/truck bằng cách tăng confidence threshold khi deploy, hoặc thêm training data negative scenes
 
+![FIG:Hình 4.6 — Phân tích lỗi V5+ theo 6 chiều (class, size, source, brightness, density, time)](../report/assets/charts/v5plus_error_6dim.png)
+
+![FIG:Hình 4.7 — 20 ảnh có lỗi nhiều nhất của V5+ (bounding box ground truth màu xanh, false positive màu đỏ)](../report/assets/charts/v5plus_worst_images.png)
+
 ## 4.7 Đánh giá cross-domain
 
 ### 4.7.1 V5+ trên OOD vn_cctv Đà Nẵng
@@ -717,6 +741,8 @@ Bảng 4.16 tổng hợp kết quả tất cả mô hình trên ba tập test:
 | truck | 0.407 | 0.687 | +69% |
 
 Fine-tune với dữ liệu VN cải thiện mạnh nhất ở **motorcycle (+131%)** — chính là class dominant trong giao thông VN mà COCO không có đủ dữ liệu đại diện.
+
+![FIG:Hình 4.8 — Tiến hoá mAP@0.5 của các phiên bản mô hình trên tập test V5](../report/assets/charts/model_evolution_mAP.png)
 
 ### 4.8.2 Limitation của so sánh
 
