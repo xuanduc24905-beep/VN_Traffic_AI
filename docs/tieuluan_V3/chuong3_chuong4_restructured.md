@@ -80,7 +80,7 @@ class_id  cx  cy  w  h
 
 trong đó `(cx, cy)` là toạ độ tâm hộp, `(w, h)` là chiều rộng và chiều cao hộp, **đã được chuẩn hoá về khoảng `[0, 1]`** theo kích thước ảnh gốc. Chuẩn hoá cho phép tái sử dụng cùng tệp nhãn với mọi độ phân giải resize.
 
-![FIG:Hình 3.7 — Minh hoạ hệ toạ độ YOLO trên ảnh thực từ bộ VN CCTV Đà Nẵng: origin ở góc trên trái, trục +X sang phải, +Y xuống dưới; tâm bbox (cx, cy) và kích thước (w, h) đều chuẩn hoá trong khoảng [0, 1] theo kích thước ảnh gốc](../report/assets/yolo_format/yolo_coord_system_vn.png)
+![FIG:Hình 3.7 — Minh hoạ hệ toạ độ YOLO trên ảnh thực từ bộ SOICT 2024 (camera ngày): origin ở góc trên trái, trục +X sang phải, +Y xuống dưới; tâm bbox (cx, cy) và kích thước (w, h) đều chuẩn hoá trong khoảng [0, 1] theo kích thước ảnh gốc](../report/assets/yolo_format/yolo_coord_system_vn.png)
 
 ### 3.2.4 Chiến lược kiểm tra chất lượng dữ liệu
 

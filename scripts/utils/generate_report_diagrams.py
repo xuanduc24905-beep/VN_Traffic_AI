@@ -94,13 +94,13 @@ def make_pipeline_diagram() -> None:
 # 2. YOLO coord system diagram với ảnh VN thực
 # ============================================================
 def make_coord_system_diagram() -> None:
-    # Dùng ảnh vn_cctv Đà Nẵng (candidate 2): bus trắng ngày + xe máy phụ
-    img_name = "000841_png.rf.3fe3d04ea52d53fb7ad67147da2ff1f1"
-    img_path = ROOT / f"data/raw_vn_cctv/train/images/{img_name}.jpg"
-    lbl_path = ROOT / f"data/raw_vn_cctv/train/labels/{img_name}.txt"
-    # vn_cctv dùng schema khác V5
-    NAMES = NAMES_VNCCTV
-    CLASS_COLORS = CLASS_COLORS_VNCCTV
+    # Dùng ảnh SOICT ngày (cam_06): container truck đỏ to rõ, scene đường quốc lộ
+    img_name = "soict24_cam_06_00631_jpg.rf.b55fc146d340ae871c080228a16bb906"
+    img_path = ROOT / f"data/merged_v5/images/train/{img_name}.jpg"
+    lbl_path = ROOT / f"data/merged_v5/labels/train/{img_name}.txt"
+    # merged_v5 dùng V5 schema
+    NAMES = NAMES_V5
+    CLASS_COLORS = CLASS_COLORS_V5
 
     assert img_path.exists(), f"Thiếu {img_path}"
     assert lbl_path.exists(), f"Thiếu {lbl_path}"
@@ -204,7 +204,7 @@ def make_coord_system_diagram() -> None:
                     bbox=dict(facecolor=color, edgecolor="none", pad=3))
 
     ax.set_title(
-        "Hệ toạ độ YOLO — ảnh thực VN CCTV Đà Nẵng\n"
+        "Hệ toạ độ YOLO — ảnh thực từ bộ SOICT 2024\n"
         f"Origin góc trên trái, +X sang phải, +Y xuống dưới; "
         f"(cx, cy, w, h) chuẩn hoá theo kích thước ảnh gốc {W}×{H} px",
         fontsize=13, pad=15,
