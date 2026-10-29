@@ -1,0 +1,64 @@
+{
+  "dataset": "data/merged_v5",
+  "nc": 4,
+  "all_passed": true,
+  "splits": {
+    "train": {
+      "status": "ok",
+      "n_images": 2833,
+      "n_labels": 2833,
+      "n_paired": 2833,
+      "n_empty_labels": 0,
+      "images_without_label": [],
+      "images_without_label_count": 0,
+      "labels_without_image": [],
+      "labels_without_image_count": 0,
+      "n_files_with_issues": 0,
+      "file_issues": {},
+      "class_distribution": {
+        "0": 10124,
+        "1": 5656,
+        "2": 1399,
+        "3": 3102
+      }
+    },
+    "val": {
+      "status": "ok",
+      "n_images": 1466,
+      "n_labels": 1466,
+      "n_paired": 1466,
+      "n_empty_labels": 6,
+      "images_without_label": [],
+      "images_without_label_count": 0,
+      "labels_without_image": [],
+      "labels_without_image_count": 0,
+      "n_files_with_issues": 0,
+      "file_issues": {},
+      "class_distribution": {
+        "0": 7134,
+        "1": 2431,
+        "2": 459,
+        "3": 1996
+      }
+    },
+    "test": {
+      "status": "ok",
+      "n_images": 1500,
+      "n_labels": 1500,
+      "n_paired": 1500,
+      "n_empty_labels": 1,
+      "images_without_label": [],
+      "images_without_label_count": 0,
+      "labels_without_image": [],
+      "labels_without_image_count": 0,
+      "n_files_with_issues": 0,
+      "file_issues": {},
+      "class_distribution": {
+        "0": 39807,
+        "1": 8031,
+        "2": 756,
+        "3": 852
+      }
+    }
+  }
+}
