@@ -108,8 +108,10 @@ def parse_md_to_blocks(md_text: str) -> list[dict]:
             if table_rows:
                 blocks.append({"type": "table", "content": table_rows})
         # Image block ![FIG:caption](path) — standalone image with caption
-        elif re.match(r"^!\[FIG:[^\]]+\]\([^)]+\)\s*$", line):
-            m = re.match(r"^!\[FIG:([^\]]+)\]\(([^)]+)\)\s*$", line)
+        # Caption có thể chứa `]` (vd "trong khoảng [0, 1]") → dùng greedy
+        # match với anchor `](` để tách caption khỏi path.
+        elif re.match(r"^!\[FIG:.+\]\(.+\)\s*$", line):
+            m = re.match(r"^!\[FIG:(.+)\]\((.+)\)\s*$", line)
             caption = m.group(1).strip()
             img_path = m.group(2).strip()
             blocks.append({"type": "image", "caption": caption, "path": img_path})
