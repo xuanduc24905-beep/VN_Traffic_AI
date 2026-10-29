@@ -78,16 +78,30 @@ class_id  cx  cy  w  h
 
 trong đó `(cx, cy)` là toạ độ tâm hộp, `(w, h)` là chiều rộng và chiều cao hộp, **đã được chuẩn hoá về khoảng `[0, 1]`** theo kích thước ảnh gốc. Chuẩn hoá cho phép tái sử dụng cùng tệp nhãn với mọi độ phân giải resize.
 
-### 3.2.4 Kiểm tra toàn vẹn dữ liệu
+### 3.2.4 Chiến lược kiểm tra chất lượng dữ liệu
 
-Trước huấn luyện, các ràng buộc sau được kiểm tra:
+Phương pháp đề xuất áp dụng **chiến lược kiểm tra hai tầng** trước mỗi lần huấn luyện, cả hai tầng đều phải PASS mới cho phép training bắt đầu (fail-hard):
 
-- Mỗi ảnh có tệp `.txt` tương ứng (song song `images/<split>/` và `labels/<split>/`)
-- `class_id` nằm trong khoảng hợp lệ `[0, nc-1]`
-- Toạ độ `(cx, cy, w, h)` nằm trong `[0, 1]`
-- Tên lớp trong tệp YAML đúng thứ tự với class_id
+**Tầng 1 — Kiểm tra toàn vẹn nhãn** (`validate_labels.py`): kiểm tra 7 ràng buộc chất lượng ở cấp độ từng bounding box:
 
-Phần kiểm tra rò rỉ cấp video (quan trọng nhất) được thực hiện bởi script `audit_leak.py` chuyên biệt, trình bày trong §3.3. Các ràng buộc toàn vẹn còn lại được Ultralytics kiểm tra gián tiếp khi quét dataset lần đầu và cảnh báo trên console.
+| # | Ràng buộc | Vi phạm sẽ gây |
+|---|---|---|
+| 1 | Mỗi ảnh có tệp `.txt` tương ứng | Ultralytics skip ảnh (không warn) |
+| 2 | `class_id` ∈ `[0, nc-1]` | Train crash IndexError epoch 1 |
+| 3 | `(cx, cy, w, h)` ∈ `[0, 1]` | Loss function bất thường |
+| 4 | `w > 0` và `h > 0` (bbox không suy biến) | Model học noise |
+| 5 | Bbox không vượt biên ảnh | Gradient không ổn định |
+| 6 | Mỗi dòng đúng format "class cx cy w h" | Parse error |
+| 7 | Đếm số ảnh "background" (nhãn rỗng) | Hint data imbalance nếu quá nhiều |
+
+Kết quả validation lưu vào tệp JSON (vd `label_validation_v5.json`) kèm phân bố lớp để làm bằng chứng tái lập.
+
+**Tầng 2 — Kiểm tra rò rỉ cấp video** (`audit_leak.py`, trình bày chi tiết trong §3.3): đảm bảo không có video nào xuất hiện trong nhiều split cùng lúc.
+
+**Căn cứ thiết kế hai tầng độc lập:**
+- Tầng 1 (bounding box) và tầng 2 (video-level) đo hai loại lỗi hoàn toàn khác nhau — vi phạm tầng này không bao hàm tầng kia.
+- Mỗi tầng là một script độc lập, chạy nhanh (vài giây đến vài chục giây cho dataset V5), có thể tích hợp vào pipeline CI/CD của dự án.
+- Ultralytics tự kiểm tra một phần ràng buộc toàn vẹn khi quét dataset lần đầu (cảnh báo trên console + lưu vào `.cache`), nhưng chỉ warn-and-skip chứ không fail-hard. Script `validate_labels.py` bổ sung cơ chế fail-hard chủ động để kiểm soát chất lượng trước khi tốn tài nguyên GPU.
 
 ## 3.3 Chia tập theo video và kiểm soát rò rỉ
 
@@ -336,7 +350,7 @@ Mỗi kết quả báo cáo được gắn với:
 Phương pháp đề xuất có các giới hạn sau cần ghi nhận:
 
 1. **OOD evaluation nhỏ**: chỉ có 1 video Đà Nẵng làm OOD → kết luận về tổng quát hoá cross-domain cần diễn giải cẩn trọng.
-2. **Nhãn chỉ có bounding box**: không có polygon segmentation → một số kỹ thuật augmentation nâng cao (vd `copy_paste` của Ultralytics) không áp dụng được.
+2. **Nhãn chỉ có bounding box**: không có polygon segmentation → một số kỹ thuật augmentation nâng cao (vd `copy_paste` của Ultralytics) không áp dụng được. Việc tự sinh mask bằng SAM hoặc tương tự để kích hoạt lại copy_paste là hướng phát triển.
 3. **Phạm vi địa lý hạn chế**: 15 video source hiện tại chủ yếu ở TP.HCM và Cần Thơ → mô hình có thể bias về domain đô thị miền Nam. Mở rộng dataset VN đa vùng (Hà Nội, Đà Nẵng, miền núi) là hướng phát triển.
 4. **Chưa có nhãn tracking per-frame**: không đánh giá được IDF1, MOTA, HOTA chính thức. Tracker ByteTrack chỉ được đánh giá gián tiếp qua chất lượng counting.
 5. **Dataset mở rộng được**: pipeline hỗ trợ thêm nguồn dữ liệu mới trong tương lai bằng cách bổ sung mẫu nhận dạng `video_id` trong `audit_leak.py` và cập nhật `SPLIT_PLAN` trong script build dataset.
