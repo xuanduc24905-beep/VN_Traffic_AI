@@ -18,7 +18,7 @@ from pathlib import Path
 from docx import Document
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.oxml.ns import qn
-from docx.shared import Pt
+from docx.shared import Inches, Pt
 
 ROOT = Path("/home/xuand/vn_traffic_ai")
 SRC_DOCX = ROOT / "docs/tieuluan_V3/Nhom_02_phanloaiphuongtienbangcnn.docx"
@@ -107,6 +107,13 @@ def parse_md_to_blocks(md_text: str) -> list[dict]:
                 i += 1
             if table_rows:
                 blocks.append({"type": "table", "content": table_rows})
+        # Image block ![FIG:caption](path) — standalone image with caption
+        elif re.match(r"^!\[FIG:[^\]]+\]\([^)]+\)\s*$", line):
+            m = re.match(r"^!\[FIG:([^\]]+)\]\(([^)]+)\)\s*$", line)
+            caption = m.group(1).strip()
+            img_path = m.group(2).strip()
+            blocks.append({"type": "image", "caption": caption, "path": img_path})
+            i += 1
         # List
         elif line.startswith("- ") or line.startswith("* ") or re.match(r"^\d+\.\s", line):
             list_items = []
@@ -152,7 +159,7 @@ def insert_blocks_before(doc: Document, before_para, blocks: list[dict]) -> None
     """Insert blocks (parsed from md) before given paragraph in doc."""
     for block in blocks:
         btype = block["type"]
-        content = block["content"]
+        content = block.get("content")
 
         if btype == "h1":
             # Main chapter heading (CHƯƠNG X)
@@ -185,6 +192,35 @@ def insert_blocks_before(doc: Document, before_para, blocks: list[dict]) -> None
                 run.font.size = Pt(10)
         elif btype == "table":
             insert_table_before(doc, before_para, content)
+        elif btype == "image":
+            insert_image_before(doc, before_para, block["path"], block["caption"])
+
+
+def insert_image_before(doc: Document, before_para, img_path: str,
+                        caption: str, width_inches: float = 5.5) -> None:
+    """Insert a centered image + caption before given paragraph.
+
+    img_path can be relative to the markdown file (docs/tieuluan_V3/) or absolute.
+    """
+    # Resolve path relative to markdown dir
+    md_dir = MD_FILE.parent
+    img_file = (md_dir / img_path).resolve() if not Path(img_path).is_absolute() else Path(img_path)
+    if not img_file.exists():
+        print(f"      [WARN] Image not found, skip: {img_file}")
+        return
+
+    # Add paragraph for image (centered)
+    img_para = before_para.insert_paragraph_before("", style="Normal")
+    img_para.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    run = img_para.add_run()
+    run.add_picture(str(img_file), width=Inches(width_inches))
+
+    # Add caption below (centered, italic)
+    caption_para = before_para.insert_paragraph_before("", style="Normal")
+    caption_para.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    caption_run = caption_para.add_run(caption)
+    caption_run.italic = True
+    caption_run.font.size = Pt(11)
 
 
 def insert_table_before(doc: Document, before_para, rows: list[list[str]]) -> None:
