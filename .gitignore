@@ -62,3 +62,4 @@ __pycache__/
 .DS_Store
 *.swp
 data/pseudo_v6/
+data/merged_v6/

@@ -1,0 +1,41 @@
+# Blacklist camera IDs không dùng cho pseudo-label V6
+#
+# Lý do loại: V5 model yếu systematic trên scene type của các camera này.
+# Dựa trên kết quả spot-check 500 ảnh round 1 (precision 87.6%).
+# Chi tiết: >= 18% ảnh của camera có issue trong 500 mẫu review ngẫu nhiên.
+
+blacklist:
+  '000026':
+    name: "Nút giao Mỹ Thủy 2, Phường Cát Lái"
+    reason: "góc cam giống 000605 — Mỹ Thủy, cao + xa"
+    problem_rate: 0.12   # borderline, loại cùng cụm Mỹ Thủy
+
+  '000096':
+    name: "625 Quang Trung, Phường Thông Tây Hội"
+    reason: "góc cam xa, miss nhiều xe máy đông"
+    problem_rate: 0.29
+
+  '000105':
+    name: "Võ Văn Kiệt - Cầu Chà Và 2 (trên cầu), Phường Chợ Lớn"
+    reason: "camera trên cầu, góc chụp từ trên xuống, xe máy đông"
+    problem_rate: 0.18
+
+  '000204':
+    name: "Đinh Tiên Hoàng - Nguyễn Đình Chiểu, Phường Tân Định"
+    reason: "góc cam có vấn đề, xe máy đông bắt thiếu"
+    problem_rate: 0.26
+
+  '000430':
+    name: "Phạm Văn Đồng - Lê Quang Định 2, Phường Hạnh Thông"
+    reason: "góc cam xấu, nhiều lỗi systematic"
+    problem_rate: 0.41
+
+  '000605':
+    name: "Nút giao Mỹ Thủy (6), Phường Cát Lái"
+    reason: "góc cam cao, chụp nút giao phức tạp, gộp cụm xe thành 1 box sai class"
+    problem_rate: 0.53
+
+  '000759':
+    name: "Nguyễn Hữu Thọ - Đường số 15, Phường Tân Hưng"
+    reason: "góc cam Tân Hưng — xe máy chằng chịt, miss nhiều"
+    problem_rate: 0.30
