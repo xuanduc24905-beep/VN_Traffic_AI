@@ -225,89 +225,110 @@ python scripts/pseudo/03_filter.py \
 
 ---
 
-### Bước 5 — Spot-check 500 frame với FiftyOne
+### Bước 5 — Spot-check 500 frame (duyệt tay)
 
-**Mục tiêu**: Đo **precision pseudo-label** để báo cáo
+**Mục tiêu**: Đo **precision pseudo-label** để báo cáo trong tiểu luận.
 
-**Script**: `scripts/pseudo/04_review.py`
+**Công cụ**: Script Python tự viết vẽ bbox màu lên ảnh → duyệt bằng file explorer (không cần FiftyOne/Label Studio — nhẹ, không phụ thuộc).
 
-```python
-import fiftyone as fo
-import random
+#### 5.1. Tạo 500 ảnh có bbox vẽ sẵn
 
-ACCEPTED_DIR = "data/pseudo_v6/accepted"
-
-# Load dataset YOLO format
-dataset = fo.Dataset.from_dir(
-    dataset_dir=ACCEPTED_DIR,
-    dataset_type=fo.types.YOLOv5Dataset,
-    name="pseudo_v6_review",
-    overwrite=True
-)
-
-# Chọn ngẫu nhiên 500 frame để review (seed cố định)
-random.seed(42)
-sample_ids = random.sample(dataset.values("id"), min(500, len(dataset)))
-review_view = dataset.select(sample_ids)
-
-# Tag sẵn các label để review
-review_view.tag_samples("to_review")
-
-# Launch UI
-session = fo.launch_app(review_view)
-session.wait()
-```
-
-**Chạy**:
 ```bash
-python scripts/pseudo/04_review.py
-# Mở browser: http://localhost:5151
+./scripts/pseudo/run.sh review
+# → nhập 500 (số ảnh muốn review)
 ```
 
-**Thao tác trong UI**:
-1. Click từng ảnh → xem bbox
-2. Với mỗi ảnh, đánh giá tổng thể:
-   - **Tag `correct`** (phím `c`): tất cả bbox đúng class + đúng vị trí
-   - **Tag `partial`** (phím `p`): có 1–2 bbox sai, còn lại đúng
-   - **Tag `wrong`** (phím `w`): đa số sai
-3. Keyboard shortcut: `→` next, `←` prev
-4. Thời gian ước tính: **500 frame × 20s = ~2.5 giờ** (chia 2–3 buổi)
+Script đọc `data/pseudo_v6/accepted/`, random 500 ảnh (seed=42 cho reproducible), vẽ bbox màu + tên class, lưu vào `data/pseudo_v6/review/`.
 
-**Sau khi review xong**, export kết quả:
+**Màu bbox (quy ước)**:
+- 🔴 Đỏ = motorcycle
+- 🟢 Xanh lá = car
+- 🟠 Cam = bus
+- 🔵 Xanh dương = truck
 
-```python
-# Trong Python/Jupyter
-import fiftyone as fo
+#### 5.2. Mở folder duyệt từng ảnh
 
-ds = fo.load_dataset("pseudo_v6_review")
-
-correct   = len(ds.match_tags("correct"))
-partial   = len(ds.match_tags("partial"))
-wrong     = len(ds.match_tags("wrong"))
-total     = correct + partial + wrong
-
-precision_strict = correct / total
-precision_loose  = (correct + partial) / total
-
-print(f"Pseudo-label precision (strict): {precision_strict:.2%}")
-print(f"Pseudo-label precision (loose) : {precision_loose:.2%}")
-
-# Export CSV
-ds.export(
-    export_dir="data/pseudo_v6/review_result",
-    dataset_type=fo.types.CSVDataset,
-    fields=["filepath", "tags"]
-)
+```bash
+code data/pseudo_v6/review/      # VSCode (preview ảnh ngay)
+# hoặc
+xdg-open data/pseudo_v6/review/  # Linux generic file manager
 ```
 
-**Quyết định**:
+Tên file đánh số theo thứ tự `0001__...jpg` đến `0500__...jpg` để dễ duyệt tuần tự.
+
+#### 5.3. Phân loại từng ảnh vào 3 nhóm
+
+| Loại | Định nghĩa | Hành động |
+|---|---|---|
+| **CORRECT** | Tất cả bbox đúng class + đúng vị trí + không miss xe lớn | Giữ ảnh cho train V6 |
+| **PARTIAL** | 1-2 bbox sai HOẶC miss 1-2 xe nhỏ, nhưng đa số đúng | Giữ ảnh (noise chấp nhận được) |
+| **WRONG** | ≥3 bbox sai HOẶC class sai hoàn toàn HOẶC đánh vào vật không phải xe | **Loại** khỏi train set |
+
+**Nguyên tắc quan trọng**: miss xe (model không detect) **không bằng** đánh sai. Model miss → PARTIAL. Model đánh sai class → WRONG.
+
+#### 5.4. Khi gặp ảnh SAI (WRONG)
+
+**KHÔNG sửa bbox tay**. Nếu sửa tay thì không còn là pseudo-labeling nữa — thành manual annotation, tốn thời gian gấp 20 lần, phá mục đích.
+
+Thay vào đó:
+1. Mở file `data/pseudo_v6/review/bad_samples.txt`
+2. Ghi tên file ảnh WRONG vào, mỗi dòng 1 file + ghi chú ngắn lý do:
+
+```
+0042__hcm_phuong-cat-lai_000026_20261105_111241.jpg   # bbox đánh vào cây xanh
+0100__hcm_xa-tan-nhut_000133_20261105_112055.jpg      # xe máy bị đánh thành car
+0203__hcm_unknown_000456_20261105_113022.jpg          # bbox lệch ra ngoài đường
+```
+
+Sau khi duyệt xong, chạy script `07_remove_bad.py` (trong `scripts/pseudo/`) để tự động xoá khỏi dataset V6.
+
+#### 5.5. Ví dụ phân loại (tham khảo)
+
+| Tình huống | Phân loại | Lý do |
+|---|---|---|
+| Ảnh có 5 bbox, tất cả đúng | CORRECT | Chuẩn |
+| Ảnh có 10 xe, model chỉ đánh 3, cả 3 đều đúng | PARTIAL | Miss 7 nhưng 3 đúng vẫn có ích |
+| Ảnh có 5 bbox, 2 cái motorbike bị đánh thành car | PARTIAL | 2/5 sai = 40%, còn lại đúng |
+| Ảnh ban đêm quá tối, model đánh đèn giao thông thành motorbike | WRONG | Class sai hoàn toàn |
+| Ảnh có 4 bbox, 3 cái bị lệch vị trí (chỉ overlap 30%) | WRONG | ≥3 bbox lệch |
+| Camera quay bầu trời, model đánh nhầm chim thành xe | WRONG | Không phải scene giao thông |
+
+#### 5.6. Điền kết quả vào template
+
+File `data/pseudo_v6/review/RESULT_FORM.md` có template sẵn:
+
+```markdown
+| Phân loại | Số ảnh |
+|---|---|
+| CORRECT (tất cả box đúng) | 395 |
+| PARTIAL (1-2 box sai, còn lại đúng) | 72 |
+| WRONG (đa số box sai) | 33 |
+```
+
+#### 5.7. Tính precision
+
+- **Precision strict** = CORRECT / tổng ảnh = **79%** (chỉ tính hoàn hảo)
+- **Precision loose** = (CORRECT + PARTIAL) / tổng ảnh = **93.4%** (chấp nhận được)
+
+#### 5.8. Quyết định dựa vào precision
+
 | Precision strict | Hành động |
 |---|---|
-| ≥ 85% | OK, dùng toàn bộ pseudo accepted cho train V6 |
-| 70–85% | Tăng conf threshold lên, chạy lại B3+B4 |
-| < 70% | Pseudo-label noisy quá, xem lại từ đầu |
+| ≥ 85% | ✅ OK — xoá WRONG rồi dùng (CORRECT + PARTIAL) cho train V6 |
+| 70–85% | ⚠️ Tăng confidence threshold (motorcycle 0.60 → 0.70), chạy lại từ `infer` |
+| < 70% | ❌ Pseudo-label noisy quá — xem lại V5 có yếu hẳn một class nào không |
 
-**⚠️ Quan trọng**: Con số precision này **PHẢI viết vào tiểu luận** — là bằng chứng pseudo-label có kiểm soát chất lượng.
+#### 5.9. Xoá ảnh WRONG tự động
+
+Sau khi hoàn thành `bad_samples.txt`:
+
+```bash
+python scripts/pseudo/07_remove_bad.py --apply
+```
+
+Script đọc `bad_samples.txt`, xoá cặp `.jpg` + `.txt` tương ứng khỏi `data/pseudo_v6/accepted/`.
+
+**⚠️ Quan trọng**: Con số precision này **PHẢI viết vào tiểu luận** — là bằng chứng pseudo-label có kiểm soát chất lượng. Đây là điểm phân biệt giữa "pseudo-label có methodology" và "cho model tự train trên noise".
 
 ---
 

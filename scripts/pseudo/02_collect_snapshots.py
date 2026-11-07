@@ -25,21 +25,67 @@ HEADERS = {
 }
 CAMERAS_YAML = Path("data/raw/hcm_cameras.yaml")
 CAMERAS_YAML_COMMITTED = Path("configs/hcm_cameras.yaml")
+BLACKLIST_YAML = Path("configs/hcm_cameras_blacklist.yaml")
 OUT_DIR = Path("data/raw/frames/hcm")
 CROP_TOP = 50
 INTERVAL = 20   # giây giữa 2 vòng — nguồn Sở GTVT HCM refresh ~15s
 
 
-def load_cameras(max_cameras: int | None) -> list[dict]:
+def load_blacklist() -> set[str]:
+    """Trả set camera id cần loại."""
+    if not BLACKLIST_YAML.exists():
+        return set()
+    with open(BLACKLIST_YAML) as f:
+        data = yaml.safe_load(f) or {}
+    return set((data.get("blacklist") or {}).keys())
+
+
+def load_sampled_history() -> set[str]:
+    """Trả set camera id đã sample trong các session trước (tránh lặp)."""
+    history_file = Path("data/raw/sampled_cameras_history.txt")
+    if not history_file.exists():
+        return set()
+    return {line.strip() for line in history_file.read_text().splitlines() if line.strip()}
+
+
+def save_sampled_history(cam_ids: set[str]):
+    history_file = Path("data/raw/sampled_cameras_history.txt")
+    history_file.parent.mkdir(parents=True, exist_ok=True)
+    existing = load_sampled_history()
+    all_ids = existing | cam_ids
+    history_file.write_text("\n".join(sorted(all_ids)) + "\n")
+
+
+def load_cameras(max_cameras: int | None, seed: int = 42, skip_history: bool = True) -> list[dict]:
     path = CAMERAS_YAML if CAMERAS_YAML.exists() else CAMERAS_YAML_COMMITTED
     with open(path) as f:
         data = yaml.safe_load(f)
-    cams = [c for c in data["cameras"].values() if c.get("image_url")]
-    print(f"[load] total cameras with URL: {len(cams)}")
+    all_cams = [c for c in data["cameras"].values() if c.get("image_url")]
+    print(f"[load] total cameras with URL: {len(all_cams)}")
+
+    # 1. Loại blacklist
+    blacklist = load_blacklist()
+    cams = [c for c in all_cams if c["id"] not in blacklist]
+    if blacklist:
+        print(f"[load] blacklist loại {len(blacklist)} cam → còn {len(cams)}")
+
+    # 2. Loại cam đã sample lần trước (tránh lặp)
+    if skip_history:
+        history = load_sampled_history()
+        cams_new = [c for c in cams if c["id"] not in history]
+        if history:
+            print(f"[load] history đã có {len(history)} cam được sample → còn {len(cams_new)} cam mới")
+        cams = cams_new
+
+    # 3. Sample
     if max_cameras and max_cameras < len(cams):
-        random.seed(42)
+        random.seed(seed)
         cams = random.sample(cams, max_cameras)
-        print(f"[load] sampled {len(cams)} cameras")
+        print(f"[load] sampled {len(cams)} cameras (seed={seed})")
+
+    # 4. Lưu history
+    save_sampled_history({c["id"] for c in cams})
+
     return cams
 
 
