@@ -163,6 +163,35 @@ if not all_weights:
     st.sidebar.error("Không tìm thấy file .pt nào trong weights/ hoặc runs/")
     st.stop()
 
+# ---------- Model priority (hiện trên top + default) ----------
+# Mapping path → (nhãn hiển thị, mô tả, thứ tự ưu tiên)
+FEATURED_MODELS = {
+    "runs/detect/train_v8s_v6_pseudo/weights/best.pt": (
+        "⭐ V6 — pseudo-label HCM CCTV (mAP@50 0.761, motor +31%)",
+        "Model mới nhất — fine-tune với 4,396 pseudo-label từ 782 camera công khai TP.HCM. "
+        "Tốt nhất cho motorcycle.", 1,
+    ),
+    "runs/detect/train_v8s_v5_honest/weights/best.pt": (
+        "V5 — honest video-aware split (mAP@50 0.665)",
+        "Baseline fine-tune từ COCO trên 2,833 ảnh gold. Honest split không leak.", 2,
+    ),
+    "weights/v3_vn_best.pt": (
+        "V3 VN best (mAP50 0.951 val — có thể leak)",
+        "⚠️ Phiên bản V1-V3 có leak video-level, số cao nhưng không reliable.", 3,
+    ),
+}
+
+# Sắp xếp: featured lên top, rest alphabetical
+featured = [w for w in all_weights if w in FEATURED_MODELS]
+featured.sort(key=lambda w: FEATURED_MODELS[w][2])
+rest = [w for w in all_weights if w not in FEATURED_MODELS]
+all_weights = featured + rest
+
+def _label_for(w):
+    if w in FEATURED_MODELS:
+        return FEATURED_MODELS[w][0]
+    return w
+
 pipeline_choice = st.sidebar.radio(
     "Pipeline",
     ["Improved (nhóm) — nhiều line + direction + log event",
@@ -173,10 +202,23 @@ pipeline_choice = st.sidebar.radio(
 )
 pipeline_kind = "improved_pipeline" if pipeline_choice.startswith("Improved") else "baseline_pipeline"
 
-_preferred = ["weights/v3_vn_best.pt", "weights/trained/v3_vn_best.pt"]
+# V6 làm default (model mới nhất, honest)
+_preferred = [
+    "runs/detect/train_v8s_v6_pseudo/weights/best.pt",   # V6 (mới nhất)
+    "runs/detect/train_v8s_v5_honest/weights/best.pt",   # V5 fallback
+    "weights/v3_vn_best.pt",                              # V3 fallback cuối
+]
 _default_idx = next((i for i, w in enumerate(all_weights) if w in _preferred), 0)
-weights_path = st.sidebar.selectbox("Model weights", all_weights, index=_default_idx,
-                                    help="v3_vn_best.pt là model tốt nhất hiện tại (mAP50=0.951 val VN).")
+weights_path = st.sidebar.selectbox(
+    "Model weights",
+    all_weights,
+    index=_default_idx,
+    format_func=_label_for,
+    help="⭐ V6 là model tốt nhất hiện tại — fine-tune pseudo-label từ CCTV HCM.",
+)
+# Hiển thị mô tả model được chọn
+if weights_path in FEATURED_MODELS:
+    st.sidebar.caption(FEATURED_MODELS[weights_path][1])
 tracker = st.sidebar.radio("Tracker", ["bytetrack.yaml", "botsort.yaml"],
                            help="Chỉ áp dụng cho Improved pipeline. Baseline pipeline dùng ByteTrack mặc định.")
 conf = st.sidebar.slider("Confidence threshold", 0.1, 0.9, 0.3, 0.05)
@@ -245,13 +287,13 @@ with tab_run:
     if mode.startswith("⚖"):
         # ---------- Compare mode ----------
         st.markdown("### Chọn 2 cấu hình để so sánh (pipeline + weights)")
-        _bl_default = next((i for i, w in enumerate(all_weights)
-                            if w.endswith("yolov8s.pt")
-                            or w.endswith("pretrained/yolov8s.pt")), 0)
-        _im_default = next((i for i, w in enumerate(all_weights)
-                            if "v3_vn" in w and w.endswith(".pt")),
-                           next((i for i, w in enumerate(all_weights)
-                                 if "v2_fix" in w), 0))
+        # Side A = V5 (baseline), Side B = V6 (improved)
+        _bl_default = next(
+            (i for i, w in enumerate(all_weights)
+             if "v5_honest" in w), 0)
+        _im_default = next(
+            (i for i, w in enumerate(all_weights)
+             if "v6_pseudo" in w), 0)
         PIPELINE_OPTIONS = [
             "Baseline (giáo viên) — 1 line, không direction, không log event",
             "Improved (nhóm) — nhiều line + direction + log event + stats",
@@ -261,12 +303,14 @@ with tab_run:
             st.markdown("**Side A — Baseline**")
             bl_pipeline = st.selectbox("Pipeline A", PIPELINE_OPTIONS, index=0, key="pip_a")
             bl_weights = st.selectbox("Weights A", all_weights, index=_bl_default, key="w_a",
-                                      help="Mặc định yolov8s.pt COCO gốc.")
+                                      format_func=_label_for,
+                                      help="Khuyến nghị: V5 honest làm baseline so với V6.")
         with c2:
             st.markdown("**Side B — Improved**")
             im_pipeline = st.selectbox("Pipeline B", PIPELINE_OPTIONS, index=1, key="pip_b")
             im_weights = st.selectbox("Weights B", all_weights, index=_im_default, key="w_b",
-                                      help="Mặc định best.pt fine-tune VN.")
+                                      format_func=_label_for,
+                                      help="Khuyến nghị: V6 pseudo-label làm improved.")
 
         _kind_bl = "baseline_pipeline" if bl_pipeline.startswith("Baseline") else "improved_pipeline"
         _kind_im = "baseline_pipeline" if im_pipeline.startswith("Baseline") else "improved_pipeline"
