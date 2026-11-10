@@ -1,0 +1,17 @@
+# V5+ — V5 clean + vietnam_vehicles v10 (Roboflow visionvn)
+# Sinh tự động bởi scripts/data_prep/build_v5plus_merged.py
+# Val/test giữ nguyên V5 → honest signal, so sánh fair với V5/V6/V7
+# Schema: {motorcycle, car, bus, truck}
+# Remap: container+xe_tai→truck, oto→car, xe_khach→bus, xe_may→motorcycle, xe_ba_gac dropped
+
+path: /home/xuand/vn_traffic_ai/data/merged_v5plus
+train: images/train
+val:   images/val
+test:  images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck
