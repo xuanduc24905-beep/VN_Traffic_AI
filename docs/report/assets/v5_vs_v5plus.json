@@ -1,0 +1,24 @@
+{
+  "V5 baseline": {
+    "weights": "/home/xuand/vn_traffic_ai/runs/detect/train_v8s_v5_honest/weights/best.pt",
+    "mAP50": 0.6393234811878409,
+    "mAP50_95": 0.3353687554024239,
+    "AP50": {
+      "motorcycle": 0.688316512996657,
+      "car": 0.8116140610580382,
+      "bus": 0.6303070451485147,
+      "truck": 0.42705630554815377
+    }
+  },
+  "V5+ warm-start": {
+    "weights": "/home/xuand/vn_traffic_ai/runs/detect/train_v8s_v5plus_warm/weights/best.pt",
+    "mAP50": 0.7469361623021938,
+    "mAP50_95": 0.3726116573790484,
+    "AP50": {
+      "motorcycle": 0.7904728645740551,
+      "car": 0.8534072152542012,
+      "bus": 0.7111862498359425,
+      "truck": 0.6326783195445765
+    }
+  }
+}

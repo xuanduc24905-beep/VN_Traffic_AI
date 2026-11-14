@@ -15,7 +15,7 @@
 
   "nga_tu_01": {
     "video_resolution": [1920, 1080],
-    "_note": "count_direction: 'ltr' đếm khi vector di chuyển tạo cross > 0 với vector line (p1p2). 'rtl' ngược lại. 'both' đếm cả hai nhưng vẫn tách theo direction.",
+    "_note": "count_direction: 'ltr' là cross-product dương với vector line p1->p2, 'rtl' là âm; đây là tên legacy, không nhất thiết là trái/phải trên màn hình. Có thể khai báo direction_labels positive/negative thành in/out.",
     "lines": [
       {
         "name": "north_in",

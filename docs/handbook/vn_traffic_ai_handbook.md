@@ -517,27 +517,20 @@ match_thresh: 0.8
 
 ![Line counting math](images/diagram_line_counting_math.png)
 
-**Mỗi track** có 1 center bbox. Lưu center của frame trước (`prev`) và frame hiện tại (`curr`).
+**Mỗi track** dùng điểm neo `bottom_center` của bbox. Module lưu phía ổn định gần nhất của điểm neo so với counting line.
 
-Nếu **segment prev→curr CẮT counting line** → đếm 1 lần. Lưu `(line_name, track_id)` vào set `_counted` để không đếm lại.
+Chỉ khi track đi từ một phía ổn định sang phía còn lại, vượt qua dead-band/hysteresis quanh line và đoạn di chuyển cắt đoạn line hữu hạn thì mới đếm. Track biến mất quá `max_gap_frames` sẽ được khởi tạo lại thay vì nối thành một crossing ảo. Cặp `(line_name, track_id)` được lưu vào `_counted` để không đếm lại.
 
-### 10.2 Segment intersection (CCW algorithm)
+### 10.2 Signed distance, hysteresis và segment intersection
 
-Dùng tính chất **counter-clockwise (CCW)** của 3 điểm:
+Khoảng cách có dấu tới line xác định track đang ở phía dương hay âm. Các điểm nằm trong dead-band được bỏ qua để bbox rung quanh line không tạo event giả. Sau đó phép orientation kiểm tra giao cắt, gồm cả trường hợp chạm endpoint:
 
 ```python
-def ccw(p, q, r):
-    return (r[1]-p[1])*(q[0]-p[0]) > (q[1]-p[1])*(r[0]-p[0])
-
-# Segment a1-a2 cắt b1-b2 khi:
-# - a1 & a2 nằm 2 bên của đường thẳng chứa b1-b2
-# - b1 & b2 nằm 2 bên của đường thẳng chứa a1-a2
-def segments_cross(a1, a2, b1, b2):
-    return (ccw(a1, b1, b2) != ccw(a2, b1, b2)
-            and ccw(a1, a2, b1) != ccw(a1, a2, b2))
+signed_distance = cross(line_vector, point - p1) / length(line_vector)
+side = +1 if signed_distance > hysteresis else -1 if signed_distance < -hysteresis else 0
 ```
 
-**Code**: [src/tracking/counter.py:38-43](../../src/tracking/counter.py#L38).
+**Code**: [src/tracking/counter.py](../../src/tracking/counter.py).
 
 ### 10.3 Direction (ltr vs rtl)
 
@@ -547,11 +540,11 @@ Dùng **cross-product** của 2 vector:
 
 ```python
 cross = v.x * m.y - v.y * m.x
-# cross > 0 → "ltr" (left-to-right theo chiều v)
-# cross < 0 → "rtl" (right-to-left)
+# cross > 0 → "ltr" (tên legacy cho dấu dương)
+# cross < 0 → "rtl" (tên legacy cho dấu âm)
 ```
 
-**Code**: [src/tracking/counter.py:46-53](../../src/tracking/counter.py#L46).
+`ltr/rtl` không phải lúc nào cũng tương ứng trái/phải trên màn hình. Config mới có thể đặt `direction_labels` thành tên nghiệp vụ như `in/out`.
 
 ### 10.4 Chống đếm trùng
 
@@ -584,7 +577,7 @@ File [configs/counting_zones.json](../../configs/counting_zones.json):
 }
 ```
 
-**Load trong code**: [src/tracking/counter.py:27 `load_lines()`](../../src/tracking/counter.py#L27).
+**Load trong code**: hàm `load_lines()` trong [src/tracking/counter.py](../../src/tracking/counter.py). Toạ độ tự scale theo `video_resolution` khi độ phân giải video thực tế khác config.
 
 ### 10.6 Output events
 

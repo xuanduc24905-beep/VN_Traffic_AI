@@ -21,7 +21,7 @@ from ultralytics import YOLO
 PROJECT_ROOT = Path("/home/xuand/vn_traffic_ai").resolve()
 RUNS_DIR     = PROJECT_ROOT / "runs" / "detect"
 DATA_YAML    = PROJECT_ROOT / "data" / "data_v5.yaml"
-INIT_WEIGHTS = PROJECT_ROOT / "yolov8s.pt"
+INIT_WEIGHTS = PROJECT_ROOT / "yolovm.pt"
 
 assert INIT_WEIGHTS.exists(), f"Thiếu {INIT_WEIGHTS}"
 assert DATA_YAML.exists(), f"Thiếu {DATA_YAML}"

@@ -263,11 +263,11 @@ ByteTrack được cấu hình qua tham số `tracker="bytetrack.yaml"` trong h�
 
 Module đếm được thiết kế dựa trên **phát hiện giao cắt đoạn thẳng**:
 
-**Bước 1**: Người dùng định nghĩa một hoặc nhiều **vạch đếm (counting line)** trên video dưới dạng tuple `(p1, p2)` — hai điểm đầu-cuối của vạch, cùng với hướng đếm `count_direction ∈ {"both", "ltr", "rtl"}` ("both" = đếm cả hai chiều, "ltr" = chỉ đếm trái sang phải, "rtl" = chỉ phải sang trái).
+**Bước 1**: Người dùng định nghĩa một hoặc nhiều **vạch đếm (counting line)** trên video dưới dạng tuple `(p1, p2)` và hướng đếm. `ltr/rtl` là tên tương thích cũ cho dấu cross-product dương/âm; config có thể đặt nhãn nghiệp vụ như `in/out`.
 
-**Bước 2**: Với mỗi track ID, module lưu **tâm bounding box của frame trước** `(cx_prev, cy_prev)`.
+**Bước 2**: Với mỗi track ID, module dùng điểm neo **bottom-center** của bounding box, class vote tích luỹ và phía ổn định gần nhất so với line. Một dead-band quanh line loại nhiễu do bbox rung.
 
-**Bước 3**: Ở frame hiện tại, tính tâm mới `(cx_curr, cy_curr)`. Nếu đoạn thẳng nối `(cx_prev, cy_prev) → (cx_curr, cy_curr)` cắt qua đoạn thẳng vạch đếm, module ghi nhận một sự kiện gồm:
+**Bước 3**: Khi điểm neo chuyển giữa hai phía ổn định, không có tracking gap dài và trajectory cắt đoạn line hữu hạn, module ghi nhận một sự kiện gồm:
 - Frame index và timestamp
 - Tên vạch
 - Hướng (ltr/rtl) tính bằng dấu cross-product `v × movement` với `v = p2 - p1`

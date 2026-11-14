@@ -245,6 +245,7 @@ python -m src.pipeline.run \
     --video data/test_videos/raw/demo_traffic.mp4 \
     --weights runs/detect/train_v8s_v5plus_960/weights/best.pt \
     --tracker bytetrack.yaml \
+    --imgsz 960 \
     --counting-config configs/counting_zones.json \
     --video-key demo_traffic \
     --out-csv results/tables/demo_events.csv \
@@ -367,7 +368,7 @@ Mặc định `http://localhost:8501`. Port bị chiếm thì `--server.port 850
 | **Tracker** (radio) | `bytetrack.yaml` (nhanh) / `botsort.yaml` (chính xác hơn khi che). |
 | **Confidence** (0.1–0.9, mặc định 0.3) | Thấp → bắt nhiều, có box rác. Cao → ít FP, dễ miss. |
 | **IoU NMS** (0.1–0.9, mặc định 0.5) | Scene xe sát → tăng 0.6-0.7. |
-| **Image size** (320/416/512/640/768/960) | Nhỏ → nhanh; lớn → bắt xe nhỏ (V5+ dùng 960). |
+| **Image size** (320/416/512/640/768/960/1280) | Nhỏ → nhanh; lớn → bắt xe nhỏ (V5+ dùng 960, V7 dùng 1280). |
 | **FP16** | Nhanh 1.3-1.5× trên Ada/Ampere/Turing. Tắt nếu CPU/GPU cũ. |
 | **Line position / direction / mode** | % vị trí line + ngang/dọc + both/ltr/rtl. |
 

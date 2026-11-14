@@ -166,8 +166,12 @@ if not all_weights:
 # ---------- Model priority (hiện trên top + default) ----------
 # Mapping path → (nhãn hiển thị, mô tả, thứ tự ưu tiên)
 FEATURED_MODELS = {
+    "runs/detect/train_v8s_v5plus_960/weights/best.pt": (
+        "⭐ V5+ — honest split, imgsz=960 (mAP@50 0.782)",
+        "Best all-around hiện tại trên V5 test; recipe inference khuyến nghị imgsz=960.", 0,
+    ),
     "runs/detect/train_v8s_v6_pseudo/weights/best.pt": (
-        "⭐ V6 — pseudo-label HCM CCTV (mAP@50 0.761, motor +31%)",
+        "V6 — pseudo-label HCM CCTV (mAP@50 0.761, motor +31%)",
         "Model mới nhất — fine-tune với 4,396 pseudo-label từ 782 camera công khai TP.HCM. "
         "Tốt nhất cho motorcycle.", 1,
     ),
@@ -202,9 +206,10 @@ pipeline_choice = st.sidebar.radio(
 )
 pipeline_kind = "improved_pipeline" if pipeline_choice.startswith("Improved") else "baseline_pipeline"
 
-# V6 làm default (model mới nhất, honest)
+# Dùng model winner hiện tại làm default khi weights có sẵn.
 _preferred = [
-    "runs/detect/train_v8s_v6_pseudo/weights/best.pt",   # V6 (mới nhất)
+    "runs/detect/train_v8s_v5plus_960/weights/best.pt", # V5+ winner
+    "runs/detect/train_v8s_v6_pseudo/weights/best.pt",   # V6 fallback
     "runs/detect/train_v8s_v5_honest/weights/best.pt",   # V5 fallback
     "weights/v3_vn_best.pt",                              # V3 fallback cuối
 ]
@@ -214,7 +219,7 @@ weights_path = st.sidebar.selectbox(
     all_weights,
     index=_default_idx,
     format_func=_label_for,
-    help="⭐ V6 là model tốt nhất hiện tại — fine-tune pseudo-label từ CCTV HCM.",
+    help="V5+ là model best all-around hiện tại; mỗi model có image size khuyến nghị riêng.",
 )
 # Hiển thị mô tả model được chọn
 if weights_path in FEATURED_MODELS:
@@ -223,8 +228,14 @@ tracker = st.sidebar.radio("Tracker", ["bytetrack.yaml", "botsort.yaml"],
                            help="Chỉ áp dụng cho Improved pipeline. Baseline pipeline dùng ByteTrack mặc định.")
 conf = st.sidebar.slider("Confidence threshold", 0.1, 0.9, 0.3, 0.05)
 iou = st.sidebar.slider("IoU threshold (NMS)", 0.1, 0.9, 0.5, 0.05)
-imgsz = st.sidebar.selectbox("Image size", [320, 416, 512, 640, 768], index=3,
-                             help="Nhỏ hơn = nhanh hơn, nhưng miss xe nhỏ. 416 thường đủ cho video 1080p.")
+_imgsz_options = [320, 416, 512, 640, 768, 960, 1280]
+_recommended_imgsz = 1280 if "v7_1280" in weights_path else (
+    960 if "v5plus_960" in weights_path else 640)
+imgsz = st.sidebar.selectbox(
+    "Image size", _imgsz_options,
+    index=_imgsz_options.index(_recommended_imgsz),
+    help="Mặc định theo recipe của weights. Nhỏ hơn nhanh hơn nhưng dễ miss xe nhỏ.",
+)
 use_half = st.sidebar.checkbox("FP16 inference (nhanh 1.3-1.5×)", value=True,
                                help="GPU Ada/Ampere/Turing hỗ trợ tốt. Tắt nếu chạy CPU hoặc GPU cũ.")
 
@@ -234,8 +245,8 @@ line_y_pct = st.sidebar.slider("Vị trí line (% chiều cao)", 10, 90, 50, 5)
 line_direction = st.sidebar.radio("Hướng line", ["horizontal", "vertical"])
 count_direction = st.sidebar.radio(
     "Chiều đếm", ["both", "ltr", "rtl"],
-    help="ltr = tráiphải theo chiều vector line (p1p2); rtl = ngược lại. "
-         "'both' đếm cả hai chiều nhưng vẫn phân biệt trong output.")
+    help="ltr/rtl là tên legacy cho dấu cross-product dương/âm, không phải luôn là "
+         "trái/phải trên màn hình. 'both' đếm cả hai dấu.")
 
 # ---------- Main ----------
 st.title(" VN Traffic AI — Đếm và phân loại phương tiện")
@@ -622,7 +633,11 @@ with tab_stats:
             st.warning("Không có event nào (0 xe qua line). Thử giảm confidence hoặc đổi vị trí line.")
         else:
             df_enriched = events_to_df(df.to_dict("records"))
-            summ = summarize(df_enriched)
+            _meta = st.session_state.get("video_meta", {})
+            _fps = float(_meta.get("fps", 0) or 0)
+            _n_frames = int(_meta.get("n_frames", 0) or 0)
+            _duration = (_n_frames / _fps) if _fps > 0 and _n_frames > 0 else None
+            summ = summarize(df_enriched, duration_sec=_duration)
 
             # --- Bucket selector ---
             BUCKETS = {"30 giây": 30, "1 phút": 60, "5 phút": 300,
@@ -643,8 +658,8 @@ with tab_stats:
 
             # --- Flow rate ---
             st.markdown("#### Tốc độ lưu lượng")
-            fr_min = flow_rate(df_enriched, unit="minute")
-            fr_hour = flow_rate(df_enriched, unit="hour")
+            fr_min = flow_rate(df_enriched, unit="minute", duration_sec=_duration)
+            fr_hour = flow_rate(df_enriched, unit="hour", duration_sec=_duration)
             fc1, fc2 = st.columns(2)
             fc1.metric("Tổng xe/phút", fr_min.get("total", 0))
             fc2.metric("Tổng xe/giờ", fr_hour.get("total", 0))

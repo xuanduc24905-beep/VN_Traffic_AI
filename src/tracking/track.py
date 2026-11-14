@@ -6,11 +6,25 @@ Wrapper này trả về stream các frame kèm tracking ID để module counter 
 from ultralytics import YOLO
 
 
-def track_stream(weights: str, source: str,
+def resolve_device(device: str | int | None = None) -> str | int:
+    """Resolve ``None`` to CUDA, MPS, or CPU in that order."""
+    if device is not None:
+        return device
+    import torch
+    if torch.cuda.is_available():
+        return 0
+    mps = getattr(torch.backends, "mps", None)
+    if mps is not None and mps.is_available():
+        return "mps"
+    return "cpu"
+
+
+def track_stream(weights: str | YOLO, source: str,
                  tracker: str = "bytetrack.yaml",
                  conf: float = 0.25, iou: float = 0.5,
-                 imgsz: int = 640, device: str = "0",
-                 half: bool = False):
+                 imgsz: int = 640, device: str | int | None = None,
+                 half: bool = False,
+                 classes: list[int] | None = None):
     """Yield từng frame result có `.boxes.id` (tracking ID).
 
     result.boxes có các thuộc tính:
@@ -21,14 +35,26 @@ def track_stream(weights: str, source: str,
 
     half=True bật FP16 inference (~1.3-1.5× nhanh hơn trên GPU Ada/Ampere).
     """
-    model = YOLO(weights)
+    model = weights if isinstance(weights, YOLO) else YOLO(weights)
+    kwargs = {
+        "source": source,
+        "tracker": tracker,
+        "conf": conf,
+        "iou": iou,
+        "imgsz": imgsz,
+        "half": half,
+        "stream": True,
+        "persist": True,
+        "verbose": False,
+    }
+    selected_device = resolve_device(device)
+    kwargs["device"] = selected_device
+    if str(selected_device).lower() == "cpu":
+        kwargs["half"] = False
+    if classes is not None:
+        kwargs["classes"] = classes
     return model.track(
-        source=source,
-        tracker=tracker,
-        conf=conf, iou=iou, imgsz=imgsz,
-        device=device,
-        half=half,
-        stream=True, persist=True, verbose=False,
+        **kwargs,
     )
 
 
@@ -39,9 +65,13 @@ if __name__ == "__main__":
     ap.add_argument("--source", required=True)
     ap.add_argument("--tracker", default="bytetrack.yaml",
                     choices=["bytetrack.yaml", "botsort.yaml"])
+    ap.add_argument("--device", default="auto",
+                    help="auto, cpu, mps, 0, 0,1, ...")
     args = ap.parse_args()
 
-    for i, res in enumerate(track_stream(args.weights, args.source, args.tracker)):
+    device = None if args.device == "auto" else args.device
+    for i, res in enumerate(track_stream(
+            args.weights, args.source, args.tracker, device=device)):
         if res.boxes.id is None:
             continue
         n = len(res.boxes)

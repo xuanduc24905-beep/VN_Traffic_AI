@@ -25,12 +25,15 @@ def counting_accuracy(pred: int, gt: int) -> float:
 
 
 def mae(preds: list[int], gts: list[int]) -> float:
-    assert len(preds) == len(gts) and len(preds) > 0
+    if len(preds) != len(gts) or not preds:
+        raise ValueError("preds and gts must have the same non-zero length")
     return sum(abs(p - g) for p, g in zip(preds, gts)) / len(preds)
 
 
 def mape(preds: list[int], gts: list[int]) -> float:
     """% — tránh chia 0 bằng cách bỏ mẫu có gt = 0."""
+    if len(preds) != len(gts):
+        raise ValueError("preds and gts must have the same length")
     pairs = [(p, g) for p, g in zip(preds, gts) if g > 0]
     if not pairs:
         return 0.0
@@ -38,7 +41,8 @@ def mape(preds: list[int], gts: list[int]) -> float:
 
 
 def tracking_proxy_from_events(events_csv: str,
-                                gts: dict[str, int]) -> dict:
+                                gts: dict[str, int],
+                                tracks_csv: str | None = None) -> dict:
     """Đo tracking proxy metrics từ file events.csv.
 
     events.csv schema: frame, time_sec, line, direction, track_id, class_name
@@ -53,7 +57,7 @@ def tracking_proxy_from_events(events_csv: str,
         return {"per_class": {}, "overall": {
             "track_count": 0, "gt": sum(gts.values()),
             "overcount_rate": -1.0, "id_stability": 0.0,
-            "avg_track_lifetime_frames": 0.0,
+            "avg_track_lifetime_frames": None,
         }}
 
     # Đếm unique track_id per class (không kể qua line bao lần)
@@ -87,9 +91,18 @@ def tracking_proxy_from_events(events_csv: str,
         ovr_all = (total_tracks - total_gt) / total_gt
         stab_all = max(0.0, 1.0 - abs(ovr_all))
 
-    # avg track lifetime = frame_max - frame_min + 1 mỗi track_id
-    life = df.groupby("track_id")["frame"].agg(lambda s: s.max() - s.min() + 1)
-    avg_life = float(life.mean()) if len(life) > 0 else 0.0
+    # Crossing-event CSV has normally one row per (line, track_id), so it
+    # cannot measure track lifetime. Only compute this metric from an optional
+    # per-frame track log containing at least frame and track_id.
+    avg_life = None
+    if tracks_csv is not None:
+        tracks = pd.read_csv(tracks_csv)
+        required = {"frame", "track_id"}
+        if not required.issubset(tracks.columns):
+            raise ValueError(f"tracks_csv must contain columns {sorted(required)}")
+        life = tracks.groupby("track_id")["frame"].agg(
+            lambda s: s.max() - s.min() + 1)
+        avg_life = round(float(life.mean()), 1) if len(life) > 0 else 0.0
 
     return {
         "per_class": per_class,
@@ -98,7 +111,7 @@ def tracking_proxy_from_events(events_csv: str,
             "gt": total_gt,
             "overcount_rate": round(ovr_all, 4) if ovr_all != float("inf") else "inf",
             "id_stability": round(stab_all, 4),
-            "avg_track_lifetime_frames": round(avg_life, 1),
+            "avg_track_lifetime_frames": avg_life,
         },
     }
 
@@ -106,6 +119,15 @@ def tracking_proxy_from_events(events_csv: str,
 def report(preds: dict[str, int], gts: dict[str, int]) -> dict:
     """preds/gts: {'motorcycle': 120, 'car': 45, ...}"""
     classes = sorted(set(preds) | set(gts))
+    if not classes:
+        return {
+            "per_class": {},
+            "total_pred": 0,
+            "total_gt": 0,
+            "MAE": 0.0,
+            "MAPE_percent": 0.0,
+            "overall_accuracy": 1.0,
+        }
     p_list = [preds.get(c, 0) for c in classes]
     g_list = [gts.get(c, 0) for c in classes]
     per_class = {c: {"pred": p, "gt": g,

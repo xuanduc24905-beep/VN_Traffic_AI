@@ -1,5 +1,6 @@
 """Test cho stats.aggregator."""
 import pandas as pd
+import pytest
 from src.stats.aggregator import (
     events_to_df, summarize, counts_per_bucket, counts_per_minute,
     counts_per_hour, flow_rate, peak_period, cumulative_counts,
@@ -63,6 +64,16 @@ def test_peak_period_finds_max():
     assert peak["peak_total"] == 3
 
 
+def test_peak_period_sparse_bucket_uses_label_not_position():
+    df = events_to_df([
+        {"frame": 300, "time_sec": 305, "line": "L",
+         "track_id": 1, "class_name": "car"},
+    ])
+    peak = peak_period(df, 60)
+    assert peak["peak_bucket"] == 5
+    assert peak["peak_per_class"] == {"car": 1}
+
+
 def test_cumulative_counts_monotonic():
     df = events_to_df(_make_events())
     cum = cumulative_counts(df)
@@ -86,3 +97,19 @@ def test_empty_df():
     assert counts_per_bucket(empty, 60).empty
     assert peak_period(empty, 60) == {}
     assert flow_rate(empty)["total"] == 0.0
+
+
+def test_flow_rate_accepts_real_video_duration():
+    df = events_to_df(_make_events())
+    result = flow_rate(df, "minute", duration_sec=120)
+    assert result["duration_sec"] == 120
+    assert result["total"] == 3.0
+    assert summarize(df, duration_sec=120)["duration_sec"] == 120
+
+
+def test_invalid_bucket_and_flow_unit():
+    df = events_to_df(_make_events())
+    with pytest.raises(ValueError):
+        counts_per_bucket(df, 0)
+    with pytest.raises(ValueError):
+        flow_rate(df, "day")
