@@ -1,0 +1,713 @@
+{
+  "check": "camera_leak",
+  "threshold": "0 camera_id xuất hiện ở >1 split (site-level chỉ WARN)",
+  "verdict": "FAIL",
+  "site_verdict": "WARN",
+  "camera": {
+    "n_unique": 44,
+    "n_unique_per_split": {
+      "train": 44,
+      "valid": 36,
+      "test": 28
+    },
+    "n_shared_across_splits": 38,
+    "n_only_in": {
+      "train": 6,
+      "valid": 0,
+      "test": 0
+    },
+    "pct_test_images_from_shared": 100.0,
+    "pct_valid_images_from_shared": 100.0,
+    "shared": {
+      "xom7vinhtan554": {
+        "train": 607,
+        "valid": 118,
+        "test": 62
+      },
+      "garagecuong554": {
+        "train": 348,
+        "valid": 72,
+        "test": 37
+      },
+      "nga3phuocthe554": {
+        "train": 278,
+        "valid": 55,
+        "test": 17
+      },
+      "tranhungdao59": {
+        "train": 273,
+        "valid": 41,
+        "test": 19
+      },
+      "caunamprc554": {
+        "train": 237,
+        "valid": 65,
+        "test": 18
+      },
+      "nga3duong554": {
+        "train": 183,
+        "valid": 51,
+        "test": 18
+      },
+      "nga3doclap37": {
+        "train": 199,
+        "valid": 17,
+        "test": 12
+      },
+      "caunamprc555": {
+        "train": 157,
+        "valid": 44,
+        "test": 20
+      },
+      "hungvuong556": {
+        "train": 142,
+        "valid": 17,
+        "test": 8
+      },
+      "nguyenvantroi56": {
+        "train": 134,
+        "valid": 22,
+        "test": 10
+      },
+      "tranquangdieu556": {
+        "train": 133,
+        "valid": 16,
+        "test": 8
+      },
+      "hoaphu555": {
+        "train": 115,
+        "valid": 24,
+        "test": 7
+      },
+      "nga4hamthang555": {
+        "train": 97,
+        "valid": 17,
+        "test": 6
+      },
+      "tranquangdieu52": {
+        "train": 102,
+        "valid": 10,
+        "test": 6
+      },
+      "comkimngan554": {
+        "train": 101,
+        "valid": 4
+      },
+      "nga3doclap36": {
+        "train": 90,
+        "valid": 9,
+        "test": 3
+      },
+      "nhatholetrang86": {
+        "train": 90,
+        "valid": 6,
+        "test": 5
+      },
+      "hodabac554": {
+        "train": 80,
+        "valid": 14,
+        "test": 6
+      },
+      "nhatholetrang84": {
+        "train": 78,
+        "valid": 8,
+        "test": 3
+      },
+      "cafeminghouse554": {
+        "train": 73,
+        "valid": 2
+      },
+      "nga3muitau554": {
+        "train": 40,
+        "valid": 10,
+        "test": 5
+      },
+      "docvinhhanh554": {
+        "train": 38,
+        "valid": 8,
+        "test": 3
+      },
+      "quancomhai555": {
+        "train": 35,
+        "valid": 5,
+        "test": 1
+      },
+      "ngabathomo554": {
+        "train": 29,
+        "valid": 5,
+        "test": 3
+      },
+      "cafestart554": {
+        "train": 29,
+        "valid": 1
+      },
+      "quangtrung54": {
+        "train": 24,
+        "valid": 5
+      },
+      "chophuocvinh12": {
+        "train": 21,
+        "valid": 4,
+        "test": 1
+      },
+      "hoaphu557": {
+        "train": 22,
+        "valid": 2,
+        "test": 1
+      },
+      "tranquangdieu48": {
+        "train": 24,
+        "valid": 1
+      },
+      "benxetp555": {
+        "train": 12,
+        "valid": 7,
+        "test": 1
+      },
+      "nga3phuocthe556": {
+        "train": 12,
+        "valid": 6
+      },
+      "ubnhandan556": {
+        "train": 11,
+        "valid": 3,
+        "test": 2
+      },
+      "nga5lienhuong555": {
+        "train": 11,
+        "valid": 1
+      },
+      "nga3huyendoi554": {
+        "train": 7,
+        "valid": 1
+      },
+      "dendo": {
+        "train": 6,
+        "test": 1
+      },
+      "congcahuyen557": {
+        "train": 3,
+        "valid": 1
+      },
+      "nga3baude78": {
+        "train": 1,
+        "valid": 1
+      },
+      "nga3baude80": {
+        "train": 1,
+        "test": 1
+      }
+    },
+    "distribution": {
+      "xom7vinhtan554": {
+        "train": 607,
+        "valid": 118,
+        "test": 62
+      },
+      "garagecuong554": {
+        "train": 348,
+        "valid": 72,
+        "test": 37
+      },
+      "nga3phuocthe554": {
+        "train": 278,
+        "valid": 55,
+        "test": 17
+      },
+      "tranhungdao59": {
+        "train": 273,
+        "valid": 41,
+        "test": 19
+      },
+      "caunamprc554": {
+        "train": 237,
+        "valid": 65,
+        "test": 18
+      },
+      "nga3duong554": {
+        "train": 183,
+        "valid": 51,
+        "test": 18
+      },
+      "nga3doclap37": {
+        "train": 199,
+        "valid": 17,
+        "test": 12
+      },
+      "caunamprc555": {
+        "train": 157,
+        "valid": 44,
+        "test": 20
+      },
+      "hungvuong556": {
+        "train": 142,
+        "valid": 17,
+        "test": 8
+      },
+      "nguyenvantroi56": {
+        "train": 134,
+        "valid": 22,
+        "test": 10
+      },
+      "tranquangdieu556": {
+        "train": 133,
+        "valid": 16,
+        "test": 8
+      },
+      "hoaphu555": {
+        "train": 115,
+        "valid": 24,
+        "test": 7
+      },
+      "nga4hamthang555": {
+        "train": 97,
+        "valid": 17,
+        "test": 6
+      },
+      "tranquangdieu52": {
+        "train": 102,
+        "valid": 10,
+        "test": 6
+      },
+      "comkimngan554": {
+        "train": 101,
+        "valid": 4
+      },
+      "nga3doclap36": {
+        "train": 90,
+        "valid": 9,
+        "test": 3
+      },
+      "nhatholetrang86": {
+        "train": 90,
+        "valid": 6,
+        "test": 5
+      },
+      "hodabac554": {
+        "train": 80,
+        "valid": 14,
+        "test": 6
+      },
+      "nhatholetrang84": {
+        "train": 78,
+        "valid": 8,
+        "test": 3
+      },
+      "cafeminghouse554": {
+        "train": 73,
+        "valid": 2
+      },
+      "nga3muitau554": {
+        "train": 40,
+        "valid": 10,
+        "test": 5
+      },
+      "docvinhhanh554": {
+        "train": 38,
+        "valid": 8,
+        "test": 3
+      },
+      "quancomhai555": {
+        "train": 35,
+        "valid": 5,
+        "test": 1
+      },
+      "ngabathomo554": {
+        "train": 29,
+        "valid": 5,
+        "test": 3
+      },
+      "cafestart554": {
+        "train": 29,
+        "valid": 1
+      },
+      "quangtrung54": {
+        "train": 24,
+        "valid": 5
+      },
+      "chophuocvinh12": {
+        "train": 21,
+        "valid": 4,
+        "test": 1
+      },
+      "hoaphu557": {
+        "train": 22,
+        "valid": 2,
+        "test": 1
+      },
+      "tranquangdieu48": {
+        "train": 24,
+        "valid": 1
+      },
+      "benxetp555": {
+        "train": 12,
+        "valid": 7,
+        "test": 1
+      },
+      "nga3phuocthe556": {
+        "train": 12,
+        "valid": 6
+      },
+      "ubnhandan556": {
+        "train": 11,
+        "valid": 3,
+        "test": 2
+      },
+      "nga5lienhuong555": {
+        "train": 11,
+        "valid": 1
+      },
+      "nga3duong556": {
+        "train": 11
+      },
+      "nga3huyendoi554": {
+        "train": 7,
+        "valid": 1
+      },
+      "dendo": {
+        "train": 6,
+        "test": 1
+      },
+      "congcahuyen557": {
+        "train": 3,
+        "valid": 1
+      },
+      "quangcaoquangha554": {
+        "train": 4
+      },
+      "chophuocvinh95": {
+        "train": 3
+      },
+      "nga4hamthang556": {
+        "train": 2
+      },
+      "caubentang91": {
+        "train": 2
+      },
+      "congsauhuyenuy554": {
+        "train": 2
+      },
+      "nga3baude78": {
+        "train": 1,
+        "valid": 1
+      },
+      "nga3baude80": {
+        "train": 1,
+        "test": 1
+      }
+    }
+  },
+  "site": {
+    "n_unique": 33,
+    "n_unique_per_split": {
+      "train": 33,
+      "valid": 29,
+      "test": 23
+    },
+    "n_shared_across_splits": 30,
+    "n_only_in": {
+      "train": 3,
+      "valid": 0,
+      "test": 0
+    },
+    "pct_test_images_from_shared": 100.0,
+    "pct_valid_images_from_shared": 100.0,
+    "shared": {
+      "xom7vinhtan": {
+        "train": 607,
+        "valid": 118,
+        "test": 62
+      },
+      "caunamprc": {
+        "train": 394,
+        "valid": 109,
+        "test": 38
+      },
+      "garagecuong": {
+        "train": 348,
+        "valid": 72,
+        "test": 37
+      },
+      "nga3phuocthe": {
+        "train": 290,
+        "valid": 61,
+        "test": 17
+      },
+      "tranhungdao": {
+        "train": 273,
+        "valid": 41,
+        "test": 19
+      },
+      "nga3doclap": {
+        "train": 289,
+        "valid": 26,
+        "test": 15
+      },
+      "tranquangdieu": {
+        "train": 259,
+        "valid": 27,
+        "test": 14
+      },
+      "nga3duong": {
+        "train": 194,
+        "valid": 51,
+        "test": 18
+      },
+      "nhatholetrang": {
+        "train": 168,
+        "valid": 14,
+        "test": 8
+      },
+      "hoaphu": {
+        "train": 137,
+        "valid": 26,
+        "test": 8
+      },
+      "hungvuong": {
+        "train": 142,
+        "valid": 17,
+        "test": 8
+      },
+      "nguyenvantroi": {
+        "train": 134,
+        "valid": 22,
+        "test": 10
+      },
+      "nga4hamthang": {
+        "train": 99,
+        "valid": 17,
+        "test": 6
+      },
+      "comkimngan": {
+        "train": 101,
+        "valid": 4
+      },
+      "hodabac": {
+        "train": 80,
+        "valid": 14,
+        "test": 6
+      },
+      "cafeminghouse": {
+        "train": 73,
+        "valid": 2
+      },
+      "nga3muitau": {
+        "train": 40,
+        "valid": 10,
+        "test": 5
+      },
+      "docvinhhanh": {
+        "train": 38,
+        "valid": 8,
+        "test": 3
+      },
+      "quancomhai": {
+        "train": 35,
+        "valid": 5,
+        "test": 1
+      },
+      "ngabathomo": {
+        "train": 29,
+        "valid": 5,
+        "test": 3
+      },
+      "cafestart": {
+        "train": 29,
+        "valid": 1
+      },
+      "chophuocvinh": {
+        "train": 24,
+        "valid": 4,
+        "test": 1
+      },
+      "quangtrung": {
+        "train": 24,
+        "valid": 5
+      },
+      "benxetp": {
+        "train": 12,
+        "valid": 7,
+        "test": 1
+      },
+      "ubnhandan": {
+        "train": 11,
+        "valid": 3,
+        "test": 2
+      },
+      "nga5lienhuong": {
+        "train": 11,
+        "valid": 1
+      },
+      "nga3huyendoi": {
+        "train": 7,
+        "valid": 1
+      },
+      "dendo": {
+        "train": 6,
+        "test": 1
+      },
+      "congcahuyen": {
+        "train": 3,
+        "valid": 1
+      },
+      "nga3baude": {
+        "train": 2,
+        "valid": 1,
+        "test": 1
+      }
+    },
+    "distribution": {
+      "xom7vinhtan": {
+        "train": 607,
+        "valid": 118,
+        "test": 62
+      },
+      "caunamprc": {
+        "train": 394,
+        "valid": 109,
+        "test": 38
+      },
+      "garagecuong": {
+        "train": 348,
+        "valid": 72,
+        "test": 37
+      },
+      "nga3phuocthe": {
+        "train": 290,
+        "valid": 61,
+        "test": 17
+      },
+      "tranhungdao": {
+        "train": 273,
+        "valid": 41,
+        "test": 19
+      },
+      "nga3doclap": {
+        "train": 289,
+        "valid": 26,
+        "test": 15
+      },
+      "tranquangdieu": {
+        "train": 259,
+        "valid": 27,
+        "test": 14
+      },
+      "nga3duong": {
+        "train": 194,
+        "valid": 51,
+        "test": 18
+      },
+      "nhatholetrang": {
+        "train": 168,
+        "valid": 14,
+        "test": 8
+      },
+      "hoaphu": {
+        "train": 137,
+        "valid": 26,
+        "test": 8
+      },
+      "hungvuong": {
+        "train": 142,
+        "valid": 17,
+        "test": 8
+      },
+      "nguyenvantroi": {
+        "train": 134,
+        "valid": 22,
+        "test": 10
+      },
+      "nga4hamthang": {
+        "train": 99,
+        "valid": 17,
+        "test": 6
+      },
+      "comkimngan": {
+        "train": 101,
+        "valid": 4
+      },
+      "hodabac": {
+        "train": 80,
+        "valid": 14,
+        "test": 6
+      },
+      "cafeminghouse": {
+        "train": 73,
+        "valid": 2
+      },
+      "nga3muitau": {
+        "train": 40,
+        "valid": 10,
+        "test": 5
+      },
+      "docvinhhanh": {
+        "train": 38,
+        "valid": 8,
+        "test": 3
+      },
+      "quancomhai": {
+        "train": 35,
+        "valid": 5,
+        "test": 1
+      },
+      "ngabathomo": {
+        "train": 29,
+        "valid": 5,
+        "test": 3
+      },
+      "cafestart": {
+        "train": 29,
+        "valid": 1
+      },
+      "chophuocvinh": {
+        "train": 24,
+        "valid": 4,
+        "test": 1
+      },
+      "quangtrung": {
+        "train": 24,
+        "valid": 5
+      },
+      "benxetp": {
+        "train": 12,
+        "valid": 7,
+        "test": 1
+      },
+      "ubnhandan": {
+        "train": 11,
+        "valid": 3,
+        "test": 2
+      },
+      "nga5lienhuong": {
+        "train": 11,
+        "valid": 1
+      },
+      "nga3huyendoi": {
+        "train": 7,
+        "valid": 1
+      },
+      "dendo": {
+        "train": 6,
+        "test": 1
+      },
+      "congcahuyen": {
+        "train": 3,
+        "valid": 1
+      },
+      "nga3baude": {
+        "train": 2,
+        "valid": 1,
+        "test": 1
+      },
+      "quangcaoquangha": {
+        "train": 4
+      },
+      "caubentang": {
+        "train": 2
+      },
+      "congsauhuyenuy": {
+        "train": 2
+      }
+    }
+  }
+}
