@@ -1,0 +1,222 @@
+{
+  "check": "cross_v5_leak",
+  "threshold": "0 MD5 trùng, 0 cặp pHash ≤5, 0 cặp camera NCC ≥0.9 và NCC chéo max < NCC min của đối chứng cùng camera, V5+ val/test = V5",
+  "verdict": "PASS",
+  "n_v10_images": 4824,
+  "n_v5_eval_images": 2966,
+  "v5_eval_videos": {
+    "cantho_CoopMart-8h30-9h00": 50,
+    "cantho_camDLHB-13h20---13h57": 416,
+    "soict24_cam_07": 1000,
+    "soict24_cam_09": 1000,
+    "soict24_cam_10": 500
+  },
+  "md5": {
+    "n_hits": 0,
+    "hits": []
+  },
+  "phash": {
+    "threshold": 5,
+    "n_pairs": 0,
+    "min_hamming": 10,
+    "pairs": [],
+    "nearest_pairs_INFO": [
+      {
+        "hamming": 10,
+        "v10": "gen_caunamprc555_id985_80C03997_xe_ba_gac_Yellow_18-02-2024_17-07-36",
+        "v5": "soict24_cam_10_00179_jpg.rf.b776ad8a4f17d6a4cbfcc1739448171e"
+      },
+      {
+        "hamming": 12,
+        "v10": "general_caunamprc555_ID749_container_color-nau_51L74220_bien_trang_06-03-2024_10-55-42",
+        "v5": "soict24_cam_09_00123_jpg.rf.7da812094e48815189ac140fcd2d4b3e"
+      },
+      {
+        "hamming": 12,
+        "v10": "general_congcahuyen557_ID1254_xe_ba_gac_model-_color-xanh_duong_51N39289_bien_trang_25-03-2024_10-28-37",
+        "v5": "soict24_cam_07_00422_jpg.rf.1e91e095c4e59246843b5b8648c22c35"
+      },
+      {
+        "hamming": 12,
+        "v10": "general_nga3duong554_ID2320_xe_ba_gac_model-_color-_99C11959_bien_trang_02-04-2024_16-24-15",
+        "v5": "soict24_cam_07_00260_jpg.rf.dd1f46cb137c2f15a6534afd73194c60"
+      }
+    ]
+  },
+  "background": {
+    "threshold": 0.9,
+    "n_hits": 0,
+    "hits": [],
+    "max_cross_ncc": 0.5001,
+    "margin_below_positive_control_min": true,
+    "top10_cross": [
+      {
+        "v10_camera": "hodabac554",
+        "v5_video": "soict24_cam_09",
+        "ncc": 0.5001
+      },
+      {
+        "v10_camera": "ngabathomo554",
+        "v5_video": "soict24_cam_09",
+        "ncc": 0.4587
+      },
+      {
+        "v10_camera": "hodabac554",
+        "v5_video": "soict24_cam_07",
+        "ncc": 0.453
+      },
+      {
+        "v10_camera": "nga3huyendoi554",
+        "v5_video": "cantho_CoopMart-8h30-9h00",
+        "ncc": 0.4137
+      },
+      {
+        "v10_camera": "nga3baude80",
+        "v5_video": "cantho_camDLHB-13h20---13h57",
+        "ncc": 0.4061
+      },
+      {
+        "v10_camera": "ubnhandan556",
+        "v5_video": "soict24_cam_07",
+        "ncc": 0.3931
+      },
+      {
+        "v10_camera": "caubentang91",
+        "v5_video": "cantho_camDLHB-13h20---13h57",
+        "ncc": 0.3892
+      },
+      {
+        "v10_camera": "nga4hamthang555",
+        "v5_video": "cantho_camDLHB-13h20---13h57",
+        "ncc": 0.3885
+      },
+      {
+        "v10_camera": "nga3baude80",
+        "v5_video": "cantho_CoopMart-8h30-9h00",
+        "ncc": 0.3755
+      },
+      {
+        "v10_camera": "ngabathomo554",
+        "v5_video": "soict24_cam_07",
+        "ncc": 0.3673
+      }
+    ],
+    "max_ncc_per_v5_video": {
+      "cantho_CoopMart-8h30-9h00": {
+        "v10_camera": "nga3huyendoi554",
+        "v5_video": "cantho_CoopMart-8h30-9h00",
+        "ncc": 0.4137
+      },
+      "cantho_camDLHB-13h20---13h57": {
+        "v10_camera": "nga3baude80",
+        "v5_video": "cantho_camDLHB-13h20---13h57",
+        "ncc": 0.4061
+      },
+      "soict24_cam_07": {
+        "v10_camera": "hodabac554",
+        "v5_video": "soict24_cam_07",
+        "ncc": 0.453
+      },
+      "soict24_cam_09": {
+        "v10_camera": "hodabac554",
+        "v5_video": "soict24_cam_09",
+        "ncc": 0.5001
+      },
+      "soict24_cam_10": {
+        "v10_camera": "nga3baude78",
+        "v5_video": "soict24_cam_10",
+        "ncc": 0.2048
+      }
+    },
+    "baseline_v10_diff_site": {
+      "p50": 0.0906,
+      "p95": 0.4274,
+      "p99": 0.5904,
+      "max": 0.7172
+    },
+    "baseline_v10_same_site_diff_channel": {
+      "p50": 0.2124,
+      "p95": 0.5216,
+      "p99": 0.5365,
+      "max": 0.5402
+    },
+    "baseline_v5_eval_between_videos": {
+      "cantho_CoopMart-8h30-9h00 vs cantho_camDLHB-13h20---13h57": 0.8209,
+      "cantho_CoopMart-8h30-9h00 vs soict24_cam_07": 0.0557,
+      "cantho_CoopMart-8h30-9h00 vs soict24_cam_09": 0.1792,
+      "cantho_CoopMart-8h30-9h00 vs soict24_cam_10": 0.0684,
+      "cantho_camDLHB-13h20---13h57 vs soict24_cam_07": 0.2292,
+      "cantho_camDLHB-13h20---13h57 vs soict24_cam_09": 0.2781,
+      "cantho_camDLHB-13h20---13h57 vs soict24_cam_10": -0.1372,
+      "soict24_cam_07 vs soict24_cam_09": 0.4211,
+      "soict24_cam_07 vs soict24_cam_10": -0.104,
+      "soict24_cam_09 vs soict24_cam_10": -0.2523
+    },
+    "positive_control_same_camera_split_half": {
+      "summary": {
+        "p50": 0.9651,
+        "p95": 0.9983,
+        "p99": 0.999,
+        "max": 0.9991,
+        "p5": 0.7809,
+        "min": 0.7669
+      },
+      "n_below_threshold": 8,
+      "v10": {
+        "caunamprc554": 0.9296,
+        "caunamprc555": 0.9302,
+        "garagecuong554": 0.9715,
+        "hoaphu555": 0.9689,
+        "nga3duong554": 0.9651,
+        "nga3muitau554": 0.9524,
+        "nga3phuocthe554": 0.9619,
+        "xom7vinhtan554": 0.9614,
+        "benxetp555": 0.7669,
+        "cafeminghouse554": 0.8263,
+        "cafestart554": 0.8235,
+        "chophuocvinh12": 0.8812,
+        "comkimngan554": 0.888,
+        "docvinhhanh554": 0.9153,
+        "hoaphu557": 0.8678,
+        "hodabac554": 0.9032,
+        "hungvuong556": 0.9973,
+        "nga3doclap36": 0.9917,
+        "nga3doclap37": 0.9981,
+        "nga4hamthang555": 0.9198,
+        "ngabathomo554": 0.7815,
+        "nguyenvantroi56": 0.997,
+        "nhatholetrang84": 0.9906,
+        "nhatholetrang86": 0.9935,
+        "quancomhai555": 0.7796,
+        "quangtrung54": 0.9577,
+        "tranhungdao59": 0.9944,
+        "tranquangdieu48": 0.979,
+        "tranquangdieu52": 0.9934,
+        "tranquangdieu556": 0.9976
+      },
+      "v5": {
+        "cantho_CoopMart-8h30-9h00": 0.9899,
+        "cantho_camDLHB-13h20---13h57": 0.9987,
+        "soict24_cam_07": 0.9975,
+        "soict24_cam_09": 0.9991,
+        "soict24_cam_10": 0.9964
+      }
+    }
+  },
+  "sanity_v5plus_eval": {
+    "val": {
+      "n_v5": 1466,
+      "n_v5plus": 1466,
+      "identical_sets": true,
+      "n_v10_files_in_v5plus": 0
+    },
+    "test": {
+      "n_v5": 1500,
+      "n_v5plus": 1500,
+      "identical_sets": true,
+      "n_v10_files_in_v5plus": 0
+    },
+    "ok": true
+  },
+  "preview": "reports/v10_cross_v5_preview.jpg"
+}

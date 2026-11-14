@@ -17,6 +17,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import check_camera_leak_v10 as cam_chk  # noqa: E402
+import check_cross_v5_leak_v10 as cross_chk  # noqa: E402
 import check_exact_duplicates_v10 as md5_chk  # noqa: E402
 import check_label_integrity_v10 as lbl_chk  # noqa: E402
 import check_perceptual_duplicates_v10 as phash_chk  # noqa: E402
@@ -65,23 +66,31 @@ def build_markdown(sv, res, feas) -> str:
     w(f"_Sinh tự động bởi [audit_v10_all.py](../scripts/data_prep/audit_v10/audit_v10_all.py) "
       f"lúc {datetime.now():%Y-%m-%d %H:%M}. Chỉ đọc dữ liệu, không sửa split._\n")
 
-    verdict = ("❌ **v10 LEAK** — train/valid/test gốc của v10 rò rỉ lẫn nhau (camera, xe, thời gian, "
-               "khung hình gần trùng). **Không** được dùng valid/test của v10 để đánh giá, và **chưa** được "
-               "coi là an toàn khi gộp vào V5+ cho tới khi xử lý các điểm ở mục 4."
-               if any_leak or label_fail else
-               "✅ **v10 CLEAN — có thể gộp vào V5+ an toàn.**")
-    w(f"## Kết luận\n\n{verdict}\n")
-    if any_leak:
-        w("**Bối cảnh V5+:** [build_v5plus_merged.py:3](../scripts/data_prep/build_v5plus_merged.py#L3) "
-          "gộp **cả 3 split** của v10 vào **train** V5+, val/test giữ nguyên của V5. Do đó leak *nội bộ* v10 "
-          "**không** làm sai số liệu eval của V5+ — nó chỉ làm valid/test gốc của v10 vô giá trị. "
-          "Hai điều kiện còn lại trước khi coi V5+ là sạch:")
-        w("1. **Chưa kiểm tra**: leak chéo v10 ↔ val/test V5 (cùng camera/khung hình với `vn_cantho`, `vnv3`).")
-        w("2. **Rủi ro chất lượng nhãn**: trung bình chỉ ~1.3 box/ảnh trên ảnh CCTV nhiều xe, và các file cùng "
-          "camera + cùng giây mang **bộ nhãn khác nhau** (vd `general_caunamprc554_50Y31618_13-02-2024_13-08-11` "
-          "có 2 box, bản ở test chỉ 1 box) → nhiều xe trong ảnh không được gán nhãn, model bị dạy coi xe là nền. "
-          "Cần kiểm tra trực quan một mẫu trước khi tin dùng.\n")
-        w("_Ghi chú: docstring build_v5plus_merged.py ghi \"~776 camera\" — thực tế parse được 44 camera._\n")
+    cross = res["cross"]
+    cross_ok = cross["verdict"] == "PASS"
+    w("## Kết luận\n")
+    w("| Câu hỏi | Trả lời |")
+    w("|---|---|")
+    w("| v10 standalone có sạch (split nội bộ)? | " + (
+        "❌ **Không** — train/valid/test gốc rò rỉ lẫn nhau (camera, xe, thời gian, khung gần trùng). "
+        "Không được dùng valid/test của v10 để đánh giá." if any_leak else "✅ Có") + " |")
+    w("| Gộp v10 vào **train** V5+ (val/test giữ của V5) có làm leak eval V5+? | " + (
+        "✅ **Không** — 0 ảnh/khung/camera của v10 trùng với val/test V5 (check (g))." if cross_ok else
+        "❌ **Có** — xem check (g).") + " |")
+    w("| Nhãn có hợp lệ? | " + ("✅ Format hợp lệ" if not label_fail else "❌ Có lỗi format") +
+      "; ⚠️ nghi **thiếu nhãn** (xem dưới) |")
+    w("")
+    if any_leak and cross_ok:
+        w("**→ Về leakage, v10 an toàn để gộp vào train V5+ theo đúng cách "
+          "[build_v5plus_merged.py:3](../scripts/data_prep/build_v5plus_merged.py#L3) đang làm** "
+          "(gộp cả 3 split v10 vào train, val/test giữ của V5): leak nội bộ v10 không chạm tới eval V5+. "
+          "**Không** an toàn nếu dùng split gốc của v10 làm val/test.\n")
+    w("**Còn lại — rủi ro chất lượng nhãn (không phải leak):** trung bình chỉ ~1.3 box/ảnh trên ảnh CCTV "
+      "nhiều xe, và các file cùng camera + cùng giây mang **bộ nhãn khác nhau** (vd "
+      "`general_caunamprc554_50Y31618_13-02-2024_13-08-11` có 2 box, bản ở test chỉ 1 box) → nhiều xe "
+      "không được gán nhãn, model có thể bị dạy coi xe là nền. Một số ảnh `gen_*` còn có **khung bbox vẽ "
+      "sẵn lên pixel** (thấy trong preview của check (g)). Nên kiểm tra trực quan một mẫu trước khi tin dùng.\n")
+    w("_Ghi chú: docstring build_v5plus_merged.py ghi \"~776 camera\" — thực tế parse được 44 camera._\n")
 
     w("## 1. Tổng quan cấu trúc\n")
     w(f"- Nguồn: `{_rel(V10_ROOT)}` (Roboflow `visionvn/vietnam_vehicles` v10, export 2024-09-05, "
@@ -117,6 +126,10 @@ def build_markdown(sv, res, feas) -> str:
       f"ảnh dính: valid {ph['pct_images_flagged'].get('valid', 0)}%, test {ph['pct_images_flagged'].get('test', 0)}% | {ICON[ph['verdict']]} |")
     w(f"| (f) Label integrity | 0 lỗi format/class/bbox | {sum(s['n_files_with_issues'] for s in lbl['splits'].values())} file lỗi | {ICON[lbl['verdict']]} |")
     w(f"| (f') Phân phối class | lệch ≤15pp giữa split | {len(lbl['class_shift_flags'])} class lệch | {ICON[lbl['distribution_verdict']]} |")
+    cb = cross["background"]
+    w(f"| (g) Chéo v10 ↔ val/test V5 | MD5=0, pHash≤5=0, NCC nền camera <0.90 và < min đối chứng | "
+      f"MD5 {cross['md5']['n_hits']}, pHash {cross['phash']['n_pairs']} (min d={cross['phash']['min_hamming']}), "
+      f"NCC max {cb['max_cross_ncc']} | {ICON[cross['verdict']]} |")
     w("")
 
     w("## 3. Chi tiết\n")
@@ -175,6 +188,27 @@ def build_markdown(sv, res, feas) -> str:
     w(f"- Không class nào lệch >15pp giữa split, nhưng container/xe_ba_gac ở valid/test gần **gấp đôi** train "
       f"(~15% vs ~8%). Imbalance nội tại max/min = {lbl['overall_max_min_ratio']}× (xe_may chiếm ~53%).\n")
 
+    w("### (g) Leak chéo v10 ↔ val/test V5\n")
+    pc = cb["positive_control_same_camera_split_half"]["summary"]
+    w(f"- So {cross['n_v10_images']} ảnh v10 (cả 3 split, vì đều vào train V5+) với "
+      f"{cross['n_v5_eval_images']} ảnh val/test V5: {cross['v5_eval_videos']}.")
+    w(f"- MD5 trùng: {cross['md5']['n_hits']}. pHash: 0 cặp ≤{cross['phash']['threshold']}, "
+      f"cặp gần nhất d={cross['phash']['min_hamming']} (và là cảnh khác hẳn khi xem bằng mắt).")
+    w("- Ảnh nền camera (trung bình xám ≤150 ảnh/camera, so NCC):")
+    w(f"  - Đối chứng dương — cùng camera chia 2 nửa: trung vị {pc['p50']}, nhỏ nhất {pc['min']}")
+    w(f"  - Baseline v10 khác địa điểm: trung vị {cb['baseline_v10_diff_site']['p50']}, "
+      f"max {cb['baseline_v10_diff_site']['max']}; cùng địa điểm khác kênh: max "
+      f"{cb['baseline_v10_same_site_diff_channel']['max']}")
+    w(f"  - **Chéo v10 ↔ V5 eval: max {cb['max_cross_ncc']}** — thấp hơn hẳn đối chứng cùng camera "
+      f"({pc['min']}), nằm trong vùng \"khác camera\".")
+    w("  - Top cặp: " + ", ".join(f"`{p['v10_camera']}`↔`{p['v5_video']}` {p['ncc']}" for p in cb["top10_cross"][:3]))
+    s = cross["sanity_v5plus_eval"]
+    w(f"- Sanity: val/test của `merged_v5plus` trùng khớp V5 và không chứa file `v10_*`: "
+      f"{'✅' if s['ok'] else '❌'}.")
+    w(f"- Preview kiểm tra bằng mắt: [{cross['preview']}](../{cross['preview']}) (trái: v10, phải: V5).")
+    w("- Giới hạn: không bắt được trường hợp cùng địa điểm nhưng góc quay khác hẳn (NCC nền thấp). "
+      "Với 44 camera v10 (tên địa điểm VN) và V5 eval (SOICT24 + Cần Thơ) thì khả năng này thấp.\n")
+
     w("## 4. Cần fix gì trước khi gộp (ĐỀ XUẤT — chưa thực hiện)\n")
     if not (any_leak or label_fail):
         w("Không cần fix. v10 có thể gộp vào V5+ an toàn.\n")
@@ -183,8 +217,8 @@ def build_markdown(sv, res, feas) -> str:
         w("**Hướng A — Chỉ dùng v10 để train (khuyến nghị, đơn giản nhất):**")
         w("1. Gộp **toàn bộ** train+valid+test của v10 vào train của V5+; **không** dùng valid/test của v10 "
           "để báo cáo số liệu. Leak nội bộ v10 khi đó vô hại vì không có split eval nào của v10.")
-        w("2. Vẫn phải kiểm tra **leak chéo v10 ↔ V5 test/val**: chạy pHash + MD5 giữa ảnh v10 và "
-          "val/test của V5 (V5 có `vn_cantho`, `vnv3` cũng là CCTV Việt Nam — có thể trùng camera).")
+        w("2. Leak chéo v10 ↔ val/test V5: " + ("✅ đã kiểm tra, PASS (check (g))." if cross_ok else
+          "❌ check (g) FAIL — loại các ảnh/camera v10 trùng khỏi train trước khi gộp."))
         w("3. Dedup khung hình trùng trong v10 (cùng camera + cùng giây / pHash≤2) để tránh over-weight; "
           "giữ một bản và **gộp nhãn** của các bản (mỗi file có thể chỉ gán nhãn một số xe trong khung).")
         w("")
@@ -224,12 +258,14 @@ def main() -> int:
     res = {
         "md5": md5_chk.run(), "cam": cam_chk.run(), "veh": veh_chk.run(),
         "tmp": time_chk.run(), "ph": phash_chk.run(), "lbl": lbl_chk.run(),
+        "cross": cross_chk.run(),
     }
     res["_files"] = {
         "survey": _rel(REPORTS_DIR / "v10_survey.json"),
         "(a) exact duplicate": _rel(md5_chk.OUT), "(b) camera leak": _rel(cam_chk.OUT),
         "(c) vehicle leak": _rel(veh_chk.OUT), "(d) temporal leak": _rel(time_chk.OUT),
         "(e) pHash near-dup": _rel(phash_chk.OUT), "(f) label integrity": _rel(lbl_chk.OUT),
+        "(g) leak chéo v10 ↔ V5 eval": _rel(cross_chk.OUT), "(g) preview": _rel(cross_chk.PREVIEW),
     }
     md = build_markdown(sv, res, _feasibility(recs))
     a.out.parent.mkdir(parents=True, exist_ok=True)
