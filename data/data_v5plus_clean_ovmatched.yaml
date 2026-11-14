@@ -1,0 +1,13 @@
+# V5+clean [ovmatched] — sinh bởi scripts/data_prep/build_v5plus_clean.py
+# Test = V5 test nguyên vẹn; val = V5 val bỏ Cần Thơ (leak camera). Xem reports/v5plus_clean_datasheet.md
+path: /home/xuand/vn_traffic_ai/data/merged_v5plus_clean_ovmatched
+train: images/train
+val:   images/val
+test:  images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck

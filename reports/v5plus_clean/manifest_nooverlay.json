@@ -1,0 +1,3703 @@
+{
+ "variant": "nooverlay",
+ "built_at": "2026-11-14T14:01:19",
+ "git_head": "2030a6d25aef8d1f58efa39108af8bf6002a05c8",
+ "builder": "scripts/data_prep/build_v5plus_clean.py",
+ "dataset_root": "data/merged_v5plus_clean_nooverlay",
+ "yaml": "data/data_v5plus_clean_nooverlay.yaml",
+ "counts": {
+  "v5_train": 2833,
+  "v5_val": 1000,
+  "v5_test": 1500,
+  "v10_train": 515,
+  "train_total": 3348
+ },
+ "val_policy": "clean",
+ "val_excluded_prefixes": [
+  "cantho_"
+ ],
+ "v10_pct_of_train": 15.38,
+ "class_boxes": {
+  "train_v5": {
+   "motorcycle": 10124,
+   "car": 5656,
+   "bus": 1399,
+   "truck": 3102
+  },
+  "train_v10": {
+   "motorcycle": 78,
+   "car": 28,
+   "bus": 4,
+   "truck": 512
+  },
+  "val": {
+   "motorcycle": 5852,
+   "car": 1654,
+   "bus": 447,
+   "truck": 1913
+  },
+  "test": {
+   "motorcycle": 39807,
+   "car": 8031,
+   "bus": 756,
+   "truck": 852
+  }
+ },
+ "v10_overlay_in_train": 0,
+ "eval_fingerprint": {
+  "val": {
+   "n_images": 1000,
+   "sha256": "bcfe4e07fd665f5a3edabf119b34fc431b6027ebfd447913325fb58fa3e4d2e7"
+  },
+  "test": {
+   "n_images": 1500,
+   "sha256": "195d764ec1ae14e844c65608574a18e60ee2c351ca687774d39f14988d09db81"
+  }
+ },
+ "v5_eval_fingerprint_reference": {
+  "val": {
+   "n_images": 1000,
+   "sha256": "bcfe4e07fd665f5a3edabf119b34fc431b6027ebfd447913325fb58fa3e4d2e7"
+  },
+  "test": {
+   "n_images": 1500,
+   "sha256": "195d764ec1ae14e844c65608574a18e60ee2c351ca687774d39f14988d09db81"
+  }
+ },
+ "rules": {
+  "R1": "bỏ ảnh có xe_ba_gac",
+  "R2": "dedup cùng camera + pHash≤4 + (cùng biển số | Δt≤2s)",
+  "R3": "bỏ ảnh có xe chưa gán nhãn theo detector COCO",
+  "R4": "bỏ nhãn lỗi/rỗng"
+ },
+ "class_map_v10_to_v5": {
+  "container": "truck",
+  "oto": "car",
+  "xe_ba_gac": "DROP_IMAGE",
+  "xe_khach": "bus",
+  "xe_may": "motorcycle",
+  "xe_tai": "truck"
+ },
+ "v10_selection": {
+  "detector": {
+   "weights": "yolov8m.pt",
+   "weights_sha256": "5d4a90cdc7a21786cc59cd19778e9eafff836df9e2da32524737c7ee6efe4fe5",
+   "params": {
+    "conf": 0.5,
+    "iou": 0.3,
+    "ioa": 0.6,
+    "min_area": 0.002
+   }
+  },
+  "n_raw": 4824,
+  "n_kept": 4136,
+  "seed": 0
+ },
+ "v10_files": [
+  {
+   "file": "v10_general_caunamprc554_51K03770_10-02-2024_00-45-43_640_jpg.rf.acc0ab8058d3080b5b53b99107d3aec0.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_caunamprc554_51K03770_10-02-2024_00-45-43_640_jpg.rf.acc0ab8058d3080b5b53b99107d3aec0.jpg",
+   "camera_id": "caunamprc554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_51R13112_09-02-2024_09-24-29_640_jpg.rf.ca4102d9b6979c9006c47f87f40eb994.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_51R13112_09-02-2024_09-24-29_640_jpg.rf.ca4102d9b6979c9006c47f87f40eb994.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_51R15010_07-02-2024_18-13-42_640_jpg.rf.5a0961977cdfc7f87323a82f6ccd7f63.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_51R15010_07-02-2024_18-13-42_640_jpg.rf.5a0961977cdfc7f87323a82f6ccd7f63.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 3
+  },
+  {
+   "file": "v10_general_garagecuong554_51R16421_07-02-2024_23-51-49_640_jpg.rf.035d17614a269fbe28f84629ccd7c5c0.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_51R16421_07-02-2024_23-51-49_640_jpg.rf.035d17614a269fbe28f84629ccd7c5c0.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_51R27508_08-02-2024_21-41-13_640_jpg.rf.d219d2b68105519287a1f8bd11dbb1b3.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_51R27508_08-02-2024_21-41-13_640_jpg.rf.d219d2b68105519287a1f8bd11dbb1b3.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_61L93058_08-02-2024_07-55-48_640_jpg.rf.5849e0735d4ea22037595138e06fb8e3.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_61L93058_08-02-2024_07-55-48_640_jpg.rf.5849e0735d4ea22037595138e06fb8e3.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 3
+  },
+  {
+   "file": "v10_general_garagecuong554_65M00030_07-02-2024_19-41-53_640_jpg.rf.bdc2a4b94f8c46e7ef3e19629a92d73e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_65M00030_07-02-2024_19-41-53_640_jpg.rf.bdc2a4b94f8c46e7ef3e19629a92d73e.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_72R02619_09-02-2024_14-54-57_640_jpg.rf.4702c58006de788c1b9d09b0cdbe2a54.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_72R02619_09-02-2024_14-54-57_640_jpg.rf.4702c58006de788c1b9d09b0cdbe2a54.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_76R00040_08-02-2024_22-14-11_640_jpg.rf.5930ae84909d124e5625062a25e06116.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_76R00040_08-02-2024_22-14-11_640_jpg.rf.5930ae84909d124e5625062a25e06116.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R03650_08-02-2024_13-06-42_640_jpg.rf.424fe0cec7fa9b79f8404784e9fb12fe.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_77R03650_08-02-2024_13-06-42_640_jpg.rf.424fe0cec7fa9b79f8404784e9fb12fe.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_77R03892_08-02-2024_15-26-02_640_jpg.rf.39f9ceed8f84e325e8088b970823ebc6.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_77R03892_08-02-2024_15-26-02_640_jpg.rf.39f9ceed8f84e325e8088b970823ebc6.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R06667_09-02-2024_01-43-46_640_jpg.rf.71d4187c435ecf8086c7adac1cd4d144.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_77R06667_09-02-2024_01-43-46_640_jpg.rf.71d4187c435ecf8086c7adac1cd4d144.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_78R00903_08-02-2024_07-46-22_640_jpg.rf.f1178368b142adfbd541a2600e8cc12a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_78R00903_08-02-2024_07-46-22_640_jpg.rf.f1178368b142adfbd541a2600e8cc12a.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_79R00722_08-02-2024_08-08-47_640_jpg.rf.3f24737382aa659d4efa22259f0e3cf8.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_79R00722_08-02-2024_08-08-47_640_jpg.rf.3f24737382aa659d4efa22259f0e3cf8.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_79R01238_08-02-2024_01-34-21_640_jpg.rf.0033f59eac7a5f9af166c7ed7acc9978.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_79R01238_08-02-2024_01-34-21_640_jpg.rf.0033f59eac7a5f9af166c7ed7acc9978.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_94R00122_07-02-2024_23-28-16_640_jpg.rf.deb8b8049fb0b0395a65f3436dd52d11.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_94R00122_07-02-2024_23-28-16_640_jpg.rf.deb8b8049fb0b0395a65f3436dd52d11.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_51R07817_10-02-2024_16-49-47_640_jpg.rf.9da7505132d310cf316460ae0650e4ca.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_nga3duong554_51R07817_10-02-2024_16-49-47_640_jpg.rf.9da7505132d310cf316460ae0650e4ca.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_77M00126_09-02-2024_09-48-10_640_jpg.rf.add56da18a35fd53bdae29aa0d4e8825.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_nga3duong554_77M00126_09-02-2024_09-48-10_640_jpg.rf.add56da18a35fd53bdae29aa0d4e8825.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 3
+  },
+  {
+   "file": "v10_general_nga3duong554_77R03119_07-02-2024_19-14-02_640_jpg.rf.54e8e404b44bf89e792d5ddc03647b73.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_nga3duong554_77R03119_07-02-2024_19-14-02_640_jpg.rf.54e8e404b44bf89e792d5ddc03647b73.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_77R03437_07-02-2024_21-38-05_640_jpg.rf.a643f3e42c7345326c905558405f1e52.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_nga3duong554_77R03437_07-02-2024_21-38-05_640_jpg.rf.a643f3e42c7345326c905558405f1e52.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_86A804731_14-02-2024_17-15-28_640_jpg.rf.15471d2d9ca23b71b7ea9119e241a1e3.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_nga3duong554_86A804731_14-02-2024_17-15-28_640_jpg.rf.15471d2d9ca23b71b7ea9119e241a1e3.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_86B269777_13-02-2024_08-06-23_640_jpg.rf.b9b5dc6e30317ebef5172074af071f1d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_nga3duong554_86B269777_13-02-2024_08-06-23_640_jpg.rf.b9b5dc6e30317ebef5172074af071f1d.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_92R00422_08-02-2024_05-00-30_640_jpg.rf.c4e0305a983738de2ed44bdc3f5e2dde.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_nga3duong554_92R00422_08-02-2024_05-00-30_640_jpg.rf.c4e0305a983738de2ed44bdc3f5e2dde.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_12R01009_08-02-2024_14-54-33_640_jpg.rf.2d1f6d99af11770146a4f34007b7cbd3.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_nga3phuocthe554_12R01009_08-02-2024_14-54-33_640_jpg.rf.2d1f6d99af11770146a4f34007b7cbd3.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_51R24625_07-02-2024_21-07-53_640_jpg.rf.c4a52493dec12a1d3bb76dc941a7dd70.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_nga3phuocthe554_51R24625_07-02-2024_21-07-53_640_jpg.rf.c4a52493dec12a1d3bb76dc941a7dd70.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_77R01415_09-02-2024_12-34-36_640_jpg.rf.fe26654195634b69969744a0f809ef70.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_nga3phuocthe554_77R01415_09-02-2024_12-34-36_640_jpg.rf.fe26654195634b69969744a0f809ef70.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_86R01154_08-02-2024_02-15-37_640_jpg.rf.bbfed9391909a1da3facb498f5950ef1.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_nga3phuocthe554_86R01154_08-02-2024_02-15-37_640_jpg.rf.bbfed9391909a1da3facb498f5950ef1.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_12R00339_08-02-2024_19-10-27_640_jpg.rf.38d2c06763855a9d1de46b3c652c5ffb.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_12R00339_08-02-2024_19-10-27_640_jpg.rf.38d2c06763855a9d1de46b3c652c5ffb.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_12R01009_08-02-2024_14-38-34_640_jpg.rf.e310f9f1c234b0f6ac5a0008781b4d96.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_12R01009_08-02-2024_14-38-34_640_jpg.rf.e310f9f1c234b0f6ac5a0008781b4d96.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_29H04968_08-02-2024_17-30-31_640_jpg.rf.ad34a0bf2903260bab7526bcb1fac24d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_29H04968_08-02-2024_17-30-31_640_jpg.rf.ad34a0bf2903260bab7526bcb1fac24d.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_29R50301_08-02-2024_14-39-14_640_jpg.rf.4e970aebdaac509481d361d61d1a0960.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_29R50301_08-02-2024_14-39-14_640_jpg.rf.4e970aebdaac509481d361d61d1a0960.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_36H02128_09-02-2024_14-43-31_640_jpg.rf.4b965cfec2106a76cb8c1ded20f2898e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_36H02128_09-02-2024_14-43-31_640_jpg.rf.4b965cfec2106a76cb8c1ded20f2898e.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_50H00296_09-02-2024_10-08-10_640_jpg.rf.9afa63a4d5b005c76e0ef16d82917861.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_50H00296_09-02-2024_10-08-10_640_jpg.rf.9afa63a4d5b005c76e0ef16d82917861.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_50M00062_10-02-2024_20-11-19_640_jpg.rf.bb3e0b4255247c87999255f5e701ec8a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_50M00062_10-02-2024_20-11-19_640_jpg.rf.bb3e0b4255247c87999255f5e701ec8a.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51B33082_08-02-2024_11-18-45_640_jpg.rf.76a48e251d8a18eafb7b5f2b89fb9f24.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_51B33082_08-02-2024_11-18-45_640_jpg.rf.76a48e251d8a18eafb7b5f2b89fb9f24.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R09844_08-02-2024_00-20-44_640_jpg.rf.0c9a02e85d101380ec976de55eec5fb8.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_51R09844_08-02-2024_00-20-44_640_jpg.rf.0c9a02e85d101380ec976de55eec5fb8.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R09955_09-02-2024_23-33-33_640_jpg.rf.ba1d4cd160bb0282ddf679ccfdd618e4.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_51R09955_09-02-2024_23-33-33_640_jpg.rf.ba1d4cd160bb0282ddf679ccfdd618e4.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R10593_07-02-2024_21-25-22_640_jpg.rf.de10b7ab486a86e04e82cec27ea4aa36.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_51R10593_07-02-2024_21-25-22_640_jpg.rf.de10b7ab486a86e04e82cec27ea4aa36.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R21069_07-02-2024_22-49-05_640_jpg.rf.3b1d27f81ee5cbd478c86f2a6a253c90.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_51R21069_07-02-2024_22-49-05_640_jpg.rf.3b1d27f81ee5cbd478c86f2a6a253c90.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R27026_07-02-2024_23-56-31_640_jpg.rf.143846394a5c4f9ecbf9d73eff08534f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_51R27026_07-02-2024_23-56-31_640_jpg.rf.143846394a5c4f9ecbf9d73eff08534f.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R27493_09-02-2024_02-19-36_640_jpg.rf.950a1ce97d398c855eed95d97979bf21.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_51R27493_09-02-2024_02-19-36_640_jpg.rf.950a1ce97d398c855eed95d97979bf21.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_60R04599_08-02-2024_20-24-52_640_jpg.rf.d1f21da121c7cc0b6bbc738702540078.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_60R04599_08-02-2024_20-24-52_640_jpg.rf.d1f21da121c7cc0b6bbc738702540078.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_61R02666_08-02-2024_16-10-32_640_jpg.rf.49602fb9cc92cfd52310c01acd1a28aa.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_61R02666_08-02-2024_16-10-32_640_jpg.rf.49602fb9cc92cfd52310c01acd1a28aa.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_62R01378_09-02-2024_02-57-34_640_jpg.rf.05cc9b7fe738ff501a904612dde89f2d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_62R01378_09-02-2024_02-57-34_640_jpg.rf.05cc9b7fe738ff501a904612dde89f2d.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00142_09-02-2024_01-18-11_640_jpg.rf.6b17ecf4b8baea0515852893ded3a2aa.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_63R00142_09-02-2024_01-18-11_640_jpg.rf.6b17ecf4b8baea0515852893ded3a2aa.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00673_09-02-2024_05-03-27_640_jpg.rf.25037864773b62701511e67da101d516.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_63R00673_09-02-2024_05-03-27_640_jpg.rf.25037864773b62701511e67da101d516.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_64R00137_09-02-2024_11-21-26_640_jpg.rf.f2d6b8e278139912d5fd9a63680e9be4.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_64R00137_09-02-2024_11-21-26_640_jpg.rf.f2d6b8e278139912d5fd9a63680e9be4.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_64R00275_09-02-2024_14-22-58_640_jpg.rf.34be56d7d435c2592971249d10665507.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_64R00275_09-02-2024_14-22-58_640_jpg.rf.34be56d7d435c2592971249d10665507.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77B03397_07-02-2024_17-24-18_640_jpg.rf.48a295ba36ce0dfaa1aa152e83cb82f9.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_77B03397_07-02-2024_17-24-18_640_jpg.rf.48a295ba36ce0dfaa1aa152e83cb82f9.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77R04628_08-02-2024_02-08-49_640_jpg.rf.36245f0d75fa3f03fe1107599f0d8324.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_77R04628_08-02-2024_02-08-49_640_jpg.rf.36245f0d75fa3f03fe1107599f0d8324.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_79R00849_07-02-2024_23-05-47_640_jpg.rf.0d6e8a3463d1675f64c3cad6b2d2a170.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_79R00849_07-02-2024_23-05-47_640_jpg.rf.0d6e8a3463d1675f64c3cad6b2d2a170.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_79R01077_09-02-2024_12-38-00_640_jpg.rf.d9d15db377b1b258422eaa7c8a22c3c9.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_79R01077_09-02-2024_12-38-00_640_jpg.rf.d9d15db377b1b258422eaa7c8a22c3c9.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86P01047_07-02-2024_18-46-16_640_jpg.rf.893528b741a8b85746758c71d5d0ad81.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_86P01047_07-02-2024_18-46-16_640_jpg.rf.893528b741a8b85746758c71d5d0ad81.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R00566_08-02-2024_14-28-28_640_jpg.rf.5922c1d74c6accbc1197d2cc794f3d07.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_86R00566_08-02-2024_14-28-28_640_jpg.rf.5922c1d74c6accbc1197d2cc794f3d07.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc554_12R00985_07-02-2024_19-54-13_640_jpg.rf.3b11d5533f350ea819bcd316508a7ea4.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc554_12R00985_07-02-2024_19-54-13_640_jpg.rf.3b11d5533f350ea819bcd316508a7ea4.jpg",
+   "camera_id": "caunamprc554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc554_51B12553_07-02-2024_18-27-59_640_jpg.rf.792fac09110a12bedf022e482f51303d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc554_51B12553_07-02-2024_18-27-59_640_jpg.rf.792fac09110a12bedf022e482f51303d.jpg",
+   "camera_id": "caunamprc554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc554_51R13112_10-02-2024_23-01-12_640_jpg.rf.60a6b2f307655f8b08de7ceccbf75bf4.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc554_51R13112_10-02-2024_23-01-12_640_jpg.rf.60a6b2f307655f8b08de7ceccbf75bf4.jpg",
+   "camera_id": "caunamprc554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc554_77R02132_07-02-2024_13-33-23_640_jpg.rf.0c6d5672118ddbf1422609adcd2b405e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc554_77R02132_07-02-2024_13-33-23_640_jpg.rf.0c6d5672118ddbf1422609adcd2b405e.jpg",
+   "camera_id": "caunamprc554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc554_78R00566_10-02-2024_07-49-59_640_jpg.rf.cccc4c3fefa06ecc7140f67bacc255f6.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc554_78R00566_10-02-2024_07-49-59_640_jpg.rf.cccc4c3fefa06ecc7140f67bacc255f6.jpg",
+   "camera_id": "caunamprc554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_caunamprc555_51R22676_07-02-2024_13-36-10_640_jpg.rf.6ffecd22bd3e720957071430b46caa4b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_51R22676_07-02-2024_13-36-10_640_jpg.rf.6ffecd22bd3e720957071430b46caa4b.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc555_51R25941_07-02-2024_17-20-36_640_jpg.rf.bfae4ae2fd18564b5c31c8156e9be180.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_51R25941_07-02-2024_17-20-36_640_jpg.rf.bfae4ae2fd18564b5c31c8156e9be180.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_caunamprc555_77R02711_08-02-2024_00-10-09_640_jpg.rf.788f9369e80ed7a3363eb75827b91f8f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_77R02711_08-02-2024_00-10-09_640_jpg.rf.788f9369e80ed7a3363eb75827b91f8f.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc555_77R03437_07-02-2024_21-33-13_640_jpg.rf.93a27f7cdf19c3174efc935a9a3d5638.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_77R03437_07-02-2024_21-33-13_640_jpg.rf.93a27f7cdf19c3174efc935a9a3d5638.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc555_86C03997_25-01-2024_15-28-46_640_jpg.rf.38498f8bc809cfaab2f433686e25eac1.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_86C03997_25-01-2024_15-28-46_640_jpg.rf.38498f8bc809cfaab2f433686e25eac1.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc555_86C14755_16-02-2024_07-32-43_640_jpg.rf.356d12b5de9a6ab4dbe43511fec3a1b0.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_86C14755_16-02-2024_07-32-43_640_jpg.rf.356d12b5de9a6ab4dbe43511fec3a1b0.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_caunamprc555_86R00950_10-02-2024_15-11-14_640_jpg.rf.4217e9eb23cf643a7694f49846e4f39c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_86R00950_10-02-2024_15-11-14_640_jpg.rf.4217e9eb23cf643a7694f49846e4f39c.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc555_86R01111_08-02-2024_00-21-17_640_jpg.rf.a2a3f112c7eda76c173255d0a9f08e5b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_86R01111_08-02-2024_00-21-17_640_jpg.rf.a2a3f112c7eda76c173255d0a9f08e5b.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_caunamprc555_92R01054_08-02-2024_00-04-37_640_jpg.rf.1238a4130c6be9351e202b49001ee33a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_92R01054_08-02-2024_00-04-37_640_jpg.rf.1238a4130c6be9351e202b49001ee33a.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_15R08974_08-02-2024_01-02-15_640_jpg.rf.e82fa8ff77b9c09e2f02184053993b7a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_15R08974_08-02-2024_01-02-15_640_jpg.rf.e82fa8ff77b9c09e2f02184053993b7a.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_15R16033_08-02-2024_17-03-44_640_jpg.rf.9ee61668245afdcd0f8ba24e31758e4b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_15R16033_08-02-2024_17-03-44_640_jpg.rf.9ee61668245afdcd0f8ba24e31758e4b.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_15R18899_08-02-2024_15-03-01_640_jpg.rf.2e8da3f92cdf87f8041b133022f56158.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_15R18899_08-02-2024_15-03-01_640_jpg.rf.2e8da3f92cdf87f8041b133022f56158.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_17R00704_08-02-2024_15-14-39_640_jpg.rf.8b6d452ef38deedb99e2c6a4d4e81413.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_17R00704_08-02-2024_15-14-39_640_jpg.rf.8b6d452ef38deedb99e2c6a4d4e81413.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_24R01521_09-02-2024_07-06-43_640_jpg.rf.048eda9f0734713a34e0ff783ab0d47c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_24R01521_09-02-2024_07-06-43_640_jpg.rf.048eda9f0734713a34e0ff783ab0d47c.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_29R51409_08-02-2024_16-13-17_640_jpg.rf.6d9e93d7be545ed694e42fa31eb0dd1a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_29R51409_08-02-2024_16-13-17_640_jpg.rf.6d9e93d7be545ed694e42fa31eb0dd1a.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_34R00311_07-02-2024_22-23-59_640_jpg.rf.d53104df53b1211f77e8b66884ad7dc3.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_34R00311_07-02-2024_22-23-59_640_jpg.rf.d53104df53b1211f77e8b66884ad7dc3.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_34R03689_09-02-2024_07-29-15_640_jpg.rf.5c6865ad20b33c882f445cbd4aa21006.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_34R03689_09-02-2024_07-29-15_640_jpg.rf.5c6865ad20b33c882f445cbd4aa21006.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_36R03265_08-02-2024_16-55-48_640_jpg.rf.378648695c55b294ffd0405c52991041.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_36R03265_08-02-2024_16-55-48_640_jpg.rf.378648695c55b294ffd0405c52991041.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 5
+  },
+  {
+   "file": "v10_general_garagecuong554_37R018641_08-02-2024_07-47-13_640_jpg.rf.875ca1bc762e8949d26591bd44e77148.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_37R018641_08-02-2024_07-47-13_640_jpg.rf.875ca1bc762e8949d26591bd44e77148.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_37R02784_09-02-2024_15-29-16_640_jpg.rf.300d758de6d3c98d38747639339f372b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_37R02784_09-02-2024_15-29-16_640_jpg.rf.300d758de6d3c98d38747639339f372b.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_43R01867_08-02-2024_00-55-38_640_jpg.rf.89b0dd5b2366c4746c8fa310d6b0eb8e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_43R01867_08-02-2024_00-55-38_640_jpg.rf.89b0dd5b2366c4746c8fa310d6b0eb8e.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_43R02065_08-02-2024_00-04-39_640_jpg.rf.9298e37a8bebb513dedea45ad86bb700.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_43R02065_08-02-2024_00-04-39_640_jpg.rf.9298e37a8bebb513dedea45ad86bb700.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_47R00529_09-02-2024_09-01-25_640_jpg.rf.f7d79fe05f38c58a5bc444f4e258d946.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_47R00529_09-02-2024_09-01-25_640_jpg.rf.f7d79fe05f38c58a5bc444f4e258d946.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_508M00066_08-02-2024_04-20-06_640_jpg.rf.c78c66721a6de13910a4b098ba3049c1.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_508M00066_08-02-2024_04-20-06_640_jpg.rf.c78c66721a6de13910a4b098ba3049c1.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_50B03330_08-02-2024_01-24-09_640_jpg.rf.c74100b21667d06355dae61d8bde518b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_50B03330_08-02-2024_01-24-09_640_jpg.rf.c74100b21667d06355dae61d8bde518b.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_50M00066_08-02-2024_04-20-05_640_jpg.rf.3ee904a7d3414dc4c7a983ca88ef5f46.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_50M00066_08-02-2024_04-20-05_640_jpg.rf.3ee904a7d3414dc4c7a983ca88ef5f46.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_50M00627_08-02-2024_07-05-38_640_jpg.rf.2a22980b39523d1ef884cf2c4d22daa5.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_50M00627_08-02-2024_07-05-38_640_jpg.rf.2a22980b39523d1ef884cf2c4d22daa5.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_50M00982_07-02-2024_21-46-37_640_jpg.rf.1fd184dd5f155c99792d13e5918be162.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_50M00982_07-02-2024_21-46-37_640_jpg.rf.1fd184dd5f155c99792d13e5918be162.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_51H23822_07-02-2024_21-03-35_640_jpg.rf.a80e791c3d93c1bdc07deb0d6387c524.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_51H23822_07-02-2024_21-03-35_640_jpg.rf.a80e791c3d93c1bdc07deb0d6387c524.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_51R03114_08-02-2024_21-01-51_640_jpg.rf.a34c1229fb00802176077d886c00ec8f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_51R03114_08-02-2024_21-01-51_640_jpg.rf.a34c1229fb00802176077d886c00ec8f.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_51R07668_08-02-2024_06-13-25_640_jpg.rf.c24a95b52d1d7087618527d1995939c4.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_51R07668_08-02-2024_06-13-25_640_jpg.rf.c24a95b52d1d7087618527d1995939c4.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_51R07669_08-02-2024_06-13-25_640_jpg.rf.364e50a6970ddeff9401183db481a3ef.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_51R07669_08-02-2024_06-13-25_640_jpg.rf.364e50a6970ddeff9401183db481a3ef.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_51R11216_08-02-2024_06-42-13_640_jpg.rf.fffe096732942c051af0f82fe0af1141.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_51R11216_08-02-2024_06-42-13_640_jpg.rf.fffe096732942c051af0f82fe0af1141.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_51R19288_09-02-2024_09-35-29_640_jpg.rf.541ca91323eaa242766ef290d90bf78f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_51R19288_09-02-2024_09-35-29_640_jpg.rf.541ca91323eaa242766ef290d90bf78f.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_51R21336_09-02-2024_13-56-50_640_jpg.rf.14d096a744aab8114d3ba8d992a58b94.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_51R21336_09-02-2024_13-56-50_640_jpg.rf.14d096a744aab8114d3ba8d992a58b94.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_51R21638_08-02-2024_13-16-29_640_jpg.rf.42c3c852fedc4438dacfeaab5b875d69.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_51R21638_08-02-2024_13-16-29_640_jpg.rf.42c3c852fedc4438dacfeaab5b875d69.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_51R26112_08-02-2024_22-09-26_640_jpg.rf.94302b9088f0c2c253e87c2b8a692575.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_51R26112_08-02-2024_22-09-26_640_jpg.rf.94302b9088f0c2c253e87c2b8a692575.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_51R26547_08-02-2024_03-10-48_640_jpg.rf.7123c3aff5c65875ce62663430e12c02.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_51R26547_08-02-2024_03-10-48_640_jpg.rf.7123c3aff5c65875ce62663430e12c02.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_51R27371_08-02-2024_09-28-25_640_jpg.rf.3632995c00e13559d5354b73dfc9ec2c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_51R27371_08-02-2024_09-28-25_640_jpg.rf.3632995c00e13559d5354b73dfc9ec2c.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 4
+  },
+  {
+   "file": "v10_general_garagecuong554_51R34479_10-02-2024_04-45-57_640_jpg.rf.eabb00510eb44debe61c9946a3dc039a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_51R34479_10-02-2024_04-45-57_640_jpg.rf.eabb00510eb44debe61c9946a3dc039a.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_51R34485_08-02-2024_14-49-21_640_jpg.rf.bfc0fc2b39ef60896c55333c9b4ad001.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_51R34485_08-02-2024_14-49-21_640_jpg.rf.bfc0fc2b39ef60896c55333c9b4ad001.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_60H05788_08-02-2024_17-47-05_640_jpg.rf.1e53c15d2f08a528c919eb613e110673.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_60H05788_08-02-2024_17-47-05_640_jpg.rf.1e53c15d2f08a528c919eb613e110673.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_60R04468_10-02-2024_04-52-57_640_jpg.rf.3eeece8945f088c11ff15e6b94550077.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_60R04468_10-02-2024_04-52-57_640_jpg.rf.3eeece8945f088c11ff15e6b94550077.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_60R05788_08-02-2024_17-47-06_640_jpg.rf.6ec9baed5724e84dc787615d25e8a68f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_60R05788_08-02-2024_17-47-06_640_jpg.rf.6ec9baed5724e84dc787615d25e8a68f.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_61R01668_08-02-2024_22-24-36_640_jpg.rf.1891533fbc36aee458cc20fb459e4003.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_61R01668_08-02-2024_22-24-36_640_jpg.rf.1891533fbc36aee458cc20fb459e4003.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_61R03077_08-02-2024_11-08-40_640_jpg.rf.fbc985983f91d3b86c7358a5fc9274f8.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_61R03077_08-02-2024_11-08-40_640_jpg.rf.fbc985983f91d3b86c7358a5fc9274f8.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_61R06426_08-02-2024_15-18-01_640_jpg.rf.6f79a5d3b93eb0a5688ab56e9856e560.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_61R06426_08-02-2024_15-18-01_640_jpg.rf.6f79a5d3b93eb0a5688ab56e9856e560.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_62H00731_08-02-2024_22-09-09_640_jpg.rf.e7d493ca09ac7efcb0a2a0c1cbee6ff9.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_62H00731_08-02-2024_22-09-09_640_jpg.rf.e7d493ca09ac7efcb0a2a0c1cbee6ff9.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_62R01433_07-02-2024_23-17-15_640_jpg.rf.01657fff857aa0f5d3e99fa2f78ba193.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_62R01433_07-02-2024_23-17-15_640_jpg.rf.01657fff857aa0f5d3e99fa2f78ba193.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_63H00499_09-02-2024_17-35-08_640_jpg.rf.a10140ef5cf04aaa2b77985676dee585.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_63H00499_09-02-2024_17-35-08_640_jpg.rf.a10140ef5cf04aaa2b77985676dee585.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_63R00348_08-02-2024_12-12-46_640_jpg.rf.28afddeaaf42034ede176e861019bc70.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_63R00348_08-02-2024_12-12-46_640_jpg.rf.28afddeaaf42034ede176e861019bc70.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_63R00799_08-02-2024_21-02-23_640_jpg.rf.261403867db5175bd97dbcb9356dc997.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_63R00799_08-02-2024_21-02-23_640_jpg.rf.261403867db5175bd97dbcb9356dc997.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_63R00893_08-02-2024_08-25-45_640_jpg.rf.cc1381947f8ecaee887ca9a4c810161d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_63R00893_08-02-2024_08-25-45_640_jpg.rf.cc1381947f8ecaee887ca9a4c810161d.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_65R00732_08-02-2024_19-04-39_640_jpg.rf.8b2314a9aa69724949beb5b39f5e3801.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_65R00732_08-02-2024_19-04-39_640_jpg.rf.8b2314a9aa69724949beb5b39f5e3801.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77B12676_07-02-2024_20-06-42_640_jpg.rf.404d1ad70af1c61aec058cbebdbe27c6.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77B12676_07-02-2024_20-06-42_640_jpg.rf.404d1ad70af1c61aec058cbebdbe27c6.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77H03570_09-02-2024_04-51-55_640_jpg.rf.bf63ad35d33bb9a12aa694eacb5a1171.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77H03570_09-02-2024_04-51-55_640_jpg.rf.bf63ad35d33bb9a12aa694eacb5a1171.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R00260_08-02-2024_22-41-38_640_jpg.rf.1dc1e3702a5033dd09f88d03d7aeca36.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R00260_08-02-2024_22-41-38_640_jpg.rf.1dc1e3702a5033dd09f88d03d7aeca36.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R00310_07-02-2024_18-56-15_640_jpg.rf.417a7db57c98f3223d30b85042bd2918.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R00310_07-02-2024_18-56-15_640_jpg.rf.417a7db57c98f3223d30b85042bd2918.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R00506_08-02-2024_08-35-21_640_jpg.rf.4ed5e05c04719ef1e0dfc30ee674eab1.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R00506_08-02-2024_08-35-21_640_jpg.rf.4ed5e05c04719ef1e0dfc30ee674eab1.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R01159_09-02-2024_06-27-05_640_jpg.rf.65a75b43a054ad8615d7ff2bebbb3889.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R01159_09-02-2024_06-27-05_640_jpg.rf.65a75b43a054ad8615d7ff2bebbb3889.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R01722_07-02-2024_17-00-00_640_jpg.rf.fbdf0d4f6f1655b8983caef614301d39.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R01722_07-02-2024_17-00-00_640_jpg.rf.fbdf0d4f6f1655b8983caef614301d39.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 3
+  },
+  {
+   "file": "v10_general_garagecuong554_77R01829_10-02-2024_08-36-35_640_jpg.rf.7e11fc51ece63643c966d018dfcd8589.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R01829_10-02-2024_08-36-35_640_jpg.rf.7e11fc51ece63643c966d018dfcd8589.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_77R02232_09-02-2024_04-49-34_640_jpg.rf.5f57e1f911f2cd971d7b2faa213a9e11.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R02232_09-02-2024_04-49-34_640_jpg.rf.5f57e1f911f2cd971d7b2faa213a9e11.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R02282_09-02-2024_05-08-59_640_jpg.rf.d5b176b7d49735e04c3e4df1eda3fd6e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R02282_09-02-2024_05-08-59_640_jpg.rf.d5b176b7d49735e04c3e4df1eda3fd6e.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R02454_09-02-2024_15-19-47_640_jpg.rf.57e11d6f8094ba0ac497d74a54670cb7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R02454_09-02-2024_15-19-47_640_jpg.rf.57e11d6f8094ba0ac497d74a54670cb7.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R02550_09-02-2024_23-47-04_640_jpg.rf.f120a09cd7c7417d7473abb7400d668e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R02550_09-02-2024_23-47-04_640_jpg.rf.f120a09cd7c7417d7473abb7400d668e.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R02779_09-02-2024_08-12-04_640_jpg.rf.1ee42e5e4ad150628f2d828398719630.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R02779_09-02-2024_08-12-04_640_jpg.rf.1ee42e5e4ad150628f2d828398719630.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 3
+  },
+  {
+   "file": "v10_general_garagecuong554_77R02956_10-02-2024_20-17-53_640_jpg.rf.b9918c1cd2ab055a7da2d02d076467af.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R02956_10-02-2024_20-17-53_640_jpg.rf.b9918c1cd2ab055a7da2d02d076467af.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_77R03119_07-02-2024_19-47-41_640_jpg.rf.a0515cd354ad3dfbb65b4235de96417b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R03119_07-02-2024_19-47-41_640_jpg.rf.a0515cd354ad3dfbb65b4235de96417b.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R03222_09-02-2024_12-02-17_640_jpg.rf.a5ed628fed2648d6ee68ffb5952dcb1e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R03222_09-02-2024_12-02-17_640_jpg.rf.a5ed628fed2648d6ee68ffb5952dcb1e.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R03268_08-02-2024_20-25-03_640_jpg.rf.4fbeba5a725f414d0af44513c7b3ab0d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R03268_08-02-2024_20-25-03_640_jpg.rf.4fbeba5a725f414d0af44513c7b3ab0d.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R03305_08-02-2024_07-50-39_640_jpg.rf.4143ec010889c454aa9792e8f0586e6b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R03305_08-02-2024_07-50-39_640_jpg.rf.4143ec010889c454aa9792e8f0586e6b.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R03660_09-02-2024_01-14-39_640_jpg.rf.35bab8fe2fa59d335b8c663151d2d2a7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R03660_09-02-2024_01-14-39_640_jpg.rf.35bab8fe2fa59d335b8c663151d2d2a7.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R03736_07-02-2024_21-10-50_640_jpg.rf.037c80e04fc2c00af5ae9359e07481c0.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R03736_07-02-2024_21-10-50_640_jpg.rf.037c80e04fc2c00af5ae9359e07481c0.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R03783_09-02-2024_08-44-09_640_jpg.rf.30482dcf7234f1e323f37edaad01ddbe.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R03783_09-02-2024_08-44-09_640_jpg.rf.30482dcf7234f1e323f37edaad01ddbe.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R03787_08-02-2024_02-38-50_640_jpg.rf.04c07b0366c45ae36f6daf7efaf01bf5.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R03787_08-02-2024_02-38-50_640_jpg.rf.04c07b0366c45ae36f6daf7efaf01bf5.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R03810_09-02-2024_12-32-33_640_jpg.rf.96cf971da3108ff1266a08f0fe72aa80.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R03810_09-02-2024_12-32-33_640_jpg.rf.96cf971da3108ff1266a08f0fe72aa80.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R03844_10-02-2024_21-59-33_640_jpg.rf.239bb3e7acd4042935d8c99bc4323d16.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R03844_10-02-2024_21-59-33_640_jpg.rf.239bb3e7acd4042935d8c99bc4323d16.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R03891_08-02-2024_11-35-21_640_jpg.rf.77d088148e32bbfcf57eb916d1daaefa.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R03891_08-02-2024_11-35-21_640_jpg.rf.77d088148e32bbfcf57eb916d1daaefa.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R04059_07-02-2024_16-27-22_640_jpg.rf.f7733bb0a5af86fda7db6c3e4ec384ce.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R04059_07-02-2024_16-27-22_640_jpg.rf.f7733bb0a5af86fda7db6c3e4ec384ce.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R04230_09-02-2024_21-43-31_640_jpg.rf.c09585277f76228ade9a65311b112739.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R04230_09-02-2024_21-43-31_640_jpg.rf.c09585277f76228ade9a65311b112739.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R04239_07-02-2024_16-01-32_640_jpg.rf.8922d8b6444b02d545f59af45b180afd.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R04239_07-02-2024_16-01-32_640_jpg.rf.8922d8b6444b02d545f59af45b180afd.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R04281_08-02-2024_19-38-11_640_jpg.rf.5c2b7169e6ab0dbcf4beeaa9d0f2071e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R04281_08-02-2024_19-38-11_640_jpg.rf.5c2b7169e6ab0dbcf4beeaa9d0f2071e.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R04341_07-02-2024_17-10-26_640_jpg.rf.c7f51c6b945ed20c4ef6047bd49a5086.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R04341_07-02-2024_17-10-26_640_jpg.rf.c7f51c6b945ed20c4ef6047bd49a5086.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_77R04430_08-02-2024_20-30-57_640_jpg.rf.ea8bc8d574b4aaca550e7f131a79c222.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R04430_08-02-2024_20-30-57_640_jpg.rf.ea8bc8d574b4aaca550e7f131a79c222.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R04625_09-02-2024_02-27-21_640_jpg.rf.3a3b9300bcc19eee06f56053c1385e5c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R04625_09-02-2024_02-27-21_640_jpg.rf.3a3b9300bcc19eee06f56053c1385e5c.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R04829_07-02-2024_20-23-22_640_jpg.rf.49cf87b0ec22cfc249cff585c2594864.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R04829_07-02-2024_20-23-22_640_jpg.rf.49cf87b0ec22cfc249cff585c2594864.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R04946_08-02-2024_22-10-04_640_jpg.rf.004b0dcfe81a04c3bbbe43c42b9bbb0c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R04946_08-02-2024_22-10-04_640_jpg.rf.004b0dcfe81a04c3bbbe43c42b9bbb0c.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R05007_08-02-2024_20-26-56_640_jpg.rf.84b205b9ae5b1de0333b6de91e3bb844.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R05007_08-02-2024_20-26-56_640_jpg.rf.84b205b9ae5b1de0333b6de91e3bb844.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R05018_10-02-2024_07-03-25_640_jpg.rf.bb71f9c00b5eff82275f3ee28f9e1dfe.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R05018_10-02-2024_07-03-25_640_jpg.rf.bb71f9c00b5eff82275f3ee28f9e1dfe.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R05038_08-02-2024_18-07-33_640_jpg.rf.9c5b62621cb81ec460ef2a82b2cdc350.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R05038_08-02-2024_18-07-33_640_jpg.rf.9c5b62621cb81ec460ef2a82b2cdc350.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R05077_09-02-2024_05-50-15_640_jpg.rf.34a6783aa9c15b78716f7fc836518d0d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R05077_09-02-2024_05-50-15_640_jpg.rf.34a6783aa9c15b78716f7fc836518d0d.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_78P00481_07-02-2024_16-29-48_640_jpg.rf.cb67baacac02f36885ed036db8876779.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_78P00481_07-02-2024_16-29-48_640_jpg.rf.cb67baacac02f36885ed036db8876779.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_79R00299_08-02-2024_17-32-19_640_jpg.rf.2db5fb34ee429212647e0442398db0d2.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_79R00299_08-02-2024_17-32-19_640_jpg.rf.2db5fb34ee429212647e0442398db0d2.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_79R00348_07-02-2024_21-31-36_640_jpg.rf.1e0fb3c889001cdf6e98afe68fa0f20c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_79R00348_07-02-2024_21-31-36_640_jpg.rf.1e0fb3c889001cdf6e98afe68fa0f20c.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_79R00452_08-02-2024_08-53-52_640_jpg.rf.6977643247bf8eed2448c44fd9f73ca5.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_79R00452_08-02-2024_08-53-52_640_jpg.rf.6977643247bf8eed2448c44fd9f73ca5.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_79R00636_09-02-2024_02-00-57_640_jpg.rf.2ee277ad04e24f5d901e50665bcdc94d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_79R00636_09-02-2024_02-00-57_640_jpg.rf.2ee277ad04e24f5d901e50665bcdc94d.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_79R00690_09-02-2024_10-07-42_640_jpg.rf.92de669d4d734fc22616f67166c92200.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_79R00690_09-02-2024_10-07-42_640_jpg.rf.92de669d4d734fc22616f67166c92200.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_79R00702_08-02-2024_10-08-50_640_jpg.rf.89870a459596ed5ab41c42b05ce0ede8.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_79R00702_08-02-2024_10-08-50_640_jpg.rf.89870a459596ed5ab41c42b05ce0ede8.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_79R00713_10-02-2024_08-22-44_640_jpg.rf.80a87367d395ea6e9e2ed50b1873595c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_79R00713_10-02-2024_08-22-44_640_jpg.rf.80a87367d395ea6e9e2ed50b1873595c.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_79R00785_07-02-2024_21-22-55_640_jpg.rf.af2bdae89087606b26a2264f9e13c150.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_79R00785_07-02-2024_21-22-55_640_jpg.rf.af2bdae89087606b26a2264f9e13c150.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_79R00832_08-02-2024_08-16-55_640_jpg.rf.5fb4b7155d8c9c12da29c893b3b7e518.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_79R00832_08-02-2024_08-16-55_640_jpg.rf.5fb4b7155d8c9c12da29c893b3b7e518.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_79R00842_09-02-2024_02-10-00_640_jpg.rf.c6c331b875d4ed949d4ec414565fc165.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_79R00842_09-02-2024_02-10-00_640_jpg.rf.c6c331b875d4ed949d4ec414565fc165.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_79R00845_10-02-2024_18-06-56_640_jpg.rf.4d0d1a5a5556add15cae6cb4902fba70.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_79R00845_10-02-2024_18-06-56_640_jpg.rf.4d0d1a5a5556add15cae6cb4902fba70.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_79R01118_09-02-2024_00-33-25_640_jpg.rf.26992dc65907af36b48f3f7af7aa9c63.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_79R01118_09-02-2024_00-33-25_640_jpg.rf.26992dc65907af36b48f3f7af7aa9c63.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_79R01335_07-02-2024_22-26-24_640_jpg.rf.782eb0d4ca7111e155fae42d6687f55f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_79R01335_07-02-2024_22-26-24_640_jpg.rf.782eb0d4ca7111e155fae42d6687f55f.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_79R90258_09-02-2024_14-01-18_640_jpg.rf.128cc00539ada06b1fbd1613a2abc5b5.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_79R90258_09-02-2024_14-01-18_640_jpg.rf.128cc00539ada06b1fbd1613a2abc5b5.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_7RBRB310_07-02-2024_18-56-15_640_jpg.rf.d26971f6697e229dc379920a13020c38.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_7RBRB310_07-02-2024_18-56-15_640_jpg.rf.d26971f6697e229dc379920a13020c38.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_86R00343_10-02-2024_09-44-20_640_jpg.rf.a9fe2c333c7ceed9fbb6c760c8174834.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_86R00343_10-02-2024_09-44-20_640_jpg.rf.a9fe2c333c7ceed9fbb6c760c8174834.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_86R00362_08-02-2024_05-18-17_640_jpg.rf.9630adefbe5c8aab4ba669aab5cfe510.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_86R00362_08-02-2024_05-18-17_640_jpg.rf.9630adefbe5c8aab4ba669aab5cfe510.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_86R00386_08-02-2024_18-06-13_640_jpg.rf.eb036dd253f44f4a41e773f92219f544.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_86R00386_08-02-2024_18-06-13_640_jpg.rf.eb036dd253f44f4a41e773f92219f544.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_86R00508_08-02-2024_21-42-28_640_jpg.rf.d0433804eeb334d0882d1d89cc12597f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_86R00508_08-02-2024_21-42-28_640_jpg.rf.d0433804eeb334d0882d1d89cc12597f.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_86R00622_08-02-2024_23-47-58_640_jpg.rf.9015577d8053d6aa6e7bd51229d8cb84.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_86R00622_08-02-2024_23-47-58_640_jpg.rf.9015577d8053d6aa6e7bd51229d8cb84.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_86R00631_08-02-2024_12-34-16_640_jpg.rf.1c62339bc38a4b16538d57108333a38a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_86R00631_08-02-2024_12-34-16_640_jpg.rf.1c62339bc38a4b16538d57108333a38a.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_86R00931_07-02-2024_20-38-28_640_jpg.rf.fbe4abd77f5c76bea061467a8cdd1f9b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_86R00931_07-02-2024_20-38-28_640_jpg.rf.fbe4abd77f5c76bea061467a8cdd1f9b.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_86R01017_08-02-2024_22-42-43_640_jpg.rf.74d2e34c36b0f80888591a0651fbc13a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_86R01017_08-02-2024_22-42-43_640_jpg.rf.74d2e34c36b0f80888591a0651fbc13a.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_86R01040_08-02-2024_18-53-05_640_jpg.rf.c7b11538116201fcc8e280b75d0c1088.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_86R01040_08-02-2024_18-53-05_640_jpg.rf.c7b11538116201fcc8e280b75d0c1088.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_86R01047_08-02-2024_14-41-15_640_jpg.rf.31d7e474fe4c5d1a74c446fb386e3820.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_86R01047_08-02-2024_14-41-15_640_jpg.rf.31d7e474fe4c5d1a74c446fb386e3820.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_86R01063_07-02-2024_16-38-16_640_jpg.rf.5a6e1e6faea74238cfc4fdbdbaf9917f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_86R01063_07-02-2024_16-38-16_640_jpg.rf.5a6e1e6faea74238cfc4fdbdbaf9917f.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_86R01076_08-02-2024_01-58-11_640_jpg.rf.1411c25b75390f44da05eb3ac01ebe4b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_86R01076_08-02-2024_01-58-11_640_jpg.rf.1411c25b75390f44da05eb3ac01ebe4b.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_86R01136_09-02-2024_19-26-20_640_jpg.rf.eaf929985503ebf3f8ef5d1472f5d600.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_86R01136_09-02-2024_19-26-20_640_jpg.rf.eaf929985503ebf3f8ef5d1472f5d600.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_86R01226_08-02-2024_19-43-34_640_jpg.rf.17e81bc44c0e91ad89c5d9a6203a68de.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_86R01226_08-02-2024_19-43-34_640_jpg.rf.17e81bc44c0e91ad89c5d9a6203a68de.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_89B01123_08-02-2024_02-32-23_640_jpg.rf.6b700ef6ef18b7bdc836bd60dcac69f0.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_89B01123_08-02-2024_02-32-23_640_jpg.rf.6b700ef6ef18b7bdc836bd60dcac69f0.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_89R01123_08-02-2024_02-32-23_640_jpg.rf.de6acde34c065cecf86a012acf9ae1bd.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_89R01123_08-02-2024_02-32-23_640_jpg.rf.de6acde34c065cecf86a012acf9ae1bd.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_92R00770_09-02-2024_09-09-09_640_jpg.rf.d124d2256f1fda5a76c0459e41383980.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_92R00770_09-02-2024_09-09-09_640_jpg.rf.d124d2256f1fda5a76c0459e41383980.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_94R00016_08-02-2024_11-14-06_640_jpg.rf.5b09d07e688f550c5d4d84a39dcbe2a3.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_94R00016_08-02-2024_11-14-06_640_jpg.rf.5b09d07e688f550c5d4d84a39dcbe2a3.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_98R03110_10-02-2024_14-16-13_640_jpg.rf.a8a6dd6c7977034fd29ef34451bcec37.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_98R03110_10-02-2024_14-16-13_640_jpg.rf.a8a6dd6c7977034fd29ef34451bcec37.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_35R00935_08-02-2024_00-39-33_640_jpg.rf.4e9bb90930a986fd883321fef7ef5f26.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_35R00935_08-02-2024_00-39-33_640_jpg.rf.4e9bb90930a986fd883321fef7ef5f26.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_37R02255_07-02-2024_21-05-50_640_jpg.rf.30fb08dc5d9b400def81d569b9bb1196.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_37R02255_07-02-2024_21-05-50_640_jpg.rf.30fb08dc5d9b400def81d569b9bb1196.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3duong554_51R16421_07-02-2024_23-17-21_640_jpg.rf.044ca64a592fd792f4a2d4040e756dbe.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_51R16421_07-02-2024_23-17-21_640_jpg.rf.044ca64a592fd792f4a2d4040e756dbe.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_51R23917_08-02-2024_21-45-44_640_jpg.rf.0fac05a5f34e7bb91eecb3c307a93a03.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_51R23917_08-02-2024_21-45-44_640_jpg.rf.0fac05a5f34e7bb91eecb3c307a93a03.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_51R32424_08-02-2024_21-35-57_640_jpg.rf.82763aacbb000b047e8ae7f728807f28.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_51R32424_08-02-2024_21-35-57_640_jpg.rf.82763aacbb000b047e8ae7f728807f28.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_62R01433_07-02-2024_22-33-01_640_jpg.rf.5a21efe396801eb567c6b2102937151a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_62R01433_07-02-2024_22-33-01_640_jpg.rf.5a21efe396801eb567c6b2102937151a.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_62R01440_09-02-2024_22-26-43_640_jpg.rf.0bd6e55f16f2aaa77d6f8dd3df060e6e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_62R01440_09-02-2024_22-26-43_640_jpg.rf.0bd6e55f16f2aaa77d6f8dd3df060e6e.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_63R00676_08-02-2024_06-21-50_640_jpg.rf.e5d68a506fcde223ac95974100321cbd.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_63R00676_08-02-2024_06-21-50_640_jpg.rf.e5d68a506fcde223ac95974100321cbd.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_72H02033_10-02-2024_19-49-28_640_jpg.rf.c049267ecde494334e1ad3a211a2b681.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_72H02033_10-02-2024_19-49-28_640_jpg.rf.c049267ecde494334e1ad3a211a2b681.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_75H77620_17-02-2024_06-26-53_640_jpg.rf.2edde7cba694ab73ef42cdf76cc28d6a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_75H77620_17-02-2024_06-26-53_640_jpg.rf.2edde7cba694ab73ef42cdf76cc28d6a.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_77K03738_07-02-2024_21-36-20_640_jpg.rf.35fe5fbc617c139acb4646bd08a67ec5.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_77K03738_07-02-2024_21-36-20_640_jpg.rf.35fe5fbc617c139acb4646bd08a67ec5.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_77R00126_09-02-2024_09-48-11_640_jpg.rf.e67cb559bef3d172083a480e0cc4253d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_77R00126_09-02-2024_09-48-11_640_jpg.rf.e67cb559bef3d172083a480e0cc4253d.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 3
+  },
+  {
+   "file": "v10_general_nga3duong554_77R01883_08-02-2024_21-13-21_640_jpg.rf.a3b9986e8ac98232897f051c07542706.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_77R01883_08-02-2024_21-13-21_640_jpg.rf.a3b9986e8ac98232897f051c07542706.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_77R03390_07-02-2024_19-32-06_640_jpg.rf.539c640482d3f104890f1667bda53ac0.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_77R03390_07-02-2024_19-32-06_640_jpg.rf.539c640482d3f104890f1667bda53ac0.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_77R04281_08-02-2024_18-51-32_640_jpg.rf.836b4d0a595ca5c9c5c3e427c1ebf302.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_77R04281_08-02-2024_18-51-32_640_jpg.rf.836b4d0a595ca5c9c5c3e427c1ebf302.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_77R04358_08-02-2024_22-37-35_640_jpg.rf.d6e84a76c072e37bf917458e20386743.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_77R04358_08-02-2024_22-37-35_640_jpg.rf.d6e84a76c072e37bf917458e20386743.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_77RM00126_09-02-2024_09-48-10_640_jpg.rf.98856ceae54d412490af2ca9b767783e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_77RM00126_09-02-2024_09-48-10_640_jpg.rf.98856ceae54d412490af2ca9b767783e.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 3
+  },
+  {
+   "file": "v10_general_nga3duong554_85B78050_17-02-2024_15-28-33_640_jpg.rf.3d92a1e88f3895daae0fdd08499711c0.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_85B78050_17-02-2024_15-28-33_640_jpg.rf.3d92a1e88f3895daae0fdd08499711c0.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_86B203888_13-02-2024_07-25-00_640_jpg.rf.89d1af8c461e1c7fff92344ea8e9034d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_86B203888_13-02-2024_07-25-00_640_jpg.rf.89d1af8c461e1c7fff92344ea8e9034d.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_92H00427_08-02-2024_05-00-30_640_jpg.rf.1ba532913f33f3a684c6e76a6432347d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_92H00427_08-02-2024_05-00-30_640_jpg.rf.1ba532913f33f3a684c6e76a6432347d.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_92R01054_08-02-2024_00-08-42_640_jpg.rf.07d582924bb82055a605b7387ebe2eb7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_92R01054_08-02-2024_00-08-42_640_jpg.rf.07d582924bb82055a605b7387ebe2eb7.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3muitau554_86B17907_14-02-2024_07-33-34_640_jpg.rf.33df4b654531a04afd8b6aaaac895935.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3muitau554_86B17907_14-02-2024_07-33-34_640_jpg.rf.33df4b654531a04afd8b6aaaac895935.jpg",
+   "camera_id": "nga3muitau554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_12R00880_08-02-2024_13-51-39_640_jpg.rf.2a49b6e80554988f90d1899c84888474.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_12R00880_08-02-2024_13-51-39_640_jpg.rf.2a49b6e80554988f90d1899c84888474.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_12R01350_08-02-2024_10-30-52_640_jpg.rf.fbbacbb2318a2a232a4d50832da3b4da.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_12R01350_08-02-2024_10-30-52_640_jpg.rf.fbbacbb2318a2a232a4d50832da3b4da.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_12R01390_07-02-2024_16-07-17_640_jpg.rf.4b9653862d918f021551f453e5f2ecc8.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_12R01390_07-02-2024_16-07-17_640_jpg.rf.4b9653862d918f021551f453e5f2ecc8.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_12R01491_07-02-2024_15-13-57_640_jpg.rf.f8e7e587ea51aa3561a6853828273f42.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_12R01491_07-02-2024_15-13-57_640_jpg.rf.f8e7e587ea51aa3561a6853828273f42.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 4
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_12R08907_08-02-2024_09-33-21_640_jpg.rf.1c843a03609952f1ac9abfca76f111bf.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_12R08907_08-02-2024_09-33-21_640_jpg.rf.1c843a03609952f1ac9abfca76f111bf.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_29R06067_07-02-2024_13-40-52_640_jpg.rf.7283be09a1506ed69eedf57850b9698a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_29R06067_07-02-2024_13-40-52_640_jpg.rf.7283be09a1506ed69eedf57850b9698a.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_38R01254_08-02-2024_23-20-13_640_jpg.rf.1c3c68e24e52a847ca9f3ced29680343.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_38R01254_08-02-2024_23-20-13_640_jpg.rf.1c3c68e24e52a847ca9f3ced29680343.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_51R03770_10-02-2024_00-24-05_640_jpg.rf.2f09d8ebdffdedf884c82ddf447a11ab.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_51R03770_10-02-2024_00-24-05_640_jpg.rf.2f09d8ebdffdedf884c82ddf447a11ab.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_51R08518_07-02-2024_17-26-23_640_jpg.rf.f5e179ae2d37e3c792d388d216582f6d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_51R08518_07-02-2024_17-26-23_640_jpg.rf.f5e179ae2d37e3c792d388d216582f6d.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_51R24370_07-02-2024_18-58-01_640_jpg.rf.8c0d97c5bab315f9a99110f14c96bb99.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_51R24370_07-02-2024_18-58-01_640_jpg.rf.8c0d97c5bab315f9a99110f14c96bb99.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_51R34336_07-02-2024_21-07-45_640_jpg.rf.5251a5a4ff8be732b0d53d3023cf276b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_51R34336_07-02-2024_21-07-45_640_jpg.rf.5251a5a4ff8be732b0d53d3023cf276b.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_51R40568_09-02-2024_13-53-15_640_jpg.rf.1a72812a8e5991a73166fb2310ae159e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_51R40568_09-02-2024_13-53-15_640_jpg.rf.1a72812a8e5991a73166fb2310ae159e.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_51R40623_08-02-2024_00-14-01_640_jpg.rf.80b4d35165508cd5e9d6ff70b9edd0db.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_51R40623_08-02-2024_00-14-01_640_jpg.rf.80b4d35165508cd5e9d6ff70b9edd0db.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_60Y31315_29-01-2024_08-26-56_640_jpg.rf.f2f39088992d31ee1222c6188ff07785.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_60Y31315_29-01-2024_08-26-56_640_jpg.rf.f2f39088992d31ee1222c6188ff07785.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_61R02975_07-02-2024_22-29-04_640_jpg.rf.2d27ffed1a7ad6b250c903b9012ac65a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_61R02975_07-02-2024_22-29-04_640_jpg.rf.2d27ffed1a7ad6b250c903b9012ac65a.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_62R00951_09-02-2024_14-01-24_640_jpg.rf.76ff0dbce835bccef561bbfd502857e3.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_62R00951_09-02-2024_14-01-24_640_jpg.rf.76ff0dbce835bccef561bbfd502857e3.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_77R04787_10-02-2024_09-38-09_640_jpg.rf.24f0a53eee67d589ec9a46cad3b645f4.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_77R04787_10-02-2024_09-38-09_640_jpg.rf.24f0a53eee67d589ec9a46cad3b645f4.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_78R00566_10-02-2024_07-28-21_640_jpg.rf.bf741bf5c604a23396dacc0db671720c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_78R00566_10-02-2024_07-28-21_640_jpg.rf.bf741bf5c604a23396dacc0db671720c.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_86F00799_09-02-2024_19-59-27_640_jpg.rf.27f0c279b172f427062b8f4ac3940f9c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_86F00799_09-02-2024_19-59-27_640_jpg.rf.27f0c279b172f427062b8f4ac3940f9c.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_86R00695_08-02-2024_06-45-54_640_jpg.rf.b7e4155ee9f3fcd3eb1ebee0aaa581f0.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_86R00695_08-02-2024_06-45-54_640_jpg.rf.b7e4155ee9f3fcd3eb1ebee0aaa581f0.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_86R00736_08-02-2024_22-06-27_640_jpg.rf.535df10c97a94e65174c5d68898f6a9b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_86R00736_08-02-2024_22-06-27_640_jpg.rf.535df10c97a94e65174c5d68898f6a9b.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_86R00893_09-02-2024_19-51-18_640_jpg.rf.35e98f69a33441e407646dd399b5114f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_86R00893_09-02-2024_19-51-18_640_jpg.rf.35e98f69a33441e407646dd399b5114f.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_86R01017_08-02-2024_14-43-36_640_jpg.rf.a1d26d23bffce4903cb82150d351aa67.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_86R01017_08-02-2024_14-43-36_640_jpg.rf.a1d26d23bffce4903cb82150d351aa67.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_86R01067_08-02-2024_08-17-27_640_jpg.rf.a42201c003d099c33aba84b6a45022e4.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_86R01067_08-02-2024_08-17-27_640_jpg.rf.a42201c003d099c33aba84b6a45022e4.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_86R01101_08-02-2024_13-46-22_640_jpg.rf.b79b62946a117b3dfa6647ee2ac44b2c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_86R01101_08-02-2024_13-46-22_640_jpg.rf.b79b62946a117b3dfa6647ee2ac44b2c.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_86R01140_09-02-2024_11-08-06_640_jpg.rf.45199068458cd96b87f2e871fb73a981.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_86R01140_09-02-2024_11-08-06_640_jpg.rf.45199068458cd96b87f2e871fb73a981.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_86R01141_09-02-2024_14-34-24_640_jpg.rf.dba39e735eb84e1e5f902d8bd36eef9e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_86R01141_09-02-2024_14-34-24_640_jpg.rf.dba39e735eb84e1e5f902d8bd36eef9e.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_86R01146_09-02-2024_11-08-07_640_jpg.rf.cf207c3cab036f45e531f1514d585ee7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_86R01146_09-02-2024_11-08-07_640_jpg.rf.cf207c3cab036f45e531f1514d585ee7.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_12R00929_09-02-2024_04-29-15_640_jpg.rf.343d9e15b0768c123ae263cf38a99268.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_12R00929_09-02-2024_04-29-15_640_jpg.rf.343d9e15b0768c123ae263cf38a99268.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_12R01531_07-02-2024_17-51-15_640_jpg.rf.47b0a8bbc985ab069b4fc70612d4a8f1.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_12R01531_07-02-2024_17-51-15_640_jpg.rf.47b0a8bbc985ab069b4fc70612d4a8f1.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_15R07499_08-02-2024_19-18-01_640_jpg.rf.5f3e76b99498f55e39fd9dab38a65901.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_15R07499_08-02-2024_19-18-01_640_jpg.rf.5f3e76b99498f55e39fd9dab38a65901.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_15R17570_07-02-2024_18-03-11_640_jpg.rf.e361fc5755b9bab101fb610e4b6c8694.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_15R17570_07-02-2024_18-03-11_640_jpg.rf.e361fc5755b9bab101fb610e4b6c8694.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_15R18645_09-02-2024_10-43-53_640_jpg.rf.f775892adf697b6e94720c97dfa5bf98.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_15R18645_09-02-2024_10-43-53_640_jpg.rf.f775892adf697b6e94720c97dfa5bf98.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_17R00103_07-02-2024_18-13-00_640_jpg.rf.6426583c079e6381b203f868893f481f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_17R00103_07-02-2024_18-13-00_640_jpg.rf.6426583c079e6381b203f868893f481f.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_18R00206_07-02-2024_20-56-25_640_jpg.rf.4b5ae661ad42db41be172463de838874.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_18R00206_07-02-2024_20-56-25_640_jpg.rf.4b5ae661ad42db41be172463de838874.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_18R00517_07-02-2024_15-24-00_640_jpg.rf.2473e116a5b869e866c26dae8863863e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_18R00517_07-02-2024_15-24-00_640_jpg.rf.2473e116a5b869e866c26dae8863863e.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_18R00535_10-02-2024_07-52-07_640_jpg.rf.b58c629ba0f924cb1c28a8f620f9984f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_18R00535_10-02-2024_07-52-07_640_jpg.rf.b58c629ba0f924cb1c28a8f620f9984f.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_20R01143_08-02-2024_16-37-57_640_jpg.rf.b017cb12d19316e5e3991eff0335a3fa.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_20R01143_08-02-2024_16-37-57_640_jpg.rf.b017cb12d19316e5e3991eff0335a3fa.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_29H50352_08-02-2024_22-19-06_640_jpg.rf.a65202a231b8ae7d1e8225c05444f2a6.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_29H50352_08-02-2024_22-19-06_640_jpg.rf.a65202a231b8ae7d1e8225c05444f2a6.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_29R05039_09-02-2024_06-21-28_640_jpg.rf.3e08feda666400c1cef2e3f016c49bc9.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_29R05039_09-02-2024_06-21-28_640_jpg.rf.3e08feda666400c1cef2e3f016c49bc9.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_29R05646_08-02-2024_20-29-59_640_jpg.rf.6f2cb125e4f96bcd78415b7bd282146f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_29R05646_08-02-2024_20-29-59_640_jpg.rf.6f2cb125e4f96bcd78415b7bd282146f.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_29R07730_09-02-2024_01-35-06_640_jpg.rf.dd547d9523b41c4bb4c076a3825aa325.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_29R07730_09-02-2024_01-35-06_640_jpg.rf.dd547d9523b41c4bb4c076a3825aa325.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_29R40069_08-02-2024_16-17-36_640_jpg.rf.cede6a562293ff53bc194e6a90070715.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_29R40069_08-02-2024_16-17-36_640_jpg.rf.cede6a562293ff53bc194e6a90070715.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_29R50352_08-02-2024_22-19-06_640_jpg.rf.ac376ee3141bfd9891d5ef35b41d8cb6.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_29R50352_08-02-2024_22-19-06_640_jpg.rf.ac376ee3141bfd9891d5ef35b41d8cb6.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_29R51090_08-02-2024_22-49-22_640_jpg.rf.c62d2c22240cf6c32c4b379509023425.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_29R51090_08-02-2024_22-49-22_640_jpg.rf.c62d2c22240cf6c32c4b379509023425.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_29R53610_09-02-2024_01-35-13_640_jpg.rf.a7b63a310068ea19b9d1f88bb8548a71.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_29R53610_09-02-2024_01-35-13_640_jpg.rf.a7b63a310068ea19b9d1f88bb8548a71.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_34R02506_07-02-2024_23-08-25_640_jpg.rf.b17a8414cd547979d398c901707aa9d4.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_34R02506_07-02-2024_23-08-25_640_jpg.rf.b17a8414cd547979d398c901707aa9d4.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_34R03595_07-02-2024_22-47-40_640_jpg.rf.f847574dff8f8b5fc18ffe39f15f1ac7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_34R03595_07-02-2024_22-47-40_640_jpg.rf.f847574dff8f8b5fc18ffe39f15f1ac7.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_37R03283_07-02-2024_18-47-40_640_jpg.rf.e385f760083c7b1f0d1b5364b98809c3.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_37R03283_07-02-2024_18-47-40_640_jpg.rf.e385f760083c7b1f0d1b5364b98809c3.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_38H00725_07-02-2024_17-22-05_640_jpg.rf.a1d4a6df86ac9e458f6aaed95a168255.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_38H00725_07-02-2024_17-22-05_640_jpg.rf.a1d4a6df86ac9e458f6aaed95a168255.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_38R01254_08-02-2024_23-02-48_640_jpg.rf.82d101da0c8d26379d3bbe288ab01bc1.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_38R01254_08-02-2024_23-02-48_640_jpg.rf.82d101da0c8d26379d3bbe288ab01bc1.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_38R02031_08-02-2024_08-08-49_640_jpg.rf.732b16f441b54ca6f7d6c96b48bdd8cf.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_38R02031_08-02-2024_08-08-49_640_jpg.rf.732b16f441b54ca6f7d6c96b48bdd8cf.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_43R00930_09-02-2024_08-58-51_640_jpg.rf.a1f8e6cbbee3bcdca268bb483f7287aa.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_43R00930_09-02-2024_08-58-51_640_jpg.rf.a1f8e6cbbee3bcdca268bb483f7287aa.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_43R01638_08-02-2024_18-30-47_640_jpg.rf.f50d2edd3fe57323351b63d4cae8cb9f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_43R01638_08-02-2024_18-30-47_640_jpg.rf.f50d2edd3fe57323351b63d4cae8cb9f.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_43R03510_10-02-2024_13-27-55_640_jpg.rf.32ef5ab45d9186417450fa74871a03c4.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_43R03510_10-02-2024_13-27-55_640_jpg.rf.32ef5ab45d9186417450fa74871a03c4.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_50B03304_07-02-2024_23-38-43_640_jpg.rf.54c6ea87eb39f68adb87cebda8efd45d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_50B03304_07-02-2024_23-38-43_640_jpg.rf.54c6ea87eb39f68adb87cebda8efd45d.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_50H00585_10-02-2024_07-08-14_640_jpg.rf.9c96cab7d804ccf24d6ed9fce6533029.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_50H00585_10-02-2024_07-08-14_640_jpg.rf.9c96cab7d804ccf24d6ed9fce6533029.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_50M00965_10-02-2024_13-00-59_640_jpg.rf.cf9942a78b56c2d42515830956abdad7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_50M00965_10-02-2024_13-00-59_640_jpg.rf.cf9942a78b56c2d42515830956abdad7.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_50M01171_07-02-2024_15-32-03_640_jpg.rf.cff05fbfcf079964d1f897acd4fb42b2.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_50M01171_07-02-2024_15-32-03_640_jpg.rf.cff05fbfcf079964d1f897acd4fb42b2.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_50M01474_08-02-2024_04-19-46_640_jpg.rf.25cbde8c68bc5fe4023f65070e84163c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_50M01474_08-02-2024_04-19-46_640_jpg.rf.25cbde8c68bc5fe4023f65070e84163c.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_50M01494_08-02-2024_14-59-59_640_jpg.rf.677e90ad37cca33bafdabe3a25c2b8f8.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_50M01494_08-02-2024_14-59-59_640_jpg.rf.677e90ad37cca33bafdabe3a25c2b8f8.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_50R03304_07-02-2024_23-38-43_640_jpg.rf.0402173875a3acc95c19bbe78134f8bf.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_50R03304_07-02-2024_23-38-43_640_jpg.rf.0402173875a3acc95c19bbe78134f8bf.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_50R03470_08-02-2024_09-29-08_640_jpg.rf.aa3954f1446380bfc8c67bfbb45331af.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_50R03470_08-02-2024_09-29-08_640_jpg.rf.aa3954f1446380bfc8c67bfbb45331af.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_50RM00803_08-02-2024_20-54-23_640_jpg.rf.5021db042744b768894dde9134c95d08.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_50RM00803_08-02-2024_20-54-23_640_jpg.rf.5021db042744b768894dde9134c95d08.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51B24182_09-02-2024_08-58-57_640_jpg.rf.262e46023d7164b059f0fc80fa8103fc.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51B24182_09-02-2024_08-58-57_640_jpg.rf.262e46023d7164b059f0fc80fa8103fc.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51P33657_07-02-2024_18-57-16_640_jpg.rf.fc40a6182050fe16fd22ca1376e8de25.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51P33657_07-02-2024_18-57-16_640_jpg.rf.fc40a6182050fe16fd22ca1376e8de25.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R03770_10-02-2024_00-09-29_640_jpg.rf.fcf7fd53f28f7425b961c03cc2c0003c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R03770_10-02-2024_00-09-29_640_jpg.rf.fcf7fd53f28f7425b961c03cc2c0003c.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R07327_09-02-2024_06-11-52_640_jpg.rf.e0e4e31b55ff5fc1f4eed6e961af3b46.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R07327_09-02-2024_06-11-52_640_jpg.rf.e0e4e31b55ff5fc1f4eed6e961af3b46.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R07668_08-02-2024_10-58-57_640_jpg.rf.6988fefc1ed014a7709623c011b73d0b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R07668_08-02-2024_10-58-57_640_jpg.rf.6988fefc1ed014a7709623c011b73d0b.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R07696_09-02-2024_13-14-46_640_jpg.rf.2314e573bb3d8c9e4714474e4f782b19.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R07696_09-02-2024_13-14-46_640_jpg.rf.2314e573bb3d8c9e4714474e4f782b19.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R10242_08-02-2024_14-53-39_640_jpg.rf.9111d547c326045995ac1581ba5741da.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R10242_08-02-2024_14-53-39_640_jpg.rf.9111d547c326045995ac1581ba5741da.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R10243_09-02-2024_23-30-13_640_jpg.rf.547118a58ae3c35c862f575ce9fe4faf.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R10243_09-02-2024_23-30-13_640_jpg.rf.547118a58ae3c35c862f575ce9fe4faf.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R10931_10-02-2024_09-18-59_640_jpg.rf.2cc6eb924d1deadfb71a595712099fa9.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R10931_10-02-2024_09-18-59_640_jpg.rf.2cc6eb924d1deadfb71a595712099fa9.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R12088_10-02-2024_06-37-42_640_jpg.rf.4a04aaca121b000fdc260966bdb0fbdc.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R12088_10-02-2024_06-37-42_640_jpg.rf.4a04aaca121b000fdc260966bdb0fbdc.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R12284_08-02-2024_17-23-11_640_jpg.rf.2ef7ccfc4a182f1844bea7ef0431688b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R12284_08-02-2024_17-23-11_640_jpg.rf.2ef7ccfc4a182f1844bea7ef0431688b.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R12970_09-02-2024_11-08-29_640_jpg.rf.04461de20fd08dea343f3cd55dc8feda.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R12970_09-02-2024_11-08-29_640_jpg.rf.04461de20fd08dea343f3cd55dc8feda.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R17431_08-02-2024_05-00-14_640_jpg.rf.377f3454371ef59a48da4935d35294d3.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R17431_08-02-2024_05-00-14_640_jpg.rf.377f3454371ef59a48da4935d35294d3.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R18305_07-02-2024_17-50-41_640_jpg.rf.b2156f0bc6db7ddbad4fa64d90f08936.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R18305_07-02-2024_17-50-41_640_jpg.rf.b2156f0bc6db7ddbad4fa64d90f08936.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R19876_09-02-2024_15-01-00_640_jpg.rf.1dba56f105761089f16c35049359ea1b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R19876_09-02-2024_15-01-00_640_jpg.rf.1dba56f105761089f16c35049359ea1b.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R20357_08-02-2024_10-22-20_640_jpg.rf.ab64940da8fb221b51559abb68268048.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R20357_08-02-2024_10-22-20_640_jpg.rf.ab64940da8fb221b51559abb68268048.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R22264_09-02-2024_05-55-59_640_jpg.rf.a1cd4d66c603fa2924889332f2edea6b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R22264_09-02-2024_05-55-59_640_jpg.rf.a1cd4d66c603fa2924889332f2edea6b.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R23917_08-02-2024_15-00-06_640_jpg.rf.9efd67e973f717caa4ffdfedc329eaf2.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R23917_08-02-2024_15-00-06_640_jpg.rf.9efd67e973f717caa4ffdfedc329eaf2.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R24517_08-02-2024_05-13-23_640_jpg.rf.ae415579a8ee3927eaf7b7814e9be764.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R24517_08-02-2024_05-13-23_640_jpg.rf.ae415579a8ee3927eaf7b7814e9be764.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R24731_09-02-2024_13-58-41_640_jpg.rf.9271ed6b4c48888715226ada7e8eb840.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R24731_09-02-2024_13-58-41_640_jpg.rf.9271ed6b4c48888715226ada7e8eb840.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R24736_08-02-2024_03-45-43_640_jpg.rf.6a1d44735952bb0c98ab9b02fa81c5c1.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R24736_08-02-2024_03-45-43_640_jpg.rf.6a1d44735952bb0c98ab9b02fa81c5c1.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R25068_09-02-2024_09-15-42_640_jpg.rf.77ae922d248fa184b0b98125ff8ea393.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R25068_09-02-2024_09-15-42_640_jpg.rf.77ae922d248fa184b0b98125ff8ea393.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R25642_08-02-2024_13-53-27_640_jpg.rf.7c8c87f87ca3c487ef2e30d387089d54.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R25642_08-02-2024_13-53-27_640_jpg.rf.7c8c87f87ca3c487ef2e30d387089d54.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R25715_09-02-2024_11-49-58_640_jpg.rf.d439f405a8c495f192eb5df5956a6997.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R25715_09-02-2024_11-49-58_640_jpg.rf.d439f405a8c495f192eb5df5956a6997.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R25852_09-02-2024_10-46-01_640_jpg.rf.ecb569ba4fdbc45441f7eb39a6d5bc8b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R25852_09-02-2024_10-46-01_640_jpg.rf.ecb569ba4fdbc45441f7eb39a6d5bc8b.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R26353_08-02-2024_06-50-01_640_jpg.rf.32faf490c23354052e8aa8c03460d0b7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R26353_08-02-2024_06-50-01_640_jpg.rf.32faf490c23354052e8aa8c03460d0b7.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R26793_09-02-2024_13-39-14_640_jpg.rf.54090071b899268e3f6e89dd6a46acf9.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R26793_09-02-2024_13-39-14_640_jpg.rf.54090071b899268e3f6e89dd6a46acf9.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R26865_08-02-2024_18-42-09_640_jpg.rf.12b3d94770aec5f8a396f00462fc801b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R26865_08-02-2024_18-42-09_640_jpg.rf.12b3d94770aec5f8a396f00462fc801b.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R30997_08-02-2024_18-40-08_640_jpg.rf.98cd8208d3ee886988ec98f49f8d7106.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R30997_08-02-2024_18-40-08_640_jpg.rf.98cd8208d3ee886988ec98f49f8d7106.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R34064_08-02-2024_03-22-38_640_jpg.rf.efc5c5adb9fa454ab1445b0be118f02b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R34064_08-02-2024_03-22-38_640_jpg.rf.efc5c5adb9fa454ab1445b0be118f02b.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R34319_08-02-2024_10-36-30_640_jpg.rf.86fdfe5e0dbcba5119e1aea13570be89.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R34319_08-02-2024_10-36-30_640_jpg.rf.86fdfe5e0dbcba5119e1aea13570be89.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R50715_10-02-2024_04-06-47_640_jpg.rf.e214c44a5a516126e4bc86e6b20605ce.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51R50715_10-02-2024_04-06-47_640_jpg.rf.e214c44a5a516126e4bc86e6b20605ce.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51RT25715_09-02-2024_11-49-58_640_jpg.rf.86a000ac8d9139c292343ad6733c7429.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_51RT25715_09-02-2024_11-49-58_640_jpg.rf.86a000ac8d9139c292343ad6733c7429.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_60F03554_08-02-2024_10-15-12_640_jpg.rf.ee3bb4aeb90de9bb895fc702a8abf354.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_60F03554_08-02-2024_10-15-12_640_jpg.rf.ee3bb4aeb90de9bb895fc702a8abf354.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_60K01891_08-02-2024_01-08-39_640_jpg.rf.8780186aa81cfa6489cd1a5ccf1c9054.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_60K01891_08-02-2024_01-08-39_640_jpg.rf.8780186aa81cfa6489cd1a5ccf1c9054.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_60R05281_09-02-2024_10-45-47_640_jpg.rf.e18298e77127cbda8638e72f9f41f066.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_60R05281_09-02-2024_10-45-47_640_jpg.rf.e18298e77127cbda8638e72f9f41f066.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_60R06048_08-02-2024_14-20-56_640_jpg.rf.28dcf054049d3fd0983387e06041d4ca.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_60R06048_08-02-2024_14-20-56_640_jpg.rf.28dcf054049d3fd0983387e06041d4ca.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_60R06613_08-02-2024_16-26-31_640_jpg.rf.753c47d7c352b98800ac1fb9c3f732d3.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_60R06613_08-02-2024_16-26-31_640_jpg.rf.753c47d7c352b98800ac1fb9c3f732d3.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_61K00407_08-02-2024_09-29-27_640_jpg.rf.eda109969bd84e4df5c3a76e1677f431.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_61K00407_08-02-2024_09-29-27_640_jpg.rf.eda109969bd84e4df5c3a76e1677f431.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_61R01142_08-02-2024_17-45-25_640_jpg.rf.ba9ad0276a5cbc6485a5aa25dedbb5d3.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_61R01142_08-02-2024_17-45-25_640_jpg.rf.ba9ad0276a5cbc6485a5aa25dedbb5d3.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_61R03549_08-02-2024_14-34-30_640_jpg.rf.df94ced3f94e6cd87f659800c9cf88b8.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_61R03549_08-02-2024_14-34-30_640_jpg.rf.df94ced3f94e6cd87f659800c9cf88b8.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_61R04566_08-02-2024_19-34-10_640_jpg.rf.ae93b398ec0cf527c7c45a39a21dabd2.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_61R04566_08-02-2024_19-34-10_640_jpg.rf.ae93b398ec0cf527c7c45a39a21dabd2.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_61R04788_08-02-2024_01-31-27_640_jpg.rf.cad1355b40807b6202ae30385fb514da.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_61R04788_08-02-2024_01-31-27_640_jpg.rf.cad1355b40807b6202ae30385fb514da.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_61R06545_07-02-2024_21-15-56_640_jpg.rf.113a79c9787158f6a306c8a6baebf47e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_61R06545_07-02-2024_21-15-56_640_jpg.rf.113a79c9787158f6a306c8a6baebf47e.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_62R00951_09-02-2024_13-37-13_640_jpg.rf.f809997307f5b727262127256bab17d4.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_62R00951_09-02-2024_13-37-13_640_jpg.rf.f809997307f5b727262127256bab17d4.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_62R00987_10-02-2024_02-30-33_640_jpg.rf.e2b8df74bc5b45a8fbfd1d7fcb7f27e7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_62R00987_10-02-2024_02-30-33_640_jpg.rf.e2b8df74bc5b45a8fbfd1d7fcb7f27e7.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_62R01359_10-02-2024_14-00-02_640_jpg.rf.d5b6e3a547a0531a285305046d4621e6.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_62R01359_10-02-2024_14-00-02_640_jpg.rf.d5b6e3a547a0531a285305046d4621e6.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00059_08-02-2024_14-50-13_640_jpg.rf.42f47e599cdcb71e99c1e6789714c39f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_63R00059_08-02-2024_14-50-13_640_jpg.rf.42f47e599cdcb71e99c1e6789714c39f.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00260_08-02-2024_19-25-10_640_jpg.rf.2ba35875c98b70d99d5956f40d64a141.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_63R00260_08-02-2024_19-25-10_640_jpg.rf.2ba35875c98b70d99d5956f40d64a141.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00324_08-02-2024_00-38-05_640_jpg.rf.d4d8a4bf7c16703cc05116d32ce95ba4.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_63R00324_08-02-2024_00-38-05_640_jpg.rf.d4d8a4bf7c16703cc05116d32ce95ba4.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00346_08-02-2024_22-24-59_640_jpg.rf.697af726e613ef3353099f9827f567b2.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_63R00346_08-02-2024_22-24-59_640_jpg.rf.697af726e613ef3353099f9827f567b2.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00437_08-02-2024_08-52-11_640_jpg.rf.29e87cdb3b7ab8fe171244626a6c0783.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_63R00437_08-02-2024_08-52-11_640_jpg.rf.29e87cdb3b7ab8fe171244626a6c0783.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00464_09-02-2024_00-49-19_640_jpg.rf.92c817e269991aad874563b5842e67de.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_63R00464_09-02-2024_00-49-19_640_jpg.rf.92c817e269991aad874563b5842e67de.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00492_09-02-2024_14-11-59_640_jpg.rf.8bcd316ddc6b4382038ccd9ad90ce29a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_63R00492_09-02-2024_14-11-59_640_jpg.rf.8bcd316ddc6b4382038ccd9ad90ce29a.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00496_09-02-2024_00-56-42_640_jpg.rf.4b030b677758ac31a2fcf4851d513617.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_63R00496_09-02-2024_00-56-42_640_jpg.rf.4b030b677758ac31a2fcf4851d513617.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00570_10-02-2024_22-01-21_640_jpg.rf.20b008c0cff25a7dcbcc9fb525ff6213.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_63R00570_10-02-2024_22-01-21_640_jpg.rf.20b008c0cff25a7dcbcc9fb525ff6213.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00641_07-02-2024_19-57-20_640_jpg.rf.7ff99ff0ff3c48ea32a6cff348d734f7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_63R00641_07-02-2024_19-57-20_640_jpg.rf.7ff99ff0ff3c48ea32a6cff348d734f7.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00801_09-02-2024_10-23-48_640_jpg.rf.3f363a7010c7b1c076d2707f2936f994.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_63R00801_09-02-2024_10-23-48_640_jpg.rf.3f363a7010c7b1c076d2707f2936f994.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00824_09-02-2024_08-34-22_640_jpg.rf.df5d12cf4306c0a6f6f25d26035767e9.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_63R00824_09-02-2024_08-34-22_640_jpg.rf.df5d12cf4306c0a6f6f25d26035767e9.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00832_08-02-2024_07-46-03_640_jpg.rf.bff0cb2377120624adf5bb53405841cb.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_63R00832_08-02-2024_07-46-03_640_jpg.rf.bff0cb2377120624adf5bb53405841cb.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00842_08-02-2024_00-29-35_640_jpg.rf.3010f0427a1522847cfe1b4c5a6f165d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_63R00842_08-02-2024_00-29-35_640_jpg.rf.3010f0427a1522847cfe1b4c5a6f165d.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00940_09-02-2024_07-19-35_640_jpg.rf.feb830c1f0b3b6a891282d95c82aff1f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_63R00940_09-02-2024_07-19-35_640_jpg.rf.feb830c1f0b3b6a891282d95c82aff1f.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R01563_09-02-2024_15-04-45_640_jpg.rf.3b32c023a7fdb4a6766132ac4d9c2182.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_63R01563_09-02-2024_15-04-45_640_jpg.rf.3b32c023a7fdb4a6766132ac4d9c2182.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_65R00532_09-02-2024_03-09-18_640_jpg.rf.b52122d17c87f4d1964fadd62bcc5a5e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_65R00532_09-02-2024_03-09-18_640_jpg.rf.b52122d17c87f4d1964fadd62bcc5a5e.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_65R00957_08-02-2024_11-48-29_640_jpg.rf.62668e350cfb5d64c2b98bea06f9480f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_65R00957_08-02-2024_11-48-29_640_jpg.rf.62668e350cfb5d64c2b98bea06f9480f.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_66R00059_08-02-2024_14-50-13_640_jpg.rf.09152e06b8bd926ef0f6aa77a097df64.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_66R00059_08-02-2024_14-50-13_640_jpg.rf.09152e06b8bd926ef0f6aa77a097df64.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_66R00366_09-02-2024_11-05-46_640_jpg.rf.aa841aaafdea7da73107fad5cae3d59f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_66R00366_09-02-2024_11-05-46_640_jpg.rf.aa841aaafdea7da73107fad5cae3d59f.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_72R02714_08-02-2024_00-17-21_640_jpg.rf.bb9d91d838252a1422d5166ef5e7e49d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_72R02714_08-02-2024_00-17-21_640_jpg.rf.bb9d91d838252a1422d5166ef5e7e49d.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_72R03073_10-02-2024_01-00-55_640_jpg.rf.7894c5bc94a9cb06592bef075b838e2c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_72R03073_10-02-2024_01-00-55_640_jpg.rf.7894c5bc94a9cb06592bef075b838e2c.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_75R00470_08-02-2024_21-48-52_640_jpg.rf.2d4cc13a8a7bf0f9954a5ad942e70c09.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_75R00470_08-02-2024_21-48-52_640_jpg.rf.2d4cc13a8a7bf0f9954a5ad942e70c09.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_76R00400_07-02-2024_15-30-29_640_jpg.rf.bacf1409ec0c201861b8d9f56e157c5d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_76R00400_07-02-2024_15-30-29_640_jpg.rf.bacf1409ec0c201861b8d9f56e157c5d.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77B02956_09-02-2024_19-51-24_640_jpg.rf.18a92c20ed0b72f8b2a217f956e50962.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_77B02956_09-02-2024_19-51-24_640_jpg.rf.18a92c20ed0b72f8b2a217f956e50962.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77B03276_10-02-2024_20-24-09_640_jpg.rf.e4a74c349900162a28e70a6ee6d72a37.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_77B03276_10-02-2024_20-24-09_640_jpg.rf.e4a74c349900162a28e70a6ee6d72a37.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77F01235_08-02-2024_07-20-27_640_jpg.rf.1496e63787bd76473e6dd37501971b78.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_77F01235_08-02-2024_07-20-27_640_jpg.rf.1496e63787bd76473e6dd37501971b78.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77R01265_08-02-2024_03-24-26_640_jpg.rf.8f706fb822d4570bbeed25d1ccb65c4a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_77R01265_08-02-2024_03-24-26_640_jpg.rf.8f706fb822d4570bbeed25d1ccb65c4a.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77R01524_08-02-2024_16-04-19_640_jpg.rf.74b486afa026333488978c83661f39e7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_77R01524_08-02-2024_16-04-19_640_jpg.rf.74b486afa026333488978c83661f39e7.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77R02001_08-02-2024_15-15-21_640_jpg.rf.e6b5c988598024ae1b3ade79707220d9.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_77R02001_08-02-2024_15-15-21_640_jpg.rf.e6b5c988598024ae1b3ade79707220d9.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77R03397_07-02-2024_17-24-18_640_jpg.rf.5011fc6c85e70d6c8455ecd47da88ecf.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_77R03397_07-02-2024_17-24-18_640_jpg.rf.5011fc6c85e70d6c8455ecd47da88ecf.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77R03566_08-02-2024_08-31-26_640_jpg.rf.dfb09e3607925d9a142e9edb90b9cad2.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_77R03566_08-02-2024_08-31-26_640_jpg.rf.dfb09e3607925d9a142e9edb90b9cad2.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77R03997_10-02-2024_08-06-10_640_jpg.rf.c054457679bef932263a572ba4ef6ff7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_77R03997_10-02-2024_08-06-10_640_jpg.rf.c054457679bef932263a572ba4ef6ff7.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77R04775_09-02-2024_21-08-28_640_jpg.rf.608aa07ef26165c6c1eef8482df6752b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_77R04775_09-02-2024_21-08-28_640_jpg.rf.608aa07ef26165c6c1eef8482df6752b.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77R04787_10-02-2024_09-23-51_640_jpg.rf.f6c06514fedbe07383eb503b6028395e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_77R04787_10-02-2024_09-23-51_640_jpg.rf.f6c06514fedbe07383eb503b6028395e.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77R04919_10-02-2024_18-32-37_640_jpg.rf.4067fd27da5f1dc7af34dcaa2b0d4586.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_77R04919_10-02-2024_18-32-37_640_jpg.rf.4067fd27da5f1dc7af34dcaa2b0d4586.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77R04950_08-02-2024_10-16-13_640_jpg.rf.fa8c76b58b9bb3f15dda08a4ec8240d0.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_77R04950_08-02-2024_10-16-13_640_jpg.rf.fa8c76b58b9bb3f15dda08a4ec8240d0.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77R05049_10-02-2024_11-39-38_640_jpg.rf.e5f92a32fe7c449a78481ed628f61a03.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_77R05049_10-02-2024_11-39-38_640_jpg.rf.e5f92a32fe7c449a78481ed628f61a03.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_78R00967_08-02-2024_08-30-14_640_jpg.rf.fdcc22408fafe8629ced590886df9d32.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_78R00967_08-02-2024_08-30-14_640_jpg.rf.fdcc22408fafe8629ced590886df9d32.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_79K00832_07-02-2024_21-00-20_640_jpg.rf.1ef349ef7428969be85fdbb03e6e8512.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_79K00832_07-02-2024_21-00-20_640_jpg.rf.1ef349ef7428969be85fdbb03e6e8512.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_79R00019_07-02-2024_20-28-23_640_jpg.rf.9efea0d2df224b84065bd4386be096ea.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_79R00019_07-02-2024_20-28-23_640_jpg.rf.9efea0d2df224b84065bd4386be096ea.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_79R00347_07-02-2024_18-58-02_640_jpg.rf.931632eec3f51f843d78755e2dfd1784.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_79R00347_07-02-2024_18-58-02_640_jpg.rf.931632eec3f51f843d78755e2dfd1784.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_79R00463_07-02-2024_20-31-14_640_jpg.rf.4ff544f47293e891a4e268d84195a569.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_79R00463_07-02-2024_20-31-14_640_jpg.rf.4ff544f47293e891a4e268d84195a569.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_79R00544_07-02-2024_20-09-59_640_jpg.rf.754f0a6f1421fb6d931ace6cd8bd15ac.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_79R00544_07-02-2024_20-09-59_640_jpg.rf.754f0a6f1421fb6d931ace6cd8bd15ac.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_79R00690_08-02-2024_04-00-23_640_jpg.rf.ee77772921831d95c523ec6228a08fb8.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_79R00690_08-02-2024_04-00-23_640_jpg.rf.ee77772921831d95c523ec6228a08fb8.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_79R00786_07-02-2024_15-18-01_640_jpg.rf.5880e65ff1f77b03cc89a452dc85acce.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_79R00786_07-02-2024_15-18-01_640_jpg.rf.5880e65ff1f77b03cc89a452dc85acce.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_79R00860_07-02-2024_20-33-07_640_jpg.rf.576ad0efe246ec0a56ce66564fd01989.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_79R00860_07-02-2024_20-33-07_640_jpg.rf.576ad0efe246ec0a56ce66564fd01989.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_79R00993_10-02-2024_11-48-07_640_jpg.rf.cb9e53f2a46b5ab12460482d13778789.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_79R00993_10-02-2024_11-48-07_640_jpg.rf.cb9e53f2a46b5ab12460482d13778789.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_83R00176_07-02-2024_16-25-56_640_jpg.rf.c2137c88caa1309a79c7d76a93a79968.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_83R00176_07-02-2024_16-25-56_640_jpg.rf.c2137c88caa1309a79c7d76a93a79968.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R00068_08-02-2024_06-28-33_640_jpg.rf.1312c9ee4a35ce261fa2953eff493ace.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R00068_08-02-2024_06-28-33_640_jpg.rf.1312c9ee4a35ce261fa2953eff493ace.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R00092_07-02-2024_15-59-29_640_jpg.rf.62f2e89c166804f648bdf78657168126.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R00092_07-02-2024_15-59-29_640_jpg.rf.62f2e89c166804f648bdf78657168126.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R00355_09-02-2024_05-00-10_640_jpg.rf.e13eb901f82dd5504a41c72d90872d7c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R00355_09-02-2024_05-00-10_640_jpg.rf.e13eb901f82dd5504a41c72d90872d7c.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R00451_09-02-2024_11-48-16_640_jpg.rf.88c69a60362fa765cad51ceaed34d1f2.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R00451_09-02-2024_11-48-16_640_jpg.rf.88c69a60362fa765cad51ceaed34d1f2.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R00464_08-02-2024_00-23-31_640_jpg.rf.60ffa15df38cffccb0fee70b2bdefeac.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R00464_08-02-2024_00-23-31_640_jpg.rf.60ffa15df38cffccb0fee70b2bdefeac.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R00592_08-02-2024_08-41-07_640_jpg.rf.2a53883b97e4850d89831eafba06ad4d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R00592_08-02-2024_08-41-07_640_jpg.rf.2a53883b97e4850d89831eafba06ad4d.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R00656_08-02-2024_14-26-38_640_jpg.rf.900e4277f340688d396d86e4c4052aa6.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R00656_08-02-2024_14-26-38_640_jpg.rf.900e4277f340688d396d86e4c4052aa6.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R00729_10-02-2024_06-37-56_640_jpg.rf.cfa3f88ff9aa293b851b3c29e2e1d309.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R00729_10-02-2024_06-37-56_640_jpg.rf.cfa3f88ff9aa293b851b3c29e2e1d309.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R00976_08-02-2024_13-40-31_640_jpg.rf.cfe3f83fb71d82859863d19df499de2b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R00976_08-02-2024_13-40-31_640_jpg.rf.cfe3f83fb71d82859863d19df499de2b.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R00978_09-02-2024_04-34-32_640_jpg.rf.b744da68b63bd76dd259a80b6aead3ff.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R00978_09-02-2024_04-34-32_640_jpg.rf.b744da68b63bd76dd259a80b6aead3ff.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R01003_07-02-2024_18-10-55_640_jpg.rf.50d82b7710355f8099e1b02692f3eec4.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R01003_07-02-2024_18-10-55_640_jpg.rf.50d82b7710355f8099e1b02692f3eec4.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R01012_08-02-2024_05-28-45_640_jpg.rf.342505e4fccecfd16d68417955c90f93.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R01012_08-02-2024_05-28-45_640_jpg.rf.342505e4fccecfd16d68417955c90f93.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R01017_08-02-2024_14-30-14_640_jpg.rf.a756145fbbe4900f88eaced33e5f0ccc.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R01017_08-02-2024_14-30-14_640_jpg.rf.a756145fbbe4900f88eaced33e5f0ccc.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R01048_08-02-2024_23-59-32_640_jpg.rf.6c744d472d4cc4e891d79a378dc6733b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R01048_08-02-2024_23-59-32_640_jpg.rf.6c744d472d4cc4e891d79a378dc6733b.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R01093_08-02-2024_02-22-48_640_jpg.rf.4c5c4459c37c53682afc5f81da3bec5e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R01093_08-02-2024_02-22-48_640_jpg.rf.4c5c4459c37c53682afc5f81da3bec5e.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R01101_08-02-2024_13-31-17_640_jpg.rf.f8c14436809db52b2baefbacadc33416.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R01101_08-02-2024_13-31-17_640_jpg.rf.f8c14436809db52b2baefbacadc33416.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R01136_09-02-2024_05-34-34_640_jpg.rf.46c3355fe5f21c6db44fd5e7bc70ac47.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R01136_09-02-2024_05-34-34_640_jpg.rf.46c3355fe5f21c6db44fd5e7bc70ac47.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R01141_09-02-2024_14-17-16_640_jpg.rf.11419949de1f71814653f96893e192a5.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R01141_09-02-2024_14-17-16_640_jpg.rf.11419949de1f71814653f96893e192a5.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R01154_08-02-2024_01-59-42_640_jpg.rf.4ea7e963a9b8a85cd8b0dd47152b028a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R01154_08-02-2024_01-59-42_640_jpg.rf.4ea7e963a9b8a85cd8b0dd47152b028a.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R01333_09-02-2024_08-44-54_640_jpg.rf.2e996aac2fd46c9dc5c6ab0872580359.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R01333_09-02-2024_08-44-54_640_jpg.rf.2e996aac2fd46c9dc5c6ab0872580359.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R01337_08-02-2024_08-09-07_640_jpg.rf.7d170b9689fbce18f9b3e6464f11f3c1.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_86R01337_08-02-2024_08-09-07_640_jpg.rf.7d170b9689fbce18f9b3e6464f11f3c1.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_88R01313_08-02-2024_22-54-20_640_jpg.rf.3df2cefa108752a5bfbaa467e76c03db.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_88R01313_08-02-2024_22-54-20_640_jpg.rf.3df2cefa108752a5bfbaa467e76c03db.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_89P02255_10-02-2024_23-03-35_640_jpg.rf.335944f743f5701c906235155f357f7b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_89P02255_10-02-2024_23-03-35_640_jpg.rf.335944f743f5701c906235155f357f7b.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_89R01622_09-02-2024_13-03-35_640_jpg.rf.5831e16bb0f35b811d31f3e690db37c2.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_89R01622_09-02-2024_13-03-35_640_jpg.rf.5831e16bb0f35b811d31f3e690db37c2.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_90R00602_08-02-2024_18-18-50_640_jpg.rf.2fc765c7ba8bc5f8a8c956ad4e31777a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_90R00602_08-02-2024_18-18-50_640_jpg.rf.2fc765c7ba8bc5f8a8c956ad4e31777a.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_90R00749_07-02-2024_16-10-27_640_jpg.rf.65b5c33239cf47043ac9c9864fbe25c3.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_90R00749_07-02-2024_16-10-27_640_jpg.rf.65b5c33239cf47043ac9c9864fbe25c3.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_90R00911_08-02-2024_16-56-12_640_jpg.rf.b75e4f02ed7a3dcb2af41f7a79118ba7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_90R00911_08-02-2024_16-56-12_640_jpg.rf.b75e4f02ed7a3dcb2af41f7a79118ba7.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_92R00666_07-02-2024_15-25-59_640_jpg.rf.a9ad254d2e166bbcef257e88f626f04c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_92R00666_07-02-2024_15-25-59_640_jpg.rf.a9ad254d2e166bbcef257e88f626f04c.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_94R00122_08-02-2024_19-17-30_640_jpg.rf.b147930599937e025e7c811c9ab46319.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_94R00122_08-02-2024_19-17-30_640_jpg.rf.b147930599937e025e7c811c9ab46319.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_98R01192_08-02-2024_17-17-40_640_jpg.rf.0405507c98e4fd9f74afca07f30b001d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_98R01192_08-02-2024_17-17-40_640_jpg.rf.0405507c98e4fd9f74afca07f30b001d.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_98R01729_08-02-2024_16-41-11_640_jpg.rf.89e726804668f4c82ee1c679a44d4c13.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_98R01729_08-02-2024_16-41-11_640_jpg.rf.89e726804668f4c82ee1c679a44d4c13.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_98R03463_07-02-2024_15-36-15_640_jpg.rf.4ac742eec408ca5086c1b283c22ba487.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_98R03463_07-02-2024_15-36-15_640_jpg.rf.4ac742eec408ca5086c1b283c22ba487.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_caunamprc554_12R01491_07-02-2024_15-39-54_640_jpg.rf.400f10d96efbaec68d917a54bed6d4e9.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc554_12R01491_07-02-2024_15-39-54_640_jpg.rf.400f10d96efbaec68d917a54bed6d4e9.jpg",
+   "camera_id": "caunamprc554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc554_51B24370_07-02-2024_19-21-52_640_jpg.rf.225c0766c847c668714fa298785fe504.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc554_51B24370_07-02-2024_19-21-52_640_jpg.rf.225c0766c847c668714fa298785fe504.jpg",
+   "camera_id": "caunamprc554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc554_60Y22395_07-02-2024_17-41-45_640_jpg.rf.9a171a2c17bd4c91c03732d15fcf7aa7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc554_60Y22395_07-02-2024_17-41-45_640_jpg.rf.9a171a2c17bd4c91c03732d15fcf7aa7.jpg",
+   "camera_id": "caunamprc554",
+   "overlay": false,
+   "n_boxes": 4
+  },
+  {
+   "file": "v10_general_caunamprc554_77H02728_07-02-2024_13-39-24_640_jpg.rf.e9c9e614c574c48a160161a2380cd86a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc554_77H02728_07-02-2024_13-39-24_640_jpg.rf.e9c9e614c574c48a160161a2380cd86a.jpg",
+   "camera_id": "caunamprc554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc554_77R03627_10-02-2024_07-54-50_640_jpg.rf.bd553ff7a31978b90346d43fd0aa3275.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc554_77R03627_10-02-2024_07-54-50_640_jpg.rf.bd553ff7a31978b90346d43fd0aa3275.jpg",
+   "camera_id": "caunamprc554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc554_77R04787_10-02-2024_10-06-46_640_jpg.rf.75d56b00c83c43a9d725ec0adab2526d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc554_77R04787_10-02-2024_10-06-46_640_jpg.rf.75d56b00c83c43a9d725ec0adab2526d.jpg",
+   "camera_id": "caunamprc554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc555_37R02255_07-02-2024_21-00-17_640_jpg.rf.c12fa9ea4d7f226284c0842d6a96edae.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc555_37R02255_07-02-2024_21-00-17_640_jpg.rf.c12fa9ea4d7f226284c0842d6a96edae.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc555_51R07817_10-02-2024_16-40-16_640_jpg.rf.f5e95782341097cef51cd67fcf641424.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc555_51R07817_10-02-2024_16-40-16_640_jpg.rf.f5e95782341097cef51cd67fcf641424.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc555_62R01433_07-02-2024_22-27-59_640_jpg.rf.7a5f85db4d4039357aed23145f2a4f08.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc555_62R01433_07-02-2024_22-27-59_640_jpg.rf.7a5f85db4d4039357aed23145f2a4f08.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc555_72R02033_10-02-2024_19-43-00_640_jpg.rf.cfe5b0823f2ca6d6e67898a29d34477e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc555_72R02033_10-02-2024_19-43-00_640_jpg.rf.cfe5b0823f2ca6d6e67898a29d34477e.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc555_77R02925_07-02-2024_15-53-30_640_jpg.rf.a727370df7fa93e9eb30ebf64bcbe9fa.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc555_77R02925_07-02-2024_15-53-30_640_jpg.rf.a727370df7fa93e9eb30ebf64bcbe9fa.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc555_86C06997_11-02-2024_15-42-12_640_jpg.rf.388ea92ec2d9743876a867a1cad8fb15.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc555_86C06997_11-02-2024_15-42-12_640_jpg.rf.388ea92ec2d9743876a867a1cad8fb15.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc555_86R00343_10-02-2024_08-59-36_640_jpg.rf.a9ac2ae663c38467f862197e236b17e1.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc555_86R00343_10-02-2024_08-59-36_640_jpg.rf.a9ac2ae663c38467f862197e236b17e1.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_caunamprc555_98R03110_10-02-2024_13-27-19_640_jpg.rf.908063062d563c700b5d496b8b34f0e7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc555_98R03110_10-02-2024_13-27-19_640_jpg.rf.908063062d563c700b5d496b8b34f0e7.jpg",
+   "camera_id": "caunamprc555",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_18R00296_08-02-2024_13-18-51_640_jpg.rf.01e980e51e0215b9732a5a3b42f92294.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_18R00296_08-02-2024_13-18-51_640_jpg.rf.01e980e51e0215b9732a5a3b42f92294.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_29H50660_09-02-2024_08-59-37_640_jpg.rf.4d64f1295d9aaa119b72a0c547fd034c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_29H50660_09-02-2024_08-59-37_640_jpg.rf.4d64f1295d9aaa119b72a0c547fd034c.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_35B02228_08-02-2024_16-32-32_640_jpg.rf.34318826454a331a09274a89907a4f52.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_35B02228_08-02-2024_16-32-32_640_jpg.rf.34318826454a331a09274a89907a4f52.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_36R03231_10-02-2024_09-16-59_640_jpg.rf.faf40fcbf064309ac6fe7d6dfffcf71a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_36R03231_10-02-2024_09-16-59_640_jpg.rf.faf40fcbf064309ac6fe7d6dfffcf71a.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_50R04915_10-02-2024_08-13-41_640_jpg.rf.6412334391dc9496967d4b3f803b3aa0.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_50R04915_10-02-2024_08-13-41_640_jpg.rf.6412334391dc9496967d4b3f803b3aa0.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_51R21330_09-02-2024_13-56-50_640_jpg.rf.53a4fe087f35105f7e6093aa4869ae87.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_51R21330_09-02-2024_13-56-50_640_jpg.rf.53a4fe087f35105f7e6093aa4869ae87.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_51R27297_07-02-2024_20-01-04_640_jpg.rf.b5ee7582a0f87033f55e0701ffda03f7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_51R27297_07-02-2024_20-01-04_640_jpg.rf.b5ee7582a0f87033f55e0701ffda03f7.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_51R32119_10-02-2024_04-45-28_640_jpg.rf.ea944c41eec72907d2acbee6b0fe0148.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_51R32119_10-02-2024_04-45-28_640_jpg.rf.ea944c41eec72907d2acbee6b0fe0148.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_51R33657_07-02-2024_13-42-22_640_jpg.rf.e72367633d6daaa699ebe17eba453088.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_51R33657_07-02-2024_13-42-22_640_jpg.rf.e72367633d6daaa699ebe17eba453088.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_51R40011_08-02-2024_16-27-55_640_jpg.rf.ed0f5d334a5b1f65938279f3db7c7c58.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_51R40011_08-02-2024_16-27-55_640_jpg.rf.ed0f5d334a5b1f65938279f3db7c7c58.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_51R40864_09-02-2024_00-17-34_640_jpg.rf.7d9a6e1357b58cb7f534026a5bdd802c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_51R40864_09-02-2024_00-17-34_640_jpg.rf.7d9a6e1357b58cb7f534026a5bdd802c.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_63H00216_09-02-2024_23-24-45_640_jpg.rf.0e0e11a783eb58f1175a7cd2cf1b1a11.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_63H00216_09-02-2024_23-24-45_640_jpg.rf.0e0e11a783eb58f1175a7cd2cf1b1a11.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 3
+  },
+  {
+   "file": "v10_general_garagecuong554_63R00203_08-02-2024_07-19-28_640_jpg.rf.3f1867d7a3deb637a809f89797d67f16.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_63R00203_08-02-2024_07-19-28_640_jpg.rf.3f1867d7a3deb637a809f89797d67f16.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_63R00218_09-02-2024_23-24-44_640_jpg.rf.7ada12bbf177720cd2a3abb6176b9827.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_63R00218_09-02-2024_23-24-44_640_jpg.rf.7ada12bbf177720cd2a3abb6176b9827.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_63R00881_08-02-2024_23-55-47_640_jpg.rf.27315fb5c59fdf22c1e5a809a9074048.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_63R00881_08-02-2024_23-55-47_640_jpg.rf.27315fb5c59fdf22c1e5a809a9074048.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_63R00964_08-02-2024_12-57-38_640_jpg.rf.09119291b97f6f074d05200332f154af.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_63R00964_08-02-2024_12-57-38_640_jpg.rf.09119291b97f6f074d05200332f154af.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 3
+  },
+  {
+   "file": "v10_general_garagecuong554_76R00399_10-02-2024_23-39-32_640_jpg.rf.2fd148d1166f3b423234eafd35a30c25.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_76R00399_10-02-2024_23-39-32_640_jpg.rf.2fd148d1166f3b423234eafd35a30c25.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R01184_10-02-2024_00-35-31_640_jpg.rf.1314cc593d7c1b05a4927f55d333f2ba.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_77R01184_10-02-2024_00-35-31_640_jpg.rf.1314cc593d7c1b05a4927f55d333f2ba.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R02086_09-02-2024_18-03-11_640_jpg.rf.b6c657e81dddfcc56187a51739720400.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_77R02086_09-02-2024_18-03-11_640_jpg.rf.b6c657e81dddfcc56187a51739720400.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_77R02150_08-02-2024_03-05-55_640_jpg.rf.4db718b8f2bb8e82f1f7faa7f774c171.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_77R02150_08-02-2024_03-05-55_640_jpg.rf.4db718b8f2bb8e82f1f7faa7f774c171.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R02734_08-02-2024_23-48-45_640_jpg.rf.d066f840ab5e560c197e35a0d52c8cba.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_77R02734_08-02-2024_23-48-45_640_jpg.rf.d066f840ab5e560c197e35a0d52c8cba.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_77R04806_08-02-2024_13-02-12_640_jpg.rf.9fdcb84b347283f7cb705755612c165b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_77R04806_08-02-2024_13-02-12_640_jpg.rf.9fdcb84b347283f7cb705755612c165b.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_79R00510_09-02-2024_06-47-39_640_jpg.rf.a37f47680aa31ae7df25dedb981118dd.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_79R00510_09-02-2024_06-47-39_640_jpg.rf.a37f47680aa31ae7df25dedb981118dd.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_79R00763_09-02-2024_16-34-08_640_jpg.rf.31312e88960c36072e6dc8b89579a6b8.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_79R00763_09-02-2024_16-34-08_640_jpg.rf.31312e88960c36072e6dc8b89579a6b8.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_79R00846_09-02-2024_14-08-26_640_jpg.rf.fa74003da8dd859c044ecce1d9d00e85.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_79R00846_09-02-2024_14-08-26_640_jpg.rf.fa74003da8dd859c044ecce1d9d00e85.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_79R00889_09-02-2024_19-54-09_640_jpg.rf.cbc8e810772f4eb1fcc2f4700a29942c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_79R00889_09-02-2024_19-54-09_640_jpg.rf.cbc8e810772f4eb1fcc2f4700a29942c.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_86R00791_09-02-2024_00-52-19_640_jpg.rf.9429864f5ee8164cb536ffe995ac1567.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_86R00791_09-02-2024_00-52-19_640_jpg.rf.9429864f5ee8164cb536ffe995ac1567.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_86R01331_08-02-2024_06-19-50_640_jpg.rf.f5500eb3ce153e877e9b1cfae9de3641.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_86R01331_08-02-2024_06-19-50_640_jpg.rf.f5500eb3ce153e877e9b1cfae9de3641.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_garagecuong554_89R01155_10-02-2024_04-23-42_640_jpg.rf.fea465c58ce03d072ff6bde406efd00c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_89R01155_10-02-2024_04-23-42_640_jpg.rf.fea465c58ce03d072ff6bde406efd00c.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_garagecuong554_92R00276_08-02-2024_03-48-45_640_jpg.rf.30195d69e3cc176cc084bdcdb6f54297.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_92R00276_08-02-2024_03-48-45_640_jpg.rf.30195d69e3cc176cc084bdcdb6f54297.jpg",
+   "camera_id": "garagecuong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_hoaphu555_86B119686_16-02-2024_07-43-30_640_jpg.rf.5ada7209219f576be754d722b1480513.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_hoaphu555_86B119686_16-02-2024_07-43-30_640_jpg.rf.5ada7209219f576be754d722b1480513.jpg",
+   "camera_id": "hoaphu555",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_hoaphu555_86C14319_21-01-2024_15-28-36_640_jpg.rf.aaaae8dbd838a2f6968db4ad37391a29.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_hoaphu555_86C14319_21-01-2024_15-28-36_640_jpg.rf.aaaae8dbd838a2f6968db4ad37391a29.jpg",
+   "camera_id": "hoaphu555",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_hoaphu557_24F124057_11-02-2024_16-02-17_640_jpg.rf.61b72ff39c8b236bc1318990a3b0e1c7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_hoaphu557_24F124057_11-02-2024_16-02-17_640_jpg.rf.61b72ff39c8b236bc1318990a3b0e1c7.jpg",
+   "camera_id": "hoaphu557",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_15R17365_08-02-2024_15-08-35_640_jpg.rf.15d3c398236abccf7f2790442ce40765.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3duong554_15R17365_08-02-2024_15-08-35_640_jpg.rf.15d3c398236abccf7f2790442ce40765.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_51R13112_09-02-2024_08-54-12_640_jpg.rf.f1374fa254de56c1b27e31017f30ce7a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3duong554_51R13112_09-02-2024_08-54-12_640_jpg.rf.f1374fa254de56c1b27e31017f30ce7a.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_51R15305_08-02-2024_07-42-14_640_jpg.rf.f9efa8d5e22d140b3bc148193b8668d1.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3duong554_51R15305_08-02-2024_07-42-14_640_jpg.rf.f9efa8d5e22d140b3bc148193b8668d1.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_51R22676_07-02-2024_13-40-32_640_jpg.rf.76eef22ee57a2b3041319b169050af07.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3duong554_51R22676_07-02-2024_13-40-32_640_jpg.rf.76eef22ee57a2b3041319b169050af07.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_51R25941_07-02-2024_17-25-32_640_jpg.rf.7c65dd97ef08fd7ad87815e672f95fad.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3duong554_51R25941_07-02-2024_17-25-32_640_jpg.rf.7c65dd97ef08fd7ad87815e672f95fad.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3duong554_63R00758_09-02-2024_08-32-50_640_jpg.rf.53afc7901eb3cc7a96560b5f0321e109.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3duong554_63R00758_09-02-2024_08-32-50_640_jpg.rf.53afc7901eb3cc7a96560b5f0321e109.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_73R00470_08-02-2024_17-15-26_640_jpg.rf.ed17d0957fb4f46d36d2ce66992e6d4e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3duong554_73R00470_08-02-2024_17-15-26_640_jpg.rf.ed17d0957fb4f46d36d2ce66992e6d4e.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_77R02454_09-02-2024_14-42-24_640_jpg.rf.f210ca1037700e99f5e74398dc380a7b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3duong554_77R02454_09-02-2024_14-42-24_640_jpg.rf.f210ca1037700e99f5e74398dc380a7b.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_77R02711_08-02-2024_00-14-56_640_jpg.rf.c5a1fe0aadb2c83fe015312e482205ce.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3duong554_77R02711_08-02-2024_00-14-56_640_jpg.rf.c5a1fe0aadb2c83fe015312e482205ce.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_86R00343_10-02-2024_09-04-52_640_jpg.rf.3a2171366fa2c5d575430e6b0aeb6bc4.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3duong554_86R00343_10-02-2024_09-04-52_640_jpg.rf.3a2171366fa2c5d575430e6b0aeb6bc4.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_86R00950_10-02-2024_15-16-15_640_jpg.rf.5edbd2f01b17f3ff015f61fef0e15ef0.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3duong554_86R00950_10-02-2024_15-16-15_640_jpg.rf.5edbd2f01b17f3ff015f61fef0e15ef0.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3duong554_86R01047_08-02-2024_14-00-09_640_jpg.rf.515d62e0848f20d0e9af0d8bc7bec393.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3duong554_86R01047_08-02-2024_14-00-09_640_jpg.rf.515d62e0848f20d0e9af0d8bc7bec393.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_86R01111_08-02-2024_00-26-03_640_jpg.rf.8d4b2aa101daa305296fc82ad55762ed.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3duong554_86R01111_08-02-2024_00-26-03_640_jpg.rf.8d4b2aa101daa305296fc82ad55762ed.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3duong554_92R01052_07-02-2024_20-36-56_640_jpg.rf.db05c242c559a9e4cced115f2a9f6488.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3duong554_92R01052_07-02-2024_20-36-56_640_jpg.rf.db05c242c559a9e4cced115f2a9f6488.jpg",
+   "camera_id": "nga3duong554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3muitau554_86B106569_17-02-2024_09-49-23_640_jpg.rf.785239e540402b50f329e5c0eab0c3ab.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3muitau554_86B106569_17-02-2024_09-49-23_640_jpg.rf.785239e540402b50f329e5c0eab0c3ab.jpg",
+   "camera_id": "nga3muitau554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3muitau554_86H21740_11-02-2024_08-49-12_640_jpg.rf.aa97d980106aba3520c9b061cfe6533a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3muitau554_86H21740_11-02-2024_08-49-12_640_jpg.rf.aa97d980106aba3520c9b061cfe6533a.jpg",
+   "camera_id": "nga3muitau554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_12R00929_09-02-2024_04-45-44_640_jpg.rf.5b25780eddbeadf1d5da38deee29724a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3phuocthe554_12R00929_09-02-2024_04-45-44_640_jpg.rf.5b25780eddbeadf1d5da38deee29724a.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_12R01021_08-02-2024_13-49-01_640_jpg.rf.af3528ea54c562785d32f3abc6b16860.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3phuocthe554_12R01021_08-02-2024_13-49-01_640_jpg.rf.af3528ea54c562785d32f3abc6b16860.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_51R07479_08-02-2024_09-39-07_640_jpg.rf.7984251ca0bfb31a3257e92104b7bec6.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3phuocthe554_51R07479_08-02-2024_09-39-07_640_jpg.rf.7984251ca0bfb31a3257e92104b7bec6.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_51R09110_08-02-2024_12-52-57_640_jpg.rf.306e1b8156653e9426fbaa376f757204.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3phuocthe554_51R09110_08-02-2024_12-52-57_640_jpg.rf.306e1b8156653e9426fbaa376f757204.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_51R23917_08-02-2024_15-16-28_640_jpg.rf.633c83afb1b8d483f63945939b2d9c6a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3phuocthe554_51R23917_08-02-2024_15-16-28_640_jpg.rf.633c83afb1b8d483f63945939b2d9c6a.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_68C35047_14-02-2024_17-49-14_640_jpg.rf.a93ca402e6920ecb458fd983fe67a366.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3phuocthe554_68C35047_14-02-2024_17-49-14_640_jpg.rf.a93ca402e6920ecb458fd983fe67a366.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_86R00700_08-02-2024_08-17-10_640_jpg.rf.0ac290463d5ea4cca278e700fab66d3e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3phuocthe554_86R00700_08-02-2024_08-17-10_640_jpg.rf.0ac290463d5ea4cca278e700fab66d3e.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_86R01333_09-02-2024_08-58-37_640_jpg.rf.1326d5ec5199a53bbcb802e266c37b07.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3phuocthe554_86R01333_09-02-2024_08-58-37_640_jpg.rf.1326d5ec5199a53bbcb802e266c37b07.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_nga3phuocthe554_86R01337_08-02-2024_08-25-00_640_jpg.rf.ffe91e4ef43bf0ab53d4aaec10418bc5.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3phuocthe554_86R01337_08-02-2024_08-25-00_640_jpg.rf.ffe91e4ef43bf0ab53d4aaec10418bc5.jpg",
+   "camera_id": "nga3phuocthe554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_12R00263_08-02-2024_14-50-49_640_jpg.rf.edc5d9f3a0a68c11509e5bb3284e2ddf.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_12R00263_08-02-2024_14-50-49_640_jpg.rf.edc5d9f3a0a68c11509e5bb3284e2ddf.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_15M00276_10-02-2024_11-37-20_640_jpg.rf.5963820be874b0fbe2bb006e377410f7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_15M00276_10-02-2024_11-37-20_640_jpg.rf.5963820be874b0fbe2bb006e377410f7.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_15M00337_09-02-2024_11-50-31_640_jpg.rf.ceed621f64610792f13895507d4e9293.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_15M00337_09-02-2024_11-50-31_640_jpg.rf.ceed621f64610792f13895507d4e9293.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_29R00135_08-02-2024_08-04-41_640_jpg.rf.9eeac312f8da9e9f3ed2250b60d702c7.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_29R00135_08-02-2024_08-04-41_640_jpg.rf.9eeac312f8da9e9f3ed2250b60d702c7.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 3
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_29R03886_09-02-2024_13-46-17_640_jpg.rf.50d21835727474d2ba64b65b4ade11b5.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_29R03886_09-02-2024_13-46-17_640_jpg.rf.50d21835727474d2ba64b65b4ade11b5.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_29R40024_08-02-2024_02-10-35_640_jpg.rf.414312e8c16b41001f118a3bba9a460d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_29R40024_08-02-2024_02-10-35_640_jpg.rf.414312e8c16b41001f118a3bba9a460d.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_37R01766_08-02-2024_08-12-14_640_jpg.rf.172fe084e5dc8f4d927fc8fe4fce2448.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_37R01766_08-02-2024_08-12-14_640_jpg.rf.172fe084e5dc8f4d927fc8fe4fce2448.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51B24736_08-02-2024_03-45-43_640_jpg.rf.e7e095b89cbcf2bf0b43d335a9d9343d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_51B24736_08-02-2024_03-45-43_640_jpg.rf.e7e095b89cbcf2bf0b43d335a9d9343d.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R04175_08-02-2024_03-32-10_640_jpg.rf.bacb6d27b2d132d3783af7ffdcf3dc5d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_51R04175_08-02-2024_03-32-10_640_jpg.rf.bacb6d27b2d132d3783af7ffdcf3dc5d.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R07085_08-02-2024_06-58-47_640_jpg.rf.bf01e2941e02b844c89f2c7c4d7adc15.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_51R07085_08-02-2024_06-58-47_640_jpg.rf.bf01e2941e02b844c89f2c7c4d7adc15.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R14553_07-02-2024_20-58-44_640_jpg.rf.02c5d655f8397669afbdf970632cf86b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_51R14553_07-02-2024_20-58-44_640_jpg.rf.02c5d655f8397669afbdf970632cf86b.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R23239_09-02-2024_12-10-28_640_jpg.rf.b8b3849f70e26f4eb2a1d8a04d3d1cd1.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_51R23239_09-02-2024_12-10-28_640_jpg.rf.b8b3849f70e26f4eb2a1d8a04d3d1cd1.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R24053_08-02-2024_12-14-00_640_jpg.rf.47ee64f171c9bcbbcc7bc7e436d637e5.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_51R24053_08-02-2024_12-14-00_640_jpg.rf.47ee64f171c9bcbbcc7bc7e436d637e5.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R24135_09-02-2024_09-35-30_640_jpg.rf.6fb07c63e5407cb8d060d3a42efbe990.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_51R24135_09-02-2024_09-35-30_640_jpg.rf.6fb07c63e5407cb8d060d3a42efbe990.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R24625_07-02-2024_20-50-05_640_jpg.rf.4d9a4221fa3d4ace682585c314e0a70e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_51R24625_07-02-2024_20-50-05_640_jpg.rf.4d9a4221fa3d4ace682585c314e0a70e.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R33258_09-02-2024_19-32-19_640_jpg.rf.9a0aed884f0d6c13e7d8d58d4b7c3a1e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_51R33258_09-02-2024_19-32-19_640_jpg.rf.9a0aed884f0d6c13e7d8d58d4b7c3a1e.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R34820_09-02-2024_22-40-13_640_jpg.rf.4b4a25d960c10047c75e1b09cc970d5b.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_51R34820_09-02-2024_22-40-13_640_jpg.rf.4b4a25d960c10047c75e1b09cc970d5b.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R40768_08-02-2024_12-16-07_640_jpg.rf.e4dcb839feb22b7e4e91fae06c628f0e.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_51R40768_08-02-2024_12-16-07_640_jpg.rf.e4dcb839feb22b7e4e91fae06c628f0e.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_51R55436_08-02-2024_12-58-26_640_jpg.rf.4a148e8984a1c57a3274b0c87ffb4c10.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_51R55436_08-02-2024_12-58-26_640_jpg.rf.4a148e8984a1c57a3274b0c87ffb4c10.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_60M00025_07-02-2024_20-28-25_640_jpg.rf.42afe1bb4e8f6f09c40763f9cf3cf645.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_60M00025_07-02-2024_20-28-25_640_jpg.rf.42afe1bb4e8f6f09c40763f9cf3cf645.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_60R06554_08-02-2024_10-15-13_640_jpg.rf.af7ac9384b075cd0e7f7c0e5a5ad6e9a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_60R06554_08-02-2024_10-15-13_640_jpg.rf.af7ac9384b075cd0e7f7c0e5a5ad6e9a.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_61R00407_08-02-2024_09-29-27_640_jpg.rf.2dc16613dfa7237ae955f9fdc2a9b414.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_61R00407_08-02-2024_09-29-27_640_jpg.rf.2dc16613dfa7237ae955f9fdc2a9b414.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_62R00911_08-02-2024_14-15-09_640_jpg.rf.e151e045f6f6f0e46db50b4428375d62.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_62R00911_08-02-2024_14-15-09_640_jpg.rf.e151e045f6f6f0e46db50b4428375d62.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 2
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00223_10-02-2024_05-23-19_640_jpg.rf.2be7e4732bb52c3be52879f56ecbd1ff.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_63R00223_10-02-2024_05-23-19_640_jpg.rf.2be7e4732bb52c3be52879f56ecbd1ff.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00575_09-02-2024_04-09-11_640_jpg.rf.2de37dcece4218e0638ed52591efbf38.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_63R00575_09-02-2024_04-09-11_640_jpg.rf.2de37dcece4218e0638ed52591efbf38.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00709_09-02-2024_11-14-35_640_jpg.rf.58af514a33ff404a798c846472b4a31f.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_63R00709_09-02-2024_11-14-35_640_jpg.rf.58af514a33ff404a798c846472b4a31f.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R00964_09-02-2024_13-58-32_640_jpg.rf.050fd4be94582f288bd6d2d14b40675d.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_63R00964_09-02-2024_13-58-32_640_jpg.rf.050fd4be94582f288bd6d2d14b40675d.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_63R01579_08-02-2024_05-15-10_640_jpg.rf.2c4f6fd6ce5bb072bfeb482acfcae2c2.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_63R01579_08-02-2024_05-15-10_640_jpg.rf.2c4f6fd6ce5bb072bfeb482acfcae2c2.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_72R00573_08-02-2024_07-21-37_640_jpg.rf.5cd6cef1ef1c7ea5f37afe7d405ba402.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_72R00573_08-02-2024_07-21-37_640_jpg.rf.5cd6cef1ef1c7ea5f37afe7d405ba402.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_72R01507_08-02-2024_18-01-03_640_jpg.rf.35a6ee9a454fdd736cfe4023b59a5ca5.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_72R01507_08-02-2024_18-01-03_640_jpg.rf.35a6ee9a454fdd736cfe4023b59a5ca5.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_72R02223_09-02-2024_05-31-27_640_jpg.rf.34addff1c8e6650a44c858af839fdeb8.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_72R02223_09-02-2024_05-31-27_640_jpg.rf.34addff1c8e6650a44c858af839fdeb8.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_76R00380_09-02-2024_20-49-57_640_jpg.rf.bde577cec4da3ec185ce58e6552631c8.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_76R00380_09-02-2024_20-49-57_640_jpg.rf.bde577cec4da3ec185ce58e6552631c8.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_76R00830_08-02-2024_05-00-07_640_jpg.rf.37c59364c2583e8b6e144258bad266c9.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_76R00830_08-02-2024_05-00-07_640_jpg.rf.37c59364c2583e8b6e144258bad266c9.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_77B03566_08-02-2024_08-31-26_640_jpg.rf.d22d120c67edeb5ca95e510e4d5560c0.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_77B03566_08-02-2024_08-31-26_640_jpg.rf.d22d120c67edeb5ca95e510e4d5560c0.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_79R00135_07-02-2024_18-32-52_640_jpg.rf.a20a9506c39522c8ce298a4a9e1be63a.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_79R00135_07-02-2024_18-32-52_640_jpg.rf.a20a9506c39522c8ce298a4a9e1be63a.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_79R00983_10-02-2024_11-48-06_640_jpg.rf.8546d258f0f7b1f9ab61eef28b2c8ede.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_79R00983_10-02-2024_11-48-06_640_jpg.rf.8546d258f0f7b1f9ab61eef28b2c8ede.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R00553_09-02-2024_08-20-59_640_jpg.rf.a6ba5b39ccb473cfd7c7dfe534cff844.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_86R00553_09-02-2024_08-20-59_640_jpg.rf.a6ba5b39ccb473cfd7c7dfe534cff844.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R00700_08-02-2024_08-02-40_640_jpg.rf.a68198f9ab31781af67274cd40d113ae.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_86R00700_08-02-2024_08-02-40_640_jpg.rf.a68198f9ab31781af67274cd40d113ae.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R00747_09-02-2024_10-04-43_640_jpg.rf.e948d83b42eff23dbfc08b7aac54331c.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_86R00747_09-02-2024_10-04-43_640_jpg.rf.e948d83b42eff23dbfc08b7aac54331c.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_86R01237_08-02-2024_02-41-28_640_jpg.rf.0ec6782aacd1d56a05abfc071f1dcbe0.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_86R01237_08-02-2024_02-41-28_640_jpg.rf.0ec6782aacd1d56a05abfc071f1dcbe0.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_88R00560_08-02-2024_13-27-37_640_jpg.rf.047cf45edefff4a70276f2bb176a1c44.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_88R00560_08-02-2024_13-27-37_640_jpg.rf.047cf45edefff4a70276f2bb176a1c44.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_95R00239_08-02-2024_22-21-37_640_jpg.rf.d09f59fb2a9ed500ffe2c22821f4e5e2.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_95R00239_08-02-2024_22-21-37_640_jpg.rf.d09f59fb2a9ed500ffe2c22821f4e5e2.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  },
+  {
+   "file": "v10_general_xom7vinhtan554_98R01315_08-02-2024_20-27-54_640_jpg.rf.70a6a356a2fdb188b2c838a4f76a3889.jpg",
+   "source": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_98R01315_08-02-2024_20-27-54_640_jpg.rf.70a6a356a2fdb188b2c838a4f76a3889.jpg",
+   "camera_id": "xom7vinhtan554",
+   "overlay": false,
+   "n_boxes": 1
+  }
+ ]
+}

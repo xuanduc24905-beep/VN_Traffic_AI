@@ -1,0 +1,519 @@
+{
+ "variants": {
+  "v5base": {
+   "root": "data/merged_v5_cleanval",
+   "V1_benchmark_unchanged": true,
+   "val_policy": "clean",
+   "eval_fingerprint": {
+    "val": {
+     "n_images": 1000,
+     "sha256": "bcfe4e07fd665f5a3edabf119b34fc431b6027ebfd447913325fb58fa3e4d2e7"
+    },
+    "test": {
+     "n_images": 1500,
+     "sha256": "195d764ec1ae14e844c65608574a18e60ee2c351ca687774d39f14988d09db81"
+    }
+   },
+   "V2_structure": {
+    "ok": true,
+    "broken_symlinks": 0,
+    "images_without_label": 0,
+    "v10_in_val_test": 0
+   },
+   "V3_labels": {
+    "ok": true,
+    "per_split": {
+     "train": {
+      "status": "ok",
+      "n_paired": 2833,
+      "n_empty_labels": 0,
+      "n_files_with_issues": 0,
+      "class_distribution": {
+       "0": 10124,
+       "1": 5656,
+       "2": 1399,
+       "3": 3102
+      }
+     },
+     "val": {
+      "status": "ok",
+      "n_paired": 1000,
+      "n_empty_labels": 0,
+      "n_files_with_issues": 0,
+      "class_distribution": {
+       "0": 5852,
+       "1": 1654,
+       "2": 447,
+       "3": 1913
+      }
+     },
+     "test": {
+      "status": "ok",
+      "n_paired": 1500,
+      "n_empty_labels": 1,
+      "n_files_with_issues": 0,
+      "class_distribution": {
+       "0": 39807,
+       "1": 8031,
+       "2": 756,
+       "3": 852
+      }
+     }
+    },
+    "v10_empty_labels": 0
+   },
+   "V6_v10_classes": {
+    "ok": true,
+    "boxes": {
+     "motorcycle": 0,
+     "car": 0,
+     "bus": 0,
+     "truck": 0
+    }
+   },
+   "V4_video_leak": {
+    "ok": true,
+    "val_pct": 0.0,
+    "test_pct": 0.0,
+    "leaky_videos": []
+   },
+   "v10_overlay_share": 0,
+   "counts": {
+    "v5_train": 2833,
+    "v5_val": 1000,
+    "v5_test": 1500,
+    "v10_train": 0,
+    "train_total": 2833
+   },
+   "v10_cameras": {}
+  },
+  "full": {
+   "root": "data/merged_v5plus_clean",
+   "V1_benchmark_unchanged": true,
+   "val_policy": "clean",
+   "eval_fingerprint": {
+    "val": {
+     "n_images": 1000,
+     "sha256": "bcfe4e07fd665f5a3edabf119b34fc431b6027ebfd447913325fb58fa3e4d2e7"
+    },
+    "test": {
+     "n_images": 1500,
+     "sha256": "195d764ec1ae14e844c65608574a18e60ee2c351ca687774d39f14988d09db81"
+    }
+   },
+   "V2_structure": {
+    "ok": true,
+    "broken_symlinks": 0,
+    "images_without_label": 0,
+    "v10_in_val_test": 0
+   },
+   "V3_labels": {
+    "ok": true,
+    "per_split": {
+     "train": {
+      "status": "ok",
+      "n_paired": 6969,
+      "n_empty_labels": 0,
+      "n_files_with_issues": 0,
+      "class_distribution": {
+       "0": 13168,
+       "1": 5880,
+       "2": 1630,
+       "3": 4915
+      }
+     },
+     "val": {
+      "status": "ok",
+      "n_paired": 1000,
+      "n_empty_labels": 0,
+      "n_files_with_issues": 0,
+      "class_distribution": {
+       "0": 5852,
+       "1": 1654,
+       "2": 447,
+       "3": 1913
+      }
+     },
+     "test": {
+      "status": "ok",
+      "n_paired": 1500,
+      "n_empty_labels": 1,
+      "n_files_with_issues": 0,
+      "class_distribution": {
+       "0": 39807,
+       "1": 8031,
+       "2": 756,
+       "3": 852
+      }
+     }
+    },
+    "v10_empty_labels": 0
+   },
+   "V6_v10_classes": {
+    "ok": true,
+    "boxes": {
+     "motorcycle": 3044,
+     "car": 224,
+     "bus": 231,
+     "truck": 1813
+    }
+   },
+   "V4_video_leak": {
+    "ok": true,
+    "val_pct": 0.0,
+    "test_pct": 0.0,
+    "leaky_videos": []
+   },
+   "v10_overlay_share": 87.55,
+   "counts": {
+    "v5_train": 2833,
+    "v5_val": 1000,
+    "v5_test": 1500,
+    "v10_train": 4136,
+    "train_total": 6969
+   },
+   "v10_cameras": {
+    "benxetp555": 19,
+    "caunamprc554": 178,
+    "caunamprc555": 124,
+    "chophuocvinh12": 26,
+    "dendo": 7,
+    "docvinhhanh554": 49,
+    "garagecuong554": 339,
+    "hoaphu555": 130,
+    "hoaphu557": 22,
+    "hodabac554": 99,
+    "hungvuong556": 152,
+    "nga3baude80": 2,
+    "nga3doclap36": 100,
+    "nga3doclap37": 214,
+    "nga3duong554": 202,
+    "nga3muitau554": 18,
+    "nga3phuocthe554": 315,
+    "nga4hamthang555": 108,
+    "ngabathomo554": 34,
+    "nguyenvantroi56": 163,
+    "nhatholetrang84": 83,
+    "nhatholetrang86": 96,
+    "quancomhai555": 40,
+    "tranhungdao59": 325,
+    "tranquangdieu52": 114,
+    "tranquangdieu556": 138,
+    "ubnhandan556": 16,
+    "xom7vinhtan554": 729,
+    "nga4hamthang556": 1,
+    "cafeminghouse554": 66,
+    "cafestart554": 27,
+    "caubentang91": 2,
+    "chophuocvinh95": 3,
+    "comkimngan554": 87,
+    "congcahuyen557": 4,
+    "nga3baude78": 2,
+    "nga3duong556": 11,
+    "nga3huyendoi554": 5,
+    "nga3phuocthe556": 18,
+    "nga5lienhuong555": 11,
+    "quangcaoquangha554": 4,
+    "quangtrung54": 29,
+    "tranquangdieu48": 24
+   }
+  },
+  "nooverlay": {
+   "root": "data/merged_v5plus_clean_nooverlay",
+   "V1_benchmark_unchanged": true,
+   "val_policy": "clean",
+   "eval_fingerprint": {
+    "val": {
+     "n_images": 1000,
+     "sha256": "bcfe4e07fd665f5a3edabf119b34fc431b6027ebfd447913325fb58fa3e4d2e7"
+    },
+    "test": {
+     "n_images": 1500,
+     "sha256": "195d764ec1ae14e844c65608574a18e60ee2c351ca687774d39f14988d09db81"
+    }
+   },
+   "V2_structure": {
+    "ok": true,
+    "broken_symlinks": 0,
+    "images_without_label": 0,
+    "v10_in_val_test": 0
+   },
+   "V3_labels": {
+    "ok": true,
+    "per_split": {
+     "train": {
+      "status": "ok",
+      "n_paired": 3348,
+      "n_empty_labels": 0,
+      "n_files_with_issues": 0,
+      "class_distribution": {
+       "0": 10202,
+       "1": 5684,
+       "2": 1403,
+       "3": 3614
+      }
+     },
+     "val": {
+      "status": "ok",
+      "n_paired": 1000,
+      "n_empty_labels": 0,
+      "n_files_with_issues": 0,
+      "class_distribution": {
+       "0": 5852,
+       "1": 1654,
+       "2": 447,
+       "3": 1913
+      }
+     },
+     "test": {
+      "status": "ok",
+      "n_paired": 1500,
+      "n_empty_labels": 1,
+      "n_files_with_issues": 0,
+      "class_distribution": {
+       "0": 39807,
+       "1": 8031,
+       "2": 756,
+       "3": 852
+      }
+     }
+    },
+    "v10_empty_labels": 0
+   },
+   "V6_v10_classes": {
+    "ok": true,
+    "boxes": {
+     "motorcycle": 78,
+     "car": 28,
+     "bus": 4,
+     "truck": 512
+    }
+   },
+   "V4_video_leak": {
+    "ok": true,
+    "val_pct": 0.0,
+    "test_pct": 0.0,
+    "leaky_videos": []
+   },
+   "v10_overlay_share": 0.0,
+   "counts": {
+    "v5_train": 2833,
+    "v5_val": 1000,
+    "v5_test": 1500,
+    "v10_train": 515,
+    "train_total": 3348
+   },
+   "v10_cameras": {
+    "caunamprc554": 12,
+    "garagecuong554": 163,
+    "nga3duong554": 42,
+    "nga3phuocthe554": 41,
+    "xom7vinhtan554": 234,
+    "caunamprc555": 17,
+    "nga3muitau554": 3,
+    "hoaphu555": 2,
+    "hoaphu557": 1
+   }
+  },
+  "ovmatched": {
+   "root": "data/merged_v5plus_clean_ovmatched",
+   "V1_benchmark_unchanged": true,
+   "val_policy": "clean",
+   "eval_fingerprint": {
+    "val": {
+     "n_images": 1000,
+     "sha256": "bcfe4e07fd665f5a3edabf119b34fc431b6027ebfd447913325fb58fa3e4d2e7"
+    },
+    "test": {
+     "n_images": 1500,
+     "sha256": "195d764ec1ae14e844c65608574a18e60ee2c351ca687774d39f14988d09db81"
+    }
+   },
+   "V2_structure": {
+    "ok": true,
+    "broken_symlinks": 0,
+    "images_without_label": 0,
+    "v10_in_val_test": 0
+   },
+   "V3_labels": {
+    "ok": true,
+    "per_split": {
+     "train": {
+      "status": "ok",
+      "n_paired": 3348,
+      "n_empty_labels": 0,
+      "n_files_with_issues": 0,
+      "class_distribution": {
+       "0": 10252,
+       "1": 5687,
+       "2": 1450,
+       "3": 3499
+      }
+     },
+     "val": {
+      "status": "ok",
+      "n_paired": 1000,
+      "n_empty_labels": 0,
+      "n_files_with_issues": 0,
+      "class_distribution": {
+       "0": 5852,
+       "1": 1654,
+       "2": 447,
+       "3": 1913
+      }
+     },
+     "test": {
+      "status": "ok",
+      "n_paired": 1500,
+      "n_empty_labels": 1,
+      "n_files_with_issues": 0,
+      "class_distribution": {
+       "0": 39807,
+       "1": 8031,
+       "2": 756,
+       "3": 852
+      }
+     }
+    },
+    "v10_empty_labels": 0
+   },
+   "V6_v10_classes": {
+    "ok": true,
+    "boxes": {
+     "motorcycle": 128,
+     "car": 31,
+     "bus": 51,
+     "truck": 397
+    }
+   },
+   "V4_video_leak": {
+    "ok": true,
+    "val_pct": 0.0,
+    "test_pct": 0.0,
+    "leaky_videos": []
+   },
+   "v10_overlay_share": 100.0,
+   "counts": {
+    "v5_train": 2833,
+    "v5_val": 1000,
+    "v5_test": 1500,
+    "v10_train": 515,
+    "train_total": 3348
+   },
+   "v10_cameras": {
+    "garagecuong554": 163,
+    "nga3duong554": 42,
+    "nga3phuocthe554": 41,
+    "xom7vinhtan554": 234,
+    "caunamprc555": 17,
+    "caunamprc554": 12,
+    "hoaphu555": 2,
+    "hoaphu557": 1,
+    "nga3muitau554": 3
+   }
+  }
+ },
+ "summary": {
+  "v5base_V1": {
+   "ok": true
+  },
+  "v5base_V2": {
+   "ok": true
+  },
+  "v5base_V3": {
+   "ok": true
+  },
+  "v5base_V4": {
+   "ok": true
+  },
+  "v5base_V6": {
+   "ok": true
+  },
+  "full_V1": {
+   "ok": true
+  },
+  "full_V2": {
+   "ok": true
+  },
+  "full_V3": {
+   "ok": true
+  },
+  "full_V4": {
+   "ok": true
+  },
+  "full_V6": {
+   "ok": true
+  },
+  "nooverlay_V1": {
+   "ok": true
+  },
+  "nooverlay_V2": {
+   "ok": true
+  },
+  "nooverlay_V3": {
+   "ok": true
+  },
+  "nooverlay_V4": {
+   "ok": true
+  },
+  "nooverlay_V6": {
+   "ok": true
+  },
+  "ovmatched_V1": {
+   "ok": true
+  },
+  "ovmatched_V2": {
+   "ok": true
+  },
+  "ovmatched_V3": {
+   "ok": true
+  },
+  "ovmatched_V4": {
+   "ok": true
+  },
+  "ovmatched_V6": {
+   "ok": true
+  },
+  "V5_phash": {
+   "ok": true
+  },
+  "V8_camera_ncc": {
+   "ok": true
+  },
+  "V7_ablation": {
+   "ok": true
+  }
+ },
+ "phash_cross_full": {
+  "threshold": 5,
+  "n_pairs_v10_train": 0,
+  "n_pairs_v5_train": 0,
+  "min_hamming_v10_train_vs_eval": 12,
+  "pairs_sample": [],
+  "ok": true
+ },
+ "camera_ncc_full": {
+  "positive_control_min": 0.6774,
+  "max_cross_ncc": 0.5059,
+  "per_eval_video": {
+   "test:soict24_cam_09": {
+    "max_ncc": 0.5059,
+    "closest_train_group": "v10:hodabac554"
+   },
+   "test:soict24_cam_10": {
+    "max_ncc": 0.284,
+    "closest_train_group": "soict24_cam_02"
+   },
+   "val:soict24_cam_07": {
+    "max_ncc": 0.4748,
+    "closest_train_group": "soict24_cam_06"
+   }
+  },
+  "ok": true
+ },
+ "V7_ablation": {
+  "ok": true,
+  "n_nooverlay": 515,
+  "n_ovmatched": 515
+ }
+}
