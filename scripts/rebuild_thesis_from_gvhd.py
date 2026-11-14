@@ -80,6 +80,12 @@ def insert_paragraph_before(before_para, doc):
 
 def add_heading(before_para, doc, text, level=1):
     para = insert_paragraph_before(before_para, doc)
+    # ÁP DỤNG Word Heading style thật → TOC auto-detect được
+    try:
+        style_name = {1: "Heading 1", 2: "Heading 2", 3: "Heading 3"}.get(level, "Heading 4")
+        para.style = doc.styles[style_name]
+    except KeyError:
+        pass
     para.paragraph_format.first_line_indent = Cm(0)
     if level == 1:
         para.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -187,6 +193,11 @@ def add_figure(before_para, doc, img_path, caption):
     except Exception as e:
         r.add_text(f"[Lỗi ảnh {img_path.name}: {e}]")
     cap = insert_paragraph_before(before_para, doc)
+    # Caption style để danh mục hình/bảng tự detect
+    try:
+        cap.style = doc.styles["Caption"]
+    except KeyError:
+        pass
     cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
     cap.paragraph_format.first_line_indent = Cm(0)
     cap.paragraph_format.space_after = Pt(12)
@@ -281,11 +292,23 @@ def main():
     doc = Document(str(SRC))
     print(f"Load gốc: {len(doc.paragraphs)} paragraphs, {len(doc.tables)} tables")
 
-    # Step 1: Xoá comment đỏ
+    # Step 1a: Xoá comment đỏ
     red = [p for p in doc.paragraphs if is_teacher_comment(p)]
     for p in red:
         p._element.getparent().remove(p._element)
-    print(f"[1] Xoá {len(red)} đoạn comment đỏ của cô")
+    print(f"[1a] Xoá {len(red)} đoạn comment đỏ của cô")
+
+    # Step 1b: Sửa access date trong TLTK (Nov 15 → Oct 15, 2026)
+    import re as _re
+    date_fixed = 0
+    for p in doc.paragraphs:
+        new = _re.sub(r"Accessed:\s*Nov\.\s*15,\s*2026", "Accessed: Oct. 15, 2026", p.text)
+        if new != p.text and p.runs:
+            p.runs[0].text = new
+            for r in p.runs[1:]:
+                r.text = ""
+            date_fixed += 1
+    print(f"[1b] Sửa {date_fixed} ngày truy cập Nov 15 → Oct 15, 2026")
 
     # Step 2: Tìm index Ch1 và TLTK
     ch1_idx = find_heading_by_text(doc, "CHƯƠNG 1")

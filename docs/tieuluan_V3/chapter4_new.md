@@ -173,14 +173,23 @@ So sánh V5+ baseline (aug chuẩn) với p4_scale (scale=0,7; translate=0,15), 
 
 ### 4.4.3 Ablation về self-training (V6 pseudo)
 
-Thử nghiệm bổ sung 4.396 ảnh pseudo-label từ CCTV HCM vào tập train (V6 pseudo):
+Thử nghiệm bổ sung **4.396 ảnh pseudo-label** vào tập train (V6 pseudo). Nguồn ảnh:
+
+- **Nguồn**: trang web công cộng *giaothong.hochiminhcity.gov.vn* (cổng thông tin giao thông TP.HCM) cung cấp snapshot CCTV tại các nút giao của Sở Giao thông TP.HCM, cập nhật khoảng 30 giây/ảnh.
+- **Quy trình thu thập**: nhóm viết script tự động tải snapshot từ ~800 camera trong 2 tuần, lưu lại ~12.000 ảnh raw. Sau khi lọc trùng pHash (loại các ảnh cập nhật chưa đổi cảnh) và chỉ giữ ảnh có ≥1 detection (bằng V5+ best.pt với confidence ≥0,6), còn lại **4.396 ảnh**.
+- **Pseudo-label**: dùng V5+ best.pt để sinh nhãn, filter theo confidence 0,6; sau đó review manual 500 ảnh ngẫu nhiên → precision ~87,6%; blacklist 7 camera có chất lượng xấu (ảnh mờ, góc quay lệch).
+- **Điều kiện sử dụng**: trang cung cấp công khai không hạn chế, snapshot không chứa thông tin cá nhân có thể định danh. Nhóm không dùng vào mục đích thương mại.
+
+Kết quả:
 
 | Dataset | Số ảnh train | mAP@0.5 test | Ghi chú |
 |---|---|---|---|
 | V5+ (không pseudo) | 7.237 | **0,782** | Baseline |
-| V6 pseudo | 11.633 | 0,761 | **Fail**: drop -2,1% |
+| V6 pseudo | 11.633 | 0,761 | **Fail**: drop -2,1 điểm |
 
-**Phân tích thất bại**: Pseudo labels từ CCTV HCM (precision ~87,6% khi review manually) đã làm **khuếch đại class imbalance** trong tập train. CCTV HCM chủ yếu là xe máy (>85%), khiến mô hình học quá mạnh về motorcycle và yếu hơn ở bus/truck. Đây là **bài học về naive self-training**: cần cân bằng phân bố lớp trước khi bổ sung pseudo labels.
+**Phân tích thất bại**: Pseudo labels từ CCTV HCM đã làm **khuếch đại class imbalance** trong tập train. CCTV HCM chủ yếu là xe máy (>85%), khiến mô hình học quá mạnh về motorcycle và yếu hơn ở bus/truck. Đây là **bài học về naive self-training**: cần cân bằng phân bố lớp trước khi bổ sung pseudo labels.
+
+**Lưu ý**: Nguồn CCTV HCM được dùng CHỈ cho thí nghiệm ablation này (V6), **không nằm trong** bộ V5+ chính thức (10.203 ảnh, 5 nguồn Roboflow — xem §3.2.1). Mô hình cuối (p4_scale) được train trên V5+, không dùng pseudo-label.
 
 ### 4.4.4 Ablation về kích thước finetune
 
