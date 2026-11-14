@@ -1,0 +1,19 @@
+{
+  "description": "Review thủ công overlay vẽ sẵn lên pixel (tag ID, tag nhiều dòng biển số/màu, khung mảnh, đa giác ROI) của hệ thống tracking gốc trên mẫu ngẫu nhiên v10. Mẫu sinh bởi check_label_completeness_v10.py --make-sheets (random.seed(2024), 60 ảnh). Nhãn do người review nhìn ảnh 400x400 trên contact sheet; 'unclear' tính là không có.",
+  "seed": 2024,
+  "n_sample": 60,
+  "reviewer_note": "Review lần 1 (2026-11-14). Có thể kiểm chứng lại bằng các sheet reports/v10_overlay_review_sheet_{0,1,2}.jpg.",
+  "has_overlay": {
+    "0": true, "1": true, "2": false, "3": true, "4": true, "5": true, "6": false, "7": true, "8": false, "9": true,
+    "10": true, "11": true, "12": false, "13": true, "14": true, "15": false, "16": true, "17": true, "18": true, "19": true,
+    "20": true, "21": true, "22": true, "23": true, "24": true, "25": false, "26": true, "27": true, "28": true, "29": "unclear",
+    "30": false, "31": true, "32": true, "33": true, "34": true, "35": true, "36": true, "37": true, "38": true, "39": true,
+    "40": true, "41": true, "42": true, "43": true, "44": true, "45": true, "46": true, "47": true, "48": true, "49": false,
+    "50": true, "51": true, "52": true, "53": true, "54": true, "55": true, "56": true, "57": true, "58": true, "59": false
+  },
+  "observations": [
+    "Tag gắn đúng vị trí xe được theo dõi (góc trên-trái bbox) → trùng vị trí box GT: model có thể học lối tắt 'tag màu = xe'.",
+    "Overlay chỉ gắn cho một số xe trong khung (vd #31, #32: 4-5 xe, chỉ 2 tag). Giả thuyết 'GT cũng chỉ phủ xe có tag' KHÔNG được xác nhận bởi check detector (% xe chưa gán của v10 ≈ V5).",
+    "Đa giác ROI xanh dương (#19, #23, #41, #44) và tag ID xanh xuất hiện ở camera 2024-09-04 (Nguyen Van Troi, Nga 3 Doc Lap, Tran Quang Dieu...)."
+  ]
+}

@@ -1,6 +1,6 @@
 # Audit leakage — Roboflow vietnam_vehicles v10 (standalone)
 
-_Sinh tự động bởi [audit_v10_all.py](../scripts/data_prep/audit_v10/audit_v10_all.py) lúc 2026-11-14 13:25. Chỉ đọc dữ liệu, không sửa split._
+_Sinh tự động bởi [audit_v10_all.py](../scripts/data_prep/audit_v10/audit_v10_all.py) lúc 2026-11-14 13:35. Chỉ đọc dữ liệu, không sửa split._
 
 ## Kết luận
 
@@ -8,11 +8,14 @@ _Sinh tự động bởi [audit_v10_all.py](../scripts/data_prep/audit_v10/audit
 |---|---|
 | v10 standalone có sạch (split nội bộ)? | ❌ **Không** — train/valid/test gốc rò rỉ lẫn nhau (camera, xe, thời gian, khung gần trùng). Không được dùng valid/test của v10 để đánh giá. |
 | Gộp v10 vào **train** V5+ (val/test giữ của V5) có làm leak eval V5+? | ✅ **Không** — 0 ảnh/khung/camera của v10 trùng với val/test V5 (check (g)). |
-| Nhãn có hợp lệ? | ✅ Format hợp lệ; ⚠️ nghi **thiếu nhãn** (xem dưới) |
+| Nhãn có hợp lệ? | ✅ Format hợp lệ; ✅ độ đầy đủ ngang V5 (~2.77% vs 2.73% xe chưa gán, check (h)) |
+| Ảnh có overlay vẽ sẵn? | ❌ **83.3%** ảnh mẫu (CI95 72.0–90.7%) có tag/khung của hệ thống tracking gốc — check (h) |
 
 **→ Về leakage, v10 an toàn để gộp vào train V5+ theo đúng cách [build_v5plus_merged.py:3](../scripts/data_prep/build_v5plus_merged.py#L3) đang làm** (gộp cả 3 split v10 vào train, val/test giữ của V5): leak nội bộ v10 không chạm tới eval V5+. **Không** an toàn nếu dùng split gốc của v10 làm val/test.
 
-**Còn lại — rủi ro chất lượng nhãn (không phải leak):** trung bình chỉ ~1.3 box/ảnh trên ảnh CCTV nhiều xe, và các file cùng camera + cùng giây mang **bộ nhãn khác nhau** (vd `general_caunamprc554_50Y31618_13-02-2024_13-08-11` có 2 box, bản ở test chỉ 1 box) → nhiều xe không được gán nhãn, model có thể bị dạy coi xe là nền. Một số ảnh `gen_*` còn có **khung bbox vẽ sẵn lên pixel** (thấy trong preview của check (g)). Nên kiểm tra trực quan một mẫu trước khi tin dùng.
+**Còn lại — chất lượng dữ liệu (không phải leak):**
+- Giả thuyết "thiếu nhãn nhiều" (do chỉ ~1.3 box/ảnh) **không được xác nhận**: theo detector COCO, tỉ lệ xe chưa gán nhãn của v10 ≈ V5 (~2.77%, cận dưới). Ảnh v10 vốn ít xe (snapshot vi phạm, tập trung 1–3 xe).
+- **Overlay vẽ sẵn lên pixel ở ~83.3% ảnh**: tag ID/biển số/màu đặt ngay góc box xe được theo dõi → nguy cơ model học lối tắt "tag màu = xe". Không làm sai số liệu trên test V5 (ảnh V5 không có overlay) nhưng có thể làm giảm lợi ích của v10. Nên ablation (mục 4).
 
 _Ghi chú: docstring build_v5plus_merged.py ghi "~776 camera" — thực tế parse được 44 camera._
 
@@ -39,6 +42,8 @@ _Ghi chú: docstring build_v5plus_merged.py ghi "~776 camera" — thực tế pa
 | (f) Label integrity | 0 lỗi format/class/bbox | 0 file lỗi | ✅ PASS |
 | (f') Phân phối class | lệch ≤15pp giữa split | 0 class lệch | ✅ PASS |
 | (g) Chéo v10 ↔ val/test V5 | MD5=0, pHash≤5=0, NCC nền camera <0.90 và < min đối chứng | MD5 0, pHash 0 (min d=10), NCC max 0.5001 | ✅ PASS |
+| (h) Thiếu nhãn (detector COCO) | % xe chưa gán v10 − V5 ≤ 5pp | v10 2.77% vs V5 2.73% | ✅ PASS |
+| (h') Overlay vẽ sẵn (review tay 60 ảnh) | cận dưới CI95 ≤ 5% | 50/60 = 83.3% (CI95 [72.0, 90.7]) | ❌ FAIL |
 
 ## 3. Chi tiết
 
@@ -113,6 +118,25 @@ _Ghi chú: docstring build_v5plus_merged.py ghi "~776 camera" — thực tế pa
 - Preview kiểm tra bằng mắt: [reports/v10_cross_v5_preview.jpg](../reports/v10_cross_v5_preview.jpg) (trái: v10, phải: V5).
 - Giới hạn: không bắt được trường hợp cùng địa điểm nhưng góc quay khác hẳn (NCC nền thấp). Với 44 camera v10 (tên địa điểm VN) và V5 eval (SOICT24 + Cần Thơ) thì khả năng này thấp.
 
+### (h) Độ đầy đủ nhãn & overlay vẽ sẵn
+
+- Detector: yolov8m.pt (COCO, chỉ inference), conf≥0.5, lớp ['car', 'motorcycle', 'bus', 'truck']; xe "chưa gán" = IoU<0.3 với mọi GT, không nằm trong GT (IoA<0.6), diện tích ≥0.2% ảnh.
+
+| | v10 | V5 val/test (đối chứng) |
+|---|---|---|
+| Ảnh | 4824 | 2966 |
+| Box GT/ảnh | 1.29 | 20.72 |
+| % ảnh có ≥1 xe chưa gán | 3.32% | 37.26% |
+| **Ước lượng % xe chưa gán** | **2.77%** | **2.73%** |
+
+- % ảnh cao hơn ở V5 chỉ vì V5 có nhiều xe/ảnh (cơ hội sót cao hơn); so theo % xe thì hai bộ ngang nhau. Detector COCO bỏ sót nhiều xe máy nhìn từ trên cao → đây là **cận dưới** cho cả hai.
+- Preview (xanh lá = GT, đỏ = xe chưa gán): [reports/v10_missing_labels_preview.jpg](../reports/v10_missing_labels_preview.jpg).
+- Overlay: review bằng mắt 60 ảnh ngẫu nhiên (seed 2024) → 50 ảnh có overlay (83.3%, CI95 72.0–90.7% ≈ 3472–4375 ảnh toàn bộ v10). Sheet: `reports/v10_overlay_review_sheet_{0,1,2}.jpg`, kết quả: `reports/v10_overlay_manual_review.json`.
+  - Tag gắn đúng vị trí xe được theo dõi (góc trên-trái bbox) → trùng vị trí box GT: model có thể học lối tắt 'tag màu = xe'.
+  - Overlay chỉ gắn cho một số xe trong khung (vd #31, #32: 4-5 xe, chỉ 2 tag). Giả thuyết 'GT cũng chỉ phủ xe có tag' KHÔNG được xác nhận bởi check detector (% xe chưa gán của v10 ≈ V5).
+  - Đa giác ROI xanh dương (#19, #23, #41, #44) và tag ID xanh xuất hiện ở camera 2024-09-04 (Nguyen Van Troi, Nga 3 Doc Lap, Tran Quang Dieu...).
+- Heuristic màu tự động đã thử và bị loại: chỉ bắt <3% ảnh v10, dương tính giả 5–8% trên V5.
+
 ## 4. Cần fix gì trước khi gộp (ĐỀ XUẤT — chưa thực hiện)
 
 Vì v10 trong V5+ chỉ đóng vai trò **dữ liệu train bổ sung**, có 2 hướng tuỳ mục đích:
@@ -120,7 +144,8 @@ Vì v10 trong V5+ chỉ đóng vai trò **dữ liệu train bổ sung**, có 2 h
 **Hướng A — Chỉ dùng v10 để train (khuyến nghị, đơn giản nhất):**
 1. Gộp **toàn bộ** train+valid+test của v10 vào train của V5+; **không** dùng valid/test của v10 để báo cáo số liệu. Leak nội bộ v10 khi đó vô hại vì không có split eval nào của v10.
 2. Leak chéo v10 ↔ val/test V5: ✅ đã kiểm tra, PASS (check (g)).
-3. Dedup khung hình trùng trong v10 (cùng camera + cùng giây / pHash≤2) để tránh over-weight; giữ một bản và **gộp nhãn** của các bản (mỗi file có thể chỉ gán nhãn một số xe trong khung).
+3. (Tuỳ chọn) Dedup khung hình gần trùng trong v10 (pHash≤2 cùng camera) để tránh over-weight một số cảnh; không ảnh hưởng tính trung thực của eval.
+4. **Ablation overlay** (đáng làm nhất): train thêm 1 run V5+ bỏ (hoặc che) các ảnh v10 có overlay, so mAP trên test V5 với V5+ hiện tại. Nếu ngang/hơn → bỏ ảnh overlay; nếu kém hơn → overlay không gây hại đáng kể, giữ nguyên.
 
 **Hướng B — Cần v10 có valid/test riêng đáng tin (vd báo cáo mAP trên v10):**
 1. Rebuild split theo **site_id** (group split, 33 địa điểm), không theo ảnh — cùng tinh thần [rebuild_v5_by_video.py](../scripts/data_prep/rebuild_v5_by_video.py). Lưu ý site lớn nhất chiếm 16.3% ảnh nên tỉ lệ 80/10/10 chỉ xấp xỉ; nên stratify theo class (container/xe_ba_gac/xe_may tập trung ở một số site).
@@ -143,5 +168,8 @@ Vì v10 trong V5+ chỉ đóng vai trò **dữ liệu train bổ sung**, có 2 h
 - `reports/v10_label_integrity.json` — (f) label integrity
 - `reports/v10_cross_v5_leak.json` — (g) leak chéo v10 ↔ V5 eval
 - `reports/v10_cross_v5_preview.jpg` — (g) preview
+- `reports/v10_label_completeness.json` — (h) độ đầy đủ nhãn + overlay
+- `reports/v10_missing_labels_preview.jpg` — (h) preview thiếu nhãn
+- `reports/v10_overlay_manual_review.json` — (h') review overlay thủ công
 
 Tái tạo: `conda activate yolov8_ft && python scripts/data_prep/audit_v10/audit_v10_all.py`

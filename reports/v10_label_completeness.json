@@ -1,0 +1,388 @@
+{
+  "check": "label_completeness",
+  "threshold": "A: % xe chưa gán nhãn (v10) − (V5) ≤ 5.0pp; B: cận dưới CI95 tỉ lệ overlay ≤ 5%",
+  "verdict": "FAIL",
+  "missing_labels": {
+    "verdict": "PASS",
+    "detector": "yolov8m.pt (COCO, chỉ inference)",
+    "params": {
+      "conf": 0.5,
+      "iou_match": 0.3,
+      "ioa_inside_gt": 0.6,
+      "min_area_frac": 0.002,
+      "coco_classes": [
+        "car",
+        "motorcycle",
+        "bus",
+        "truck"
+      ]
+    },
+    "v10": {
+      "n_images": 4824,
+      "n_gt_boxes": 6245,
+      "gt_per_image": 1.29,
+      "n_unlabeled_vehicle_dets": 178,
+      "pct_images_with_unlabeled_vehicle": 3.32,
+      "unlabeled_per_image": 0.037,
+      "est_pct_vehicles_unlabeled": 2.77,
+      "unlabeled_by_coco_class": {
+        "motorcycle": 128,
+        "truck": 21,
+        "bus": 9,
+        "car": 20
+      }
+    },
+    "v5_eval_control": {
+      "n_images": 2966,
+      "n_gt_boxes": 61466,
+      "gt_per_image": 20.72,
+      "n_unlabeled_vehicle_dets": 1726,
+      "pct_images_with_unlabeled_vehicle": 37.26,
+      "unlabeled_per_image": 0.582,
+      "est_pct_vehicles_unlabeled": 2.73,
+      "unlabeled_by_coco_class": {
+        "motorcycle": 45,
+        "car": 1268,
+        "truck": 248,
+        "bus": 165
+      }
+    },
+    "excess_pp_vs_v5": 0.04,
+    "top_images": [
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_comkimngan554_ID6405_xe_khach_model-_color-xanh_duong_85E00099_bien_vang_10-04-2024_17-11-28_640_jpg.rf.b1a8eb21a982b1f78afdd26715ce7fe2.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 3
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_comkimngan554_ID7674_oto_model-mercedes_benz_Sprinter_color-xam_86B00982_bien_trang_11-04-2024_17-45-49_640_jpg.rf.8f3d74f2f1dac76a45f764815adf63b3.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 3
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/valid/images/general_nga4hamthang555_ID278_oto_color-nau_86C12487_bien_trang_07-03-2024_07-58-52_640_jpg.rf.e7b1517b70bd39f32f895f87d3b9bf15.jpg",
+        "n_gt": 4,
+        "n_unlabeled": 3
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_61L67092_08-02-2024_15-10-04_640_jpg.rf.57621347da0cb5afcc7bf7ffd3f8b47d.jpg",
+        "n_gt": 3,
+        "n_unlabeled": 2
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_cafeminghouse554_ID5258_oto_model-toyota_hiace_color-trang_86B01464_bien_trang_10-04-2024_07-05-27_640_jpg.rf.13ee992896fafc3699b6e47ffcfebe3e.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 2
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_cafestart554_ID900_xe_tai_model-_color-den_79B00959_bien_trang_04-04-2024_11-40-58_640_jpg.rf.79960e6bc31a4b2d4733cd3266629553.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 2
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_comkimngan554_ID1515_xe_tai_model-_color-trang_86A14707_bien_trang_22-03-2024_11-16-16_640_jpg.rf.63a9c00d1388c95c501f21ec29bcf4ac.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 2
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_comkimngan554_ID36_oto_color-trang_86B01555_bien_vang_13-03-2024_12-15-00_640_jpg.rf.60da7d466d176ea87fad385a1ce747f6.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 2
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_comkimngan554_ID696_xe_tai_model-_color-unknown_29K70371_bien_trang_19-03-2024_17-26-12_640_jpg.rf.b12e028ec334e2fd8adc0cf0055db047.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 2
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_comkimngan554_ID755_xe_tai_color-nau_17C04141_bien_vang_13-03-2024_17-30-52_640_jpg.rf.b53c05cee14fdd17afe39551c6352816.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 2
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_comkimngan554_ID906_oto_model-mercedes_benz_Sprinter_color-xam_60B01877_bien_trang_24-03-2024_10-18-47_640_jpg.rf.e37ce8a8c4c4ae1347d40314283c1f12.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 2
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_congsauhuyenuy554_ID423_xe_ba_gac_model-_color-xanh_duong_6B113853_bien_trang_27-03-2024_07-59-50_640_jpg.rf.dc784426eb92edf496934263e4c57a98.jpg",
+        "n_gt": 2,
+        "n_unlabeled": 2
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_nguyenvantroi56_ID922_xe_may_model-_color-xanh_duong_61F149466_bien_trang_04-09-2024_07-31-27_640_jpg.rf.688bff413f170b9a634ee454ddd57799.jpg",
+        "n_gt": 2,
+        "n_unlabeled": 2
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_tranquangdieu52_ID358_xe_may_model-_color-den_93H134518_bien_trang_04-09-2024_06-49-49_640_jpg.rf.acc53afc8fadf1b5daf995b87a70dee8.jpg",
+        "n_gt": 2,
+        "n_unlabeled": 2
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_tranquangdieu556_ID63_xe_may_model-_color-_61F143568_bien_trang_04-09-2024_10-05-38_640_jpg.rf.6536df1edbdbe364c8a27b480ddebaf7.jpg",
+        "n_gt": 2,
+        "n_unlabeled": 2
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/test/images/general_caunamprc555_ID556_container_color-nau_49C24034_bien_trang_05-03-2024_09-21-06_640_jpg.rf.2311bc9c54e721f4a9a5913d12387893.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_86H71055_25-01-2024_11-45-32_640_jpg.rf.0b5c2ce42562642cc1e8edb4fdecf8f3.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/test/images/general_hungvuong556_ID684_xe_may_model-_color-vang_61F114608_bien_trang_04-09-2024_12-00-07_640_jpg.rf.243ac709794eb9c57aab9b4b5379c5b5.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/test/images/general_nga3phuocthe554_36R03507_08-02-2024_20-15-52_640_jpg.rf.332d5e4e2e3f9090c0048214a80e5638.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/test/images/general_nhatholetrang84_ID2902_oto_model-_color-den_51F144263_bien_trang_04-09-2024_11-00-11_640_jpg.rf.c239824c2f893f05379142a9c6088005.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/test/images/general_tranhungdao59_ID668_xe_may_model-_color-_51F146914_bien_trang_04-09-2024_06-45-55_640_jpg.rf.a2c3a6dbf4c89bb4752517eb0188d223.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/test/images/general_tranhungdao59_ID751_xe_may_model-_color-_60Y33640_bien_trang_04-09-2024_06-52-38_640_jpg.rf.d45126ad3feb7f0b8f8a53b57866893a.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_86R80370_08-02-2024_14-27-54_640_jpg.rf.8d60d8e15808c2f915821bedbcf0c788.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_92H00427_07-02-2024_17-30-59_640_jpg.rf.8814a0c5bfa9b96cddf95c21c9f5cac7.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_cafeminghouse554_ID14083_oto_model-mitsubishi_freeca_color-unknown_86F00315_bien_vang_30-03-2024_18-07-27_640_jpg.rf.2f6adbd020d8f69f217cf69cfbd293fd.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_cafeminghouse554_ID1546_oto_model-mercedes_benz_Sprinter_color-xam_86F00328_bien_vang_17-03-2024_20-22-16_640_jpg.rf.cd01c93b0d82f999df1c0a60e3670a32.jpg",
+        "n_gt": 2,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_cafeminghouse554_ID5622_oto_model-mercedes_benz_Sprinter_color-xam_86B01464_bien_trang_03-04-2024_07-05-35_640_jpg.rf.6a32fbfef61d56d4748c67bff79c3710.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_cafeminghouse554_ID7366_oto_model-mercedes_benz_Sprinter_color-xam_66B00407_bien_vang_30-03-2024_07-55-04_640_jpg.rf.00497556002437f1a413af4e8d69fce1.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_cafeminghouse554_ID7580_oto_model-mercedes_benz_Sprinter_color-xam_70F00084_bien_vang_30-03-2024_07-59-08_640_jpg.rf.e81d341df2053ced65aa63b0d2c17ebe.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_cafeminghouse554_ID8030_xe_ba_gac_model-_color-unknown_51C10976_bien_trang_02-04-2024_16-33-01_640_jpg.rf.fefbc482de0a1f7b6c22cbbcf9d004bb.jpg",
+        "n_gt": 2,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_cafestart554_ID123_xe_khach_model-_color-unknown_86H49941_bien_trang_28-03-2024_12-07-25_640_jpg.rf.07a1c1f7ec2b9eb1d0d043ed0d93e929.jpg",
+        "n_gt": 2,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_cafestart554_ID1327_xe_tai_model-_color-den_86A28349_bien_trang_04-04-2024_13-26-56_640_jpg.rf.bea5fadaf95639709461303491a6bb49.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_60P63024_18-01-2024_07-10-45_640_jpg.rf.e34608474fe6dbea7bd1c3b176438793.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_60Y22395_09-02-2024_17-46-25_640_jpg.rf.bb5221b900f3cff2c38cab004356d6c4.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_60Y33178_19-01-2024_08-04-43_640_jpg.rf.c7584d4a8619cd19505a6e36de62aac0.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_60Y35029_07-02-2024_16-44-17_640_jpg.rf.c86b4fc0a23b1f5b7c8334f184fafd93.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_60Y35973_20-01-2024_16-48-10_640_jpg.rf.7bbde9c5b694e4918897958098649063.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_61L62817_19-01-2024_10-48-25_640_jpg.rf.c8388177f72a01f2c901e242d84050a1.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_63H50783_23-01-2024_14-17-05_640_jpg.rf.aaa06315afbd8bc36b7ddd28fb523948.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_ID365_xe_ba_gac_color-xanh_la_86H46816_bien_trang_06-03-2024_16-36-07_640_jpg.rf.041db4a4d74ced4c25f2242eb20591cc.jpg",
+        "n_gt": 2,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_ID378_container_color-nau_85B80577_bien_vang_04-03-2024_15-52-34_640_jpg.rf.7b070dd32d0ea302f43882e63c863def.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_ID514_xe_ba_gac_color-unknown_78F163352_bien_trang_06-03-2024_17-25-48_640_jpg.rf.c65d150d4cff6cbadf87e05a85bc247e.jpg",
+        "n_gt": 2,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_ID561_container_color-cam_86C47970_bien_vang_05-03-2024_16-56-07_640_jpg.rf.d1aec6884dc153e3ded2c4bbae548dc4.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_comkimngan554_ID1383_xe_khach_model-_color-den_79B03558_bien_trang_04-04-2024_13-20-04_640_jpg.rf.2c87d28e0129f2889255ced16372b627.jpg",
+        "n_gt": 2,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_comkimngan554_ID163_xe_khach_model-_color-xam_79G00202_bien_vang_16-03-2024_13-28-29_640_jpg.rf.6e04fd5bc985aaf60280663e3979cdc0.jpg",
+        "n_gt": 2,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_comkimngan554_ID2628_xe_khach_model-_color-trang_85E00099_bien_vang_31-03-2024_15-35-37_640_jpg.rf.283b4409f01a6ffb511ae3a109a70e9d.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_comkimngan554_ID3975_xe_tai_model-_color-trang_78A05601_bien_trang_31-03-2024_16-29-57_640_jpg.rf.552a3b5b90359d42c0214ec777a016fc.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_comkimngan554_ID541_xe_khach_color-trang_85F00120_bien_vang_12-03-2024_16-49-49_640_jpg.rf.f8fb4887ed31876f25b30f3bc4fa9603.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_comkimngan554_ID563_xe_tai_model-_color-trang_85C07543_bien_trang_03-04-2024_13-02-12_640_jpg.rf.3ecd414da60ba5ed8a77feca5e835da5.jpg",
+        "n_gt": 2,
+        "n_unlabeled": 1
+      },
+      {
+        "path": "data/raw_vietnam_vehicles_v10/train/images/general_comkimngan554_ID6083_xe_tai_model-_color-unknown_79B00959_bien_trang_10-04-2024_17-07-08_640_jpg.rf.8bd7ed53ec127a3628f3e6b1c79c4cdb.jpg",
+        "n_gt": 1,
+        "n_unlabeled": 1
+      }
+    ]
+  },
+  "burned_in_overlay": {
+    "verdict": "FAIL",
+    "threshold": "cận dưới CI95 tỉ lệ ảnh có overlay ≤ 5%",
+    "n_reviewed": 60,
+    "n_with_overlay": 50,
+    "n_unclear": 1,
+    "pct_with_overlay": 83.3,
+    "ci95_pct": [
+      72.0,
+      90.7
+    ],
+    "est_images_in_v10": [
+      3472,
+      4375
+    ],
+    "sample_files": {
+      "0": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_ID24_container_model-_color-xanh_duong_85C04469_bien_vang_28-03-2024_16-38-12_640_jpg.rf.02c1e8e01d8950dd1f7201e8b5d175f1.jpg",
+      "1": "data/raw_vietnam_vehicles_v10/train/images/general_hodabac554_ID277_container_model-_color-xanh_la_60R05859_bien_trang_29-03-2024_12-29-30_640_jpg.rf.29b638c85af1b5fafd64c8e2c4aab45b.jpg",
+      "2": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_72R02223_09-02-2024_05-31-27_640_jpg.rf.34addff1c8e6650a44c858af839fdeb8.jpg",
+      "3": "data/raw_vietnam_vehicles_v10/train/images/general_nga4hamthang555_ID10036_xe_ba_gac_model-_color-unknown_86F37704_bien_trang_05-04-2024_07-22-56_640_jpg.rf.ce64591c282225155b804e6edf7fd16a.jpg",
+      "4": "data/raw_vietnam_vehicles_v10/train/images/general_hungvuong556_ID579_xe_may_model-_color-_61F149770_bien_trang_04-09-2024_11-32-11_640_jpg.rf.dbdf2f91ba8eeae96147832a351a234e.jpg",
+      "5": "data/raw_vietnam_vehicles_v10/train/images/general_tranquangdieu52_ID413_xe_may_model-_color-_61F101436_bien_trang_04-09-2024_07-12-30_640_jpg.rf.340e987248a1572a347d8515eeb127a8.jpg",
+      "6": "data/raw_vietnam_vehicles_v10/train/images/general_nga3muitau554_61L72753_22-01-2024_15-42-40_640_jpg.rf.5dfc8b9fde1f897c9ffd8215e71b690f.jpg",
+      "7": "data/raw_vietnam_vehicles_v10/valid/images/general_hoaphu555_ID178_xe_ba_gac_model-_color-nau_86B234284_bien_trang_25-03-2024_08-19-02_640_jpg.rf.8d79191979f43ae15da01a7842fe2b70.jpg",
+      "8": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_77RM00126_09-02-2024_09-48-10_640_jpg.rf.98856ceae54d412490af2ca9b767783e.jpg",
+      "9": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_ID802_container_model-_color-xam_86C15820_bien_trang_23-03-2024_08-55-09_640_jpg.rf.6512941cfdd1c0564b232a0206e26603.jpg",
+      "10": "data/raw_vietnam_vehicles_v10/train/images/general_nhatholetrang86_ID400_xe_may_model-_color-den_61F145346_bien_trang_04-09-2024_07-13-51_640_jpg.rf.7278dab1ca856cc4c9633fc125d97cfa.jpg",
+      "11": "data/raw_vietnam_vehicles_v10/train/images/general_tranquangdieu556_ID1218_xe_may_model-_color-den_36B62616_bien_vang_04-09-2024_11-22-49_640_jpg.rf.020604d522a158466a36e26a7034ce43.jpg",
+      "12": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_76R00399_10-02-2024_23-39-32_640_jpg.rf.2fd148d1166f3b423234eafd35a30c25.jpg",
+      "13": "data/raw_vietnam_vehicles_v10/train/images/general_nga3doclap37_ID1140_xe_may_model-_color-den_61F137024_bien_trang_04-09-2024_07-29-16_640_jpg.rf.3a12ac20c5d752958176e7b9b6d6964e.jpg",
+      "14": "data/raw_vietnam_vehicles_v10/train/images/general_nga4hamthang555_ID341_xe_ba_gac_color-den_86B537871_bien_trang_25-03-2024_15-50-37_640_jpg.rf.f03d04947664ac6d8bde316ab35d1705.jpg",
+      "15": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3duong554_60Y36172_01-02-2024_07-05-08_640_jpg.rf.2017cecad489f3ca2ef7616df9b080d5.jpg",
+      "16": "data/raw_vietnam_vehicles_v10/train/images/general_nguyenvantroi56_ID619_xe_may_model-_color-den_61F116598_bien_trang_04-09-2024_06-52-17_640_jpg.rf.27a7584d5f1ad421f3834cd2a6d2eb4e.jpg",
+      "17": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc555_ID199_container_color-xam_85H00016_bien_vang_04-03-2024_14-24-03_640_jpg.rf.ada185d51cb7ae66f691eee1e393e9cd.jpg",
+      "18": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc554_ID608_xe_ba_gac_color-cam_86B127837_bien_trang_06-03-2024_07-55-01_640_jpg.rf.80628460f238a24923090914358d441a.jpg",
+      "19": "data/raw_vietnam_vehicles_v10/train/images/general_nga3doclap36_ID121_xe_may_model-_color-den_61F125000_bien_trang_04-09-2024_06-01-00_640_jpg.rf.a6a1f9352e55b5e8c8754a40cddad99f.jpg",
+      "20": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_ID2232_container_model-_color-_51C53017_bien_trang_03-04-2024_16-02-25_640_jpg.rf.1d7dbfb4fb9fbc6d9f8378a9af47e3d2.jpg",
+      "21": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_ID194_container_model-_color-_51K40792_bien_trang_04-04-2024_12-20-11_640_jpg.rf.13aeffe6e72ad42401dd7fd5fe2884bb.jpg",
+      "22": "data/raw_vietnam_vehicles_v10/valid/images/general_garagecuong554_ID776_container_color-unknown_73C07204_bien_unknown_06-03-2024_18-04-31_640_jpg.rf.f8884be75d6557a88680986c314eff8c.jpg",
+      "23": "data/raw_vietnam_vehicles_v10/train/images/general_nga3doclap36_ID1692_oto_model-_color-_1F107954_bien_trang_04-09-2024_07-19-41_640_jpg.rf.c511dcf9bd565a764398e3d483b6e5ec.jpg",
+      "24": "data/raw_vietnam_vehicles_v10/train/images/general_tranquangdieu52_ID52_xe_may_model-_color-den_61F13876_bien_unknown_04-09-2024_06-11-50_640_jpg.rf.4ca8ca39c5a0436b4b4e7495e7805cc3.jpg",
+      "25": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc554_61L71302_19-01-2024_17-47-55_640_jpg.rf.566a7b1307fd95323adb23b6c232f79a.jpg",
+      "26": "data/raw_vietnam_vehicles_v10/train/images/general_nhatholetrang86_ID194_xe_may_model-_color-trang_61F148077_bien_trang_04-09-2024_06-30-54_640_jpg.rf.7a8f08e8ef13fbc8e7ffed1fe93766bd.jpg",
+      "27": "data/raw_vietnam_vehicles_v10/train/images/general_tranquangdieu556_ID1248_xe_may_model-_color-trang_54V28178_bien_unknown_04-09-2024_11-26-37_640_jpg.rf.9a693244859467a5699c5cd68a1282bf.jpg",
+      "28": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_ID202_container_model-_color-xanh_la_29H89765_bien_vang_24-03-2024_13-29-39_640_jpg.rf.92929a66b4628e3c8a14a8d6ece33d5b.jpg",
+      "29": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_60Y22357_22-01-2024_14-55-45_640_jpg.rf.ff738ebab5aefae0d819a44740a5b841.jpg",
+      "30": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_79R00832_08-02-2024_08-16-55_640_jpg.rf.5fb4b7155d8c9c12da29c893b3b7e518.jpg",
+      "31": "data/raw_vietnam_vehicles_v10/train/images/general_nguyenvantroi56_ID474_xe_may_model-_color-nau_61F151429_bien_trang_04-09-2024_06-40-15_640_jpg.rf.66f6fd5a8f57b6afd6eca64817b21df7.jpg",
+      "32": "data/raw_vietnam_vehicles_v10/train/images/general_tranhungdao59_ID695_xe_may_model-_color-trang_61FA05030_bien_trang_04-09-2024_06-47-59_640_jpg.rf.82830ae7760b805e866c15755688d748.jpg",
+      "33": "data/raw_vietnam_vehicles_v10/train/images/general_nguyenvantroi56_ID663_xe_may_model-_color-den_33N33952_bien_trang_04-09-2024_06-58-44_640_jpg.rf.917ad842edf6ac437582dd3e012204ac.jpg",
+      "34": "data/raw_vietnam_vehicles_v10/train/images/general_nhatholetrang84_ID919_xe_may_model-_color-trang_61F128505_bien_vang_04-09-2024_07-22-08_640_jpg.rf.b701fe7698a270e2aaf421fc01b0d0ed.jpg",
+      "35": "data/raw_vietnam_vehicles_v10/train/images/general_hungvuong556_ID600_xe_may_model-_color-_61F115262_bien_trang_04-09-2024_11-36-19_640_jpg.rf.3d1ce70e3ddda83d748871403eea9629.jpg",
+      "36": "data/raw_vietnam_vehicles_v10/train/images/general_nguyenvantroi56_ID376_xe_may_model-_color-trang_61F12393_bien_trang_04-09-2024_06-27-27_640_jpg.rf.84af77ffe6ba4e33b4c132c6edf10c02.jpg",
+      "37": "data/raw_vietnam_vehicles_v10/train/images/general_tranquangdieu556_ID713_xe_may_model-_color-den_61F145912_bien_unknown_04-09-2024_10-43-27_640_jpg.rf.b571abc3749f850be4498de30f5ac4d7.jpg",
+      "38": "data/raw_vietnam_vehicles_v10/train/images/general_tranquangdieu556_ID1067_xe_may_model-_color-_61F156842_bien_trang_04-09-2024_11-11-59_640_jpg.rf.6e7aaa1f7d6af73811dcc35982e08bb2.jpg",
+      "39": "data/raw_vietnam_vehicles_v10/train/images/general_nga5lienhuong555_ID6812_xe_ba_gac_model-_color-do_86B109459_bien_trang_02-04-2024_12-00-00_640_jpg.rf.8ec346ddefaa66ac99c76b737b1febbd.jpg",
+      "40": "data/raw_vietnam_vehicles_v10/valid/images/general_tranhungdao59_ID500_xe_may_model-_color-_1F131801_bien_trang_04-09-2024_06-33-47_640_jpg.rf.52c324cdbc94ddf5340acdad52feedbf.jpg",
+      "41": "data/raw_vietnam_vehicles_v10/train/images/general_nga3doclap36_ID1881_xe_may_model-_color-_61F128777_bien_trang_04-09-2024_07-31-01_640_jpg.rf.af33df0de7101d91ffc2989c3fd7a897.jpg",
+      "42": "data/raw_vietnam_vehicles_v10/train/images/general_tranquangdieu52_ID320_xe_may_model-_color-den_61F142069_bien_trang_04-09-2024_06-44-46_640_jpg.rf.0eb322b9347bf007a35f7e1e13219137.jpg",
+      "43": "data/raw_vietnam_vehicles_v10/train/images/general_nga3doclap37_ID597_xe_may_model-_color-trang_61F157652_bien_trang_04-09-2024_06-43-01_640_jpg.rf.f5cffd59d000d2c8c879067e4f6d24fa.jpg",
+      "44": "data/raw_vietnam_vehicles_v10/train/images/general_nga3doclap36_ID1020_xe_may_model-_color-vang_61F57022_bien_trang_04-09-2024_06-48-03_640_jpg.rf.9c56a39355d8bbc31287810deea35668.jpg",
+      "45": "data/raw_vietnam_vehicles_v10/train/images/general_cafeminghouse554_ID1508_oto_model-hyundai_staria_color-trang_86B00937_bien_trang_02-04-2024_13-05-27_640_jpg.rf.f0f42732fa58848574bc86989a8fd6da.jpg",
+      "46": "data/raw_vietnam_vehicles_v10/train/images/general_nga3doclap37_ID3405_oto_model-mitsubishi_mirage_color-trang_61F122218_bien_trang_04-09-2024_10-56-15_640_jpg.rf.efe78a709b7e267eba25f3d4cfee96fe.jpg",
+      "47": "data/raw_vietnam_vehicles_v10/test/images/general_nga4hamthang555_ID1235_container_model-_color-xanh_la_29H89758_bien_vang_04-04-2024_12-55-11_640_jpg.rf.0a771b8a9de0ac7358f0bcf595e8698f.jpg",
+      "48": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_ID674_xe_khach_color-den_29K10078_bien_trang_06-03-2024_09-10-19_640_jpg.rf.ad67305e6330db4e2a46dd0f9fa10aba.jpg",
+      "49": "data/raw_vietnam_vehicles_v10/train/images/veh_caunamprc554_ID194_xe_khach_color-trang_79H00248_bien_vang_12-03-2024_14-17-47_640_jpg.rf.e63c34a5e7e9fbd77a81406eda2b6684.jpg",
+      "50": "data/raw_vietnam_vehicles_v10/train/images/general_ngabathomo554_ID4485_container_model-_color-xanh_duong_51R27446_bien_trang_04-04-2024_17-03-38_640_jpg.rf.4f330f22e85f4050ca9bf262b237ee22.jpg",
+      "51": "data/raw_vietnam_vehicles_v10/valid/images/general_tranhungdao59_ID947_xe_may_model-_color-unknown_79H106773_bien_trang_04-09-2024_07-08-30_640_jpg.rf.b4f1757bbeb7d49cfaa30ffe599c04e5.jpg",
+      "52": "data/raw_vietnam_vehicles_v10/train/images/general_tranquangdieu556_ID262_xe_may_model-_color-_61AA0013_bien_trang_04-09-2024_10-14-23_640_jpg.rf.7d42997505bf970e7798f8cd9aea0841.jpg",
+      "53": "data/raw_vietnam_vehicles_v10/train/images/general_comkimngan554_ID949_oto_model-mercedes_benz_Sprinter_color-xam_60B03814_bien_vang_18-03-2024_11-13-48_640_jpg.rf.3965ae03f66304f231b61325bb8b550e.jpg",
+      "54": "data/raw_vietnam_vehicles_v10/train/images/general_nguyenvantroi56_ID672_xe_may_model-_color-den_61F19888_bien_trang_04-09-2024_07-01-24_640_jpg.rf.d8f50e1dedabc3c128c7bbee8997d870.jpg",
+      "55": "data/raw_vietnam_vehicles_v10/train/images/general_nga3doclap37_ID675_xe_may_model-_color-trang_61F125781_bien_trang_04-09-2024_06-48-44_640_jpg.rf.2564d6de2375931a0db32ae5f307885c.jpg",
+      "56": "data/raw_vietnam_vehicles_v10/train/images/general_nga3doclap37_ID862_xe_may_model-_color-trang_61F125146_bien_trang_04-09-2024_07-04-42_640_jpg.rf.7fa774a476cb8dfeef990b9c41a74265.jpg",
+      "57": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_ID1917_container_model-_color-vang_50H21158_bien_vang_04-04-2024_07-03-35_640_jpg.rf.01ef35c2e2771915d5d0b96675f41dea.jpg",
+      "58": "data/raw_vietnam_vehicles_v10/train/images/general_tranhungdao59_ID1019_xe_may_model-_color-_61F118108_bien_trang_04-09-2024_07-14-23_640_jpg.rf.19a7f9ca5e1c2f8ac2eebde5a5aff86f.jpg",
+      "59": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77R03891_08-02-2024_11-35-21_640_jpg.rf.77d088148e32bbfcf57eb916d1daaefa.jpg"
+    },
+    "observations": [
+      "Tag gắn đúng vị trí xe được theo dõi (góc trên-trái bbox) → trùng vị trí box GT: model có thể học lối tắt 'tag màu = xe'.",
+      "Overlay chỉ gắn cho một số xe trong khung (vd #31, #32: 4-5 xe, chỉ 2 tag). Giả thuyết 'GT cũng chỉ phủ xe có tag' KHÔNG được xác nhận bởi check detector (% xe chưa gán của v10 ≈ V5).",
+      "Đa giác ROI xanh dương (#19, #23, #41, #44) và tag ID xanh xuất hiện ở camera 2024-09-04 (Nguyen Van Troi, Nga 3 Doc Lap, Tran Quang Dieu...)."
+    ]
+  },
+  "preview": "reports/v10_missing_labels_preview.jpg"
+}
