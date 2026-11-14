@@ -1,0 +1,97 @@
+{
+ "variant": "v5base",
+ "built_at": "2026-11-14T14:01:14",
+ "git_head": "2030a6d25aef8d1f58efa39108af8bf6002a05c8",
+ "builder": "scripts/data_prep/build_v5plus_clean.py",
+ "dataset_root": "data/merged_v5_cleanval",
+ "yaml": "data/data_v5_cleanval.yaml",
+ "counts": {
+  "v5_train": 2833,
+  "v5_val": 1000,
+  "v5_test": 1500,
+  "v10_train": 0,
+  "train_total": 2833
+ },
+ "val_policy": "clean",
+ "val_excluded_prefixes": [
+  "cantho_"
+ ],
+ "v10_pct_of_train": 0.0,
+ "class_boxes": {
+  "train_v5": {
+   "motorcycle": 10124,
+   "car": 5656,
+   "bus": 1399,
+   "truck": 3102
+  },
+  "train_v10": {
+   "motorcycle": 0,
+   "car": 0,
+   "bus": 0,
+   "truck": 0
+  },
+  "val": {
+   "motorcycle": 5852,
+   "car": 1654,
+   "bus": 447,
+   "truck": 1913
+  },
+  "test": {
+   "motorcycle": 39807,
+   "car": 8031,
+   "bus": 756,
+   "truck": 852
+  }
+ },
+ "v10_overlay_in_train": 0,
+ "eval_fingerprint": {
+  "val": {
+   "n_images": 1000,
+   "sha256": "bcfe4e07fd665f5a3edabf119b34fc431b6027ebfd447913325fb58fa3e4d2e7"
+  },
+  "test": {
+   "n_images": 1500,
+   "sha256": "195d764ec1ae14e844c65608574a18e60ee2c351ca687774d39f14988d09db81"
+  }
+ },
+ "v5_eval_fingerprint_reference": {
+  "val": {
+   "n_images": 1000,
+   "sha256": "bcfe4e07fd665f5a3edabf119b34fc431b6027ebfd447913325fb58fa3e4d2e7"
+  },
+  "test": {
+   "n_images": 1500,
+   "sha256": "195d764ec1ae14e844c65608574a18e60ee2c351ca687774d39f14988d09db81"
+  }
+ },
+ "rules": {
+  "R1": "bỏ ảnh có xe_ba_gac",
+  "R2": "dedup cùng camera + pHash≤4 + (cùng biển số | Δt≤2s)",
+  "R3": "bỏ ảnh có xe chưa gán nhãn theo detector COCO",
+  "R4": "bỏ nhãn lỗi/rỗng"
+ },
+ "class_map_v10_to_v5": {
+  "container": "truck",
+  "oto": "car",
+  "xe_ba_gac": "DROP_IMAGE",
+  "xe_khach": "bus",
+  "xe_may": "motorcycle",
+  "xe_tai": "truck"
+ },
+ "v10_selection": {
+  "detector": {
+   "weights": "yolov8m.pt",
+   "weights_sha256": "5d4a90cdc7a21786cc59cd19778e9eafff836df9e2da32524737c7ee6efe4fe5",
+   "params": {
+    "conf": 0.5,
+    "iou": 0.3,
+    "ioa": 0.6,
+    "min_area": 0.002
+   }
+  },
+  "n_raw": 4824,
+  "n_kept": 4136,
+  "seed": 0
+ },
+ "v10_files": []
+}

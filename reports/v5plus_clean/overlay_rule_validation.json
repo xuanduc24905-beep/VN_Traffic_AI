@@ -1,0 +1,261 @@
+{
+ "description": "Kiểm định quy tắc 'tên file có vehicle ID ⇔ ảnh có overlay vẽ sẵn'. Mẫu held-out độc lập với mẫu review đầu (loại 60 ảnh đã xem), 20 ảnh có ID + 20 ảnh không ID, random.Random(777), trộn thứ tự. Người review chỉ thấy ảnh (sheet overlay_holdout_sheet_{0,1}.jpg), nhận định được ghi lại TRƯỚC khi mở khoá đáp án.",
+ "tuning_sample": {
+  "source": "reports/v10_overlay_manual_review.json",
+  "n": 60,
+  "rule_correct": 59,
+  "note": "1 ảnh có ID nhưng không thấy overlay (ảnh cận cảnh), 1 ảnh không ID 'unclear'"
+ },
+ "holdout": {
+  "n": 40,
+  "confusion": {
+   "has_id_and_overlay": 20,
+   "has_id_no_overlay": 0,
+   "no_id_and_overlay": 0,
+   "no_id_no_overlay": 20
+  },
+  "accuracy": 1.0,
+  "items": [
+   {
+    "i": 0,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc554_63H42375_07-02-2024_10-48-37_640_jpg.rf.253de7da54cf3ac47f4f4f4cda56a806.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 1,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_60Y36362_08-02-2024_16-26-40_640_jpg.rf.42f2cc9f4afb85069de5290b10b76d62.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 2,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc554_12R00985_07-02-2024_19-54-13_640_jpg.rf.3b11d5533f350ea819bcd316508a7ea4.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 3,
+    "path": "data/raw_vietnam_vehicles_v10/test/images/general_xom7vinhtan554_ID367_container_color-trang_62C00757_bien_vang_03-03-2024_16-24-28_640_jpg.rf.16aaeb8b8a9fa8c2977b5db111dc2ebe.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 4,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_61L72536_25-01-2024_10-46-43_640_jpg.rf.1283f191a7a29bc0781f6236728b139a.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 5,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc554_ID1519_container_color-xanh_duong_86R00949_bien_trang_04-03-2024_10-59-19_640_jpg.rf.35130afce143b87783c93cd63d7e7a7a.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 6,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_86B13797_08-02-2024_15-32-14_640_jpg.rf.085abf4b96d32eaa4f7dc51592aeb00f.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 7,
+    "path": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_76R00040_08-02-2024_22-14-11_640_jpg.rf.5930ae84909d124e5625062a25e06116.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 8,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_60P60729_11-02-2024_17-35-38_640_jpg.rf.1aaecff14d02ec16f5e23963bf4685e3.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 9,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_79R00845_10-02-2024_18-06-56_640_jpg.rf.4d0d1a5a5556add15cae6cb4902fba70.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 10,
+    "path": "data/raw_vietnam_vehicles_v10/test/images/general_caunamprc555_ID873_xe_ba_gac_color-unknown_85H107794_bien_unknown_06-03-2024_23-16-40_640_jpg.rf.9fac9b9d56b229d2753c6ada22d7c7c2.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 11,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_nga3duong554_ID6602_xe_ba_gac_model-_color-nau_86B129385_bien_trang_02-04-2024_11-45-17_640_jpg.rf.8069111b57d7eec1bfc490dc82a4a955.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 12,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_60F03554_08-02-2024_10-15-12_640_jpg.rf.ee3bb4aeb90de9bb895fc702a8abf354.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 13,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_tranquangdieu52_ID172_xe_may_model-_color-den_61FA04270_bien_trang_04-09-2024_06-30-38_640_jpg.rf.ca65a921d999db3c3d3ab2cd65dd1c81.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 14,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_nguyenvantroi56_ID304_xe_may_model-_color-xanh_duong_48F89137_bien_trang_04-09-2024_06-22-12_640_jpg.rf.faad09a80225177e8fe2552be0b03228.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 15,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_ID1256_container_model-_color-cam_51R23805_bien_trang_25-03-2024_11-31-13_640_jpg.rf.3cf0f21d73aff61c712acecb3a4de57a.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 16,
+    "path": "data/raw_vietnam_vehicles_v10/valid/images/general_nguyenvantroi56_ID846_xe_may_model-_color-_61F143779_bien_trang_04-09-2024_07-21-10_640_jpg.rf.4d76ad13f899b3c1daa7066f1a8806b9.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 17,
+    "path": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_51R34820_09-02-2024_22-40-13_640_jpg.rf.4b4a25d960c10047c75e1b09cc970d5b.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 18,
+    "path": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc555_72R02033_10-02-2024_19-43-00_640_jpg.rf.cfe5b0823f2ca6d6e67898a29d34477e.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 19,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_hungvuong556_ID496_xe_may_model-_color-trang_61F129490_bien_trang_04-09-2024_11-10-53_640_jpg.rf.54ca6e1aec244166d555154293bdcbd0.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 20,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_nga3doclap37_ID1147_xe_may_model-_color-trang_61L56835_bien_trang_04-09-2024_07-29-45_640_jpg.rf.1091bb6cc585e00bca15692aa35f1491.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 21,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_tranhungdao59_ID159_xe_may_model-_color-den_6F154435_bien_trang_03-09-2024_22-11-39_640_jpg.rf.e44f85fb494c80296c0f8f2dd2dde37b.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 22,
+    "path": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_78R00903_08-02-2024_07-46-22_640_jpg.rf.f1178368b142adfbd541a2600e8cc12a.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 23,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_ID302_xe_ba_gac_color-den_86B461998_bien_trang_03-03-2024_15-52-43_640_jpg.rf.8cc5be762679901c52df3680eb63a25a.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 24,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_nga3phuocthe554_ID5397_container_model-_color-unknown_86R00949_bien_trang_05-04-2024_11-27-51_640_jpg.rf.97d573011cdca2d9a070edb840fb9e86.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 25,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_78R00967_08-02-2024_08-30-14_640_jpg.rf.fdcc22408fafe8629ced590886df9d32.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 26,
+    "path": "data/raw_vietnam_vehicles_v10/valid/images/general_xom7vinhtan554_98R01315_08-02-2024_20-27-54_640_jpg.rf.70a6a356a2fdb188b2c838a4f76a3889.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 27,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_garagecuong554_77H03570_09-02-2024_04-51-55_640_jpg.rf.bf63ad35d33bb9a12aa694eacb5a1171.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 28,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_60P63024_19-01-2024_07-20-29_640_jpg.rf.7941f6efa00aab5b8e03c3a7176d6e97.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 29,
+    "path": "data/raw_vietnam_vehicles_v10/test/images/general_garagecuong554_60P61873_04-02-2024_09-08-41_640_jpg.rf.e8b3f286487ecc198dbe4dcb5415c9dd.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 30,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_nga3doclap37_ID532_xe_may_model-_color-den_61P17034_bien_trang_04-09-2024_06-39-19_640_jpg.rf.a572efa42e4bda6164d584e884f88b99.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 31,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_tranhungdao59_ID672_xe_may_model-_color-xanh_duong_61FA05092_bien_trang_04-09-2024_06-46-29_640_jpg.rf.57b40015d7cd0e8f6d9951532a3d7461.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 32,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_xom7vinhtan554_ID935_container_color-xanh_duong_85C02624_bien_unknown_08-03-2024_20-50-33_640_jpg.rf.fae86d1a8d9f8663d1ebd0876ae818c0.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 33,
+    "path": "data/raw_vietnam_vehicles_v10/valid/images/general_caunamprc554_4K135539_16-02-2024_15-02-13_640_jpg.rf.c0b6922cc6cfe824280198b0305f223d.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 34,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_nguyenvantroi56_ID290_xe_may_model-_color-vang_61F124472_bien_trang_04-09-2024_06-18-13_640_jpg.rf.381eefbf2d284e7c366930ef263bf74d.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 35,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_caunamprc555_60F61367_07-02-2024_15-10-31_640_jpg.rf.fb7749d1e677aa81c689037ec6083cc9.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 36,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_tranhungdao59_ID1211_xe_may_model-_color-_61F135429_bien_trang_04-09-2024_07-28-22_640_jpg.rf.7f655d28379b731da424863f279d2e1b.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 37,
+    "path": "data/raw_vietnam_vehicles_v10/valid/images/general_nga3phuocthe554_68C35047_14-02-2024_17-49-14_640_jpg.rf.a93ca402e6920ecb458fd983fe67a366.jpg",
+    "has_id": false,
+    "reviewer_saw_overlay": false
+   },
+   {
+    "i": 38,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_docvinhhanh554_ID583_container_model-_color-xanh_duong_51B27155_bien_vang_23-03-2024_15-50-26_640_jpg.rf.4a51e3d159e90398512833825454a59b.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   },
+   {
+    "i": 39,
+    "path": "data/raw_vietnam_vehicles_v10/train/images/general_tranquangdieu556_ID1007_xe_may_model-_color-unknown_61F125020_bien_vang_04-09-2024_11-07-50_640_jpg.rf.299eba86d550634ca368696c92066850.jpg",
+    "has_id": true,
+    "reviewer_saw_overlay": true
+   }
+  ]
+ }
+}
