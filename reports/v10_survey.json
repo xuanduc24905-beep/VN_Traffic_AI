@@ -1,0 +1,29 @@
+{
+  "n_images": 4824,
+  "per_split": {
+    "train": 3867,
+    "valid": 673,
+    "test": 284
+  },
+  "prefix_variants": {
+    "gen": 17,
+    "general": 4791,
+    "veh": 16
+  },
+  "parse_rate": {
+    "camera_id": 1.0,
+    "vehicle_id": 0.7879353233830846,
+    "plate": 1.0,
+    "datetime": 1.0
+  },
+  "n_unique_camera": 44,
+  "n_unique_site": 33,
+  "n_unique_vehicle_id_global": 1819,
+  "n_unique_camera_vehicle_id": 3654,
+  "n_unique_plate": 4081,
+  "n_copy_suffix": 8,
+  "date_min": "2024-01-16T06:22:20",
+  "date_max": "2024-09-04T14:13:53",
+  "n_unique_dates": 78,
+  "unparsed_examples": []
+}

@@ -1,0 +1,2763 @@
+{
+  "check": "vehicle_leak",
+  "threshold": "0 (camera,vehicle_id,ngày) cross-split và 0 biển số cross-split",
+  "verdict": "FAIL",
+  "n_with_vehicle_id": 3801,
+  "n_with_plate": 4824,
+  "n_unique_plate": 4081,
+  "strict_camera_vid_date": {
+    "n_keys": 3787,
+    "n_cross_split": 3,
+    "pct_eval_images_affected": {
+      "valid": 0.3,
+      "test": 0.35
+    },
+    "items": [
+      {
+        "key": "hodabac554|130|2024-03-23",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_hodabac554_ID130_container_model-_color-xanh_la_51R34695_bien_trang_23-03-2024_12-58-37",
+          "valid/veh_hodabac554_ID130_container_model-_color-xanh_la_51R34695_bien_trang_23-03-2024_12-58-37"
+        ]
+      },
+      {
+        "key": "nga3phuocthe556|49|2024-03-28",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3phuocthe556_ID49_container_model-_color-xanh_duong_86R01125_bien_trang_28-03-2024_11-11-40",
+          "valid/veh_nga3phuocthe556_ID49_container_model-_color-xanh_duong_86R01125_bien_trang_28-03-2024_11-11-40"
+        ]
+      },
+      {
+        "key": "garagecuong554|997|2024-03-01",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/veh_garagecuong554_ID997_container_color-nau_51C64047_bien_unknown_01-03-2024_21-58-12",
+          "test/general_garagecuong554_ID997_container_color-nau_51C64047_bien_unknown_01-03-2024_21-58-12"
+        ]
+      }
+    ]
+  },
+  "plate": {
+    "n_keys": 4081,
+    "n_cross_split": 178,
+    "pct_eval_images_affected": {
+      "valid": 26.75,
+      "test": 24.3
+    },
+    "items": [
+      {
+        "key": "60Y33178",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_60Y33178_14-02-2024_13-31-29",
+          "train/general_caunamprc554_60Y33178_16-01-2024_07-48-39",
+          "train/general_caunamprc554_60Y33178_16-01-2024_14-14-58",
+          "train/general_caunamprc554_60Y33178_26-01-2024_07-50-10",
+          "train/general_caunamprc555_60Y33178_05-02-2024_06-08-53",
+          "train/general_caunamprc555_60Y33178_05-02-2024_06-29-08",
+          "train/general_caunamprc555_60Y33178_11-02-2024_15-40-51",
+          "train/general_caunamprc555_60Y33178_16-01-2024_08-37-59",
+          "train/general_caunamprc555_60Y33178_16-01-2024_14-41-27",
+          "train/general_caunamprc555_60Y33178_19-01-2024_08-04-43",
+          "train/general_caunamprc555_60Y33178_26-01-2024_08-09-18",
+          "train/general_nga3duong554_60Y33178_02-02-2024_09-44-35",
+          "train/general_nga3duong554_60Y33178_07-02-2024_13-48-17",
+          "train/general_nga3duong554_60Y33178_08-02-2024_11-16-36",
+          "train/general_nga3duong554_60Y33178_23-01-2024_09-59-47",
+          "train/general_nga3duong554_60Y33178_26-01-2024_10-17-31",
+          "valid/general_caunamprc555_60Y33178_13-02-2024_07-14-27",
+          "valid/general_nga3duong554_60Y33178_08-02-2024_09-07-05",
+          "valid/general_nga3duong554_60Y33178_13-02-2024_10-05-19",
+          "valid/general_nga3muitau554_60Y33178_07-02-2024_13-21-27",
+          "test/general_caunamprc554_60Y33178_13-02-2024_06-52-55"
+        ]
+      },
+      {
+        "key": "61L67092",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_61L67092_02-02-2024_13-26-06",
+          "train/general_garagecuong554_61L67092_03-02-2024_13-57-23",
+          "train/general_garagecuong554_61L67092_04-02-2024_06-38-43",
+          "train/general_garagecuong554_61L67092_05-02-2024_15-57-29",
+          "train/general_garagecuong554_61L67092_06-02-2024_10-33-43",
+          "train/general_garagecuong554_61L67092_06-02-2024_11-14-39",
+          "train/general_garagecuong554_61L67092_08-02-2024_12-35-57",
+          "train/general_garagecuong554_61L67092_08-02-2024_16-21-20",
+          "train/general_garagecuong554_61L67092_09-02-2024_13-23-11",
+          "train/general_garagecuong554_61L67092_09-02-2024_14-30-24",
+          "train/general_garagecuong554_61L67092_21-01-2024_17-32-00",
+          "train/general_garagecuong554_61L67092_23-01-2024_16-55-51",
+          "train/general_garagecuong554_61L67092_26-01-2024_16-34-46",
+          "train/general_garagecuong554_61L67092_27-01-2024_16-55-34",
+          "train/general_xom7vinhtan554_61L67092_04-02-2024_16-06-50",
+          "valid/general_garagecuong554_61L67092_05-02-2024_09-29-27",
+          "test/general_garagecuong554_61L67092_04-02-2024_15-27-39",
+          "test/general_garagecuong554_61L67092_05-02-2024_13-17-00",
+          "test/general_xom7vinhtan554_61L67092_08-02-2024_15-10-04"
+        ]
+      },
+      {
+        "key": "86R00949",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_ID1519_container_color-xanh_duong_86R00949_bien_trang_04-03-2024_10-59-19",
+          "train/general_caunamprc555_ID893_container_color-_86R00949_bien_trang_06-03-2024_11-59-56",
+          "train/general_caunamprc555_ID93_container_color-unknown_86R00949_bien_unknown_02-03-2024_05-24-13",
+          "train/general_docvinhhanh554_ID454_container_model-_color-xanh_duong_86R00949_bien_trang_04-04-2024_13-11-45",
+          "train/general_garagecuong554_ID243_container_model-_color-xam_86R00949_bien_trang_30-03-2024_12-26-11",
+          "train/general_nga3duong554_ID597_container_color-xanh_duong_86R00949_bien_trang_02-03-2024_11-08-01",
+          "train/general_nga3duong556_ID1015_container_model-_color-den_86R00949_bien_trang_28-03-2024_14-16-53",
+          "train/general_nga3phuocthe554_ID3053_container_model-_color-xam_86R00949_bien_trang_30-03-2024_08-01-34",
+          "train/general_nga3phuocthe554_ID5397_container_model-_color-unknown_86R00949_bien_trang_05-04-2024_11-27-51",
+          "train/general_nga3phuocthe554_ID572_container_model-_color-xanh_duong_86R00949_bien_trang_01-04-2024_12-58-07",
+          "train/general_nga3phuocthe554_ID77_container_color-nau_86R00949_bien_trang_07-03-2024_08-00-56",
+          "train/general_ngabathomo554_ID761_container_model-_color-xanh_duong_86R00949_bien_trang_23-03-2024_06-16-53",
+          "train/general_xom7vinhtan554_ID474_container_color-xanh_duong_86R00949_bien_trang_02-03-2024_07-03-28",
+          "train/general_xom7vinhtan554_ID804_container_model-_color-unknown_86R00949_bien_trang_30-03-2024_13-30-08",
+          "valid/general_hodabac554_ID2299_container_model-_color-xanh_duong_86R00949_bien_unknown_04-04-2024_06-21-07",
+          "valid/general_nga3duong554_ID124_container_model-_color-xanh_duong_86R00949_bien_trang_04-04-2024_11-21-50",
+          "valid/general_nga3phuocthe554_ID4503_container_model-_color-den_86R00949_bien_trang_02-04-2024_09-49-00",
+          "valid/general_xom7vinhtan554_ID127_container_color-unknown_86R00949_bien_trang_05-03-2024_13-20-34"
+        ]
+      },
+      {
+        "key": "60Y31618",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_60Y31618_05-02-2024_11-16-58",
+          "train/general_caunamprc554_60Y31618_19-01-2024_14-50-29",
+          "train/general_caunamprc554_60Y31618_20-01-2024_10-44-32",
+          "train/general_caunamprc554_60Y31618_23-01-2024_19-03-49",
+          "train/general_caunamprc554_60Y31618_25-01-2024_11-27-07",
+          "train/general_caunamprc554_60Y31618_25-01-2024_14-24-38",
+          "train/general_caunamprc554_60Y31618_26-01-2024_10-16-44",
+          "train/general_caunamprc554_60Y31618_28-01-2024_16-54-42",
+          "train/general_caunamprc554_60Y31618_28-01-2024_17-52-09",
+          "train/general_caunamprc555_60Y31618_16-01-2024_10-17-13",
+          "valid/general_caunamprc554_60Y31618_04-02-2024_16-14-25",
+          "valid/general_caunamprc554_60Y31618_18-01-2024_15-18-38",
+          "valid/general_caunamprc554_60Y31618_23-01-2024_09-23-39",
+          "valid/general_nga3duong554_60Y31618_03-02-2024_15-02-33",
+          "test/general_caunamprc554_60Y31618_03-02-2024_16-01-35",
+          "test/general_caunamprc554_60Y31618_26-01-2024_11-45-31"
+        ]
+      },
+      {
+        "key": "60Y22357",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_60Y22357_04-02-2024_17-00-00",
+          "train/general_garagecuong554_60Y22357_06-02-2024_14-40-27",
+          "train/general_garagecuong554_60Y22357_06-02-2024_15-37-24",
+          "train/general_garagecuong554_60Y22357_22-01-2024_14-55-45",
+          "train/general_garagecuong554_60Y22357_24-01-2024_09-50-55",
+          "train/general_garagecuong554_60Y22357_24-01-2024_15-29-23",
+          "train/general_garagecuong554_60Y22357_24-01-2024_16-30-56",
+          "train/general_garagecuong554_60Y22357_27-01-2024_15-08-46",
+          "train/general_xom7vinhtan554_60Y22357_02-02-2024_17-29-32",
+          "train/general_xom7vinhtan554_60Y22357_07-02-2024_07-39-19",
+          "valid/general_garagecuong554_60Y22357_01-02-2024_16-41-51",
+          "valid/general_garagecuong554_60Y22357_04-02-2024_16-28-54",
+          "valid/general_garagecuong554_60Y22357_20-01-2024_15-40-32",
+          "valid/general_garagecuong554_60Y22357_23-01-2024_16-35-24",
+          "test/general_xom7vinhtan554_60Y22357_02-02-2024_18-26-38"
+        ]
+      },
+      {
+        "key": "60Y36172",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_60Y36172_16-01-2024_17-39-25",
+          "train/general_caunamprc554_60Y36172_19-01-2024_16-27-29",
+          "train/general_caunamprc555_60Y36172_16-02-2024_06-19-49",
+          "train/general_nga3duong554_60Y36172_09-02-2024_06-32-01",
+          "train/general_nga3duong554_60Y36172_16-02-2024_06-31-00",
+          "train/general_nga3duong554_60Y36172_26-01-2024_07-11-21",
+          "valid/general_caunamprc554_ID1337_container_color-xanh_la_60Y36172_bien_trang_04-03-2024_10-02-35",
+          "valid/general_caunamprc555_60Y36172_18-01-2024_11-58-44",
+          "valid/general_caunamprc555_60Y36172_19-01-2024_14-49-05",
+          "valid/general_caunamprc555_60Y36172_23-01-2024_13-24-33",
+          "valid/general_nga3duong554_60Y36172_01-02-2024_07-05-08",
+          "valid/general_nga3duong554_60Y36172_06-02-2024_07-17-17",
+          "valid/general_nga3duong554_60Y36172_23-01-2024_13-31-00",
+          "test/general_caunamprc555_60Y36172_16-01-2024_06-51-33"
+        ]
+      },
+      {
+        "key": "86B01464",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_cafeminghouse554_ID1070_oto_model-toyota_hiace_color-trang_86B01464_bien_trang_09-04-2024_13-06-52",
+          "train/general_cafeminghouse554_ID1113_oto_model-toyota_hiace_color-trang_86B01464_bien_trang_11-04-2024_13-05-31",
+          "train/general_cafeminghouse554_ID1119_oto_model-toyota_hiace_color-xam_86B01464_bien_trang_08-04-2024_13-05-37",
+          "train/general_cafeminghouse554_ID1600_oto_model-toyota_hiace_color-trang_86B01464_bien_trang_28-03-2024_13-10-51",
+          "train/general_cafeminghouse554_ID4629_oto_model-mercedes_benz_Sprinter_color-xam_86B01464_bien_trang_08-04-2024_07-06-08",
+          "train/general_cafeminghouse554_ID5258_oto_model-toyota_hiace_color-trang_86B01464_bien_trang_10-04-2024_07-05-27",
+          "train/general_cafeminghouse554_ID5622_oto_model-mercedes_benz_Sprinter_color-xam_86B01464_bien_trang_03-04-2024_07-05-35",
+          "train/general_cafeminghouse554_ID6630_oto_model-mercedes_benz_Sprinter_color-trang_86B01464_bien_trang_07-04-2024_16-26-36",
+          "train/general_cafeminghouse554_ID970_oto_model-mercedes_benz_Sprinter_color-xam_86B01464_bien_trang_07-04-2024_13-07-46",
+          "valid/general_garagecuong554_ID2764_container_model-_color-vang_86B01464_bien_trang_04-04-2024_15-40-01"
+        ]
+      },
+      {
+        "key": "86K43627",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_caunamprc554_86K43627_01-02-2024_09-27-52",
+          "train/general_caunamprc554_86K43627_02-02-2024_15-52-07",
+          "train/general_caunamprc554_86K43627_18-01-2024_06-56-08",
+          "train/general_garagecuong554_86K43627_06-02-2024_09-25-11",
+          "train/general_hoaphu555_86K43627_26-01-2024_17-07-07",
+          "train/general_nga3duong554_86K43627_06-02-2024_08-53-05",
+          "train/general_nga3muitau554_86K43627_19-01-2024_12-56-54",
+          "train/general_nga3muitau554_86K43627_30-01-2024_04-33-47",
+          "test/general_nga3muitau554_86K43627_29-01-2024_07-01-30"
+        ]
+      },
+      {
+        "key": "61L72536",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_61L72536_08-02-2024_10-45-38",
+          "train/general_garagecuong554_61L72536_08-02-2024_11-27-53",
+          "train/general_garagecuong554_61L72536_08-02-2024_16-23-08",
+          "train/general_garagecuong554_61L72536_15-02-2024_14-40-29",
+          "train/general_garagecuong554_61L72536_25-01-2024_10-46-43",
+          "train/general_xom7vinhtan554_61L72536_08-02-2024_15-43-17",
+          "valid/general_garagecuong554_61L72536_08-02-2024_13-45-21",
+          "test/general_garagecuong554_61L72536_07-02-2024_07-48-19",
+          "test/general_garagecuong554_61L72536_16-02-2024_14-01-14-1-"
+        ]
+      },
+      {
+        "key": "60Y35831",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_60Y35831_05-02-2024_09-03-31",
+          "train/general_nga3duong554_60Y35831_08-02-2024_06-39-50",
+          "train/general_nga3duong554_60Y35831_24-01-2024_06-58-24",
+          "train/general_nga3phuocthe554_60Y35831_08-02-2024_12-58-28",
+          "valid/general_caunamprc554_60Y35831_17-02-2024_06-03-15",
+          "valid/general_nga3duong554_60Y35831_04-02-2024_08-16-20",
+          "valid/general_nga3duong554_60Y35831_08-02-2024_15-35-42",
+          "test/general_garagecuong554_60Y35831_08-02-2024_12-15-48"
+        ]
+      },
+      {
+        "key": "60Y33527",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_garagecuong554_60Y33527_06-02-2024_12-00-42",
+          "train/general_garagecuong554_60Y33527_08-02-2024_20-40-39",
+          "train/general_garagecuong554_60Y33527_17-02-2024_12-40-28",
+          "train/general_garagecuong554_60Y33527_20-01-2024_16-34-20",
+          "train/general_garagecuong554_60Y33527_26-01-2024_20-49-28",
+          "train/general_garagecuong554_60Y33527_27-01-2024_20-13-34",
+          "train/general_garagecuong554_60Y33527_28-01-2024_12-45-43",
+          "test/general_garagecuong554_60Y33527_05-02-2024_12-22-33"
+        ]
+      },
+      {
+        "key": "86R01125",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3duong556_ID239_container_model-_color-unknown_86R01125_bien_trang_25-03-2024_14-01-49",
+          "train/general_nga3phuocthe554_ID190_container_model-_color-xanh_duong_86R01125_bien_trang_30-03-2024_12-19-41",
+          "train/general_nga3phuocthe554_ID676_container_model-_color-xanh_duong_86R01125_bien_trang_29-03-2024_13-29-10",
+          "train/general_nga3phuocthe556_ID49_container_model-_color-xanh_duong_86R01125_bien_trang_28-03-2024_11-11-40",
+          "train/general_xom7vinhtan554_ID279_container_model-_color-xanh_duong_86R01125_bien_trang_28-03-2024_12-32-27",
+          "valid/general_nga3phuocthe554_ID591_container_color-xanh_duong_86R01125_bien_trang_02-03-2024_09-35-01",
+          "valid/general_nga3phuocthe556_ID328_container_model-_color-vang_86R01125_bien_trang_25-03-2024_06-16-10",
+          "valid/veh_nga3phuocthe556_ID49_container_model-_color-xanh_duong_86R01125_bien_trang_28-03-2024_11-11-40"
+        ]
+      },
+      {
+        "key": "86C16046",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_cafeminghouse554_ID18352_container_model-_color-_86C16046_bien_trang_01-04-2024_11-46-17",
+          "train/general_nga3duong554_ID361_container_color-_86C16046_bien_trang_05-03-2024_16-24-54",
+          "train/general_nga3duong554_ID4220_container_model-_color-_86C16046_bien_trang_02-04-2024_08-42-34",
+          "train/general_nga3phuocthe554_ID2618_container_model-_color-_86C16046_bien_trang_31-03-2024_16-18-59",
+          "train/general_nga3phuocthe554_ID5203_container_model-_color-xam_86C16046_bien_trang_01-04-2024_17-23-56",
+          "train/general_nga3phuocthe554_ID6135_container_model-_color-_86C16046_bien_trang_30-03-2024_11-20-47",
+          "valid/general_nga3phuocthe554_ID198_container_model-_color-_86C16046_bien_trang_04-04-2024_11-31-33"
+        ]
+      },
+      {
+        "key": "60Y22395",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_60Y22395_09-02-2024_18-15-23",
+          "train/general_caunamprc554_60Y22395_13-02-2024_08-10-54",
+          "train/general_caunamprc555_60Y22395_09-02-2024_17-46-25",
+          "valid/general_caunamprc554_60Y22395_07-02-2024_17-41-45",
+          "valid/general_caunamprc554_60Y22395_12-02-2024_16-11-41",
+          "valid/general_caunamprc555_60Y22395_07-02-2024_17-32-53",
+          "test/general_caunamprc555_60Y22395_13-02-2024_07-58-31"
+        ]
+      },
+      {
+        "key": "61L62817",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_61L62817_04-02-2024_16-34-26",
+          "train/general_caunamprc554_61L62817_16-02-2024_11-30-37",
+          "train/general_caunamprc554_61L62817_29-01-2024_17-42-33",
+          "train/general_caunamprc555_61L62817_04-02-2024_15-13-15",
+          "train/general_caunamprc555_61L62817_19-01-2024_10-48-25",
+          "valid/general_caunamprc554_61L62817_22-01-2024_11-55-40",
+          "valid/general_caunamprc555_61L62817_16-02-2024_08-06-09"
+        ]
+      },
+      {
+        "key": "61L87512",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_caunamprc554_61L87512_02-02-2024_15-04-06",
+          "train/general_caunamprc554_61L87512_28-01-2024_12-29-34",
+          "train/general_caunamprc555_61L87512_02-02-2024_15-00-15",
+          "train/general_caunamprc555_61L87512_18-01-2024_16-44-44",
+          "train/general_caunamprc555_61L87512_23-01-2024_13-58-29",
+          "train/general_caunamprc555_61L87512_27-01-2024_16-58-08",
+          "test/general_caunamprc555_61L87512_16-01-2024_14-35-37"
+        ]
+      },
+      {
+        "key": "61L75473",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_61L75473_07-02-2024_05-23-52",
+          "train/general_garagecuong554_61L75473_07-02-2024_06-10-43",
+          "train/general_garagecuong554_61L75473_08-02-2024_08-42-51",
+          "train/general_garagecuong554_61L75473_14-02-2024_05-22-28-1-",
+          "train/general_garagecuong554_61L75473_21-01-2024_05-52-58",
+          "valid/general_garagecuong554_61L75473_08-02-2024_09-39-56",
+          "test/general_garagecuong554_61L75473_22-01-2024_06-00-01"
+        ]
+      },
+      {
+        "key": "86C18159",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID2070_container_model-_color-xanh_duong_86C18159_bien_trang_04-04-2024_07-22-04",
+          "train/general_xom7vinhtan554_ID40_container_color-nau_86C18159_bien_trang_07-03-2024_12-25-43",
+          "train/general_xom7vinhtan554_ID434_container_color-nau_86C18159_bien_vang_04-03-2024_06-24-40",
+          "train/general_xom7vinhtan554_ID546_container_color-den_86C18159_bien_trang_03-03-2024_07-36-11",
+          "train/general_xom7vinhtan554_ID638_container_model-_color-trang_86C18159_bien_trang_04-04-2024_09-57-08",
+          "train/general_xom7vinhtan554_ID930_container_model-_color-trang_86C18159_bien_trang_25-03-2024_09-19-14",
+          "valid/general_xom7vinhtan554_ID794_container_model-_color-xanh_duong_86C18159_bien_trang_25-03-2024_08-29-44"
+        ]
+      },
+      {
+        "key": "60P61979",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_60P61979_05-02-2024_08-15-24",
+          "train/general_caunamprc554_ID1423_xe_tai_color-xanh_la_60P61979_bien_trang_03-03-2024_11-22-11",
+          "train/general_hoaphu557_60P61979_05-02-2024_06-53-37",
+          "train/general_nga3duong554_60P61979_05-02-2024_17-37-49",
+          "valid/general_caunamprc555_60P61979_05-02-2024_17-31-44",
+          "valid/general_hoaphu555_60P61979_05-02-2024_08-04-25"
+        ]
+      },
+      {
+        "key": "60P63024",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_60P63024_16-01-2024_07-20-20",
+          "train/general_caunamprc554_60P63024_19-01-2024_07-35-40",
+          "train/general_caunamprc555_60P63024_16-01-2024_07-11-25",
+          "train/general_caunamprc555_60P63024_18-01-2024_07-10-45",
+          "train/general_caunamprc555_60P63024_19-01-2024_07-20-29",
+          "valid/general_caunamprc555_60P63024_16-02-2024_07-08-59"
+        ]
+      },
+      {
+        "key": "60Y32573",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_60Y32573_02-02-2024_07-38-54",
+          "train/general_caunamprc554_60Y32573_27-01-2024_13-34-50",
+          "train/general_caunamprc555_60Y32573_02-02-2024_12-35-18",
+          "train/general_caunamprc555_60Y32573_24-01-2024_12-41-38",
+          "train/general_caunamprc555_60Y32573_25-01-2024_11-53-24",
+          "valid/general_caunamprc555_60Y32573_23-01-2024_11-05-16"
+        ]
+      },
+      {
+        "key": "79R00390",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_ID20_container_color-xam_79R00390_bien_trang_06-03-2024_14-01-30",
+          "train/general_nga3phuocthe554_ID130_container_color-_79R00390_bien_trang_06-03-2024_13-38-32",
+          "train/general_nga3phuocthe554_ID611_container_model-_color-xanh_duong_79R00390_bien_trang_02-04-2024_13-01-25",
+          "train/general_nga3phuocthe554_ID844_container_model-_color-_79R00390_bien_trang_30-03-2024_13-29-17",
+          "valid/general_caunamprc555_ID248_container_color-xanh_duong_79R00390_bien_trang_07-03-2024_09-38-36",
+          "valid/general_nga3phuocthe554_ID526_container_model-_color-_79R00390_bien_trang_28-03-2024_12-59-25"
+        ]
+      },
+      {
+        "key": "60Y35029",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_caunamprc555_60Y35029_04-02-2024_15-21-36",
+          "train/general_caunamprc555_60Y35029_07-02-2024_16-44-17",
+          "train/general_caunamprc555_60Y35029_15-02-2024_13-33-15",
+          "train/general_nga3duong554_60Y35029_04-02-2024_15-28-52",
+          "train/general_nga3phuocthe554_60Y35029_17-02-2024_07-15-44",
+          "test/general_nga3duong554_60Y35029_07-02-2024_16-51-29"
+        ]
+      },
+      {
+        "key": "61L60179",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_61L60179_05-02-2024_23-17-13",
+          "train/general_garagecuong554_61L60179_20-01-2024_13-12-16",
+          "train/general_garagecuong554_61L60179_27-01-2024_06-09-51",
+          "valid/general_garagecuong554_61L60179_23-01-2024_06-17-39",
+          "test/general_garagecuong554_61L60179_25-01-2024_13-18-34",
+          "test/general_garagecuong554_61L60179_29-01-2024_06-27-37"
+        ]
+      },
+      {
+        "key": "61L66218",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_garagecuong554_61L66218_20-01-2024_10-40-27",
+          "train/general_garagecuong554_61L66218_24-01-2024_10-53-22",
+          "train/general_garagecuong554_61L66218_27-01-2024_17-53-42",
+          "train/general_xom7vinhtan554_61L66218_05-02-2024_15-38-26",
+          "test/general_garagecuong554_61L66218_22-01-2024_14-39-19",
+          "test/general_garagecuong554_61L66218_24-01-2024_15-45-09"
+        ]
+      },
+      {
+        "key": "60P61279",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_60P61279_05-02-2024_14-14-31",
+          "train/general_caunamprc555_60P61279_20-01-2024_11-07-14",
+          "valid/general_caunamprc554_60P61279_07-02-2024_17-36-21",
+          "test/general_caunamprc554_60P61279_04-02-2024_17-34-45",
+          "test/general_nga3duong554_60P61279_25-01-2024_10-04-37"
+        ]
+      },
+      {
+        "key": "60Y20207",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_60Y20207_02-02-2024_06-48-00",
+          "train/general_caunamprc554_60Y20207_18-01-2024_07-22-22",
+          "train/general_caunamprc554_60Y20207_30-01-2024_06-55-16",
+          "valid/general_caunamprc554_60Y20207_17-01-2024_06-17-48",
+          "valid/general_caunamprc554_60Y20207_17-02-2024_07-10-31"
+        ]
+      },
+      {
+        "key": "60Y24237",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_60Y24237_03-02-2024_13-23-06",
+          "train/general_hoaphu555_60Y24237_01-02-2024_17-16-40",
+          "train/general_hoaphu555_60Y24237_18-01-2024_12-26-57",
+          "train/general_hoaphu555_60Y24237_21-01-2024_10-41-13",
+          "valid/general_hoaphu557_60Y24237_21-01-2024_08-28-54"
+        ]
+      },
+      {
+        "key": "60Y38696",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_caunamprc554_60Y38696_05-02-2024_17-47-30",
+          "train/general_caunamprc554_60Y38696_07-02-2024_08-28-18",
+          "train/general_nga3duong554_60Y38696_08-02-2024_10-11-29",
+          "train/general_nga3duong554_60Y38696_17-02-2024_09-02-31",
+          "test/general_caunamprc555_60Y38696_07-02-2024_08-33-35"
+        ]
+      },
+      {
+        "key": "61L77029",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_caunamprc554_61L77029_07-02-2024_10-15-18",
+          "train/general_caunamprc554_61L77029_17-01-2024_11-12-57",
+          "train/general_caunamprc554_61L77029_20-01-2024_12-46-19",
+          "train/general_caunamprc554_61L77029_26-01-2024_12-08-10",
+          "test/general_caunamprc554_61L77029_19-01-2024_11-10-50"
+        ]
+      },
+      {
+        "key": "63H42375",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_63H42375_04-02-2024_09-27-45",
+          "train/general_caunamprc554_63H42375_07-02-2024_10-48-37",
+          "train/general_caunamprc554_63H42375_16-02-2024_07-55-29",
+          "train/general_caunamprc555_63H42375_03-02-2024_13-36-59",
+          "valid/general_caunamprc555_63H42375_07-02-2024_13-41-08"
+        ]
+      },
+      {
+        "key": "78M28638",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_78M28638_02-02-2024_04-50-06",
+          "train/general_xom7vinhtan554_78M28638_11-02-2024_05-45-54",
+          "valid/general_xom7vinhtan554_78M28638_02-02-2024_05-29-32",
+          "valid/general_xom7vinhtan554_78M28638_08-02-2024_05-51-55",
+          "valid/general_xom7vinhtan554_78M28638_09-02-2024_05-52-21"
+        ]
+      },
+      {
+        "key": "86B224955",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_hoaphu555_ID159_xe_ba_gac_model-_color-xanh_la_86B224955_bien_trang_28-03-2024_13-15-17",
+          "train/general_hoaphu555_ID177_xe_ba_gac_model-_color-xanh_la_86B224955_bien_trang_03-04-2024_13-58-21",
+          "train/general_hoaphu555_ID196_xe_ba_gac_model-_color-xanh_la_86B224955_bien_trang_29-03-2024_13-30-15",
+          "train/general_hoaphu555_ID623_xe_ba_gac_model-_color-xanh_la_86B224955_bien_trang_30-03-2024_16-50-45",
+          "valid/general_hoaphu555_ID132_xe_ba_gac_model-_color-xanh_la_86B224955_bien_trang_05-04-2024_13-07-42"
+        ]
+      },
+      {
+        "key": "86B109459",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga5lienhuong555_ID5225_xe_ba_gac_model-_color-_86B109459_bien_trang_29-03-2024_10-30-39",
+          "train/general_nga5lienhuong555_ID6812_xe_ba_gac_model-_color-do_86B109459_bien_trang_02-04-2024_12-00-00",
+          "train/general_xom7vinhtan554_ID1092_xe_ba_gac_model-_color-do_86B109459_bien_trang_03-04-2024_13-58-30",
+          "train/general_xom7vinhtan554_ID409_xe_ba_gac_color-_86B109459_bien_trang_01-03-2024_17-43-57",
+          "valid/general_nga5lienhuong555_ID26_xe_ba_gac_model-_color-_86B109459_bien_trang_28-03-2024_11-10-14"
+        ]
+      },
+      {
+        "key": "79B00959",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_cafestart554_ID900_xe_tai_model-_color-den_79B00959_bien_trang_04-04-2024_11-40-58",
+          "train/general_comkimngan554_ID6083_xe_tai_model-_color-unknown_79B00959_bien_trang_10-04-2024_17-07-08",
+          "train/veh_caunamprc554_ID935_container_color-xanh_la_79B00959_bien_trang_09-03-2024_08-27-15",
+          "test/general_caunamprc554_ID134_xe_tai_color-den_79B00959_bien_unknown_07-03-2024_04-49-55"
+        ]
+      },
+      {
+        "key": "60Y35039",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_60Y35039_14-02-2024_07-22-08-1-",
+          "valid/general_caunamprc554_60Y35039_13-02-2024_10-43-58",
+          "valid/general_nga3muitau554_60Y35039_28-01-2024_19-12-38",
+          "test/general_caunamprc554_60Y35039_05-02-2024_07-53-18"
+        ]
+      },
+      {
+        "key": "60Y36798",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_60Y36798_16-02-2024_08-54-09",
+          "train/general_caunamprc554_60Y36798_18-01-2024_09-41-44",
+          "valid/general_caunamprc554_60Y36798_05-02-2024_11-52-57",
+          "valid/general_caunamprc555_60Y36798_24-01-2024_14-42-50"
+        ]
+      },
+      {
+        "key": "51R24050",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_ID1199_container_color-xanh_la_51R24050_bien_trang_02-03-2024_10-42-13",
+          "train/general_nga3duong554_ID2730_container_model-_color-do_51R24050_bien_trang_30-03-2024_08-35-56",
+          "valid/general_xom7vinhtan554_ID691_container_color-xanh_la_51R24050_bien_trang_05-03-2024_08-19-33",
+          "test/general_nga3phuocthe554_ID4432_container_model-_color-_51R24050_bien_trang_04-04-2024_09-42-46"
+        ]
+      },
+      {
+        "key": "61L90531",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc555_61L90531_04-02-2024_08-13-39",
+          "train/general_garagecuong554_61L90531_04-02-2024_10-42-13",
+          "train/general_xom7vinhtan554_61L90531_04-02-2024_11-37-26",
+          "valid/general_caunamprc555_61L90531_05-02-2024_07-55-01"
+        ]
+      },
+      {
+        "key": "86B157352",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_docvinhhanh554_ID149_xe_ba_gac_model-_color-xanh_la_86B157352_bien_trang_01-04-2024_12-18-59",
+          "train/general_nga3phuocthe554_ID192_xe_ba_gac_model-_color-xanh_la_86B157352_bien_trang_01-04-2024_12-17-56",
+          "train/general_nga3phuocthe554_ID6092_xe_ba_gac_model-_color-xanh_la_86B157352_bien_trang_02-04-2024_11-47-15",
+          "valid/general_xom7vinhtan554_ID58_xe_ba_gac_color-xanh_la_86B157352_bien_trang_05-03-2024_12-40-06"
+        ]
+      },
+      {
+        "key": "86C17283",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_ID579_oto_color-xanh_la_86C17283_bien_trang_03-03-2024_18-00-49",
+          "train/general_garagecuong554_ID885_oto_color-den_86C17283_bien_unknown_04-03-2024_19-08-53",
+          "train/general_garagecuong554_ID987_xe_ba_gac_color-xanh_la_86C17283_bien_trang_04-03-2024_08-57-35",
+          "valid/general_garagecuong554_ID984_oto_color-unknown_86C17283_bien_unknown_04-03-2024_19-51-27"
+        ]
+      },
+      {
+        "key": "29H89765",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_ID708_container_color-xanh_la_29H89765_bien_vang_08-03-2024_18-09-27",
+          "train/general_xom7vinhtan554_ID202_container_model-_color-xanh_la_29H89765_bien_vang_24-03-2024_13-29-39",
+          "valid/general_nga3phuocthe554_ID4835_container_model-_color-xanh_la_29H89765_bien_vang_05-04-2024_10-47-46",
+          "valid/general_nga4hamthang555_ID955_container_model-_color-xanh_la_29H89765_bien_vang_05-04-2024_12-54-29"
+        ]
+      },
+      {
+        "key": "86B342031",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_hoaphu555_ID194_xe_ba_gac_color-den_86B342031_bien_trang_05-03-2024_17-37-37",
+          "train/general_hoaphu555_ID203_xe_ba_gac_color-_86B342031_bien_trang_04-03-2024_17-53-38",
+          "train/general_hoaphu557_ID92_xe_ba_gac_model-_color-_86B342031_bien_trang_24-03-2024_14-12-39",
+          "valid/general_hoaphu555_ID184_xe_ba_gac_color-nau_86B342031_bien_unknown_06-03-2024_17-46-06"
+        ]
+      },
+      {
+        "key": "86B229144",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_hoaphu555_ID485_xe_ba_gac_model-_color-_86B229144_bien_trang_30-03-2024_16-01-03",
+          "train/general_hoaphu555_ID506_xe_ba_gac_model-_color-_86B229144_bien_trang_31-03-2024_16-33-38",
+          "train/general_hoaphu555_ID575_xe_ba_gac_model-_color-_86B229144_bien_trang_03-04-2024_16-59-11",
+          "test/general_hoaphu555_ID85_xe_ba_gac_color-nau_86B229144_bien_trang_01-03-2024_16-40-29"
+        ]
+      },
+      {
+        "key": "51R21755",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3duong554_ID126_container_model-_color-_51R21755_bien_trang_29-03-2024_12-17-53",
+          "train/general_nga3phuocthe554_ID1635_container_model-_color-_51R21755_bien_trang_29-03-2024_14-44-35",
+          "train/general_nga3phuocthe554_ID4553_container_model-_color-do_51R21755_bien_trang_02-04-2024_17-11-38",
+          "valid/general_nga3phuocthe554_ID2939_container_model-_color-xanh_la_51R21755_bien_trang_29-03-2024_10-26-16"
+        ]
+      },
+      {
+        "key": "29H89758",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3duong554_ID2670_container_model-_color-xanh_la_29H89758_bien_vang_31-03-2024_17-30-17",
+          "train/general_nga3phuocthe554_ID5201_container_model-_color-den_29H89758_bien_vang_04-04-2024_10-43-56",
+          "valid/general_nga3phuocthe554_ID2978_container_model-_color-xanh_la_29H89758_bien_vang_29-03-2024_10-28-36",
+          "test/general_nga4hamthang555_ID1235_container_model-_color-xanh_la_29H89758_bien_vang_04-04-2024_12-55-11"
+        ]
+      },
+      {
+        "key": "51D36824",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3phuocthe554_ID325_container_color-do_51D36824_bien_vang_07-03-2024_06-55-55",
+          "train/general_nga3phuocthe554_ID4686_container_model-_color-do_51D36824_bien_vang_01-04-2024_17-09-38",
+          "train/general_xom7vinhtan554_ID513_container_color-trang_51D36824_bien_vang_07-03-2024_06-42-38",
+          "valid/general_nga3duong554_ID682_xe_khach_color-vang_51D36824_bien_vang_04-03-2024_10-02-03"
+        ]
+      },
+      {
+        "key": "86K98242",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3phuocthe554_ID330_xe_ba_gac_color-nau_86K98242_bien_trang_08-03-2024_15-35-48",
+          "train/general_nga3phuocthe554_ID345_xe_ba_gac_model-_color-den_86K98242_bien_trang_28-03-2024_11-32-38",
+          "train/general_nga3phuocthe554_ID5491_xe_ba_gac_model-_color-cam_86K98242_bien_trang_30-03-2024_10-37-36",
+          "valid/general_nga3phuocthe554_ID201_xe_ba_gac_model-_color-_86K98242_bien_trang_30-03-2024_12-20-39"
+        ]
+      },
+      {
+        "key": "86B328649",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_benxetp555_ID1996_xe_ba_gac_model-_color-_86B328649_bien_trang_01-04-2024_15-34-34",
+          "valid/general_benxetp555_ID577_xe_ba_gac_model-_color-xanh_duong_86B328649_bien_trang_05-04-2024_13-26-05",
+          "valid/general_nga3phuocthe554_ID887_xe_ba_gac_color-den_86B328649_bien_trang_08-03-2024_11-51-11"
+        ]
+      },
+      {
+        "key": "63B566213",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_cafestart554_ID4302_xe_ba_gac_model-_color-_63B566213_bien_trang_04-04-2024_15-51-51",
+          "train/general_congsauhuyenuy554_ID3763_xe_ba_gac_model-_color-_63B566213_bien_trang_04-04-2024_15-49-37",
+          "valid/general_benxetp555_ID5433_xe_ba_gac_model-_color-_63B566213_bien_trang_05-04-2024_11-49-12"
+        ]
+      },
+      {
+        "key": "51R13112",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_51R13112_10-02-2024_23-01-12",
+          "valid/general_nga3duong554_51R13112_09-02-2024_08-54-12",
+          "test/general_garagecuong554_51R13112_09-02-2024_09-24-29"
+        ]
+      },
+      {
+        "key": "60F61367",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_60F61367_07-02-2024_09-41-15",
+          "train/general_caunamprc555_60F61367_07-02-2024_15-10-31",
+          "valid/general_nga3duong554_60F61367_07-02-2024_15-15-30"
+        ]
+      },
+      {
+        "key": "60Y38369",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_60Y38369_19-01-2024_08-35-41",
+          "train/general_caunamprc554_60Y38369_28-01-2024_11-37-20",
+          "valid/general_caunamprc554_60Y38369_26-01-2024_17-50-15"
+        ]
+      },
+      {
+        "key": "61L94058",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_61L94058_07-02-2024_21-14-35",
+          "train/general_nga3muitau554_61L94058_04-02-2024_09-02-56",
+          "valid/general_caunamprc554_61L94058_07-02-2024_10-23-47"
+        ]
+      },
+      {
+        "key": "92R01054",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc555_92R01054_08-02-2024_00-04-37",
+          "train/general_nga3duong554_92R01054_08-02-2024_00-08-42",
+          "valid/general_nga3duong554_ID689_xe_khach_color-unknown_92R01054_bien_unknown_02-03-2024_23-38-27"
+        ]
+      },
+      {
+        "key": "29F04941",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_docvinhhanh554_ID686_container_model-_color-xanh_la_29F04941_bien_vang_24-03-2024_16-49-18",
+          "train/general_xom7vinhtan554_ID3690_container_model-_color-xanh_la_29F04941_bien_vang_05-04-2024_17-00-51",
+          "valid/general_xom7vinhtan554_ID2759_container_model-_color-xanh_la_29F04941_bien_vang_03-04-2024_16-48-44"
+        ]
+      },
+      {
+        "key": "60Y23246",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_60Y23246_21-01-2024_09-36-09",
+          "valid/general_garagecuong554_60Y23246_23-01-2024_08-56-39",
+          "valid/general_garagecuong554_60Y23246_24-01-2024_08-32-06"
+        ]
+      },
+      {
+        "key": "61L65832",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_61L65832_09-02-2024_11-00-00",
+          "train/general_garagecuong554_61L65832_25-01-2024_17-52-41",
+          "valid/general_garagecuong554_61L65832_20-01-2024_17-42-54"
+        ]
+      },
+      {
+        "key": "62R01433",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_62R01433_07-02-2024_23-17-15",
+          "train/general_nga3duong554_62R01433_07-02-2024_22-33-01",
+          "valid/general_caunamprc555_62R01433_07-02-2024_22-27-59"
+        ]
+      },
+      {
+        "key": "86R00343",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_86R00343_10-02-2024_09-44-20",
+          "valid/general_caunamprc555_86R00343_10-02-2024_08-59-36",
+          "valid/general_nga3duong554_86R00343_10-02-2024_09-04-52"
+        ]
+      },
+      {
+        "key": "86R00282",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_ID103_container_color-do_86R00282_bien_trang_05-03-2024_12-50-57",
+          "valid/general_xom7vinhtan554_ID161_container_model-_color-do_86R00282_bien_trang_28-03-2024_16-49-16",
+          "test/general_garagecuong554_ID24_container_model-_color-do_86R00282_bien_trang_24-03-2024_12-13-56"
+        ]
+      },
+      {
+        "key": "51R34573",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_ID1122_container_color-xam_51R34573_bien_unknown_01-03-2024_23-12-27",
+          "train/general_xom7vinhtan554_ID241_container_model-_color-xanh_la_51R34573_bien_trang_29-03-2024_16-31-42",
+          "valid/general_garagecuong554_ID1182_container_model-_color-xanh_la_51R34573_bien_trang_23-03-2024_09-17-14"
+        ]
+      },
+      {
+        "key": "50H29097",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_ID325_container_color-do_50H29097_bien_unknown_07-03-2024_04-32-46",
+          "valid/general_garagecuong554_ID422_container_color-do_50H29097_bien_unknown_02-03-2024_04-52-37",
+          "valid/general_nga3phuocthe554_ID263_container_color-do_50H29097_bien_vang_05-03-2024_14-28-38"
+        ]
+      },
+      {
+        "key": "86B311921",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_hoaphu555_ID31_xe_ba_gac_model-_color-nau_86B311921_bien_trang_24-03-2024_12-20-59",
+          "train/general_hoaphu555_ID720_xe_ba_gac_model-_color-xanh_la_86B311921_bien_trang_03-04-2024_11-55-58",
+          "valid/general_hoaphu555_ID197_xe_ba_gac_model-_color-_86B311921_bien_trang_25-03-2024_08-34-46"
+        ]
+      },
+      {
+        "key": "86C130407",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_hoaphu555_ID39_xe_ba_gac_model-_color-xanh_la_86C130407_bien_trang_02-04-2024_12-38-28",
+          "valid/general_hoaphu555_ID13_xe_ba_gac_color-_86C130407_bien_trang_07-03-2024_12-24-19",
+          "valid/general_hoaphu555_ID49_xe_ba_gac_model-_color-nau_86C130407_bien_trang_03-04-2024_12-40-59"
+        ]
+      },
+      {
+        "key": "86R01364",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_hodabac554_ID121_container_model-_color-trang_86R01364_bien_trang_29-03-2024_12-12-12",
+          "train/general_xom7vinhtan554_ID395_container_color-den_86R01364_bien_trang_05-03-2024_16-33-28",
+          "test/general_hodabac554_ID1056_container_model-_color-nau_86R01364_bien_vang_29-03-2024_17-24-44"
+        ]
+      },
+      {
+        "key": "61F141843",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_nga3doclap37_ID961_xe_may_model-_color-den_61F141843_bien_trang_04-09-2024_07-13-05",
+          "train/general_tranquangdieu52_ID400_xe_may_model-_color-den_61F141843_bien_trang_04-09-2024_07-04-48",
+          "test/general_tranquangdieu556_ID537_xe_may_model-_color-den_61F141843_bien_trang_04-09-2024_10-30-44"
+        ]
+      },
+      {
+        "key": "51R23917",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3duong554_51R23917_08-02-2024_21-45-44",
+          "train/general_xom7vinhtan554_51R23917_08-02-2024_15-00-06",
+          "valid/general_nga3phuocthe554_51R23917_08-02-2024_15-16-28"
+        ]
+      },
+      {
+        "key": "29F02372",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3duong554_ID501_container_model-_color-xanh_la_29F02372_bien_vang_30-03-2024_13-09-28",
+          "valid/general_nga3duong554_ID775_container_model-_color-xanh_la_29F02372_bien_vang_05-04-2024_13-41-02",
+          "test/general_nga3duong554_ID547_container_model-_color-xanh_la_29F02372_bien_vang_01-04-2024_13-16-54"
+        ]
+      },
+      {
+        "key": "86B231338",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3duong554_ID90_xe_ba_gac_model-_color-_86B231338_bien_trang_28-03-2024_08-47-36",
+          "valid/general_nga3duong554_ID648_xe_ba_gac_color-trang_86B231338_bien_trang_08-03-2024_08-51-56",
+          "test/general_hoaphu555_ID145_xe_ba_gac_model-_color-_86B231338_bien_trang_25-03-2024_15-34-13"
+        ]
+      },
+      {
+        "key": "60P62789",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3muitau554_60P62789_18-01-2024_06-11-25",
+          "train/general_nga3muitau554_60P62789_28-01-2024_04-45-20",
+          "valid/general_nga3muitau554_60P62789_29-01-2024_07-26-33"
+        ]
+      },
+      {
+        "key": "61L72753",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3muitau554_61L72753_22-01-2024_15-42-40",
+          "train/general_nga3muitau554_61L72753_25-01-2024_08-50-45",
+          "valid/general_benxetp555_ID4318_xe_tai_model-_color-xanh_duong_61L72753_bien_trang_30-03-2024_17-24-52"
+        ]
+      },
+      {
+        "key": "61L85731",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_nga3muitau554_61L85731_10-02-2024_09-21-48",
+          "train/general_nga3muitau554_61L85731_16-01-2024_12-21-22",
+          "test/general_nga3muitau554_61L85731_16-01-2024_12-41-41"
+        ]
+      },
+      {
+        "key": "60Y21279",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_nga3phuocthe554_60Y21279_02-02-2024_05-04-39",
+          "train/general_nga3phuocthe554_60Y21279_29-01-2024_11-13-49",
+          "test/general_nga3phuocthe554_60Y21279_17-02-2024_08-25-00"
+        ]
+      },
+      {
+        "key": "77R04787",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3phuocthe554_77R04787_10-02-2024_09-38-09",
+          "train/general_xom7vinhtan554_77R04787_10-02-2024_09-23-51",
+          "valid/general_caunamprc554_77R04787_10-02-2024_10-06-46"
+        ]
+      },
+      {
+        "key": "86R00781",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3phuocthe554_ID2420_container_model-_color-do_86R00781_bien_trang_29-03-2024_09-47-37",
+          "train/general_xom7vinhtan554_ID2622_container_model-_color-den_86R00781_bien_trang_03-04-2024_16-37-39",
+          "valid/general_nga3phuocthe554_ID2491_container_model-_color-xanh_la_86R00781_bien_trang_29-03-2024_15-41-59"
+        ]
+      },
+      {
+        "key": "85H01083",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3phuocthe554_ID398_container_color-xanh_duong_85H01083_bien_vang_02-03-2024_07-52-25",
+          "train/general_xom7vinhtan554_ID2568_container_model-_color-den_85H01083_bien_vang_03-04-2024_16-32-08",
+          "valid/general_xom7vinhtan554_ID636_container_color-xanh_duong_85H01083_bien_vang_03-03-2024_08-42-22"
+        ]
+      },
+      {
+        "key": "51R23383",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3phuocthe554_ID4294_container_model-_color-_51R23383_bien_trang_02-04-2024_17-02-39",
+          "train/general_xom7vinhtan554_ID136_container_model-_color-den_51R23383_bien_trang_29-03-2024_16-23-42",
+          "valid/general_nga3phuocthe554_ID3788_container_model-_color-_51R23383_bien_trang_29-03-2024_11-33-54"
+        ]
+      },
+      {
+        "key": "86B129764",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3phuocthe554_ID4667_xe_ba_gac_model-_color-xanh_duong_86B129764_bien_trang_05-04-2024_10-36-29",
+          "train/general_xom7vinhtan554_ID293_xe_ba_gac_color-xanh_duong_86B129764_bien_trang_02-03-2024_16-41-54",
+          "valid/general_xom7vinhtan554_ID1162_xe_ba_gac_model-_color-_86B129764_bien_trang_23-03-2024_11-19-58"
+        ]
+      },
+      {
+        "key": "51R42844",
+        "splits": [
+          "test",
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nguyenvantroi56_ID720_xe_may_model-_color-den_51R42844_bien_trang_04-09-2024_07-06-36",
+          "valid/general_nhatholetrang86_ID359_xe_may_model-_color-den_51R42844_bien_trang_04-09-2024_07-03-12",
+          "test/general_tranhungdao59_ID789_xe_may_model-_color-den_51R42844_bien_trang_04-09-2024_06-56-54"
+        ]
+      },
+      {
+        "key": "61FA03702",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nhatholetrang86_ID108_xe_may_model-_color-_61FA03702_bien_unknown_04-09-2024_06-13-18",
+          "valid/general_nga3doclap37_ID497_xe_may_model-_color-_61FA03702_bien_trang_04-09-2024_06-37-37",
+          "valid/general_nhatholetrang84_ID405_xe_may_model-_color-trang_61FA03702_bien_trang_04-09-2024_06-38-43"
+        ]
+      },
+      {
+        "key": "61F152474",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_tranhungdao59_ID786_xe_may_model-_color-do_61F152474_bien_trang_04-09-2024_06-56-34",
+          "train/general_tranquangdieu556_ID1244_xe_may_model-_color-do_61F152474_bien_trang_04-09-2024_11-25-50",
+          "valid/general_nguyenvantroi56_ID561_xe_may_model-_color-_61F152474_bien_trang_04-09-2024_06-47-37"
+        ]
+      },
+      {
+        "key": "51D51461",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID579_container_model-_color-xanh_duong_51D51461_bien_vang_05-04-2024_13-00-00",
+          "valid/general_docvinhhanh554_ID1279_container_model-_color-xanh_duong_51D51461_bien_vang_05-04-2024_14-35-41",
+          "valid/general_ubnhandan556_ID4746_container_model-_color-xanh_duong_51D51461_bien_vang_05-04-2024_16-44-39"
+        ]
+      },
+      {
+        "key": "0B113806",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_caunamprc554_0B113806_20-01-2024_11-18-24",
+          "test/general_caunamprc554_ID261_xe_tai_color-xanh_duong_0B113806_bien_unknown_03-03-2024_05-52-51"
+        ]
+      },
+      {
+        "key": "60B113806",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_60B113806_17-01-2024_07-08-38",
+          "valid/general_caunamprc554_60B113806_18-01-2024_10-09-21"
+        ]
+      },
+      {
+        "key": "61L21593",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_61L21593_20-01-2024_10-22-19",
+          "valid/general_caunamprc554_61L21593_16-01-2024_08-56-19"
+        ]
+      },
+      {
+        "key": "61L65229",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_caunamprc554_61L65229_18-01-2024_09-53-35",
+          "test/general_caunamprc555_61L65229_18-01-2024_10-10-14"
+        ]
+      },
+      {
+        "key": "51R17859",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_ID1001_container_color-xanh_duong_51R17859_bien_trang_01-03-2024_09-16-32",
+          "valid/general_xom7vinhtan554_ID780_container_color-xanh_duong_51R17859_bien_unknown_05-03-2024_18-52-21"
+        ]
+      },
+      {
+        "key": "79H00973",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_ID1231_container_color-trang_79H00973_bien_unknown_06-03-2024_19-57-25",
+          "valid/general_caunamprc555_ID697_xe_khach_color-unknown_79H00973_bien_unknown_02-03-2024_19-53-43"
+        ]
+      },
+      {
+        "key": "51R22676",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc555_51R22676_07-02-2024_13-36-10",
+          "valid/general_nga3duong554_51R22676_07-02-2024_13-40-32"
+        ]
+      },
+      {
+        "key": "51R25941",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc555_51R25941_07-02-2024_17-20-36",
+          "valid/general_nga3duong554_51R25941_07-02-2024_17-25-32"
+        ]
+      },
+      {
+        "key": "77R02711",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc555_77R02711_08-02-2024_00-10-09",
+          "valid/general_nga3duong554_77R02711_08-02-2024_00-14-56"
+        ]
+      },
+      {
+        "key": "77R03437",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_caunamprc555_77R03437_07-02-2024_21-33-13",
+          "test/general_nga3duong554_77R03437_07-02-2024_21-38-05"
+        ]
+      },
+      {
+        "key": "86R00950",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc555_86R00950_10-02-2024_15-11-14",
+          "valid/general_nga3duong554_86R00950_10-02-2024_15-16-15"
+        ]
+      },
+      {
+        "key": "86R01111",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc555_86R01111_08-02-2024_00-21-17",
+          "valid/general_nga3duong554_86R01111_08-02-2024_00-26-03"
+        ]
+      },
+      {
+        "key": "86H46816",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc555_ID365_xe_ba_gac_color-xanh_la_86H46816_bien_trang_06-03-2024_16-36-07",
+          "valid/general_caunamprc555_ID172_xe_ba_gac_color-xam_86H46816_bien_trang_05-03-2024_13-44-04"
+        ]
+      },
+      {
+        "key": "86B125832",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc555_ID48_xe_ba_gac_color-_86B125832_bien_trang_08-03-2024_12-28-45",
+          "valid/general_caunamprc555_ID26_xe_ba_gac_color-_86B125832_bien_trang_04-03-2024_12-18-36"
+        ]
+      },
+      {
+        "key": "86H01700",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_docvinhhanh554_ID286_container_model-_color-den_86H01700_bien_vang_23-03-2024_14-10-30",
+          "valid/general_docvinhhanh554_ID504_container_model-_color-xanh_duong_86H01700_bien_vang_23-03-2024_15-22-19"
+        ]
+      },
+      {
+        "key": "76E125261",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_docvinhhanh554_ID717_xe_ba_gac_model-_color-trang_76E125261_bien_trang_24-03-2024_16-59-49",
+          "test/general_docvinhhanh554_ID687_xe_ba_gac_model-_color-_76E125261_bien_trang_24-03-2024_08-44-48"
+        ]
+      },
+      {
+        "key": "60P62575",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_60P62575_05-02-2024_10-07-39",
+          "valid/general_garagecuong554_60P62575_04-02-2024_17-06-17"
+        ]
+      },
+      {
+        "key": "60X23705",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_60X23705_16-01-2024_06-58-07",
+          "valid/general_nga3muitau554_60X23705_17-01-2024_06-06-17"
+        ]
+      },
+      {
+        "key": "60Y25172",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_garagecuong554_60Y25172_20-01-2024_15-17-55",
+          "test/general_garagecuong554_60Y25172_16-01-2024_06-22-20"
+        ]
+      },
+      {
+        "key": "60Y35157",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_60Y35157_06-02-2024_17-23-54",
+          "valid/general_garagecuong554_60Y35157_08-02-2024_12-55-41"
+        ]
+      },
+      {
+        "key": "61L60926",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_61L60926_17-02-2024_15-42-34",
+          "valid/general_garagecuong554_61L60926_08-02-2024_10-03-54"
+        ]
+      },
+      {
+        "key": "61L72530",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_61L72530_23-01-2024_09-40-36",
+          "valid/general_garagecuong554_61L72530_25-01-2024_12-38-41"
+        ]
+      },
+      {
+        "key": "61L93058",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_garagecuong554_61L93058_07-02-2024_07-21-17",
+          "test/general_garagecuong554_61L93058_08-02-2024_07-55-48"
+        ]
+      },
+      {
+        "key": "77R02454",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_77R02454_09-02-2024_15-19-47",
+          "valid/general_nga3duong554_77R02454_09-02-2024_14-42-24"
+        ]
+      },
+      {
+        "key": "77R03119",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_garagecuong554_77R03119_07-02-2024_19-47-41",
+          "test/general_nga3duong554_77R03119_07-02-2024_19-14-02"
+        ]
+      },
+      {
+        "key": "86H71055",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_garagecuong554_86H71055_01-02-2024_09-11-38",
+          "test/general_garagecuong554_86H71055_25-01-2024_11-45-32"
+        ]
+      },
+      {
+        "key": "86R01047",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_86R01047_08-02-2024_14-41-15",
+          "valid/general_nga3duong554_86R01047_08-02-2024_14-00-09"
+        ]
+      },
+      {
+        "key": "98R03110",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_98R03110_10-02-2024_14-16-13",
+          "valid/general_caunamprc555_98R03110_10-02-2024_13-27-19"
+        ]
+      },
+      {
+        "key": "35R00455",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_ID1407_container_model-_color-xanh_duong_35R00455_bien_trang_23-03-2024_10-28-25",
+          "valid/general_xom7vinhtan554_ID685_container_model-_color-xanh_duong_35R00455_bien_trang_01-04-2024_13-06-47"
+        ]
+      },
+      {
+        "key": "51R27392",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_garagecuong554_ID663_container_model-_color-xanh_duong_51R27392_bien_trang_28-03-2024_12-59-57",
+          "test/general_xom7vinhtan554_ID2187_container_model-_color-unknown_51R27392_bien_trang_03-04-2024_15-57-12"
+        ]
+      },
+      {
+        "key": "86C17259",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_ID665_oto_color-xanh_la_86C17259_bien_vang_07-03-2024_06-41-22",
+          "valid/general_garagecuong554_ID173_oto_color-_86C17259_bien_trang_06-03-2024_13-37-35"
+        ]
+      },
+      {
+        "key": "29H78584",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_ID98_container_color-_29H78584_bien_vang_02-03-2024_13-32-59",
+          "valid/general_xom7vinhtan554_ID3547_container_model-_color-trang_29H78584_bien_vang_03-04-2024_17-23-09"
+        ]
+      },
+      {
+        "key": "86B116594",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_hoaphu555_ID20_xe_ba_gac_model-_color-do_86B116594_bien_trang_23-03-2024_12-28-42",
+          "valid/general_hoaphu555_ID49_xe_ba_gac_model-_color-do_86B116594_bien_trang_29-03-2024_12-24-02"
+        ]
+      },
+      {
+        "key": "50X102161",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_hoaphu555_ID71_xe_ba_gac_model-_color-_50X102161_bien_trang_27-03-2024_07-02-40",
+          "valid/general_hoaphu555_ID73_xe_tai_color-den_50X102161_bien_trang_04-03-2024_07-25-11"
+        ]
+      },
+      {
+        "key": "86B249947",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_hoaphu557_ID188_xe_ba_gac_color-xanh_duong_86B249947_bien_trang_05-03-2024_10-58-26",
+          "valid/general_hoaphu555_ID136_xe_ba_gac_color-xanh_duong_86B249947_bien_trang_05-03-2024_09-39-08"
+        ]
+      },
+      {
+        "key": "51R34695",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_hodabac554_ID130_container_model-_color-xanh_la_51R34695_bien_trang_23-03-2024_12-58-37",
+          "valid/veh_hodabac554_ID130_container_model-_color-xanh_la_51R34695_bien_trang_23-03-2024_12-58-37"
+        ]
+      },
+      {
+        "key": "86C161708",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_hodabac554_ID4409_xe_ba_gac_model-_color-unknown_86C161708_bien_trang_01-04-2024_09-20-47",
+          "valid/general_benxetp555_ID248_xe_ba_gac_model-_color-unknown_86C161708_bien_trang_25-03-2024_14-54-40"
+        ]
+      },
+      {
+        "key": "61F119515",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_hungvuong556_ID338_xe_may_model-_color-cam_61F119515_bien_trang_04-09-2024_10-42-01",
+          "valid/general_hungvuong556_ID357_xe_may_model-_color-_61F119515_bien_trang_04-09-2024_10-45-55"
+        ]
+      },
+      {
+        "key": "61FA03410",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_hungvuong556_ID546_xe_may_model-_color-trang_61FA03410_bien_trang_04-09-2024_11-24-18",
+          "valid/general_tranquangdieu556_ID1270_xe_may_model-_color-trang_61FA03410_bien_trang_04-09-2024_11-29-02"
+        ]
+      },
+      {
+        "key": "61F138231",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3doclap36_ID1027_xe_may_model-_color-vang_61F138231_bien_trang_04-09-2024_06-48-46",
+          "valid/general_nga3doclap37_ID473_xe_may_model-_color-_61F138231_bien_trang_04-09-2024_06-35-58"
+        ]
+      },
+      {
+        "key": "61F133353",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3doclap36_ID1647_xe_may_model-_color-_61F133353_bien_trang_04-09-2024_07-17-17",
+          "valid/general_nhatholetrang86_ID419_xe_may_model-_color-_61F133353_bien_trang_04-09-2024_07-16-10"
+        ]
+      },
+      {
+        "key": "93KA00733",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3doclap36_ID1730_xe_may_model-_color-_93KA00733_bien_trang_04-09-2024_07-23-23",
+          "valid/general_nga3doclap37_ID1019_xe_may_model-_color-xanh_duong_93KA00733_bien_trang_04-09-2024_07-21-29"
+        ]
+      },
+      {
+        "key": "61F158298",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3doclap37_ID1017_xe_may_model-_color-trang_61F158298_bien_trang_04-09-2024_07-18-31",
+          "valid/general_nguyenvantroi56_ID757_xe_may_model-_color-den_61F158298_bien_trang_04-09-2024_07-11-22"
+        ]
+      },
+      {
+        "key": "61F152302",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3doclap37_ID910_xe_may_model-_color-_61F152302_bien_trang_04-09-2024_07-07-19",
+          "valid/general_nhatholetrang86_ID291_xe_may_model-_color-_61F152302_bien_trang_04-09-2024_06-49-07"
+        ]
+      },
+      {
+        "key": "37R02255",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3duong554_37R02255_07-02-2024_21-05-50",
+          "valid/general_caunamprc555_37R02255_07-02-2024_21-00-17"
+        ]
+      },
+      {
+        "key": "51R16421",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_nga3duong554_51R16421_07-02-2024_23-17-21",
+          "test/general_garagecuong554_51R16421_07-02-2024_23-51-49"
+        ]
+      },
+      {
+        "key": "61L65958",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3duong554_61L65958_29-01-2024_16-44-47",
+          "valid/general_nga3duong554_61L65958_29-01-2024_15-29-47"
+        ]
+      },
+      {
+        "key": "92H00427",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_nga3duong554_92H00427_08-02-2024_05-00-30",
+          "test/general_xom7vinhtan554_92H00427_07-02-2024_17-30-59"
+        ]
+      },
+      {
+        "key": "89C21037",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_nga3duong554_ID123_xe_khach_color-unknown_89C21037_bien_unknown_08-03-2024_04-38-53",
+          "test/general_nga3phuocthe554_ID40_xe_khach_color-unknown_89C21037_bien_unknown_07-03-2024_03-10-58"
+        ]
+      },
+      {
+        "key": "95F72313",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3duong554_ID4386_xe_ba_gac_model-_color-den_95F72313_bien_trang_03-04-2024_09-53-35",
+          "valid/general_benxetp555_ID1703_xe_ba_gac_model-_color-_95F72313_bien_trang_29-03-2024_15-07-05"
+        ]
+      },
+      {
+        "key": "86C16699",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3duong554_ID4788_container_model-_color-_86C16699_bien_trang_02-04-2024_09-25-42",
+          "valid/general_nga3phuocthe554_ID5077_container_model-_color-_86C16699_bien_trang_05-04-2024_11-03-05"
+        ]
+      },
+      {
+        "key": "95H00050",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3duong554_ID495_xe_khach_color-unknown_95H00050_bien_unknown_03-03-2024_19-35-06",
+          "valid/general_caunamprc554_ID952_container_color-unknown_95H00050_bien_unknown_01-03-2024_19-20-30"
+        ]
+      },
+      {
+        "key": "59Y229467",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3duong554_ID747_xe_ba_gac_color-nau_59Y229467_bien_trang_08-03-2024_09-50-29",
+          "valid/general_hoaphu555_ID134_xe_ba_gac_model-_color-_59Y229467_bien_trang_28-03-2024_12-58-33"
+        ]
+      },
+      {
+        "key": "12R01491",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3phuocthe554_12R01491_07-02-2024_15-13-57",
+          "valid/general_caunamprc554_12R01491_07-02-2024_15-39-54"
+        ]
+      },
+      {
+        "key": "86B155276",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_nga3phuocthe554_ID218_xe_ba_gac_model-_color-den_86B155276_bien_trang_02-04-2024_12-22-33",
+          "test/general_nga3phuocthe554_ID738_xe_ba_gac_model-_color-xanh_la_86B155276_bien_trang_01-04-2024_13-15-51"
+        ]
+      },
+      {
+        "key": "85R25541",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3phuocthe554_ID3024_xe_ba_gac_model-_color-den_85R25541_bien_trang_05-04-2024_16-09-01",
+          "valid/general_nga3phuocthe554_ID464_xe_ba_gac_color-_85R25541_bien_trang_05-03-2024_16-08-43"
+        ]
+      },
+      {
+        "key": "29H83152",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_nga3phuocthe554_ID45_container_color-xanh_duong_29H83152_bien_vang_03-03-2024_12-48-08",
+          "test/general_caunamprc554_ID112_container_color-xanh_duong_29H83152_bien_vang_03-03-2024_13-18-46"
+        ]
+      },
+      {
+        "key": "51C11635",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga4hamthang555_ID2456_container_model-_color-unknown_51C11635_bien_vang_04-04-2024_13-36-12",
+          "valid/general_docvinhhanh554_ID60_container_model-_color-_51C11635_bien_vang_04-04-2024_11-13-35"
+        ]
+      },
+      {
+        "key": "51R32978",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_ngabathomo554_ID1851_container_model-_color-do_51R32978_bien_unknown_05-04-2024_14-10-31",
+          "valid/general_xom7vinhtan554_ID2827_container_model-_color-do_51R32978_bien_trang_05-04-2024_15-58-45"
+        ]
+      },
+      {
+        "key": "78R00932",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_ngabathomo554_ID2580_container_model-_color-xam_78R00932_bien_vang_03-04-2024_17-03-49",
+          "valid/general_hodabac554_ID158_container_model-_color-xanh_duong_78R00932_bien_vang_28-03-2024_16-51-11"
+        ]
+      },
+      {
+        "key": "77R01062",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_ngabathomo554_ID2633_container_model-_color-xanh_duong_77R01062_bien_vang_03-04-2024_17-09-23",
+          "valid/general_hodabac554_ID2988_container_model-_color-xanh_duong_77R01062_bien_trang_03-04-2024_17-03-47"
+        ]
+      },
+      {
+        "key": "51R08688",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_ngabathomo554_ID372_container_model-_color-cam_51R08688_bien_trang_05-04-2024_12-31-33",
+          "valid/general_hodabac554_ID318_container_model-_color-vang_51R08688_bien_trang_05-04-2024_12-28-12"
+        ]
+      },
+      {
+        "key": "92R00389",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_ngabathomo554_ID57_container_model-_color-_92R00389_bien_trang_29-03-2024_12-05-39",
+          "valid/general_hodabac554_ID21_container_model-_color-unknown_92R00389_bien_trang_29-03-2024_12-02-35"
+        ]
+      },
+      {
+        "key": "59L148634",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_nhatholetrang84_ID532_xe_may_model-_color-den_59L148634_bien_trang_04-09-2024_06-47-20",
+          "test/general_nga3doclap37_ID642_xe_may_model-_color-_59L148634_bien_trang_04-09-2024_06-46-04"
+        ]
+      },
+      {
+        "key": "61F139095",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_nhatholetrang86_ID180_xe_may_model-_color-_61F139095_bien_trang_04-09-2024_06-29-47",
+          "test/general_nguyenvantroi56_ID416_xe_may_model-_color-_61F139095_bien_trang_04-09-2024_06-32-58"
+        ]
+      },
+      {
+        "key": "61F157282",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nhatholetrang86_ID219_xe_may_model-_color-den_61F157282_bien_trang_04-09-2024_06-37-01",
+          "valid/general_tranquangdieu556_ID386_xe_may_model-_color-vang_61F157282_bien_trang_04-09-2024_10-21-42"
+        ]
+      },
+      {
+        "key": "86B166136",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_quancomhai555_ID1106_xe_ba_gac_model-_color-cam_86B166136_bien_trang_23-03-2024_11-16-38",
+          "valid/general_benxetp555_ID1119_xe_ba_gac_model-_color-xanh_duong_86B166136_bien_trang_23-03-2024_11-17-39"
+        ]
+      },
+      {
+        "key": "61F150929",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_tranhungdao59_ID496_xe_may_model-_color-vang_61F150929_bien_trang_04-09-2024_06-33-24",
+          "valid/general_nguyenvantroi56_ID327_xe_may_model-_color-vang_61F150929_bien_trang_04-09-2024_06-23-08"
+        ]
+      },
+      {
+        "key": "36B672967",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_tranhungdao59_ID649_xe_may_model-_color-den_36B672967_bien_trang_04-09-2024_06-45-08",
+          "valid/general_tranhungdao59_ID423_xe_may_model-_color-den_36B672967_bien_trang_04-09-2024_06-27-26"
+        ]
+      },
+      {
+        "key": "61F141551",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_tranhungdao59_ID802_xe_may_model-_color-vang_61F141551_bien_trang_04-09-2024_06-57-48",
+          "test/general_nga3doclap37_ID829_xe_may_model-_color-vang_61F141551_bien_trang_04-09-2024_07-00-55"
+        ]
+      },
+      {
+        "key": "61P16554",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_tranquangdieu52_ID121_xe_may_model-_color-den_61P16554_bien_trang_04-09-2024_06-24-47",
+          "valid/general_chophuocvinh12_ID15_xe_may_model-_color-_61P16554_bien_vang_03-09-2024_21-27-08"
+        ]
+      },
+      {
+        "key": "61F110549",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_tranquangdieu52_ID166_xe_may_model-_color-unknown_61F110549_bien_trang_04-09-2024_06-29-51",
+          "test/general_tranquangdieu52_ID369_xe_may_model-_color-nau_61F110549_bien_trang_04-09-2024_06-51-47"
+        ]
+      },
+      {
+        "key": "61F125174",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_tranquangdieu52_ID416_xe_may_model-_color-den_61F125174_bien_trang_04-09-2024_07-16-28",
+          "valid/general_tranhungdao59_ID955_xe_may_model-_color-den_61F125174_bien_trang_04-09-2024_07-09-33"
+        ]
+      },
+      {
+        "key": "61F143779",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_tranquangdieu52_ID438_xe_may_model-_color-_61F143779_bien_trang_04-09-2024_07-25-57",
+          "valid/general_nguyenvantroi56_ID846_xe_may_model-_color-_61F143779_bien_trang_04-09-2024_07-21-10"
+        ]
+      },
+      {
+        "key": "12R00929",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_12R00929_09-02-2024_04-29-15",
+          "valid/general_nga3phuocthe554_12R00929_09-02-2024_04-45-44"
+        ]
+      },
+      {
+        "key": "86R01154",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_86R01154_08-02-2024_01-59-42",
+          "test/general_nga3phuocthe554_86R01154_08-02-2024_02-15-37"
+        ]
+      },
+      {
+        "key": "86R01333",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_86R01333_09-02-2024_08-44-54",
+          "valid/general_nga3phuocthe554_86R01333_09-02-2024_08-58-37"
+        ]
+      },
+      {
+        "key": "86R01337",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_86R01337_08-02-2024_08-09-07",
+          "valid/general_nga3phuocthe554_86R01337_08-02-2024_08-25-00"
+        ]
+      },
+      {
+        "key": "94R00122",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_94R00122_08-02-2024_19-17-30",
+          "test/general_garagecuong554_94R00122_07-02-2024_23-28-16"
+        ]
+      },
+      {
+        "key": "50H19936",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID1098_container_model-_color-nau_50H19936_bien_vang_25-03-2024_10-33-33",
+          "valid/general_ngabathomo554_ID228_container_model-_color-xam_50H19936_bien_vang_04-04-2024_09-24-25"
+        ]
+      },
+      {
+        "key": "85H00448",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID154_container_model-_color-nau_85H00448_bien_vang_24-03-2024_13-08-24",
+          "test/general_xom7vinhtan554_ID168_xe_khach_color-do_85H00448_bien_unknown_08-03-2024_02-22-15"
+        ]
+      },
+      {
+        "key": "68H01457",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID171_container_color-xam_68H01457_bien_vang_06-03-2024_14-56-07",
+          "valid/general_xom7vinhtan554_ID438_container_model-_color-trang_68H01457_bien_vang_01-04-2024_12-39-09"
+        ]
+      },
+      {
+        "key": "85C02585",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID2153_container_model-_color-den_85C02585_bien_vang_04-04-2024_07-31-03",
+          "test/general_caunamprc555_ID747_container_color-unknown_85C02585_bien_unknown_01-03-2024_22-18-50"
+        ]
+      },
+      {
+        "key": "50H01841",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID628_container_model-_color-_50H01841_bien_vang_28-03-2024_09-30-58",
+          "valid/general_comkimngan554_ID989_container_model-_color-_50H01841_bien_vang_28-03-2024_09-32-50"
+        ]
+      },
+      {
+        "key": "29C89851",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID684_container_model-_color-do_29C89851_bien_vang_30-03-2024_13-13-35",
+          "valid/general_nga3phuocthe554_ID840_container_model-_color-do_29C89851_bien_vang_30-03-2024_13-27-57"
+        ]
+      },
+      {
+        "key": "86R00750",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID712_container_color-do_86R00750_bien_unknown_05-03-2024_18-10-31",
+          "test/general_xom7vinhtan554_ID1081_container_color-den_86R00750_bien_trang_05-03-2024_11-34-41"
+        ]
+      },
+      {
+        "key": "79H03836",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID841_container_color-unknown_79H03836_bien_trang_01-03-2024_22-47-57",
+          "valid/general_xom7vinhtan554_ID1146_xe_tai_color-unknown_79H03836_bien_trang_05-03-2024_22-52-10"
+        ]
+      },
+      {
+        "key": "93C00086",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID926_container_color-unknown_93C00086_bien_unknown_03-03-2024_22-04-10",
+          "test/general_xom7vinhtan554_ID207_container_color-unknown_93C00086_bien_unknown_01-03-2024_02-40-36"
+        ]
+      },
+      {
+        "key": "85F00337",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID981_container_color-unknown_85F00337_bien_unknown_03-03-2024_22-38-13",
+          "valid/general_xom7vinhtan554_ID1140_container_color-unknown_85F00337_bien_unknown_05-03-2024_22-44-29"
+        ]
+      },
+      {
+        "key": "51C64047",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/veh_garagecuong554_ID997_container_color-nau_51C64047_bien_unknown_01-03-2024_21-58-12",
+          "test/general_garagecuong554_ID997_container_color-nau_51C64047_bien_unknown_01-03-2024_21-58-12"
+        ]
+      },
+      {
+        "key": "51R07817",
+        "splits": [
+          "test",
+          "valid"
+        ],
+        "files": [
+          "valid/general_caunamprc555_51R07817_10-02-2024_16-40-16",
+          "test/general_nga3duong554_51R07817_10-02-2024_16-49-47"
+        ]
+      },
+      {
+        "key": "86B119686",
+        "splits": [
+          "test",
+          "valid"
+        ],
+        "files": [
+          "valid/general_hoaphu555_86B119686_16-02-2024_07-43-30",
+          "test/general_hoaphu557_ID167_xe_ba_gac_model-_color-do_86B119686_bien_trang_23-03-2024_15-09-49"
+        ]
+      },
+      {
+        "key": "61L65119",
+        "splits": [
+          "test",
+          "valid"
+        ],
+        "files": [
+          "valid/general_nga3muitau554_61L65119_19-01-2024_17-07-02",
+          "test/general_nga3muitau554_61L65119_21-01-2024_17-14-06"
+        ]
+      },
+      {
+        "key": "85B00464",
+        "splits": [
+          "test",
+          "valid"
+        ],
+        "files": [
+          "valid/general_nga3phuocthe554_ID533_xe_khach_color-xam_85B00464_bien_vang_06-03-2024_08-20-20",
+          "test/general_caunamprc555_ID78_container_color-nau_85B00464_bien_vang_05-03-2024_12-47-37"
+        ]
+      },
+      {
+        "key": "51R24625",
+        "splits": [
+          "test",
+          "valid"
+        ],
+        "files": [
+          "valid/general_xom7vinhtan554_51R24625_07-02-2024_20-50-05",
+          "test/general_nga3phuocthe554_51R24625_07-02-2024_21-07-53"
+        ]
+      }
+    ]
+  },
+  "loose_camera_vid_INFO": {
+    "n_keys": 3654,
+    "n_cross_split": 39,
+    "items": [
+      {
+        "key": "hoaphu555|241",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_hoaphu555_ID241_xe_ba_gac_model-_color-_59AA00463_bien_trang_02-04-2024_14-40-45",
+          "train/general_hoaphu555_ID241_xe_ba_gac_model-_color-_86R14708_bien_trang_23-03-2024_09-26-53",
+          "test/general_hoaphu555_ID241_xe_ba_gac_model-_color-cam_86B254391_bien_trang_31-03-2024_15-21-23"
+        ]
+      },
+      {
+        "key": "hoaphu555|97",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_hoaphu555_ID97_xe_ba_gac_model-_color-nau_59P300120_bien_trang_04-04-2024_10-35-10",
+          "train/general_hoaphu555_ID97_xe_khach_color-xam_86C14641_bien_trang_06-03-2024_11-10-40",
+          "valid/general_hoaphu555_ID97_xe_ba_gac_color-xanh_duong_86B24997_bien_trang_03-03-2024_10-08-32"
+        ]
+      },
+      {
+        "key": "nga3duong554|1",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3duong554_ID1_container_color-unknown_86K01080_bien_unknown_06-03-2024_00-01-17",
+          "train/general_nga3duong554_ID1_xe_khach_color-unknown_50H09084_bien_unknown_05-03-2024_00-08-36",
+          "valid/general_nga3duong554_ID1_xe_khach_color-den_50H07095_bien_trang_07-03-2024_00-00-56"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|127",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID127_container_model-_color-nau_63C13890_bien_vang_05-04-2024_12-14-31",
+          "valid/general_xom7vinhtan554_ID127_container_color-unknown_86R00949_bien_trang_05-03-2024_13-20-34",
+          "valid/general_xom7vinhtan554_ID127_container_color-xam_29H86815_bien_unknown_07-03-2024_01-44-00"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|561",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID561_container_color-trang_51C15466_bien_vang_07-03-2024_11-33-42",
+          "train/general_xom7vinhtan554_ID561_container_model-_color-_29H82497_bien_vang_05-04-2024_12-58-41",
+          "test/general_xom7vinhtan554_ID561_container_model-_color-vang_50H01566_bien_vang_26-03-2024_06-46-03"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|734",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID734_container_color-unknown_43C19065_bien_unknown_04-03-2024_19-55-27",
+          "train/general_xom7vinhtan554_ID734_container_color-xam_0LD81103_bien_vang_04-03-2024_09-22-27",
+          "test/general_xom7vinhtan554_ID734_xe_khach_color-unknown_51R07293_bien_unknown_02-03-2024_21-45-30"
+        ]
+      },
+      {
+        "key": "caunamprc554|364",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_ID364_container_color-_73H00394_bien_vang_07-03-2024_14-42-40",
+          "valid/general_caunamprc554_ID364_container_color-xam_50H00382_bien_vang_03-03-2024_16-31-33"
+        ]
+      },
+      {
+        "key": "caunamprc554|649",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_ID649_container_color-den_86C64158_bien_trang_05-03-2024_16-33-04",
+          "valid/general_caunamprc554_ID649_xe_ba_gac_color-nau_86B233101_bien_trang_04-03-2024_17-01-37"
+        ]
+      },
+      {
+        "key": "caunamprc554|724",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc554_ID724_xe_ba_gac_color-den_86B25934_bien_trang_04-03-2024_17-19-22",
+          "valid/general_caunamprc554_ID724_xe_tai_color-nau_61L86821_bien_trang_07-03-2024_17-13-33"
+        ]
+      },
+      {
+        "key": "caunamprc555|422",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc555_ID422_container_color-xanh_duong_43B02178_bien_vang_04-03-2024_16-14-11",
+          "valid/general_caunamprc555_ID422_xe_ba_gac_color-nau_85C148257_bien_vang_08-03-2024_16-11-37"
+        ]
+      },
+      {
+        "key": "caunamprc555|44",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc555_ID44_xe_ba_gac_color-den_29A111063_bien_trang_07-03-2024_12-19-01",
+          "valid/general_caunamprc555_ID44_xe_khach_color-unknown_79H01073_bien_unknown_05-03-2024_03-21-17"
+        ]
+      },
+      {
+        "key": "caunamprc555|781",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_caunamprc555_ID781_container_color-xam_29R52650_bien_unknown_01-03-2024_23-41-47",
+          "valid/general_caunamprc555_ID781_container_color-unknown_72C15452_bien_unknown_04-03-2024_18-09-11"
+        ]
+      },
+      {
+        "key": "garagecuong554|276",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_garagecuong554_ID276_container_color-cam_29R03044_bien_vang_06-03-2024_15-43-52",
+          "valid/general_garagecuong554_ID276_container_color-unknown_50H19396_bien_unknown_01-03-2024_03-29-12"
+        ]
+      },
+      {
+        "key": "hoaphu555|73",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_hoaphu555_ID73_xe_ba_gac_model-_color-nau_86B275638_bien_trang_25-03-2024_13-36-34",
+          "valid/general_hoaphu555_ID73_xe_tai_color-den_50X102161_bien_trang_04-03-2024_07-25-11"
+        ]
+      },
+      {
+        "key": "hodabac554|130",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_hodabac554_ID130_container_model-_color-xanh_la_51R34695_bien_trang_23-03-2024_12-58-37",
+          "valid/veh_hodabac554_ID130_container_model-_color-xanh_la_51R34695_bien_trang_23-03-2024_12-58-37"
+        ]
+      },
+      {
+        "key": "hodabac554|158",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_hodabac554_ID158_container_model-_color-trang_72C16918_bien_vang_25-03-2024_13-42-33",
+          "valid/general_hodabac554_ID158_container_model-_color-xanh_duong_78R00932_bien_vang_28-03-2024_16-51-11"
+        ]
+      },
+      {
+        "key": "nga3doclap36|1271",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_nga3doclap36_ID1271_xe_may_model-_color-unknown_6F156210_bien_unknown_03-09-2024_19-14-45",
+          "test/general_nga3doclap36_ID1271_xe_may_model-_color-den_61F35345_bien_trang_04-09-2024_06-57-41"
+        ]
+      },
+      {
+        "key": "nga3duong554|582",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3duong554_ID582_xe_ba_gac_color-den_79A102595_bien_trang_02-03-2024_10-52-41",
+          "valid/general_nga3duong554_ID582_xe_ba_gac_color-_86B15345_bien_trang_08-03-2024_08-14-35"
+        ]
+      },
+      {
+        "key": "nga3duong554|597",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_nga3duong554_ID597_container_color-xanh_duong_86R00949_bien_trang_02-03-2024_11-08-01",
+          "test/general_nga3duong554_ID597_xe_ba_gac_color-den_86B62662_bien_trang_08-03-2024_08-23-50"
+        ]
+      },
+      {
+        "key": "nga3phuocthe554|198",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3phuocthe554_ID198_container_model-_color-_86C07407_bien_vang_28-03-2024_11-19-22",
+          "valid/general_nga3phuocthe554_ID198_container_model-_color-_86C16046_bien_trang_04-04-2024_11-31-33"
+        ]
+      },
+      {
+        "key": "nga3phuocthe554|492",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3phuocthe554_ID492_xe_ba_gac_color-do_86B14439_bien_trang_04-03-2024_16-41-19",
+          "valid/general_nga3phuocthe554_ID492_container_model-_color-_86C11969_bien_trang_29-03-2024_16-35-18"
+        ]
+      },
+      {
+        "key": "nga3phuocthe556|49",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_nga3phuocthe556_ID49_container_model-_color-xanh_duong_86R01125_bien_trang_28-03-2024_11-11-40",
+          "valid/veh_nga3phuocthe556_ID49_container_model-_color-xanh_duong_86R01125_bien_trang_28-03-2024_11-11-40"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|1140",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID1140_container_model-_color-xanh_la_50H07536_bien_vang_25-03-2024_10-51-24",
+          "valid/general_xom7vinhtan554_ID1140_container_color-unknown_85F00337_bien_unknown_05-03-2024_22-44-29"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|153",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID153_container_color-xam_71C06934_bien_vang_05-03-2024_13-38-41",
+          "valid/general_xom7vinhtan554_ID153_oto_color-den_50M01555_bien_unknown_07-03-2024_02-07-10"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|154",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID154_container_model-_color-nau_85H00448_bien_vang_24-03-2024_13-08-24",
+          "valid/general_xom7vinhtan554_ID154_container_model-_color-den_50H04242_bien_vang_29-03-2024_16-24-27"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|16",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID16_container_model-_color-_51R15482_bien_trang_28-03-2024_16-37-42",
+          "valid/general_xom7vinhtan554_ID16_container_color-xam_79C03837_bien_unknown_06-03-2024_00-07-51"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|1811",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID1811_container_model-_color-xanh_la_77R00938_bien_trang_05-04-2024_14-39-11",
+          "valid/general_xom7vinhtan554_ID1811_container_model-_color-_81R00562_bien_vang_29-03-2024_06-25-54"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|2187",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID2187_container_model-_color-trang_61C35264_bien_vang_05-04-2024_15-12-52",
+          "test/general_xom7vinhtan554_ID2187_container_model-_color-unknown_51R27392_bien_trang_03-04-2024_15-57-12"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|2827",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID2827_container_model-_color-_72H00907_bien_vang_03-04-2024_16-53-52",
+          "valid/general_xom7vinhtan554_ID2827_container_model-_color-do_51R32978_bien_trang_05-04-2024_15-58-45"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|371",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID371_container_model-_color-vang_85C04015_bien_vang_05-04-2024_12-42-37",
+          "test/general_xom7vinhtan554_ID371_container_color-den_18H00716_bien_vang_05-03-2024_16-20-37"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|438",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID438_container_color-do_85C05274_bien_vang_03-03-2024_17-15-48",
+          "valid/general_xom7vinhtan554_ID438_container_model-_color-trang_68H01457_bien_vang_01-04-2024_12-39-09"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|471",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID471_container_color-xam_29H70427_bien_vang_04-03-2024_06-42-03",
+          "valid/general_xom7vinhtan554_ID471_container_model-_color-den_83G00112_bien_vang_28-03-2024_17-04-16"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|491",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID491_container_color-_95C05624_bien_vang_04-03-2024_06-51-30",
+          "valid/general_xom7vinhtan554_ID491_container_model-_color-cam_50H91379_bien_vang_25-03-2024_06-12-19"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|58",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID58_container_color-xanh_duong_86H01586_bien_vang_07-03-2024_12-35-53",
+          "valid/general_xom7vinhtan554_ID58_xe_ba_gac_color-xanh_la_86B157352_bien_trang_05-03-2024_12-40-06"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|857",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID857_container_color-unknown_75C04095_bien_unknown_05-03-2024_19-30-19",
+          "test/general_xom7vinhtan554_ID857_container_color-unknown_75H01142_bien_unknown_04-03-2024_21-31-43"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|963",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/general_xom7vinhtan554_ID963_container_color-xam_78C03389_bien_unknown_04-03-2024_22-32-15",
+          "valid/general_xom7vinhtan554_ID963_container_color-xanh_duong_29H78339_bien_unknown_08-03-2024_21-03-55"
+        ]
+      },
+      {
+        "key": "caunamprc554|417",
+        "splits": [
+          "train",
+          "valid"
+        ],
+        "files": [
+          "train/veh_caunamprc554_ID417_xe_tai_model-_color-_76B01193_bien_trang_19-03-2024_14-37-09",
+          "valid/general_caunamprc554_ID417_xe_ba_gac_color-den_86B129712_bien_trang_03-03-2024_17-03-07"
+        ]
+      },
+      {
+        "key": "garagecuong554|997",
+        "splits": [
+          "test",
+          "train"
+        ],
+        "files": [
+          "train/veh_garagecuong554_ID997_container_color-nau_51C64047_bien_unknown_01-03-2024_21-58-12",
+          "test/general_garagecuong554_ID997_container_color-nau_51C64047_bien_unknown_01-03-2024_21-58-12"
+        ]
+      },
+      {
+        "key": "xom7vinhtan554|771",
+        "splits": [
+          "test",
+          "valid"
+        ],
+        "files": [
+          "valid/general_xom7vinhtan554_ID771_container_color-xam_78H00815_bien_unknown_04-03-2024_20-27-13",
+          "test/general_xom7vinhtan554_ID771_container_model-_color-do_29KT00402_bien_trang_23-03-2024_17-28-53"
+        ]
+      }
+    ]
+  },
+  "bare_vehicle_id_INFO_ONLY": {
+    "note": "track-ID reset theo camera → trùng ID trần KHÔNG có nghĩa là cùng xe",
+    "n_keys": 1819,
+    "n_cross_split": 387
+  }
+}

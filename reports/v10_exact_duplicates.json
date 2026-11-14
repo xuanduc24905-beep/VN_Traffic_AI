@@ -1,0 +1,18 @@
+{
+  "check": "exact_duplicates",
+  "threshold": "0 nhóm MD5 trùng cross-split, 0 source_name trùng cross-split",
+  "verdict": "PASS",
+  "n_images": 4824,
+  "n_unique_md5": 4824,
+  "n_groups_cross_split": 0,
+  "n_images_in_cross_split_groups": 0,
+  "n_groups_within_split": 0,
+  "n_redundant_within_split": 0,
+  "n_source_name_cross_split": 0,
+  "n_source_name_within_split": 0,
+  "n_copy_suffix_files": 8,
+  "cross_split_groups": [],
+  "within_split_groups": [],
+  "source_name_cross_split": [],
+  "source_name_within_split": []
+}
