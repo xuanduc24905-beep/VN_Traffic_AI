@@ -1,14 +1,18 @@
 # Audit leakage — Roboflow vietnam_vehicles v10 (standalone)
 
-_Sinh tự động bởi [audit_v10_all.py](../scripts/data_prep/audit_v10/audit_v10_all.py) lúc 2026-11-14 13:09. Chỉ đọc dữ liệu, không sửa split._
+_Sinh tự động bởi [audit_v10_all.py](../scripts/data_prep/audit_v10/audit_v10_all.py) lúc 2026-11-14 13:25. Chỉ đọc dữ liệu, không sửa split._
 
 ## Kết luận
 
-❌ **v10 LEAK** — train/valid/test gốc của v10 rò rỉ lẫn nhau (camera, xe, thời gian, khung hình gần trùng). **Không** được dùng valid/test của v10 để đánh giá, và **chưa** được coi là an toàn khi gộp vào V5+ cho tới khi xử lý các điểm ở mục 4.
+| Câu hỏi | Trả lời |
+|---|---|
+| v10 standalone có sạch (split nội bộ)? | ❌ **Không** — train/valid/test gốc rò rỉ lẫn nhau (camera, xe, thời gian, khung gần trùng). Không được dùng valid/test của v10 để đánh giá. |
+| Gộp v10 vào **train** V5+ (val/test giữ của V5) có làm leak eval V5+? | ✅ **Không** — 0 ảnh/khung/camera của v10 trùng với val/test V5 (check (g)). |
+| Nhãn có hợp lệ? | ✅ Format hợp lệ; ⚠️ nghi **thiếu nhãn** (xem dưới) |
 
-**Bối cảnh V5+:** [build_v5plus_merged.py:3](../scripts/data_prep/build_v5plus_merged.py#L3) gộp **cả 3 split** của v10 vào **train** V5+, val/test giữ nguyên của V5. Do đó leak *nội bộ* v10 **không** làm sai số liệu eval của V5+ — nó chỉ làm valid/test gốc của v10 vô giá trị. Hai điều kiện còn lại trước khi coi V5+ là sạch:
-1. **Chưa kiểm tra**: leak chéo v10 ↔ val/test V5 (cùng camera/khung hình với `vn_cantho`, `vnv3`).
-2. **Rủi ro chất lượng nhãn**: trung bình chỉ ~1.3 box/ảnh trên ảnh CCTV nhiều xe, và các file cùng camera + cùng giây mang **bộ nhãn khác nhau** (vd `general_caunamprc554_50Y31618_13-02-2024_13-08-11` có 2 box, bản ở test chỉ 1 box) → nhiều xe trong ảnh không được gán nhãn, model bị dạy coi xe là nền. Cần kiểm tra trực quan một mẫu trước khi tin dùng.
+**→ Về leakage, v10 an toàn để gộp vào train V5+ theo đúng cách [build_v5plus_merged.py:3](../scripts/data_prep/build_v5plus_merged.py#L3) đang làm** (gộp cả 3 split v10 vào train, val/test giữ của V5): leak nội bộ v10 không chạm tới eval V5+. **Không** an toàn nếu dùng split gốc của v10 làm val/test.
+
+**Còn lại — rủi ro chất lượng nhãn (không phải leak):** trung bình chỉ ~1.3 box/ảnh trên ảnh CCTV nhiều xe, và các file cùng camera + cùng giây mang **bộ nhãn khác nhau** (vd `general_caunamprc554_50Y31618_13-02-2024_13-08-11` có 2 box, bản ở test chỉ 1 box) → nhiều xe không được gán nhãn, model có thể bị dạy coi xe là nền. Một số ảnh `gen_*` còn có **khung bbox vẽ sẵn lên pixel** (thấy trong preview của check (g)). Nên kiểm tra trực quan một mẫu trước khi tin dùng.
 
 _Ghi chú: docstring build_v5plus_merged.py ghi "~776 camera" — thực tế parse được 44 camera._
 
@@ -34,6 +38,7 @@ _Ghi chú: docstring build_v5plus_merged.py ghi "~776 camera" — thực tế pa
 | (e) Near-duplicate pHash | 0 cặp cross-split có Hamming(pHash 64-bit) ≤ 5 | 203 cặp {'train-valid': 145, 'train-test': 51, 'valid-test': 7}; ảnh dính: valid 7.58%, test 7.04% | ❌ FAIL |
 | (f) Label integrity | 0 lỗi format/class/bbox | 0 file lỗi | ✅ PASS |
 | (f') Phân phối class | lệch ≤15pp giữa split | 0 class lệch | ✅ PASS |
+| (g) Chéo v10 ↔ val/test V5 | MD5=0, pHash≤5=0, NCC nền camera <0.90 và < min đối chứng | MD5 0, pHash 0 (min d=10), NCC max 0.5001 | ✅ PASS |
 
 ## 3. Chi tiết
 
@@ -95,13 +100,26 @@ _Ghi chú: docstring build_v5plus_merged.py ghi "~776 camera" — thực tế pa
 - Không có lỗi format/class_id/toạ độ (tái sử dụng `check_label_file` của [validate_labels.py:35](../scripts/data_prep/validate_labels.py#L35)).
 - Không class nào lệch >15pp giữa split, nhưng container/xe_ba_gac ở valid/test gần **gấp đôi** train (~15% vs ~8%). Imbalance nội tại max/min = 13.2× (xe_may chiếm ~53%).
 
+### (g) Leak chéo v10 ↔ val/test V5
+
+- So 4824 ảnh v10 (cả 3 split, vì đều vào train V5+) với 2966 ảnh val/test V5: {'cantho_CoopMart-8h30-9h00': 50, 'cantho_camDLHB-13h20---13h57': 416, 'soict24_cam_07': 1000, 'soict24_cam_09': 1000, 'soict24_cam_10': 500}.
+- MD5 trùng: 0. pHash: 0 cặp ≤5, cặp gần nhất d=10 (và là cảnh khác hẳn khi xem bằng mắt).
+- Ảnh nền camera (trung bình xám ≤150 ảnh/camera, so NCC):
+  - Đối chứng dương — cùng camera chia 2 nửa: trung vị 0.9651, nhỏ nhất 0.7669
+  - Baseline v10 khác địa điểm: trung vị 0.0906, max 0.7172; cùng địa điểm khác kênh: max 0.5402
+  - **Chéo v10 ↔ V5 eval: max 0.5001** — thấp hơn hẳn đối chứng cùng camera (0.7669), nằm trong vùng "khác camera".
+  - Top cặp: `hodabac554`↔`soict24_cam_09` 0.5001, `ngabathomo554`↔`soict24_cam_09` 0.4587, `hodabac554`↔`soict24_cam_07` 0.453
+- Sanity: val/test của `merged_v5plus` trùng khớp V5 và không chứa file `v10_*`: ✅.
+- Preview kiểm tra bằng mắt: [reports/v10_cross_v5_preview.jpg](../reports/v10_cross_v5_preview.jpg) (trái: v10, phải: V5).
+- Giới hạn: không bắt được trường hợp cùng địa điểm nhưng góc quay khác hẳn (NCC nền thấp). Với 44 camera v10 (tên địa điểm VN) và V5 eval (SOICT24 + Cần Thơ) thì khả năng này thấp.
+
 ## 4. Cần fix gì trước khi gộp (ĐỀ XUẤT — chưa thực hiện)
 
 Vì v10 trong V5+ chỉ đóng vai trò **dữ liệu train bổ sung**, có 2 hướng tuỳ mục đích:
 
 **Hướng A — Chỉ dùng v10 để train (khuyến nghị, đơn giản nhất):**
 1. Gộp **toàn bộ** train+valid+test của v10 vào train của V5+; **không** dùng valid/test của v10 để báo cáo số liệu. Leak nội bộ v10 khi đó vô hại vì không có split eval nào của v10.
-2. Vẫn phải kiểm tra **leak chéo v10 ↔ V5 test/val**: chạy pHash + MD5 giữa ảnh v10 và val/test của V5 (V5 có `vn_cantho`, `vnv3` cũng là CCTV Việt Nam — có thể trùng camera).
+2. Leak chéo v10 ↔ val/test V5: ✅ đã kiểm tra, PASS (check (g)).
 3. Dedup khung hình trùng trong v10 (cùng camera + cùng giây / pHash≤2) để tránh over-weight; giữ một bản và **gộp nhãn** của các bản (mỗi file có thể chỉ gán nhãn một số xe trong khung).
 
 **Hướng B — Cần v10 có valid/test riêng đáng tin (vd báo cáo mAP trên v10):**
@@ -123,5 +141,7 @@ Vì v10 trong V5+ chỉ đóng vai trò **dữ liệu train bổ sung**, có 2 h
 - `reports/v10_temporal_leak.json` — (d) temporal leak
 - `reports/v10_phash_near_duplicates.json` — (e) pHash near-dup
 - `reports/v10_label_integrity.json` — (f) label integrity
+- `reports/v10_cross_v5_leak.json` — (g) leak chéo v10 ↔ V5 eval
+- `reports/v10_cross_v5_preview.jpg` — (g) preview
 
 Tái tạo: `conda activate yolov8_ft && python scripts/data_prep/audit_v10/audit_v10_all.py`
