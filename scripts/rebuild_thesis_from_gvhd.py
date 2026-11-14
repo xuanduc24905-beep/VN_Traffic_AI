@@ -29,12 +29,22 @@ CHAPTERS = [
 ]
 
 FIGURE_IMAGES = {
+    # Ch2 lý thuyết — ảnh gốc từ docx của cô
+    "Hình 2.1": "fig_2_1_original.png",   # kernel 3x3
+    "Hình 2.2": "fig_2_2_original.png",   # ResNet residual
+    "Hình 2.3": "fig_2_3_original.png",   # 3 nhiệm vụ classification/detection/segmentation
+    "Hình 2.5": "fig_2_5_original.png",   # YOLOv8 architecture
+    "Hình 2.6": "fig_2_6_original.png",   # Faster R-CNN architecture
+    "Hình 2.7": "fig_2_7_original.png",   # IoU minh họa
+    # Ch3 pipeline + samples
     "Hình 3.1": "fig_3_pipeline.png",
     "Hình 3.2": "fig_3_sample_soict_night.jpg",
     "Hình 3.3": "fig_3_sample_soict_2024.jpg",
     "Hình 3.4": "fig_3_sample_cantho.jpg",
     "Hình 3.5": "fig_3_sample_vnv3.jpg",
     "Hình 3.6": "fig_3_sample_v10.jpg",
+    "Hình 3.7": "fig_3_7_original.png",   # YOLO coord system
+    # Ch4 charts
     "Hình 4.1": "fig_4_training_curves_v5plus.png",
     "Hình 4.2": "fig_4_confusion_matrix_p4scale.png",
     "Hình 4.5": "fig_4_model_comparison.png",
@@ -43,6 +53,7 @@ FIGURE_IMAGES = {
     "Hình 4.8": "fig_4_fps_comparison.png",
     "Hình 4.9": "fig_4_val_test_gap.png",
     "Hình 4.10": "fig_4_counting.png",
+    # Ch5 UI
     "Hình 5.1": "fig_5_streamlit_mockup.png",
     "Hình 5.2": "fig_5_streamlit_mockup.png",
 }

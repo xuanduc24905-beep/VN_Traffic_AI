@@ -45,7 +45,7 @@ Khoảng trống nghiên cứu mà đề tài hướng tới là chưa có bằn
 
 Ảnh màu được biểu diễn dưới dạng tensor ba chiều gồm chiều cao H, chiều rộng W và số kênh C (với ảnh RGB, C = 3). Lớp tích chập áp dụng bộ lọc (kernel) kích thước k × k với d kênh đầu vào tại nhiều vị trí của ảnh để tạo bản đồ đặc trưng (feature map). Kích thước đầu ra theo một chiều được tính theo công thức:
 
-$$H_{out} = \left\lfloor \frac{H_{in} + 2p - d(k-1) - 1}{s} \right\rfloor + 1 \quad (2.1)$$
+H_out = ⌊(H_in + 2p − d(k−1) − 1) / s⌋ + 1                    (2.1)
 
 trong đó p là padding, s là stride và d là dilation. Việc chia sẻ trọng số (weight sharing) của tích chập giúp mô hình học một mẫu cục bộ có thể xuất hiện ở nhiều vị trí khác nhau, đồng thời giảm đáng kể số tham số so với mạng fully-connected.
 
@@ -61,11 +61,13 @@ Giảm kích thước feature map có thể thực hiện bằng max pooling ho�
 
 Khối học phần dư của He và cộng sự [3] có dạng:
 
-$$y = F(x, \{W_i\}) + x \quad (2.2)$$
+y = F(x, {W_i}) + x                                              (2.2)
 
 trong đó F là hàm biến đổi học được (thường gồm vài lớp tích chập), x là đầu vào và y là đầu ra. Kết nối tắt x → y cho phép gradient truyền trực tiếp qua các khối mà không bị suy giảm, cho phép huấn luyện mạng rất sâu (34, 50, 101, 152 lớp). Khi kích thước của F(x) không tương thích với x (do stride > 1 hoặc thay đổi số kênh), nhánh tắt cần phép chiếu 1×1 để điều chỉnh.
 
 Trong đề tài này, ResNet50 đóng vai trò backbone cho Faster R-CNN, trích xuất feature map từ ảnh đầu vào. Feature Pyramid Network (FPN) [23] kết hợp các mức đặc trưng từ ResNet để tạo ra pyramid gồm 5 mức P2–P6 với các độ phân giải khác nhau, cho phép phát hiện đối tượng ở nhiều kích thước.
+
+**Hình 2.2** Khối học phần dư với kết nối tắt đồng nhất, cho phép gradient truyền trực tiếp qua các khối giúp huấn luyện mạng rất sâu (Nguồn: [3]).
 
 ## 2.3 Bài toán phát hiện và phân loại phương tiện
 
@@ -80,6 +82,8 @@ Với ảnh I ∈ R^(H×W×3), detector tạo ra tập dự đoán D = {(b_i, c_
 | Phân vùng ảnh | Một ảnh | Một nhãn/pixel | Phân vùng làn đường |
 
 Đề tài này tập trung vào nhiệm vụ phát hiện đối tượng (hàng thứ hai). Việc thống kê số phương tiện theo lớp được thực hiện sau khi hậu xử lý detection; đếm lượt phương tiện đi qua một mặt cắt trong video cần thêm thành phần theo vết (tracking) và quy tắc đếm, được trình bày ở Chương 3.
+
+**Hình 2.3** So sánh ba nhiệm vụ thị giác máy tính: phân loại ảnh (một nhãn/ảnh), phát hiện đối tượng (nhiều bounding box + nhãn) và phân vùng ngữ nghĩa (một nhãn/pixel).
 
 ## 2.4 Kiến trúc và cơ chế hoạt động của YOLOv8
 
@@ -107,7 +111,7 @@ Bounding box cuối cùng được tính: (x_1, y_1, x_2, y_2) = ((j - l)·s, (i
 
 Hàm mất mát tổng của YOLOv8 kết hợp ba thành phần [12]:
 
-$$L = \lambda_{box} L_{box} + \lambda_{cls} L_{cls} + \lambda_{dfl} L_{dfl} \quad (2.3)$$
+L = λ_box · L_box + λ_cls · L_cls + λ_dfl · L_dfl                (2.3)
 
 với các giá trị mặc định λ_box = 7.5, λ_cls = 0.5, λ_dfl = 1.5.
 
@@ -188,7 +192,7 @@ Nguyên tắc chống rò rỉ cấp video được triển khai trong đề tà
 
 Intersection over Union (IoU) đo mức chồng lấp giữa hai bounding box B₁ và B₂:
 
-$$IoU(B_1, B_2) = \frac{|B_1 \cap B_2|}{|B_1 \cup B_2|} \quad (2.4)$$
+IoU(B₁, B₂) = |B₁ ∩ B₂| / |B₁ ∪ B₂|                              (2.4)
 
 Trong đánh giá detection theo lớp, một dự đoán được xem là True Positive (TP) khi: (i) được ghép với một bounding box ground truth chưa dùng, (ii) IoU ≥ ngưỡng (thường 0.5), (iii) nhãn lớp khớp. Dự đoán dư hoặc không ghép được là False Positive (FP). Ground truth không có dự đoán nào ghép đúng là False Negative (FN). Mỗi ground truth chỉ được ghép tối đa một lần [16].
 
@@ -198,19 +202,19 @@ Trong đánh giá detection theo lớp, một dự đoán được xem là True 
 
 Các chỉ số cơ bản được tính theo công thức:
 
-$$Precision = \frac{TP}{TP + FP} \quad (2.5)$$
+Precision = TP / (TP + FP)                                       (2.5)
 
-$$Recall = \frac{TP}{TP + FN} \quad (2.6)$$
+Recall = TP / (TP + FN)                                          (2.6)
 
-$$F_1 = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall} \quad (2.7)$$
+F₁ = 2 · Precision · Recall / (Precision + Recall)               (2.7)
 
 Average Precision (AP) tổng hợp đường cong Precision–Recall khi thay đổi ngưỡng confidence:
 
-$$AP = \int_0^1 P(r) dr \quad (2.8)$$
+AP = ∫₀¹ P(r) dr                                                  (2.8)
 
 Trong thực tế, AP được tính xấp xỉ bằng 101-point interpolation theo chuẩn COCO [9], [16]. Mean Average Precision (mAP) là trung bình AP của các lớp:
 
-$$mAP = \frac{1}{C} \sum_{c=1}^{C} AP_c \quad (2.9)$$
+mAP = (1/C) · Σ_{c=1..C} AP_c                                    (2.9)
 
 Đề tài báo cáo hai biến thể: **mAP@0.5** (AP trung bình ở ngưỡng IoU = 0.5) và **mAP@0.5:0.95** (AP trung bình ở 10 ngưỡng IoU từ 0.5 đến 0.95, bước 0.05 — chỉ số strict hơn). Mỗi lớp cũng báo cáo AP riêng để đánh giá ảnh hưởng của mất cân bằng lớp.
 
@@ -226,9 +230,9 @@ Tốc độ xử lý được đo bằng Frames Per Second (FPS) hoặc latency 
 
 Với bài toán đếm phương tiện qua vạch ảo, các chỉ số được sử dụng:
 
-$$MAE = \frac{1}{N} \sum_{i=1}^{N} |N_{pred,i} - N_{GT,i}| \quad (2.10)$$
+MAE = (1/N) · Σ_{i=1..N} |N_pred,i − N_GT,i|                     (2.10)
 
-$$MAPE = \frac{1}{N} \sum_{i=1}^{N} \frac{|N_{pred,i} - N_{GT,i}|}{N_{GT,i}} \times 100\% \quad (2.11)$$
+MAPE = (1/N) · Σ_{i=1..N} |N_pred,i − N_GT,i| / N_GT,i × 100%    (2.11)
 
 trong đó N là số đoạn video đánh giá, N_{pred,i} và N_{GT,i} lần lượt là số lượt phương tiện hệ thống đếm được và số lượt đếm tay (ground truth) ở đoạn thứ i. MAE phản ánh sai số tuyệt đối, MAPE phản ánh sai số tương đối. Đánh giá được thực hiện theo từng lớp phương tiện và theo điều kiện (ngày/đêm) nếu có đủ dữ liệu.
 
