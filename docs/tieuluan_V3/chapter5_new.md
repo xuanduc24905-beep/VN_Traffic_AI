@@ -42,12 +42,12 @@ Panel sidebar cho phép chọn model từ danh sách các checkpoint đã huấn
 
 | Model | mAP@0.5 test | Mô tả |
 |---|---|---|
-| ⭐ V5+ (mặc định) | 0,782 | Best all-around, imgsz=960 |
+| ⭐ **p4_scale (mặc định)** | **0,787** | Mô hình cuối — khuyến nghị cho mọi đánh giá |
+| V5+ 960px | 0,782 | Baseline mạnh thứ hai, imgsz=960 |
 | V6 pseudo | 0,761 | Motor cải thiện (dù mAP tổng thấp hơn) |
-| V5 honest | 0,665 | Baseline honest split |
-| p4_scale | 0,787 | Mô hình cuối (khuyến nghị cho đánh giá) |
+| V5 honest | 0,665 | Baseline honest split 640 |
 
-Người dùng cũng có thể chọn model V3 VN (mAP val 0,951) với cảnh báo rằng số liệu này **có thể leak** và không đáng tin cậy — thể hiện tính minh bạch của ứng dụng.
+Người dùng cũng có thể chọn model V3 VN (mAP **val** 0,951) với cảnh báo rằng số liệu val cao này **có thể bị ảnh hưởng bởi rò rỉ dữ liệu cấp khung hình của phiên bản V1–V4**: khi đó val chứa các frame rất gần với train nên chỉ số không phản ánh khả năng tổng quát hóa. Khi chạy trên test honest V5+, mô hình V3 cho mAP thấp hơn nhiều so với V5+. Cảnh báo này thể hiện tính minh bạch của ứng dụng.
 
 ### 5.2.3 Cấu hình vạch đếm
 

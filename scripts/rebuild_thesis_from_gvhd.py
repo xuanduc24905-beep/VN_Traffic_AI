@@ -316,6 +316,18 @@ def main():
         print(f"    + {md.name}")
         insert_md(tltk_para, doc, md)
 
+    # Step 5: Thêm [31] Streamlit vào cuối danh mục TLTK
+    print(f"[5] Thêm [31] Streamlit vào TLTK")
+    streamlit_ref = ('[31]\tStreamlit Inc., "Streamlit — A faster way to build and share data apps," '
+                     'Streamlit Documentation. Accessed: Nov. 14, 2026. [Online]. '
+                     'Available: https://docs.streamlit.io/')
+    # Append paragraph at end of doc (after TLTK references)
+    last = doc.add_paragraph()
+    last.paragraph_format.first_line_indent = Cm(0)
+    last.paragraph_format.line_spacing = 1.5
+    last.paragraph_format.space_after = Pt(6)
+    r = last.add_run(streamlit_ref); set_font(r, 13)
+
     # Save
     doc.save(str(OUT))
     import os
