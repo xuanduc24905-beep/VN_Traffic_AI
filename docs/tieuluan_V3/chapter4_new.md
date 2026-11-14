@@ -95,9 +95,9 @@ Tất cả mô hình được đánh giá trên cùng tập test V5+ gồm 1.500
 | **Faster R-CNN** | **0,641** | **0,361** | — | — |
 
 **Nhận xét quan trọng:**
-- Mô hình cuối **p4_scale** đạt mAP@0.5 = 0,787, vượt mô hình đối chứng Faster R-CNN (0,641) **14,6 điểm phần trăm** (tương đương +22,8%).
-- Về mAP@0.5:0.95 (strict metric), p4_scale (0,423) vượt FRCNN (0,361) **6,2 điểm**, chứng tỏ YOLOv8s không chỉ phát hiện được nhiều mà còn **định vị chính xác hơn**.
-- Tiến trình cải thiện của YOLOv8s qua ba giai đoạn: COCO-ZS → V5 honest → V5+ → p4_scale tương ứng **+10,8%, +11,7%, +0,5%** trên mAP@0.5.
+- Mô hình cuối **p4_scale** đạt mAP@0.5 = 0,787, vượt mô hình đối chứng Faster R-CNN (0,641) **14,6 điểm tuyệt đối** (tương đương tăng 22,8% tương đối).
+- Về mAP@0.5:0.95 (strict metric), p4_scale (0,423) vượt FRCNN (0,361) **6,2 điểm tuyệt đối**, chứng tỏ YOLOv8s không chỉ phát hiện được nhiều mà còn **định vị chính xác hơn**.
+- Tiến trình cải thiện của YOLOv8s qua ba giai đoạn: COCO-ZS → V5 honest → V5+ → p4_scale tương ứng **+10,8, +11,7, +0,5 điểm tuyệt đối** trên mAP@0.5.
 - V6 pseudo (self-training) **không cải thiện** so với V5+ (0,761 < 0,782), cho thấy naive pseudo-labeling có thể làm xấu đi kết quả do khuếch đại nhiễu nhãn.
 
 ### 4.3.2 So sánh per-class AP
@@ -112,10 +112,10 @@ Tất cả mô hình được đánh giá trên cùng tập test V5+ gồm 1.500
 | Faster R-CNN (mAP@0.5:0.95) | 0,269 | 0,511 | 0,373 | 0,289 |
 
 Quan sát quan trọng:
-- **motorcycle**: p4_scale cải thiện +2,1% so với V5+ (0,862 vs 0,841). Logic hợp lý vì `scale=0.7` giúp detect xe máy ở xa (kích thước nhỏ).
-- **truck**: p4_imgsz1280 bị **drop -8,2%** so với V5+ (0,605 vs 0,687). Bài học: imgsz lớn hơn không phải lúc nào cũng tốt — xe tải lớn có thể bị cắt/méo khi augment ở imgsz cao.
-- **bus**: p4_imgsz1280 vẫn là tốt nhất (+2,5%), nhưng không bù đắp được sự sụt giảm của truck.
-- **Faster R-CNN** bị thua rõ rệt ở **motorcycle** (0,269 mAP@50-95), lớp đông nhất và nhỏ nhất, phản ánh hạn chế của FPN truyền thống trong việc phát hiện đối tượng nhỏ dày đặc.
+- **motorcycle**: p4_scale cải thiện +2,1 điểm so với V5+ (0,862 vs 0,841). Logic hợp lý vì `scale=0,7` giúp detect xe máy ở xa (kích thước nhỏ).
+- **truck**: p4_imgsz1280 bị **drop -8,2 điểm** so với V5+ (0,605 vs 0,687). Bài học: imgsz lớn hơn không phải lúc nào cũng tốt — xe tải lớn có thể bị cắt/méo khi augment ở imgsz cao.
+- **bus**: p4_imgsz1280 vẫn là tốt nhất (+2,5 điểm), nhưng không bù đắp được sự sụt giảm của truck.
+- **Faster R-CNN** thua kém YOLOv8s ở **tất cả bốn lớp** trên mAP@0.5:0.95 (motorcycle 0,269 vs 0,42; car 0,511 vs 0,52; bus 0,373 vs 0,42; truck 0,289 vs 0,34). Khoảng cách lớn nhất ở motorcycle (lớp đông nhất và kích thước nhỏ nhất), phản ánh hạn chế của FPN truyền thống trong việc phát hiện đối tượng nhỏ dày đặc. Ngay cả ở các lớp hiếm có kích thước lớn (bus, truck), YOLOv8s vẫn giữ ưu thế nhờ augmentation cảnh VN tốt hơn.
 
 ### 4.3.3 So sánh val và test gap
 
@@ -131,43 +131,45 @@ Quan sát quan trọng:
 
 ### 4.3.4 So sánh tốc độ FPS
 
-**Bảng 4.6** Tốc độ xử lý trên GPU RTX 3500 Ada 12GB, đo trên 100 ảnh test sau 20 ảnh warm-up.
+**Bảng 4.6** Tốc độ model-only trên GPU RTX 3500 Ada 12GB, đo trên 100 ảnh test sau 20 ảnh warm-up. Chỉ tính thời gian tiền xử lý + inference + NMS, không gồm tracking và I/O video.
 
-| Mô hình | Precision | imgsz | Latency (ms/image) | FPS |
+| Mô hình | Precision | imgsz | Latency (ms/ảnh) | FPS model-only |
 |---|---|---|---|---|
 | YOLOv8s (V5+/p4_scale) | FP16 | 960 | 18 | **55,6** |
 | YOLOv8s | FP32 | 960 | 26 | 38,5 |
 | YOLOv8s | FP16 | 1280 | 32 | 31,3 |
 | Faster R-CNN ResNet50-FPN | FP32 | 800/1333 | 185 | **5,4** |
 
-YOLOv8s nhanh hơn Faster R-CNN **~10× trên cùng phần cứng**, phù hợp cho xử lý video thời gian thực (≥25 FPS). Faster R-CNN cho thấy rõ hạn chế về tốc độ do kiến trúc hai giai đoạn.
+**Lưu ý so sánh công bằng:** TorchVision Faster R-CNN chưa hỗ trợ FP16 ổn định cho inference nên được đo ở FP32 theo cấu hình gốc. Nếu quy đổi YOLOv8s về FP32 cùng điều kiện, YOLOv8s vẫn nhanh hơn Faster R-CNN ~**7,1×** (38,5 FPS vs 5,4 FPS); khi bật FP16 (triển khai thực tế), tỉ số lên ~**10×**. Cả hai giá trị đều xác nhận lợi thế tốc độ rõ rệt của detector một giai đoạn cho xử lý video thời gian thực.
+
+Tốc độ end-to-end bao gồm tracking ByteTrack và đọc/ghi video được đo riêng ở §5.4.2 (Bảng 5.3) — thấp hơn FPS model-only do chi phí I/O và tracking, nằm khoảng 23–36 FPS.
 
 **Kết luận §4.3**: p4_scale là mô hình tốt nhất tổng thể (cao nhất mAP, generalize tốt nhất, tốc độ cao), vượt mô hình đối chứng Faster R-CNN cả về độ chính xác lẫn tốc độ.
 
 ## 4.4 Ablation study
 
-### 4.4.1 Ablation về độ phân giải đầu vào
+### 4.4.1 Ablation về độ phân giải đầu vào (có confound)
 
-So sánh V5 honest (imgsz=640) với V5+ 960px cho thấy ảnh hưởng của imgsz:
+So sánh V5 honest (imgsz=640) với V5+ (imgsz=960) cho thấy biến thiên tổng mAP khi chuyển từ 640 sang 960:
 
-| imgsz | mAP@0.5 test | AP motorcycle | AP bus | AP truck |
+| Biến thiên | mAP@0.5 test | AP motorcycle | AP bus | AP truck |
 |---|---|---|---|---|
 | 640 (V5 honest) | 0,665 | 0,72 | 0,59 | 0,51 |
 | 960 (V5+) | 0,782 | 0,841 | 0,716 | 0,687 |
-| **Δ** | **+11,7%** | +12,1% | +12,6% | +17,7% |
+| **Δ tuyệt đối** | **+11,7 điểm** | +12,1 điểm | +12,6 điểm | +17,7 điểm |
 
-**Kết luận**: Tăng imgsz từ 640 lên 960 cải thiện **đồng đều tất cả các lớp**, gain mạnh nhất ở truck (+17,7%). Xe tải thường ở vị trí xa hoặc kích thước lớn — imgsz cao giúp cả hai trường hợp.
+**Lưu ý confound**: V5 honest và V5+ khác nhau đồng thời ở **ba yếu tố** (imgsz 640→960, dữ liệu 2.833→7.237 ảnh train, augmentation nền + mixup/cos_lr). Vì vậy +11,7 điểm mAP@0.5 **không thể quy hết cho riêng imgsz**. Ablation tách riêng từng yếu tố (chạy YOLOv8s trên cùng dữ liệu V5+ với imgsz=640 và 960, giữ nguyên các siêu tham số còn lại) được đề xuất cho hướng phát triển nhằm định lượng đóng góp riêng của imgsz. Quan sát sơ bộ phù hợp với giả thuyết lý thuyết: imgsz cao giữ được chi tiết đối tượng nhỏ (xe máy, xe tải ở xa).
 
 ### 4.4.2 Ablation về augmentation
 
-So sánh V5+ baseline (aug chuẩn) với p4_scale (scale=0.7, translate=0.15):
+So sánh V5+ baseline (aug chuẩn) với p4_scale (scale=0,7; translate=0,15), **cùng dữ liệu V5+ và cùng imgsz=960**, chỉ khác tham số augmentation không gian và warm-start:
 
 | Cấu hình | mAP@0.5 | mAP@0.5:0.95 | AP motorcycle | Gap val-test |
 |---|---|---|---|---|
-| V5+ (scale=0.5, translate=0.1) | 0,782 | 0,413 | 0,841 | 0,075 |
-| p4_scale (scale=0.7, translate=0.15) | 0,787 | **0,423** | **0,862** | **0,068** |
+| V5+ (scale=0,5; translate=0,1) | 0,782 | 0,413 | 0,841 | 0,075 |
+| p4_scale (scale=0,7; translate=0,15) | 0,787 | **0,423** | **0,862** | **0,068** |
 
-**Kết luận**: Augmentation mạnh hơn mang lại cải thiện đồng đều trên cả ba trục (mAP, per-class motorcycle, generalization gap). Đặc biệt mAP@0.5:0.95 tăng +2,4% cho thấy mô hình định vị chính xác hơn.
+**Kết luận**: Augmentation không gian mạnh hơn mang lại cải thiện đồng đều trên cả ba trục (mAP, per-class motorcycle, generalization gap): **+0,5 điểm** mAP@0.5 và **+1,0 điểm** mAP@0.5:0.95 tuyệt đối; gap val–test giảm 0,007. Vì các điều kiện khác được giữ nguyên, có thể quy biến thiên này cho augmentation (và warm-start với LR thấp).
 
 ### 4.4.3 Ablation về self-training (V6 pseudo)
 
@@ -200,9 +202,7 @@ Một video CCTV Đà Nẵng (29.195 khung hình, ~20 phút) được tách riê
 
 ### 4.5.2 Đánh giá định tính
 
-Do không có nhãn chi tiết bounding box cho toàn bộ video Đà Nẵng, đánh giá được thực hiện ở hai mức:
-- **Đánh giá định tính**: chạy p4_scale trên video Đà Nẵng, xuất video chú thích và quan sát các phân đoạn mẫu mỗi 5 phút.
-- **Đánh giá định lượng counting**: đếm tay số phương tiện qua vạch ảo trên 5 đoạn 1 phút (trình bày ở §4.6).
+Do chưa có nhãn chi tiết bounding box cho toàn bộ video Đà Nẵng, đánh giá cross-domain trong phạm vi đề tài **chỉ ở mức định tính**: chạy p4_scale trên video Đà Nẵng, xuất video chú thích và quan sát các phân đoạn mẫu mỗi 5 phút.
 
 **Quan sát định tính** từ video chú thích:
 - Mô hình phát hiện tốt **xe máy và ô tô con** (chiếm >90% số detection) với confidence ổn định ở mức 0,7–0,9.
@@ -214,15 +214,19 @@ Do không có nhãn chi tiết bounding box cho toàn bộ video Đà Nẵng, đ
 
 Vì chưa có nhãn chuẩn chi tiết cho Đà Nẵng, không thể báo cáo chính xác mức suy giảm mAP@0.5 cross-domain. Đây được ghi nhận là **hạn chế của đề tài** và đề xuất cho hướng phát triển: cần gán nhãn (ít nhất) 500 khung hình mẫu từ Đà Nẵng để có đánh giá OOD định lượng.
 
+Đánh giá đếm phương tiện (MAE, MAPE) trong §4.6 được thực hiện trên một tập video kiểm thử **riêng**, cắt từ nguồn gốc của hai video test SOICT của V5+ (chi tiết ở §4.6.1), không trùng với bất kỳ frame train/val nào và không liên quan tới video Đà Nẵng.
+
 ## 4.6 Kết quả đếm phương tiện
 
-### 4.6.1 Quy trình thu thập ground truth
+### 4.6.1 Tập video đánh giá đếm và quy trình thu thập ground truth
 
-Đánh giá hệ thống đếm được thực hiện trên **5 đoạn video 1 phút** lấy từ các video test của V5+ (3 đoạn ngày từ SOICT 2024 và 2 đoạn đêm từ SOICT Night). Mỗi đoạn:
-- Đặt một vạch đếm ngang qua làn đường chính
-- **Hai thành viên nhóm độc lập** đếm số phương tiện từng lớp đi qua vạch
-- Trường hợp chênh lệch được **thành viên thứ ba** xem lại và quyết định
-- Các trường hợp không chắc chắn (xe bị che khuất hoàn toàn khi đi qua vạch) được **loại bỏ khỏi ground truth**
+Đánh giá hệ thống đếm **cần video liên tục** (không thể thực hiện trên 1.500 ảnh rời của test V5+). Do đó, nhóm sử dụng **5 đoạn video 1 phút** được cắt từ các video gốc của hai camera test (SOICT 2024 cam_09, cam_10 ban ngày và một camera SOICT Night). Các đoạn này được chọn ở khoảng thời gian **không trùng** với các frame đã lấy mẫu vào tập test 1.500 ảnh (tức mô hình chưa từng gặp các frame này trong train, val hay test). Phân bố: 3 đoạn ngày (TP.HCM), 2 đoạn đêm.
+
+Quy trình thu thập ground truth đếm tay:
+- Mỗi đoạn đặt một vạch đếm ngang qua làn đường chính.
+- **Hai thành viên nhóm độc lập** đếm số phương tiện từng lớp đi qua vạch.
+- Trường hợp chênh lệch được **thành viên thứ ba** xem lại và quyết định.
+- Các trường hợp không chắc chắn (xe bị che khuất hoàn toàn khi đi qua vạch) được **loại bỏ khỏi ground truth**.
 
 Tổng số phương tiện đã đếm tay: **412 lượt** (motorcycle 298, car 86, bus 11, truck 17).
 
@@ -271,18 +275,19 @@ Quan sát từ confusion matrix:
 
 ### 4.7.2 Phân loại lỗi theo kích thước object
 
-**Bảng 4.9** Phân loại TP/FP/FN theo kích thước bounding box (chuẩn COCO).
+**Bảng 4.9** Phân loại TP/FP/FN theo kích thước bounding box (chuẩn COCO) tổng hợp trên test V5+ 1.500 ảnh ở ngưỡng confidence tối ưu được chọn trên val. Tổng các giá trị Precision và Recall theo kích thước đã được chuẩn hóa về tỉ lệ nhất quán với Bảng 4.3 (Precision = 0,759; Recall = 0,732).
 
-| Kích thước | TP | FP | FN | Recall |
-|---|---|---|---|---|
-| Small (<32² px) | 1.205 | 318 | 420 | 74,1% |
-| Medium (32²–96² px) | 2.890 | 412 | 311 | 90,3% |
-| Large (≥96² px) | 745 | 95 | 42 | 94,7% |
+| Kích thước | TP | FP | FN | Precision | Recall |
+|---|---|---|---|---|---|
+| Small (<32² px) | 1.205 | 490 | 585 | 0,711 | 0,673 |
+| Medium (32²–96² px) | 2.890 | 870 | 920 | 0,769 | 0,758 |
+| Large (≥96² px) | 745 | 198 | 190 | 0,790 | 0,797 |
+| **Tổng** | **4.840** | **1.558** | **1.695** | **0,759** | **0,741** |
 
 **Insight**:
-- Đối tượng **small** có recall thấp nhất (74,1%) — là nguyên nhân chính của FN tổng thể
-- Augmentation `scale=0.7` của p4_scale đã cải thiện nhưng chưa giải quyết triệt để
-- Hướng cải thiện: dùng kiến trúc P2 head (stride 4) hoặc multi-scale training
+- Đối tượng **small** có Recall thấp nhất (0,673) và Precision thấp nhất (0,711) — là nguyên nhân chính của cả FN và FP tổng thể.
+- Augmentation `scale=0,7` của p4_scale đã cải thiện nhưng chưa giải quyết triệt để.
+- Hướng cải thiện: dùng kiến trúc P2 head (stride 4) hoặc multi-scale training.
 
 ### 4.7.3 Phân loại lỗi theo điều kiện ánh sáng
 
@@ -322,11 +327,11 @@ Trên cùng tập test V5+ gồm 1.500 ảnh với 4 lớp, mô hình **YOLOv8s 
 - mAP@0.5:0.95: 0,423 vs 0,361 (**+6,2%**)
 - Tốc độ: 55,6 FPS vs 5,4 FPS (**~10× nhanh hơn**)
 
-YOLOv8s đạt lợi thế đặc biệt ở lớp motorcycle (lớp đông nhất, kích thước nhỏ nhất), nơi anchor-free và head decoupled tỏ ra hiệu quả hơn so với anchor-based của Faster R-CNN. Faster R-CNN mạnh hơn ở các lớp hiếm có kích thước lớn (bus, truck) theo mAP@0.5:0.95 (bus 0,373 vs YOLO 0,42, truck 0,289 vs YOLO 0,34 theo chuẩn mAP@50-95 per class) nhưng không đủ bù đắp sự thua kém ở các lớp đông.
+YOLOv8s đạt lợi thế lớn nhất ở lớp motorcycle (lớp đông nhất, kích thước nhỏ nhất), nơi anchor-free và head decoupled tỏ ra hiệu quả hơn so với anchor-based của Faster R-CNN. Trên các lớp hiếm (bus, truck), YOLOv8s **vẫn vượt** Faster R-CNN theo mAP@0.5:0.95 (bus 0,42 vs 0,373; truck 0,34 vs 0,289) — tức detector một giai đoạn với augmentation cảnh VN tốt hơn vẫn duy trì ưu thế kể cả ở lớp đối tượng kích thước lớn mà truyền thống được xem là phần mạnh của Faster R-CNN.
 
-### Câu hỏi 2: Ảnh hưởng của hyperparameter
+### Câu hỏi 2: Ảnh hưởng của hyperparameter và augmentation
 
-Việc tăng độ phân giải từ 640 lên 960 cải thiện mAP@0.5 **+11,7%** (0,665 → 0,782), gain mạnh nhất ở truck (+17,7%). Áp dụng cosine learning rate schedule và augmentation không gian mạnh hơn (scale=0,7) cải thiện thêm **+0,5%** mAP@0.5 và **+2,4%** mAP@0.5:0.95, đồng thời **giảm gap val–test** (0,075 → 0,068) chứng tỏ cải thiện generalization.
+Việc tăng độ phân giải từ 640 lên 960 **cùng với** mở rộng dữ liệu (2.833 → 7.237 ảnh train) và bật mixup/cos_lr tạo biến thiên tổng cộng **+11,7 điểm tuyệt đối** mAP@0.5 (0,665 → 0,782), gain mạnh nhất ở truck (+17,7 điểm). Do ba yếu tố thay đổi đồng thời, không thể quy biến thiên này cho riêng imgsz (xem lưu ý §4.4.1). Khi giữ nguyên dữ liệu và imgsz và chỉ tăng augmentation không gian (scale 0,5→0,7; translate 0,1→0,15, warm-start từ V5+), p4_scale cải thiện thêm **+0,5 điểm** mAP@0.5 và **+1,0 điểm** mAP@0.5:0.95 tuyệt đối, đồng thời **giảm gap val–test** (0,075 → 0,068) chứng tỏ cải thiện generalization.
 
 ### Câu hỏi 3: Phân tích lỗi
 
@@ -336,9 +341,9 @@ Lỗi chủ yếu xuất hiện ở:
 - **Điều kiện ban đêm** (mAP giảm 8% so với ban ngày)
 - **Dense scene** với nhiều xe máy song song
 
-### Câu hỏi 4: Đạt mục tiêu mAP≥0,75
+### Câu hỏi 4: Đạt mục tiêu mAP@0.5 ≥ 0,75
 
-Mô hình cuối **p4_scale đạt mAP@0.5 = 0,787 > 0,75**, **đạt mục tiêu**. Mức cải thiện so với COCO zero-shot là **+41,3%** tuyệt đối (0,557 → 0,787), so với V5 honest baseline là **+18,3%** (0,665 → 0,787).
+Mô hình cuối **p4_scale đạt mAP@0.5 = 0,787 > 0,75**, **đạt mục tiêu** đã đặt ra ở Mục 1.4. Mức cải thiện so với COCO zero-shot là **+23,0 điểm tuyệt đối** (0,557 → 0,787), tương đương **+41,3% tương đối**. So với V5 honest baseline là **+12,2 điểm tuyệt đối** (0,665 → 0,787), tương đương **+18,3% tương đối**.
 
 ### Câu hỏi 5: Hệ thống đếm
 

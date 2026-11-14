@@ -16,7 +16,7 @@
 
 Mặc dù đã đạt các mục tiêu chính, đề tài vẫn có các hạn chế sau cần ghi nhận:
 
-**Hạn chế 1 — Phạm vi địa lý hạn chế**. Dữ liệu V5+ chủ yếu từ TP.HCM, Cần Thơ và một phần snapshot CCTV từ Vietnam Vehicles v10. Các khu vực khác như Hà Nội, Đà Nẵng, miền núi phía Bắc chưa được đại diện đầy đủ. Mô hình có thể bias về domain đô thị miền Nam.
+**Hạn chế 1 — Phạm vi địa lý hạn chế**. Dữ liệu V5+ chủ yếu từ TP.HCM, Cần Thơ, cùng một phần snapshot CCTV của Vietnam Vehicles v10 phân bố trên nhiều camera ở miền Nam. Các khu vực khác như Hà Nội, Đà Nẵng, miền Trung và miền núi phía Bắc chưa được đại diện đầy đủ, nên mô hình có thể bias về domain đô thị miền Nam.
 
 **Hạn chế 2 — Đánh giá ngoài phân phối (OOD) chỉ định tính**. Video CCTV Đà Nẵng (29.195 khung hình) chưa được gán nhãn bounding box chi tiết, do đó chỉ thực hiện đánh giá định tính và counting (5 đoạn 1 phút). Không thể báo cáo chính xác mức suy giảm mAP cross-domain.
 
