@@ -1,0 +1,59 @@
+{
+  "v5plus_baseline": {
+    "status": "ok",
+    "weights": "runs/detect/train_v8s_v5plus_960/weights/best.pt",
+    "imgsz": 960,
+    "mAP50": 0.7819177342044896,
+    "mAP50_95": 0.4133905960090476,
+    "precision": 0.7677251049565506,
+    "recall": 0.7073090862954721,
+    "AP50": {
+      "motorcycle": 0.8405610825606495,
+      "car": 0.8838982790465584,
+      "bus": 0.7164038762588469,
+      "truck": 0.6868076989519035
+    }
+  },
+  "r_p2": {
+    "status": "missing",
+    "weights": "runs/detect/r_p2/weights/best.pt"
+  },
+  "r_clspw": {
+    "status": "missing",
+    "weights": "runs/detect/r_clspw/weights/best.pt"
+  },
+  "r_progressive": {
+    "status": "missing",
+    "weights": "runs/detect/r_progressive/weights/best.pt"
+  },
+  "p4_scale_from_baseline": {
+    "status": "ok",
+    "weights": "runs/detect/p4_scale_from_baseline/weights/best.pt",
+    "imgsz": 960,
+    "mAP50": 0.786927783745695,
+    "mAP50_95": 0.42349229103418207,
+    "precision": 0.7590372403405363,
+    "recall": 0.7324808682364429,
+    "AP50": {
+      "motorcycle": 0.8616059252998127,
+      "car": 0.8850752007017344,
+      "bus": 0.7216939052427371,
+      "truck": 0.6793361037384956
+    }
+  },
+  "p4_imgsz1280_from_baseline": {
+    "status": "ok",
+    "weights": "runs/detect/p4_imgsz1280_from_baseline/weights/best.pt",
+    "imgsz": 1280,
+    "mAP50": 0.7744562163025789,
+    "mAP50_95": 0.4178596556261982,
+    "precision": 0.7286868844549426,
+    "recall": 0.7430803999290585,
+    "AP50": {
+      "motorcycle": 0.8624334153353514,
+      "car": 0.8888434479552548,
+      "bus": 0.7417790821266852,
+      "truck": 0.6047689197930238
+    }
+  }
+}
