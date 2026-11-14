@@ -18,6 +18,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import check_camera_leak_v10 as cam_chk  # noqa: E402
 import check_cross_v5_leak_v10 as cross_chk  # noqa: E402
+import check_label_completeness_v10 as comp_chk  # noqa: E402
 import check_exact_duplicates_v10 as md5_chk  # noqa: E402
 import check_label_integrity_v10 as lbl_chk  # noqa: E402
 import check_perceptual_duplicates_v10 as phash_chk  # noqa: E402
@@ -77,19 +78,29 @@ def build_markdown(sv, res, feas) -> str:
     w("| Gộp v10 vào **train** V5+ (val/test giữ của V5) có làm leak eval V5+? | " + (
         "✅ **Không** — 0 ảnh/khung/camera của v10 trùng với val/test V5 (check (g))." if cross_ok else
         "❌ **Có** — xem check (g).") + " |")
+    comp = res["comp"]
+    ml, ov = comp["missing_labels"], comp["burned_in_overlay"]
     w("| Nhãn có hợp lệ? | " + ("✅ Format hợp lệ" if not label_fail else "❌ Có lỗi format") +
-      "; ⚠️ nghi **thiếu nhãn** (xem dưới) |")
+      f"; {'✅' if ml['verdict'] == 'PASS' else '❌'} độ đầy đủ ngang V5 "
+      f"(~{ml['v10']['est_pct_vehicles_unlabeled']}% vs {ml['v5_eval_control']['est_pct_vehicles_unlabeled']}% xe chưa gán, check (h)) |")
+    if ov.get("verdict") not in (None, "N/A"):
+        w(f"| Ảnh có overlay vẽ sẵn? | {'❌' if ov['verdict'] == 'FAIL' else '✅'} **{ov['pct_with_overlay']}%** ảnh mẫu "
+          f"(CI95 {ov['ci95_pct'][0]}–{ov['ci95_pct'][1]}%) có tag/khung của hệ thống tracking gốc — check (h) |")
     w("")
     if any_leak and cross_ok:
         w("**→ Về leakage, v10 an toàn để gộp vào train V5+ theo đúng cách "
           "[build_v5plus_merged.py:3](../scripts/data_prep/build_v5plus_merged.py#L3) đang làm** "
           "(gộp cả 3 split v10 vào train, val/test giữ của V5): leak nội bộ v10 không chạm tới eval V5+. "
           "**Không** an toàn nếu dùng split gốc của v10 làm val/test.\n")
-    w("**Còn lại — rủi ro chất lượng nhãn (không phải leak):** trung bình chỉ ~1.3 box/ảnh trên ảnh CCTV "
-      "nhiều xe, và các file cùng camera + cùng giây mang **bộ nhãn khác nhau** (vd "
-      "`general_caunamprc554_50Y31618_13-02-2024_13-08-11` có 2 box, bản ở test chỉ 1 box) → nhiều xe "
-      "không được gán nhãn, model có thể bị dạy coi xe là nền. Một số ảnh `gen_*` còn có **khung bbox vẽ "
-      "sẵn lên pixel** (thấy trong preview của check (g)). Nên kiểm tra trực quan một mẫu trước khi tin dùng.\n")
+    w("**Còn lại — chất lượng dữ liệu (không phải leak):**")
+    w(f"- Giả thuyết \"thiếu nhãn nhiều\" (do chỉ ~1.3 box/ảnh) **không được xác nhận**: theo detector COCO, "
+      f"tỉ lệ xe chưa gán nhãn của v10 ≈ V5 (~{ml['v10']['est_pct_vehicles_unlabeled']}%, cận dưới). "
+      f"Ảnh v10 vốn ít xe (snapshot vi phạm, tập trung 1–3 xe).")
+    if ov.get("verdict") == "FAIL":
+        w(f"- **Overlay vẽ sẵn lên pixel ở ~{ov['pct_with_overlay']}% ảnh**: tag ID/biển số/màu đặt ngay góc box xe "
+          f"được theo dõi → nguy cơ model học lối tắt \"tag màu = xe\". Không làm sai số liệu trên test V5 (ảnh "
+          f"V5 không có overlay) nhưng có thể làm giảm lợi ích của v10. Nên ablation (mục 4).")
+    w("")
     w("_Ghi chú: docstring build_v5plus_merged.py ghi \"~776 camera\" — thực tế parse được 44 camera._\n")
 
     w("## 1. Tổng quan cấu trúc\n")
@@ -130,6 +141,11 @@ def build_markdown(sv, res, feas) -> str:
     w(f"| (g) Chéo v10 ↔ val/test V5 | MD5=0, pHash≤5=0, NCC nền camera <0.90 và < min đối chứng | "
       f"MD5 {cross['md5']['n_hits']}, pHash {cross['phash']['n_pairs']} (min d={cross['phash']['min_hamming']}), "
       f"NCC max {cb['max_cross_ncc']} | {ICON[cross['verdict']]} |")
+    w(f"| (h) Thiếu nhãn (detector COCO) | % xe chưa gán v10 − V5 ≤ 5pp | v10 {ml['v10']['est_pct_vehicles_unlabeled']}% "
+      f"vs V5 {ml['v5_eval_control']['est_pct_vehicles_unlabeled']}% | {ICON[ml['verdict']]} |")
+    if ov.get("verdict") not in (None, "N/A"):
+        w(f"| (h') Overlay vẽ sẵn (review tay {ov['n_reviewed']} ảnh) | cận dưới CI95 ≤ 5% | "
+          f"{ov['n_with_overlay']}/{ov['n_reviewed']} = {ov['pct_with_overlay']}% (CI95 {ov['ci95_pct']}) | {ICON[ov['verdict']]} |")
     w("")
 
     w("## 3. Chi tiết\n")
@@ -209,6 +225,32 @@ def build_markdown(sv, res, feas) -> str:
     w("- Giới hạn: không bắt được trường hợp cùng địa điểm nhưng góc quay khác hẳn (NCC nền thấp). "
       "Với 44 camera v10 (tên địa điểm VN) và V5 eval (SOICT24 + Cần Thơ) thì khả năng này thấp.\n")
 
+    w("### (h) Độ đầy đủ nhãn & overlay vẽ sẵn\n")
+    a, b = ml["v10"], ml["v5_eval_control"]
+    w(f"- Detector: {ml['detector']}, conf≥{ml['params']['conf']}, lớp {ml['params']['coco_classes']}; "
+      f"xe \"chưa gán\" = IoU<{ml['params']['iou_match']} với mọi GT, không nằm trong GT (IoA<{ml['params']['ioa_inside_gt']}), "
+      f"diện tích ≥{ml['params']['min_area_frac']*100:.1f}% ảnh.")
+    w("")
+    w("| | v10 | V5 val/test (đối chứng) |")
+    w("|---|---|---|")
+    w(f"| Ảnh | {a['n_images']} | {b['n_images']} |")
+    w(f"| Box GT/ảnh | {a['gt_per_image']} | {b['gt_per_image']} |")
+    w(f"| % ảnh có ≥1 xe chưa gán | {a['pct_images_with_unlabeled_vehicle']}% | {b['pct_images_with_unlabeled_vehicle']}% |")
+    w(f"| **Ước lượng % xe chưa gán** | **{a['est_pct_vehicles_unlabeled']}%** | **{b['est_pct_vehicles_unlabeled']}%** |")
+    w("")
+    w("- % ảnh cao hơn ở V5 chỉ vì V5 có nhiều xe/ảnh (cơ hội sót cao hơn); so theo % xe thì hai bộ ngang nhau. "
+      "Detector COCO bỏ sót nhiều xe máy nhìn từ trên cao → đây là **cận dưới** cho cả hai.")
+    w(f"- Preview (xanh lá = GT, đỏ = xe chưa gán): [{comp['preview']}](../{comp['preview']}).")
+    if ov.get("verdict") not in (None, "N/A"):
+        w(f"- Overlay: review bằng mắt {ov['n_reviewed']} ảnh ngẫu nhiên (seed 2024) → {ov['n_with_overlay']} ảnh có "
+          f"overlay ({ov['pct_with_overlay']}%, CI95 {ov['ci95_pct'][0]}–{ov['ci95_pct'][1]}% ≈ "
+          f"{ov['est_images_in_v10'][0]}–{ov['est_images_in_v10'][1]} ảnh toàn bộ v10). Sheet: "
+          f"`reports/v10_overlay_review_sheet_{{0,1,2}}.jpg`, kết quả: `reports/v10_overlay_manual_review.json`.")
+        for o in ov.get("observations", []):
+            w(f"  - {o}")
+        w("- Heuristic màu tự động đã thử và bị loại: chỉ bắt <3% ảnh v10, dương tính giả 5–8% trên V5.")
+    w("")
+
     w("## 4. Cần fix gì trước khi gộp (ĐỀ XUẤT — chưa thực hiện)\n")
     if not (any_leak or label_fail):
         w("Không cần fix. v10 có thể gộp vào V5+ an toàn.\n")
@@ -219,8 +261,11 @@ def build_markdown(sv, res, feas) -> str:
           "để báo cáo số liệu. Leak nội bộ v10 khi đó vô hại vì không có split eval nào của v10.")
         w("2. Leak chéo v10 ↔ val/test V5: " + ("✅ đã kiểm tra, PASS (check (g))." if cross_ok else
           "❌ check (g) FAIL — loại các ảnh/camera v10 trùng khỏi train trước khi gộp."))
-        w("3. Dedup khung hình trùng trong v10 (cùng camera + cùng giây / pHash≤2) để tránh over-weight; "
-          "giữ một bản và **gộp nhãn** của các bản (mỗi file có thể chỉ gán nhãn một số xe trong khung).")
+        w("3. (Tuỳ chọn) Dedup khung hình gần trùng trong v10 (pHash≤2 cùng camera) để tránh over-weight "
+          "một số cảnh; không ảnh hưởng tính trung thực của eval.")
+        w("4. **Ablation overlay** (đáng làm nhất): train thêm 1 run V5+ bỏ (hoặc che) các ảnh v10 có overlay, "
+          "so mAP trên test V5 với V5+ hiện tại. Nếu ngang/hơn → bỏ ảnh overlay; nếu kém hơn → overlay không gây hại "
+          "đáng kể, giữ nguyên.")
         w("")
         w("**Hướng B — Cần v10 có valid/test riêng đáng tin (vd báo cáo mAP trên v10):**")
         w(f"1. Rebuild split theo **site_id** (group split, {feas['n_sites']} địa điểm), không theo ảnh — "
@@ -258,7 +303,7 @@ def main() -> int:
     res = {
         "md5": md5_chk.run(), "cam": cam_chk.run(), "veh": veh_chk.run(),
         "tmp": time_chk.run(), "ph": phash_chk.run(), "lbl": lbl_chk.run(),
-        "cross": cross_chk.run(),
+        "cross": cross_chk.run(), "comp": comp_chk.run(),
     }
     res["_files"] = {
         "survey": _rel(REPORTS_DIR / "v10_survey.json"),
@@ -266,6 +311,8 @@ def main() -> int:
         "(c) vehicle leak": _rel(veh_chk.OUT), "(d) temporal leak": _rel(time_chk.OUT),
         "(e) pHash near-dup": _rel(phash_chk.OUT), "(f) label integrity": _rel(lbl_chk.OUT),
         "(g) leak chéo v10 ↔ V5 eval": _rel(cross_chk.OUT), "(g) preview": _rel(cross_chk.PREVIEW),
+        "(h) độ đầy đủ nhãn + overlay": _rel(comp_chk.OUT), "(h) preview thiếu nhãn": _rel(comp_chk.PREVIEW),
+        "(h') review overlay thủ công": _rel(comp_chk.REVIEW),
     }
     md = build_markdown(sv, res, _feasibility(recs))
     a.out.parent.mkdir(parents=True, exist_ok=True)
