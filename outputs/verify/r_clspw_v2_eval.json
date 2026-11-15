@@ -1,0 +1,69 @@
+{
+  "ckpt": "runs/detect/r_clspw_v2/weights/best.pt",
+  "imgsz": 960,
+  "per_dataset": {
+    "V5+_test": {
+      "data": "data/data_v5plus.yaml",
+      "split": "test",
+      "mAP50": 0.7984286268897476,
+      "mAP50_95": 0.4282980600835371,
+      "mAP75": 0.41064238047116897,
+      "precision": 0.7648399686855885,
+      "recall": 0.7444819788527535,
+      "AP50_per_class": {
+        "motorcycle": 0.8607575579143143,
+        "car": 0.8960712010744561,
+        "bus": 0.7462265834101817,
+        "truck": 0.6906591651600384
+      },
+      "seconds": 11.31,
+      "imgsz": 960,
+      "conf": 0.001,
+      "iou": 0.7,
+      "batch": 16,
+      "half": true
+    },
+    "VN_Aerial_val": {
+      "data": "data/data_vn_aerial.yaml",
+      "split": "val",
+      "mAP50": 0.6368052986909132,
+      "mAP50_95": 0.30089305112631265,
+      "mAP75": 0.2411958803798867,
+      "precision": 0.7233831095937071,
+      "recall": 0.5960994202834189,
+      "AP50_per_class": {
+        "motorcycle": 0.6849613867619916,
+        "car": 0.7409955106403114,
+        "bus": 0.4711244622828447,
+        "truck": 0.6501398350785048
+      },
+      "seconds": 3.81,
+      "imgsz": 960,
+      "conf": 0.001,
+      "iou": 0.7,
+      "batch": 16,
+      "half": true
+    },
+    "VN_Aerial_test": {
+      "data": "data/data_vn_aerial.yaml",
+      "split": "test",
+      "mAP50": 0.6017691103000846,
+      "mAP50_95": 0.2891063156708845,
+      "mAP75": 0.22484080460338177,
+      "precision": 0.6773986335750086,
+      "recall": 0.5880843859429044,
+      "AP50_per_class": {
+        "motorcycle": 0.5300854590953772,
+        "car": 0.7548875094768475,
+        "bus": 0.44181049361216446,
+        "truck": 0.6802929790159495
+      },
+      "seconds": 1.4,
+      "imgsz": 960,
+      "conf": 0.001,
+      "iou": 0.7,
+      "batch": 16,
+      "half": true
+    }
+  }
+}

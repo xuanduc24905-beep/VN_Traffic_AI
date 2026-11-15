@@ -30,6 +30,9 @@ results/videos/*.avi
 baseline/*.mp4
 baseline/*.avi
 
+# Verify artifacts: giữ JSON/log/PNG, bỏ video binary lớn
+outputs/verify/*.mp4
+
 # Word/Office lock files
 ~$*
 *.tmp

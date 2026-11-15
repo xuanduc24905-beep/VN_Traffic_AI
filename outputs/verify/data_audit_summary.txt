@@ -1,0 +1,41 @@
+
+=== V5+ ===
+  train: 7237 images, 25985 bboxes, empty=0
+    cls bbox: {1: 5921, 0: 13453, 3: 4960, 2: 1651}  (0=moto, 1=car, 2=bus, 3=truck)
+    size bbox (COCO): {'small': 3301, 'medium': 13436, 'large': 9248}
+    per-source images: {'cantho': 259, 'soict24_day': 879, 'soict_night': 1385, 'OTHER': 4404, 'vn_v3': 310}
+    per-source cls bbox: {'cantho': {1: 933, 0: 870, 3: 57, 2: 7}, 'soict24_day': {0: 4025, 3: 1839, 1: 1575, 2: 575}, 'soict_night': {3: 844, 1: 2578, 0: 4751, 2: 748}, 'OTHER': {3: 1859, 0: 3336, 1: 265, 2: 253}, 'vn_v3': {1: 570, 0: 471, 3: 361, 2: 68}}
+    per-source size bbox: {'cantho': {'small': 732, 'medium': 1065, 'large': 70}, 'soict24_day': {'medium': 4822, 'large': 1537, 'small': 1655}, 'soict_night': {'large': 2064, 'medium': 6199, 'small': 658}, 'OTHER': {'large': 5188, 'medium': 520, 'small': 5}, 'vn_v3': {'medium': 830, 'large': 389, 'small': 251}}
+    issue_counts: {'malformed_lines': 0, 'bad_class_id': 0, 'coords_out_of_range': 0, 'duplicate_bboxes': 9, 'images_without_labels': 0, 'labels_without_images': 0}
+  val: 1466 images, 12020 bboxes, empty=6
+    cls bbox: {1: 2431, 0: 7134, 3: 1996, 2: 459}  (0=moto, 1=car, 2=bus, 3=truck)
+    size bbox (COCO): {'medium': 6784, 'small': 3044, 'large': 2192}
+    per-source images: {'cantho': 466, 'soict24_day': 1000}
+    per-source cls bbox: {'cantho': {1: 777, 0: 1282, 3: 83, 2: 12}, 'soict24_day': {0: 5852, 3: 1913, 2: 447, 1: 1654}}
+    per-source size bbox: {'cantho': {'medium': 1154, 'small': 884, 'large': 116}, 'soict24_day': {'medium': 5630, 'large': 2076, 'small': 2160}}
+    issue_counts: {'malformed_lines': 0, 'bad_class_id': 0, 'coords_out_of_range': 0, 'duplicate_bboxes': 0, 'images_without_labels': 0, 'labels_without_images': 0}
+  test: 1500 images, 49444 bboxes, empty=1
+    cls bbox: {1: 8031, 0: 39807, 2: 754, 3: 852}  (0=moto, 1=car, 2=bus, 3=truck)
+    size bbox (COCO): {'large': 3714, 'medium': 38057, 'small': 7673}
+    per-source images: {'soict24_day': 1500}
+    per-source cls bbox: {'soict24_day': {1: 8031, 0: 39807, 2: 754, 3: 852}}
+    per-source size bbox: {'soict24_day': {'large': 3714, 'medium': 38057, 'small': 7673}}
+    issue_counts: {'malformed_lines': 0, 'bad_class_id': 0, 'coords_out_of_range': 0, 'duplicate_bboxes': 2, 'images_without_labels': 0, 'labels_without_images': 0}
+  LEAKAGE across splits: 0 base keys appear in >1 split
+
+=== VN_Aerial ===
+  val: 486 images, 4822 bboxes, empty=0
+    cls bbox: {1: 2232, 3: 785, 0: 1654, 2: 151}  (0=moto, 1=car, 2=bus, 3=truck)
+    size bbox (COCO): {'medium': 1299, 'small': 3233, 'large': 290}
+    per-source images: {'OTHER': 486}
+    per-source cls bbox: {'OTHER': {1: 2232, 3: 785, 0: 1654, 2: 151}}
+    per-source size bbox: {'OTHER': {'medium': 1299, 'small': 3233, 'large': 290}}
+    issue_counts: {'malformed_lines': 0, 'bad_class_id': 0, 'coords_out_of_range': 0, 'duplicate_bboxes': 3, 'images_without_labels': 0, 'labels_without_images': 0}
+  test: 149 images, 2042 bboxes, empty=0
+    cls bbox: {0: 768, 3: 482, 1: 766, 2: 26}  (0=moto, 1=car, 2=bus, 3=truck)
+    size bbox (COCO): {'medium': 481, 'small': 1470, 'large': 91}
+    per-source images: {'OTHER': 149}
+    per-source cls bbox: {'OTHER': {0: 768, 3: 482, 1: 766, 2: 26}}
+    per-source size bbox: {'OTHER': {'medium': 481, 'small': 1470, 'large': 91}}
+    issue_counts: {'malformed_lines': 0, 'bad_class_id': 0, 'coords_out_of_range': 0, 'duplicate_bboxes': 1, 'images_without_labels': 0, 'labels_without_images': 0}
+  LEAKAGE across splits: 0 base keys appear in >1 split

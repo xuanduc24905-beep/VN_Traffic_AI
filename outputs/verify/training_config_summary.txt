@@ -1,0 +1,90 @@
+
+--- V5_honest (runs/detect/train_v8s_v5_honest) ---
+  model=/home/xuand/vn_traffic_ai/yolov8s.pt data=/home/xuand/vn_traffic_ai/data/data_v5.yaml imgsz=640 batch=16
+  epochs(max)=40 patience=15 optimizer=SGD
+  lr0=0.01 lrf=0.01 cos_lr=False close_mosaic=10
+  scale=0.5 translate=0.1 mosaic=1.0 mixup=0.0 copy_paste=0.0
+  cls_pw=0.0 obj_pw=None  box=7.5 cls=0.5 dfl=1.5
+  results.csv: 40 rows, best@epoch_idx=33 fitness=0.5413  total_time≈20m3s
+    best row keys: mAP50=metrics/mAP50(B) mAP50-95=metrics/mAP50-95(B)
+    best mAP50=0.82265  best mAP50-95=0.51006
+
+--- V5+_baseline (runs/detect/train_v8s_v5plus_960) ---
+  model=/home/xuand/vn_traffic_ai/yolov8s.pt data=/home/xuand/vn_traffic_ai/data/data_v5.yaml imgsz=960 batch=16
+  epochs(max)=40 patience=15 optimizer=SGD
+  lr0=0.005 lrf=0.01 cos_lr=True close_mosaic=10
+  scale=0.5 translate=0.1 mosaic=1.0 mixup=0.1 copy_paste=0.3
+  cls_pw=0.0 obj_pw=None  box=7.5 cls=0.5 dfl=1.5
+  results.csv: 26 rows, best@epoch_idx=10 fitness=0.5636  total_time≈29m12s
+    best row keys: mAP50=metrics/mAP50(B) mAP50-95=metrics/mAP50-95(B)
+    best mAP50=0.85687  best mAP50-95=0.53096
+
+--- p4_scale (runs/detect/p4_scale_from_baseline) ---
+  model=runs/detect/exp_baseline/weights/best.pt data=/home/xuand/vn_traffic_ai/runs/detect/_data_v5plus_local.yaml imgsz=960 batch=6
+  epochs(max)=40 patience=15 optimizer=SGD
+  lr0=0.0005 lrf=0.01 cos_lr=True close_mosaic=10
+  scale=0.7 translate=0.15 mosaic=1.0 mixup=0.1 copy_paste=0.0
+  cls_pw=0.0 obj_pw=None  box=7.5 cls=0.5 dfl=1.5
+  results.csv: 28 rows, best@epoch_idx=12 fitness=0.5651  total_time≈60m31s
+    best row keys: mAP50=metrics/mAP50(B) mAP50-95=metrics/mAP50-95(B)
+    best mAP50=0.85381  best mAP50-95=0.53303
+
+--- p4_scale_cold (runs/detect/p4_scale) ---
+  model=yolov8s.pt data=/home/xuand/vn_traffic_ai/runs/detect/_data_v5plus_local.yaml imgsz=960 batch=6
+  epochs(max)=40 patience=15 optimizer=SGD
+  lr0=0.005 lrf=0.01 cos_lr=True close_mosaic=10
+  scale=0.7 translate=0.15 mosaic=1.0 mixup=0.1 copy_paste=0.0
+  cls_pw=0.0 obj_pw=None  box=7.5 cls=0.5 dfl=1.5
+  results.csv: 1 rows, best@epoch_idx=0 fitness=0.4957  total_time≈2m13s
+    best row keys: mAP50=metrics/mAP50(B) mAP50-95=metrics/mAP50-95(B)
+    best mAP50=0.76223  best mAP50-95=0.46614
+
+--- p4_imgsz1280 (runs/detect/p4_imgsz1280_from_baseline) ---
+  model=/home/xuand/vn_traffic_ai/runs/detect/p4_imgsz1280_from_baseline/weights/last.pt data=/home/xuand/vn_traffic_ai/runs/detect/_data_v5plus_local.yaml imgsz=1280 batch=6
+  epochs(max)=40 patience=15 optimizer=SGD
+  lr0=0.0005 lrf=0.01 cos_lr=True close_mosaic=10
+  scale=0.5 translate=0.1 mosaic=1.0 mixup=0.1 copy_paste=0.0
+  cls_pw=0.0 obj_pw=None  box=7.5 cls=0.5 dfl=1.5
+  results.csv: 40 rows, best@epoch_idx=1 fitness=0.5636  total_time≈38m22s
+    best row keys: mAP50=metrics/mAP50(B) mAP50-95=metrics/mAP50-95(B)
+    best mAP50=0.85904  best mAP50-95=0.53074
+
+--- r_p2 (runs/detect/r_p2) ---
+  model=/home/xuand/vn_traffic_ai/runs/detect/r_p2/weights/last.pt data=/home/xuand/vn_traffic_ai/runs/detect/_data_v5plus_local.yaml imgsz=960 batch=16
+  epochs(max)=25 patience=8 optimizer=SGD
+  lr0=0.005 lrf=0.01 cos_lr=True close_mosaic=10
+  scale=0.5 translate=0.1 mosaic=1.0 mixup=0.1 copy_paste=0.0
+  cls_pw=0.0 obj_pw=None  box=7.5 cls=0.5 dfl=1.5
+  results.csv: 25 rows, best@epoch_idx=21 fitness=0.5640  total_time≈155m4s
+    best row keys: mAP50=metrics/mAP50(B) mAP50-95=metrics/mAP50-95(B)
+    best mAP50=0.85712  best mAP50-95=0.53146
+
+--- r_clspw (runs/detect/r_clspw) ---
+  model=runs/detect/train_v8s_v5plus_960/weights/best.pt data=/home/xuand/vn_traffic_ai/runs/detect/_data_v5plus_local.yaml imgsz=960 batch=16
+  epochs(max)=15 patience=8 optimizer=SGD
+  lr0=0.001 lrf=0.1 cos_lr=True close_mosaic=5
+  scale=0.5 translate=0.1 mosaic=1.0 mixup=0.1 copy_paste=0.0
+  cls_pw=0.5 obj_pw=None  box=7.5 cls=0.5 dfl=1.5
+  results.csv: 15 rows, best@epoch_idx=8 fitness=0.5791  total_time≈30m44s
+    best row keys: mAP50=metrics/mAP50(B) mAP50-95=metrics/mAP50-95(B)
+    best mAP50=0.87004  best mAP50-95=0.54681
+
+--- r_progressive_s1 (runs/detect/r_progressive_s1) ---
+  model=yolov8s.pt data=/home/xuand/vn_traffic_ai/runs/detect/_data_v5plus_local.yaml imgsz=960 batch=16
+  epochs(max)=20 patience=8 optimizer=SGD
+  lr0=0.005 lrf=0.01 cos_lr=True close_mosaic=10
+  scale=0.5 translate=0.1 mosaic=1.0 mixup=0.1 copy_paste=0.0
+  cls_pw=0.0 obj_pw=None  box=7.5 cls=0.5 dfl=1.5
+  results.csv: 20 rows, best@epoch_idx=16 fitness=0.5728  total_time≈40m56s
+    best row keys: mAP50=metrics/mAP50(B) mAP50-95=metrics/mAP50-95(B)
+    best mAP50=0.8637  best mAP50-95=0.54051
+
+--- r_progressive_s2 (runs/detect/r_progressive) ---
+  model=/home/xuand/vn_traffic_ai/runs/detect/r_progressive_s1/weights/best.pt data=/home/xuand/vn_traffic_ai/runs/detect/_data_v5plus_local.yaml imgsz=1280 batch=8
+  epochs(max)=10 patience=8 optimizer=SGD
+  lr0=0.002 lrf=0.01 cos_lr=True close_mosaic=5
+  scale=0.5 translate=0.1 mosaic=1.0 mixup=0.1 copy_paste=0.0
+  cls_pw=0.0 obj_pw=None  box=7.5 cls=0.5 dfl=1.5
+  results.csv: 10 rows, best@epoch_idx=8 fitness=0.5570  total_time≈35m35s
+    best row keys: mAP50=metrics/mAP50(B) mAP50-95=metrics/mAP50-95(B)
+    best mAP50=0.85052  best mAP50-95=0.5244

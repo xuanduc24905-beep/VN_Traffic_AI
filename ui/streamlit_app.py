@@ -166,22 +166,26 @@ if not all_weights:
 # ---------- Model priority (hiện trên top + default) ----------
 # Mapping path → (nhãn hiển thị, mô tả, thứ tự ưu tiên)
 FEATURED_MODELS = {
-    "runs/detect/train_v8s_v5plus_960/weights/best.pt": (
-        "⭐ V5+ — honest split, imgsz=960 (mAP@50 0.782)",
-        "Best all-around hiện tại trên V5 test; recipe inference khuyến nghị imgsz=960.", 0,
+    "runs/detect/r_clspw_v2/weights/best.pt": (
+        "⭐ r_clspw_v2 — mô hình cuối V5+ (mAP@50 0.798)",
+        "Fine-tune class-weighted (cls_pw=0.5) từ exp_baseline trên 7,237 ảnh V5+. "
+        "Cao nhất in-domain, tốt cho CCTV Việt Nam.", 0,
+    ),
+    "runs/detect/exp_baseline/weights/best.pt": (
+        "V5+ baseline (exp_baseline) — mAP@50 0.793",
+        "YOLOv8s train trực tiếp 40 epoch trên V5+ (7,237 ảnh, batch=6, imgsz=960).", 1,
+    ),
+    "runs/detect/p4_scale_from_baseline/weights/best.pt": (
+        "p4_scale — cross-domain best (VN Aerial test mAP@50 0.637)",
+        "Warm-start từ exp_baseline với scale=0.7, translate=0.15. Bền khi domain đổi.", 2,
     ),
     "runs/detect/train_v8s_v6_pseudo/weights/best.pt": (
-        "V6 — pseudo-label HCM CCTV (mAP@50 0.761, motor +31%)",
-        "Model mới nhất — fine-tune với 4,396 pseudo-label từ 782 camera công khai TP.HCM. "
-        "Tốt nhất cho motorcycle.", 1,
+        "V6 — pseudo-label HCM CCTV",
+        "Fine-tune với pseudo-label từ camera công khai TP.HCM.", 3,
     ),
     "runs/detect/train_v8s_v5_honest/weights/best.pt": (
-        "V5 — honest video-aware split (mAP@50 0.665)",
-        "Baseline fine-tune từ COCO trên 2,833 ảnh gold. Honest split không leak.", 2,
-    ),
-    "weights/v3_vn_best.pt": (
-        "V3 VN best (mAP50 0.951 val — có thể leak)",
-        "⚠️ Phiên bản V1-V3 có leak video-level, số cao nhưng không reliable.", 3,
+        "V5 honest — baseline từ COCO trên 2,833 ảnh",
+        "Honest split không leak.", 4,
     ),
 }
 
@@ -206,12 +210,13 @@ pipeline_choice = st.sidebar.radio(
 )
 pipeline_kind = "improved_pipeline" if pipeline_choice.startswith("Improved") else "baseline_pipeline"
 
-# Dùng model winner hiện tại làm default khi weights có sẵn.
+# Dùng model winner (r_clspw_v2) làm default. Thứ tự fallback theo mAP V5+ test giảm dần.
 _preferred = [
-    "runs/detect/train_v8s_v5plus_960/weights/best.pt", # V5+ winner
-    "runs/detect/train_v8s_v6_pseudo/weights/best.pt",   # V6 fallback
-    "runs/detect/train_v8s_v5_honest/weights/best.pt",   # V5 fallback
-    "weights/v3_vn_best.pt",                              # V3 fallback cuối
+    "runs/detect/r_clspw_v2/weights/best.pt",              # r_clspw_v2 winner (0.7984 mAP@0.5)
+    "runs/detect/exp_baseline/weights/best.pt",             # V5+ baseline đúng (0.7930)
+    "runs/detect/p4_scale_from_baseline/weights/best.pt",   # cross-domain winner
+    "runs/detect/train_v8s_v6_pseudo/weights/best.pt",     # V6 pseudo fallback
+    "runs/detect/train_v8s_v5_honest/weights/best.pt",     # V5 honest fallback
 ]
 _default_idx = next((i for i, w in enumerate(all_weights) if w in _preferred), 0)
 weights_path = st.sidebar.selectbox(

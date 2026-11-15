@@ -1,0 +1,1403 @@
+{
+  "checkpoints": [
+    {
+      "path": "weights/v3_vn_best.pt",
+      "size": 22519786,
+      "mtime": "2026-10-24T21:36:56",
+      "sha256": "03906d3e08163206ff9474b568ffe051e0ea2d5738a90400c2fec148ae4a1fb1"
+    },
+    {
+      "path": "weights/yolo26n.pt",
+      "size": 5544453,
+      "mtime": "2026-11-07T20:19:06",
+      "sha256": "9b09cc8bf347f0fc8a5f7657480587f25db09b34bf33b0652110fb03a8ad4fef"
+    },
+    {
+      "path": "yolo26n.pt",
+      "size": 5544453,
+      "mtime": "2026-10-24T22:54:42",
+      "sha256": "9b09cc8bf347f0fc8a5f7657480587f25db09b34bf33b0652110fb03a8ad4fef"
+    },
+    {
+      "path": "yolov8m.pt",
+      "size": 52136884,
+      "mtime": "2026-10-23T20:45:11",
+      "sha256": "5d4a90cdc7a21786cc59cd19778e9eafff836df9e2da32524737c7ee6efe4fe5"
+    },
+    {
+      "path": "yolov8s.pt",
+      "size": 22588772,
+      "mtime": "2026-09-18T19:03:04",
+      "sha256": "1f47a78bf100391c2a140b7ac73a1caae18c32779be7d310658112f7ac9aa78a"
+    },
+    {
+      "path": "weights/trained/v1_baseline.pt",
+      "size": 6223395,
+      "mtime": "2026-09-18T17:50:16",
+      "sha256": "d9c00cee378bb1bb0a20e0a3c913fd401431f5adc0382d7fcde69125836303ff"
+    },
+    {
+      "path": "weights/trained/v2_fix.pt",
+      "size": 22503651,
+      "mtime": "2026-09-19T11:41:01",
+      "sha256": "f75f39673550586f2e15389dc27b9779b9d990c3273c7e2dbee3c17d7e2e9566"
+    },
+    {
+      "path": "weights/trained/v3_vn_1280.pt",
+      "size": 22676138,
+      "mtime": "2026-10-25T13:01:59",
+      "sha256": "160162f5ef18264fd2e7f68978318a057fb05ceed5ded37ed8c06a8ddc032880"
+    },
+    {
+      "path": "weights/trained/v4_vn_cctv.pt",
+      "size": 22516586,
+      "mtime": "2026-10-25T16:06:59",
+      "sha256": "05e6291f34e80ef82fc1e261a092bde8e2eae997ce52aac1dd6b8681669b7f53"
+    },
+    {
+      "path": "weights/pretrained/yolo26n.pt",
+      "size": 5544453,
+      "mtime": "2026-09-18T03:21:48",
+      "sha256": "9b09cc8bf347f0fc8a5f7657480587f25db09b34bf33b0652110fb03a8ad4fef"
+    },
+    {
+      "path": "weights/pretrained/yolov8n.pt",
+      "size": 6549796,
+      "mtime": "2026-09-18T02:47:07",
+      "sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36"
+    },
+    {
+      "path": "weights/trained/frcnn/best.pt",
+      "size": 165769315,
+      "mtime": "2026-11-08T05:09:31",
+      "sha256": "b5406a062bf575129d86ac4d35cddf277280aaf41db7d47bec8a6988ffcd22a9"
+    },
+    {
+      "path": "weights/trained/frcnn/last.pt",
+      "size": 330156219,
+      "mtime": "2026-11-08T23:51:08",
+      "sha256": "ca201fff9abc0cf9432f65a3dc956e38f4b4d5accf22ed9b013f76c590fe65ec"
+    },
+    {
+      "path": "runs/detect/exp_baseline/weights/best.pt",
+      "size": 22584675,
+      "mtime": "2026-11-12T23:09:44",
+      "sha256": "8e3d5f89a8f7411e557283b8355e03fa6203730fe84296a17d6cf864e776c92e"
+    },
+    {
+      "path": "runs/detect/exp_baseline_batch2_previous/weights/best.pt",
+      "size": 44932918,
+      "mtime": "2026-11-12T21:38:09",
+      "sha256": "a9dda6e2b78876e97bf548de0f5ee61faae6db912cf4c269180e0626063a32dc"
+    },
+    {
+      "path": "runs/detect/motor_p2_head/weights/best.pt",
+      "size": 21984073,
+      "mtime": "2026-11-13T22:45:10",
+      "sha256": "a85315d27db0cd44565f31bfb89769620520bdbfca8180b1887b34339f089ed5"
+    },
+    {
+      "path": "runs/detect/motor_tile_mixed/weights/best.pt",
+      "size": 44933366,
+      "mtime": "2026-11-14T12:37:09",
+      "sha256": "4ce5e05b7ed6502c73e8927fc71eca7399d810cef77e8f833c84b056fcb38612"
+    },
+    {
+      "path": "runs/detect/p4_imgsz1280_from_baseline/weights/best.pt",
+      "size": 22675555,
+      "mtime": "2026-11-13T04:56:10",
+      "sha256": "a2103f32c804067785ade292657622b4086ae7349031c23d2c21d5d6a703237d"
+    },
+    {
+      "path": "runs/detect/p4_scale/weights/best.pt",
+      "size": 44932790,
+      "mtime": "2026-11-12T23:36:52",
+      "sha256": "10a448b3af953daff3c145f65ed4ce11b5ef90a60fe3a1e2221f4b72cc4656e0"
+    },
+    {
+      "path": "runs/detect/p4_scale_from_baseline/weights/best.pt",
+      "size": 22583267,
+      "mtime": "2026-11-13T00:38:57",
+      "sha256": "59cdbdfc181b053f5ea7c242f6d6b849c83077c5b872222b6394f7c78ec80ca4"
+    },
+    {
+      "path": "runs/detect/r_clspw/weights/best.pt",
+      "size": 22581854,
+      "mtime": "2026-11-15T05:23:02",
+      "sha256": "8bb04fdd7c46fa12697ac7652319ebaabfa0f26a9e22dfd15c6a4515b3bc5990"
+    },
+    {
+      "path": "runs/detect/r_p2/weights/best.pt",
+      "size": 21987017,
+      "mtime": "2026-11-15T04:51:35",
+      "sha256": "80daf0bba5605a887763e38fcf5813f3ce8cef4c70624f1f378e027a0909711c"
+    },
+    {
+      "path": "runs/detect/r_progressive/weights/best.pt",
+      "size": 22671715,
+      "mtime": "2026-11-15T06:40:22",
+      "sha256": "7475fb1cbdb3de4666c374e4b6e58d816c0aeda60ae00c2ea5c9d3b75f125342"
+    },
+    {
+      "path": "runs/detect/r_progressive_s1/weights/best.pt",
+      "size": 22582115,
+      "mtime": "2026-11-15T06:04:31",
+      "sha256": "78c5d4c402ca18081dd5bba701f5923260a5f621a8a84a919ac85c8e420ce03a"
+    },
+    {
+      "path": "runs/detect/runs/detect/ZBookFury16/weights/best.pt",
+      "size": 22516387,
+      "mtime": "2026-11-07T21:46:30",
+      "sha256": "ca9ea65b2864c7cb9aed817dc08b5de9d827a61f60c5b7c398786bfc8fff5e6d"
+    },
+    {
+      "path": "runs/detect/runs/detect/train_v8s_4cls/weights/best.pt",
+      "size": 22503651,
+      "mtime": "2026-09-19T09:52:18",
+      "sha256": "f75f39673550586f2e15389dc27b9779b9d990c3273c7e2dbee3c17d7e2e9566"
+    },
+    {
+      "path": "runs/detect/runs/detect/train_v8s_50e/weights/best.pt",
+      "size": 67100408,
+      "mtime": "2026-09-18T22:58:33",
+      "sha256": "1442661c94d0c193bd4cbd6c548adac368e8759cc9e12f718d8d62efe4fd1393"
+    },
+    {
+      "path": "runs/detect/runs/detect/train_v8s_ft_vnv3/weights/best.pt",
+      "size": 22499498,
+      "mtime": "2026-09-20T02:13:38",
+      "sha256": "2caaad620b447940f42ec001e6d1147c16985e8fe2d8033460a250d20da14f3c"
+    },
+    {
+      "path": "runs/detect/runs/detect/train_v8s_lite/weights/best.pt",
+      "size": 22497898,
+      "mtime": "2026-09-20T15:20:07",
+      "sha256": "f1ae11f81ad122373c13e008a34c01419c1f2b73cc53909cc056df007f8eb94f"
+    },
+    {
+      "path": "runs/detect/train/weights/best.pt",
+      "size": 22565738,
+      "mtime": "2026-10-22T20:03:04",
+      "sha256": "55a8170f174193fe3428f799361aa1ef00067532efb303ebbd3ea37b2308eae7"
+    },
+    {
+      "path": "runs/detect/train-2/weights/best.pt",
+      "size": 22565738,
+      "mtime": "2026-10-23T18:32:55",
+      "sha256": "2eb234458b03e14ed8a640e7aada60cb965ba85f02b42c4dd168928aa3ef1029"
+    },
+    {
+      "path": "runs/detect/train-3/weights/best.pt",
+      "size": 89912551,
+      "mtime": "2026-10-28T16:36:35",
+      "sha256": "5bf21a4034efdfcf24f31470879df8822ddb0e8a4766f8b4bb9996e76736cf35"
+    },
+    {
+      "path": "runs/detect/train_v8m_merged/weights/best.pt",
+      "size": 52010450,
+      "mtime": "2026-10-24T01:40:41",
+      "sha256": "a904bf70e1c24b3d8066247c189e3e45970372ff49bd87b09d34a7bf228e228f"
+    },
+    {
+      "path": "runs/detect/train_v8m_v5_960/weights/best.pt",
+      "size": 52098123,
+      "mtime": "2026-11-10T11:20:55",
+      "sha256": "33a9c3390ecb81096e13339fcac650dacc009a13781fe7efe0ec3e027b3789d3"
+    },
+    {
+      "path": "runs/detect/train_v8s_1round_merged/weights/best.pt",
+      "size": 44848182,
+      "mtime": "2026-10-01T02:22:19",
+      "sha256": "8a378d3f2e3810cb401617a7b40b6724e0570b6dd47f7d39384fb7cd1e49d883"
+    },
+    {
+      "path": "runs/detect/train_v8s_1round_merged_v2/weights/best.pt",
+      "size": 22497251,
+      "mtime": "2026-10-01T22:32:16",
+      "sha256": "a6ea0316e5ced2069b968c27819b1d32d6f413fdd0daab570bdf287fd0ddad10"
+    },
+    {
+      "path": "runs/detect/train_v8s_cls_boost/weights/best.pt",
+      "size": 22496490,
+      "mtime": "2026-10-23T20:43:50",
+      "sha256": "4ece83144355d53309424866d10d7e93507c3bdc80058cc4094536fea315ff15"
+    },
+    {
+      "path": "runs/detect/train_v8s_fix_small_object/weights/best.pt",
+      "size": 22517290,
+      "mtime": "2026-10-19T15:50:34",
+      "sha256": "39a9b792cb0b16daf4d6d81de9c9d6a1c228b5df3ad6730be12920f7c2e7aee6"
+    },
+    {
+      "path": "runs/detect/train_v8s_fix_v2_small_car/weights/best.pt",
+      "size": 22497514,
+      "mtime": "2026-10-22T19:43:22",
+      "sha256": "ea2c3857a423f9c7339f16e36e7884ccd441937805ab893a575ad73500a7f018"
+    },
+    {
+      "path": "runs/detect/train_v8s_freeze10/weights/best.pt",
+      "size": 22496618,
+      "mtime": "2026-10-23T19:30:28",
+      "sha256": "d009accd1330ecc7da0b6597db067a09cbcea34506dc826dcb80296eb32cc99c"
+    },
+    {
+      "path": "runs/detect/train_v8s_v3_1280/weights/best.pt",
+      "size": 22676138,
+      "mtime": "2026-10-25T10:17:56",
+      "sha256": "160162f5ef18264fd2e7f68978318a057fb05ceed5ded37ed8c06a8ddc032880"
+    },
+    {
+      "path": "runs/detect/train_v8s_v3_baseline/weights/best.pt",
+      "size": 22519786,
+      "mtime": "2026-10-24T05:20:28",
+      "sha256": "03906d3e08163206ff9474b568ffe051e0ea2d5738a90400c2fec148ae4a1fb1"
+    },
+    {
+      "path": "runs/detect/train_v8s_v4_finetune/weights/best.pt",
+      "size": 22516586,
+      "mtime": "2026-10-25T16:06:42",
+      "sha256": "05e6291f34e80ef82fc1e261a092bde8e2eae997ce52aac1dd6b8681669b7f53"
+    },
+    {
+      "path": "runs/detect/train_v8s_v4_vn_cctv/weights/best.pt",
+      "size": 22519786,
+      "mtime": "2026-10-25T22:33:50",
+      "sha256": "1393913f942a8b23edace0ae7eed867e130161166e6be5059a87f525ee95e674"
+    },
+    {
+      "path": "runs/detect/train_v8s_v5_honest/weights/best.pt",
+      "size": 22519786,
+      "mtime": "2026-10-26T02:48:46",
+      "sha256": "433936be2b3b1f80ea417d64c9cc60f89e5fe99396fdfba70cd996c2aea3c6a9"
+    },
+    {
+      "path": "runs/detect/train_v8s_v5plus_960/weights/best.pt",
+      "size": 22583530,
+      "mtime": "2026-10-26T05:35:11",
+      "sha256": "b1e9b1e583a3fa0d0dfccdd502fd234e670a46a318998bfb6e81db7ecd6d0a0d"
+    },
+    {
+      "path": "runs/detect/train_v8s_v5plus_warm/weights/best.pt",
+      "size": 22582435,
+      "mtime": "2026-11-11T15:23:37",
+      "sha256": "6ec687f056dcf5aaf6ebafecceb80cc60743a684f6b3a3479362cf30aae0e8e6"
+    },
+    {
+      "path": "runs/detect/train_v8s_v6_pseudo/weights/best.pt",
+      "size": 22585322,
+      "mtime": "2026-10-26T06:25:52",
+      "sha256": "d914dcbf2239187c6b610a0d4c99161af4a8ede8d3aa8504503b29a414eeb1ca"
+    },
+    {
+      "path": "runs/detect/train_v8s_v7_1280/weights/best.pt",
+      "size": 22675370,
+      "mtime": "2026-10-27T10:27:47",
+      "sha256": "199848ec28025b1ee3b76993780d109ccdb40c52a06da9122ef161569230721b"
+    },
+    {
+      "path": "runs/detect/train_v8s_vn_only/weights/best.pt",
+      "size": 22498787,
+      "mtime": "2026-10-01T22:40:32",
+      "sha256": "283c0804b484632b8ba8c63db8a885b2d482a5590dfd3755e568ad01e5a6b6f2"
+    }
+  ],
+  "yamls": [
+    {
+      "path": "data/data.yaml",
+      "size": 352,
+      "mtime": "2026-10-28T23:53:40",
+      "sha256": null
+    },
+    {
+      "path": "data/data_eval_extended.yaml",
+      "size": 556,
+      "mtime": "2026-11-15T13:34:56",
+      "sha256": null
+    },
+    {
+      "path": "data/data_v3.yaml",
+      "size": 489,
+      "mtime": "2026-10-28T23:53:50",
+      "sha256": null
+    },
+    {
+      "path": "data/data_v4.yaml",
+      "size": 373,
+      "mtime": "2026-10-28T23:53:50",
+      "sha256": null
+    },
+    {
+      "path": "data/data_v5.yaml",
+      "size": 379,
+      "mtime": "2026-10-28T23:53:50",
+      "sha256": null
+    },
+    {
+      "path": "data/data_v5_cleanval.yaml",
+      "size": 361,
+      "mtime": "2026-11-15T12:18:44",
+      "sha256": null
+    },
+    {
+      "path": "data/data_v5plus.yaml",
+      "size": 514,
+      "mtime": "2026-11-11T14:40:03",
+      "sha256": null
+    },
+    {
+      "path": "data/data_v5plus_clean.yaml",
+      "size": 360,
+      "mtime": "2026-11-15T12:18:44",
+      "sha256": null
+    },
+    {
+      "path": "data/data_v5plus_clean_nooverlay.yaml",
+      "size": 375,
+      "mtime": "2026-11-15T12:18:44",
+      "sha256": null
+    },
+    {
+      "path": "data/data_v5plus_clean_ovmatched.yaml",
+      "size": 375,
+      "mtime": "2026-11-15T12:18:44",
+      "sha256": null
+    },
+    {
+      "path": "data/data_v6.yaml",
+      "size": 410,
+      "mtime": "2026-10-28T23:53:50",
+      "sha256": null
+    },
+    {
+      "path": "data/data_v7.yaml",
+      "size": 376,
+      "mtime": "2026-10-28T23:53:50",
+      "sha256": null
+    },
+    {
+      "path": "data/data_vn_aerial.yaml",
+      "size": 488,
+      "mtime": "2026-11-15T12:40:36",
+      "sha256": null
+    },
+    {
+      "path": "data/data_vn_only.yaml",
+      "size": 161,
+      "mtime": "2026-10-28T23:53:50",
+      "sha256": null
+    }
+  ],
+  "runs_detect": [
+    {
+      "name": "exp_baseline",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "exp_baseline_batch2_previous",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "motor_p2_head",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "motor_tile_mixed",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "motor_tile_mixed_p2",
+      "has_args": true,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "p4_imgsz1280_from_baseline",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "p4_scale",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "p4_scale_from_baseline",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "r_clspw",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "r_p2",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "r_progressive",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "r_progressive_s1",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "results",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "runs",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "train",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train-2",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train-3",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8m_merged",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8m_v3_vn",
+      "has_args": true,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "train_v8m_v5_960",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8s_1round_merged",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8s_1round_merged_v2",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8s_cls_boost",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8s_fix_small_object",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8s_fix_v2_small_car",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8s_freeze10",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8s_v3_1280",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8s_v3_baseline",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8s_v4_finetune",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8s_v4_vn_cctv",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8s_v5_honest",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8s_v5plus_960",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8s_v5plus_warm",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8s_v6_pseudo",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8s_v7_1280",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "train_v8s_vn_only",
+      "has_args": true,
+      "has_results": true,
+      "has_best": true
+    },
+    {
+      "name": "val",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-10",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-100",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-101",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-102",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-103",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-104",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-105",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-106",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-107",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-108",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-109",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-11",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-110",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-111",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-112",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-113",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-114",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-115",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-116",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-117",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-118",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-119",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-12",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-13",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-14",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-15",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-16",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-17",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-18",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-19",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-2",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-20",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-21",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-22",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-23",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-24",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-25",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-26",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-27",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-28",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-29",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-3",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-30",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-31",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-32",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-33",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-34",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-35",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-36",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-37",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-38",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-39",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-4",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-40",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-41",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-42",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-43",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-44",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-45",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-46",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-47",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-48",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-49",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-5",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-50",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-51",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-52",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-53",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-54",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-55",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-56",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-57",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-58",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-59",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-6",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-60",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-61",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-62",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-63",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-64",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-65",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-66",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-67",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-68",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-69",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-7",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-70",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-71",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-72",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-73",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-74",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-75",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-76",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-77",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-78",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-79",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-8",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-80",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-81",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-82",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-83",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-84",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-85",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-86",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-87",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-88",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-89",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-9",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-90",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-91",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-92",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-93",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-94",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-95",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-96",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-97",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-98",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    },
+    {
+      "name": "val-99",
+      "has_args": false,
+      "has_results": false,
+      "has_best": false
+    }
+  ],
+  "run_args": [
+    "runs/detect/train_v8s_v3_1280/args.yaml",
+    "runs/detect/train_v8m_v5_960/args.yaml",
+    "runs/detect/train_v8s_v3_baseline/args.yaml",
+    "runs/detect/train-3/args.yaml",
+    "runs/detect/motor_tile_mixed/args.yaml",
+    "runs/detect/train_v8m_v3_vn/args.yaml",
+    "runs/detect/train_v8s_v5plus_warm/args.yaml",
+    "runs/detect/motor_p2_head/args.yaml",
+    "runs/detect/train/args.yaml",
+    "runs/detect/train-2/args.yaml",
+    "runs/detect/r_p2/args.yaml",
+    "runs/detect/train_v8s_v5_honest/args.yaml",
+    "runs/detect/r_progressive/args.yaml",
+    "runs/detect/p4_scale/args.yaml",
+    "runs/detect/train_v8s_1round_merged_v2/args.yaml",
+    "runs/detect/train_v8m_merged/args.yaml",
+    "runs/detect/exp_baseline_batch2_previous/args.yaml",
+    "runs/detect/train_v8s_freeze10/args.yaml",
+    "runs/detect/train_v8s_cls_boost/args.yaml",
+    "runs/detect/train_v8s_1round_merged/args.yaml",
+    "runs/detect/p4_scale_from_baseline/args.yaml",
+    "runs/detect/train_v8s_fix_v2_small_car/args.yaml",
+    "runs/detect/motor_tile_mixed_p2/args.yaml",
+    "runs/detect/train_v8s_v6_pseudo/args.yaml",
+    "runs/detect/r_clspw/args.yaml",
+    "runs/detect/train_v8s_v7_1280/args.yaml",
+    "runs/detect/train_v8s_v4_vn_cctv/args.yaml",
+    "runs/detect/train_v8s_v4_finetune/args.yaml",
+    "runs/detect/exp_baseline/args.yaml",
+    "runs/detect/train_v8s_vn_only/args.yaml",
+    "runs/detect/p4_imgsz1280_from_baseline/args.yaml",
+    "runs/detect/r_progressive_s1/args.yaml",
+    "runs/detect/train_v8s_fix_small_object/args.yaml",
+    "runs/detect/runs/detect/train_v8s_ft_vnv3/args.yaml",
+    "runs/detect/runs/detect/train/args.yaml",
+    "runs/detect/runs/detect/train_v8s_lite/args.yaml",
+    "runs/detect/runs/detect/train_v8s_50e/args.yaml",
+    "runs/detect/runs/detect/ZBookFury16/args.yaml",
+    "runs/detect/runs/detect/train_v8s_4cls/args.yaml",
+    "runs/detect/train_v8s_v5plus_960/args.yaml"
+  ],
+  "run_results": [
+    "runs/detect/train_v8s_v3_1280/results.csv",
+    "runs/detect/train_v8m_v5_960/results.csv",
+    "runs/detect/train_v8s_v3_baseline/results.csv",
+    "runs/detect/train-3/results.csv",
+    "runs/detect/motor_tile_mixed/results.csv",
+    "runs/detect/train_v8s_v5plus_warm/results.csv",
+    "runs/detect/motor_p2_head/results.csv",
+    "runs/detect/train/results.csv",
+    "runs/detect/train-2/results.csv",
+    "runs/detect/r_p2/results.csv",
+    "runs/detect/train_v8s_v5_honest/results.csv",
+    "runs/detect/r_progressive/results.csv",
+    "runs/detect/p4_scale/results.csv",
+    "runs/detect/train_v8s_1round_merged_v2/results.csv",
+    "runs/detect/train_v8m_merged/results.csv",
+    "runs/detect/exp_baseline_batch2_previous/results.csv",
+    "runs/detect/train_v8s_freeze10/results.csv",
+    "runs/detect/train_v8s_cls_boost/results.csv",
+    "runs/detect/train_v8s_1round_merged/results.csv",
+    "runs/detect/p4_scale_from_baseline/results.csv",
+    "runs/detect/train_v8s_fix_v2_small_car/results.csv",
+    "runs/detect/train_v8s_v6_pseudo/results.csv",
+    "runs/detect/r_clspw/results.csv",
+    "runs/detect/train_v8s_v7_1280/results.csv",
+    "runs/detect/train_v8s_v4_vn_cctv/results.csv",
+    "runs/detect/train_v8s_v4_finetune/results.csv",
+    "runs/detect/exp_baseline/results.csv",
+    "runs/detect/train_v8s_vn_only/results.csv",
+    "runs/detect/p4_imgsz1280_from_baseline/results.csv",
+    "runs/detect/r_progressive_s1/results.csv",
+    "runs/detect/train_v8s_fix_small_object/results.csv",
+    "runs/detect/runs/detect/train_v8s_ft_vnv3/results.csv",
+    "runs/detect/runs/detect/train_v8s_lite/results.csv",
+    "runs/detect/runs/detect/train_v8s_50e/results.csv",
+    "runs/detect/runs/detect/ZBookFury16/results.csv",
+    "runs/detect/runs/detect/train_v8s_4cls/results.csv",
+    "runs/detect/train_v8s_v5plus_960/results.csv"
+  ]
+}

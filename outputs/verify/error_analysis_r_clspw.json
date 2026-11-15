@@ -1,0 +1,464 @@
+{
+  "ckpt": "runs/detect/r_clspw/weights/best.pt",
+  "test": "V5+_test (1500 images, all SOICT24 day cam_09/cam_10)",
+  "imgsz": 960,
+  "conf": 0.25,
+  "iou_nms": 0.7,
+  "iou_match": 0.5,
+  "half": true,
+  "per_class": {
+    "motorcycle": {
+      "tp": 27989,
+      "fp": 4429,
+      "fn": 11818,
+      "precision": 0.8633783700413351,
+      "recall": 0.7031175421408296
+    },
+    "car": {
+      "tp": 6117,
+      "fp": 1061,
+      "fn": 1914,
+      "precision": 0.8521872387851769,
+      "recall": 0.7616735151288756
+    },
+    "bus": {
+      "tp": 528,
+      "fp": 200,
+      "fn": 228,
+      "precision": 0.7252747252747253,
+      "recall": 0.6984126984126984
+    },
+    "truck": {
+      "tp": 571,
+      "fp": 289,
+      "fn": 281,
+      "precision": 0.663953488372093,
+      "recall": 0.67018779342723
+    }
+  },
+  "per_size": {
+    "small": {
+      "tp": {
+        "motorcycle": 3372,
+        "car": 92,
+        "bus": 0,
+        "truck": 0
+      },
+      "fp": {
+        "motorcycle": 1670,
+        "car": 126,
+        "bus": 0,
+        "truck": 0
+      },
+      "fn": {
+        "motorcycle": 3904,
+        "car": 304,
+        "bus": 6,
+        "truck": 0
+      }
+    },
+    "medium": {
+      "tp": {
+        "motorcycle": 23720,
+        "car": 4081,
+        "bus": 250,
+        "truck": 286
+      },
+      "fp": {
+        "motorcycle": 2657,
+        "car": 681,
+        "bus": 57,
+        "truck": 116
+      },
+      "fn": {
+        "motorcycle": 7856,
+        "car": 1457,
+        "bus": 173,
+        "truck": 229
+      }
+    },
+    "large": {
+      "tp": {
+        "motorcycle": 897,
+        "car": 1944,
+        "bus": 278,
+        "truck": 285
+      },
+      "fp": {
+        "motorcycle": 87,
+        "car": 101,
+        "bus": 26,
+        "truck": 42
+      },
+      "fn": {
+        "motorcycle": 58,
+        "car": 153,
+        "bus": 49,
+        "truck": 52
+      }
+    }
+  },
+  "per_daynight": {
+    "day": {
+      "tp": {
+        "motorcycle": 27989,
+        "car": 6117,
+        "bus": 528,
+        "truck": 571
+      },
+      "fp": {
+        "motorcycle": 4414,
+        "car": 908,
+        "bus": 83,
+        "truck": 158
+      },
+      "fn": {
+        "motorcycle": 11818,
+        "car": 1914,
+        "bus": 228,
+        "truck": 281
+      }
+    },
+    "night": {
+      "tp": {
+        "motorcycle": 0,
+        "car": 0,
+        "bus": 0,
+        "truck": 0
+      },
+      "fp": {
+        "motorcycle": 0,
+        "car": 0,
+        "bus": 0,
+        "truck": 0
+      },
+      "fn": {
+        "motorcycle": 0,
+        "car": 0,
+        "bus": 0,
+        "truck": 0
+      }
+    }
+  },
+  "confusion_matrix": {
+    "rows_pred": [
+      "motor",
+      "car",
+      "bus",
+      "truck",
+      "bg"
+    ],
+    "cols_gt": [
+      "motor",
+      "car",
+      "bus",
+      "truck",
+      "bg"
+    ],
+    "matrix": [
+      [
+        27989,
+        15,
+        0,
+        0,
+        4414
+      ],
+      [
+        28,
+        6117,
+        88,
+        37,
+        908
+      ],
+      [
+        1,
+        87,
+        528,
+        29,
+        83
+      ],
+      [
+        1,
+        55,
+        75,
+        571,
+        158
+      ],
+      [
+        11818,
+        1914,
+        228,
+        281,
+        0
+      ]
+    ]
+  },
+  "examples": {
+    "missed": [
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00001_jpg.rf.1759d728879a91f2e84deb83b569b45a.jpg",
+        "gt_class": "car",
+        "bbox_xyxy": [
+          708.9999999999999,
+          247.0,
+          757.0,
+          309.0
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00001_jpg.rf.1759d728879a91f2e84deb83b569b45a.jpg",
+        "gt_class": "car",
+        "bbox_xyxy": [
+          856.0,
+          257.0,
+          880.0,
+          298.0
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00001_jpg.rf.1759d728879a91f2e84deb83b569b45a.jpg",
+        "gt_class": "car",
+        "bbox_xyxy": [
+          820.0,
+          216.00000000000003,
+          861.0,
+          248.0
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00001_jpg.rf.1759d728879a91f2e84deb83b569b45a.jpg",
+        "gt_class": "car",
+        "bbox_xyxy": [
+          835.0,
+          198.00000000000003,
+          864.0,
+          223.0
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00001_jpg.rf.1759d728879a91f2e84deb83b569b45a.jpg",
+        "gt_class": "car",
+        "bbox_xyxy": [
+          795.0,
+          179.0,
+          828.0000000000001,
+          222.0
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00001_jpg.rf.1759d728879a91f2e84deb83b569b45a.jpg",
+        "gt_class": "car",
+        "bbox_xyxy": [
+          833.0,
+          184.99999999999997,
+          858.0,
+          204.0
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00001_jpg.rf.1759d728879a91f2e84deb83b569b45a.jpg",
+        "gt_class": "car",
+        "bbox_xyxy": [
+          846.0000000000001,
+          172.0,
+          873.0,
+          191.0
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00001_jpg.rf.1759d728879a91f2e84deb83b569b45a.jpg",
+        "gt_class": "motorcycle",
+        "bbox_xyxy": [
+          897.0,
+          363.0,
+          933.0,
+          417.99999999999994
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00001_jpg.rf.1759d728879a91f2e84deb83b569b45a.jpg",
+        "gt_class": "motorcycle",
+        "bbox_xyxy": [
+          1001.9999999999999,
+          287.0,
+          1030.0,
+          335.0
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00001_jpg.rf.1759d728879a91f2e84deb83b569b45a.jpg",
+        "gt_class": "motorcycle",
+        "bbox_xyxy": [
+          980.0,
+          277.0,
+          1006.9999999999999,
+          316.0
+        ]
+      }
+    ],
+    "extra": [
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00001_jpg.rf.1759d728879a91f2e84deb83b569b45a.jpg",
+        "pred_class": "motorcycle",
+        "bbox_xyxy": [
+          11.333333969116211,
+          662.6666870117188,
+          92.41667175292969,
+          720.0
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00001_jpg.rf.1759d728879a91f2e84deb83b569b45a.jpg",
+        "pred_class": "motorcycle",
+        "bbox_xyxy": [
+          316.66668701171875,
+          649.3333740234375,
+          400.66668701171875,
+          720.0
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00001_jpg.rf.1759d728879a91f2e84deb83b569b45a.jpg",
+        "pred_class": "motorcycle",
+        "bbox_xyxy": [
+          950.6666870117188,
+          278.66668701171875,
+          980.0,
+          327.0
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00001_jpg.rf.1759d728879a91f2e84deb83b569b45a.jpg",
+        "pred_class": "motorcycle",
+        "bbox_xyxy": [
+          492.66668701171875,
+          685.3333740234375,
+          551.3333740234375,
+          720.0
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00001_jpg.rf.1759d728879a91f2e84deb83b569b45a.jpg",
+        "pred_class": "motorcycle",
+        "bbox_xyxy": [
+          998.0,
+          279.16668701171875,
+          1018.0,
+          326.8333435058594
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00001_jpg.rf.1759d728879a91f2e84deb83b569b45a.jpg",
+        "pred_class": "car",
+        "bbox_xyxy": [
+          850.6666870117188,
+          263.3333435058594,
+          893.3333740234375,
+          299.3333435058594
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00002_jpg.rf.e318e289dfd3244a5123dc133a7d68f8.jpg",
+        "pred_class": "motorcycle",
+        "bbox_xyxy": [
+          10.25,
+          662.6666870117188,
+          92.66667175292969,
+          720.0
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00002_jpg.rf.e318e289dfd3244a5123dc133a7d68f8.jpg",
+        "pred_class": "motorcycle",
+        "bbox_xyxy": [
+          318.0,
+          649.3333740234375,
+          400.0,
+          720.0
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00002_jpg.rf.e318e289dfd3244a5123dc133a7d68f8.jpg",
+        "pred_class": "motorcycle",
+        "bbox_xyxy": [
+          950.6666870117188,
+          278.3333435058594,
+          980.0,
+          327.0
+        ]
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00002_jpg.rf.e318e289dfd3244a5123dc133a7d68f8.jpg",
+        "pred_class": "motorcycle",
+        "bbox_xyxy": [
+          492.66668701171875,
+          685.3333740234375,
+          551.3333740234375,
+          720.0
+        ]
+      }
+    ],
+    "wrong_cls": [
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00013_jpg.rf.db4147e5166e61d437c4533047b99df9.jpg",
+        "pred_class": "car",
+        "gt_class": "motorcycle",
+        "iou": 0.5488544275809616
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00015_jpg.rf.e9422efd5485658287adcec97541004d.jpg",
+        "pred_class": "bus",
+        "gt_class": "car",
+        "iou": 0.7574210672465881
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00022_jpg.rf.bfb238fc9ea18849fe5669059a335607.jpg",
+        "pred_class": "car",
+        "gt_class": "motorcycle",
+        "iou": 0.6551739738308008
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00030_jpg.rf.f8db4270d989d887bafce93b1522cef0.jpg",
+        "pred_class": "car",
+        "gt_class": "truck",
+        "iou": 0.7901583504905413
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00031_jpg.rf.5646508ad4aa04c499e9b0e97464bb8d.jpg",
+        "pred_class": "car",
+        "gt_class": "truck",
+        "iou": 0.8195355158211038
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00052_jpg.rf.3a9573139fdc18f59d7a96bd9d29f691.jpg",
+        "pred_class": "truck",
+        "gt_class": "car",
+        "iou": 0.8912845099134077
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00053_jpg.rf.1ee5958c025e75b91a5038bb0541cbcc.jpg",
+        "pred_class": "car",
+        "gt_class": "motorcycle",
+        "iou": 0.7065400268190146
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00054_jpg.rf.cee3d6fc63cf0528f67be12c4e646ea4.jpg",
+        "pred_class": "car",
+        "gt_class": "motorcycle",
+        "iou": 0.661391871790113
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00055_jpg.rf.065bad1505712ef5f659f611f0dd47e2.jpg",
+        "pred_class": "car",
+        "gt_class": "motorcycle",
+        "iou": 0.8212523218360812
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00062_jpg.rf.69d22aab8db2fc91fc29f08682c0cee4.jpg",
+        "pred_class": "car",
+        "gt_class": "motorcycle",
+        "iou": 0.5685816209636264
+      }
+    ]
+  }
+}

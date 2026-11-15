@@ -1,0 +1,355 @@
+{
+  "datasets": {
+    "V5+": {
+      "train": {
+        "dataset": "V5+",
+        "split": "train",
+        "n_images": 7237,
+        "n_bboxes": 25985,
+        "empty_labels": 0,
+        "per_source_images": {
+          "cantho": 259,
+          "soict24_day": 879,
+          "soict_night": 1385,
+          "OTHER": 4404,
+          "vn_v3": 310
+        },
+        "per_source_cls_bbox": {
+          "cantho": {
+            "1": 933,
+            "0": 870,
+            "3": 57,
+            "2": 7
+          },
+          "soict24_day": {
+            "0": 4025,
+            "3": 1839,
+            "1": 1575,
+            "2": 575
+          },
+          "soict_night": {
+            "3": 844,
+            "1": 2578,
+            "0": 4751,
+            "2": 748
+          },
+          "OTHER": {
+            "3": 1859,
+            "0": 3336,
+            "1": 265,
+            "2": 253
+          },
+          "vn_v3": {
+            "1": 570,
+            "0": 471,
+            "3": 361,
+            "2": 68
+          }
+        },
+        "per_source_size_bbox": {
+          "cantho": {
+            "small": 732,
+            "medium": 1065,
+            "large": 70
+          },
+          "soict24_day": {
+            "medium": 4822,
+            "large": 1537,
+            "small": 1655
+          },
+          "soict_night": {
+            "large": 2064,
+            "medium": 6199,
+            "small": 658
+          },
+          "OTHER": {
+            "large": 5188,
+            "medium": 520,
+            "small": 5
+          },
+          "vn_v3": {
+            "medium": 830,
+            "large": 389,
+            "small": 251
+          }
+        },
+        "overall_cls_bbox": {
+          "1": 5921,
+          "0": 13453,
+          "3": 4960,
+          "2": 1651
+        },
+        "overall_size_bbox": {
+          "small": 3301,
+          "medium": 13436,
+          "large": 9248
+        },
+        "issue_counts": {
+          "malformed_lines": 0,
+          "bad_class_id": 0,
+          "coords_out_of_range": 0,
+          "duplicate_bboxes": 9,
+          "images_without_labels": 0,
+          "labels_without_images": 0
+        },
+        "issues_sample": {
+          "malformed_lines": [],
+          "bad_class_id": [],
+          "coords_out_of_range": [],
+          "duplicate_bboxes": [
+            "soict24_cam_01_00961_jpg.rf.7de70b5e591f985c159aae9c322de678.txt:17  ['3', '0.752734375', '0.6916666666666667', '0.49453125', '0.6166666666666667']",
+            "soict24_cam_02_00316_jpg.rf.a523f673cf0ac6a31ae34f86b944a043.txt:10  ['2', '0.66953125', '0.4263888888888889', '0.1234375', '0.24166666666666667']",
+            "soict24_cam_02_00951_jpg.rf.dff459347178bbcf81d69b0e7b338384.txt:4  ['0', '0.460546875', '0.3013888888888889', '0.02265625', '0.06666666666666667']",
+            "soict24_cam_04_00016_jpg.rf.7eb2a0d73366d30d29493312884edf4a.txt:12  ['0', '0.49921875', '0.25', '0.0109375', '0.03888888888888889']",
+            "soict24_cam_04_00346_jpg.rf.405ff015d60878b67d7e4e087c6620b0.txt:14  ['0', '0.496875', '0.36875', '0.0203125', '0.08472222222222223']",
+            "soict24_cam_04_00491_jpg.rf.57c5429b3a15bc4d82465e87a2c8cc31.txt:9  ['0', '0.521875', '0.32222222222222224', '0.015625', '0.06666666666666667']",
+            "soict24_cam_04_00536_jpg.rf.8195a994b1b417a14efdcdf3cafb8221.txt:9  ['0', '0.53515625', '0.34097222222222223', '0.01875', '0.07083333333333333']",
+            "soict24_cam_04_00716_jpg.rf.6438db633d56bf79ece2bb71dccde3b9.txt:3  ['0', '0.327734375', '0.4895833333333333', '0.02578125', '0.10416666666666667']",
+            "soict24_cam_04_00881_jpg.rf.3ddeffe46c7b4ff6b7256e2c62a01cf5.txt:11  ['0', '0.493359375', '0.3020833333333333', '0.01171875', '0.05694444444444444']"
+          ],
+          "images_without_labels": [],
+          "labels_without_images": []
+        }
+      },
+      "val": {
+        "dataset": "V5+",
+        "split": "val",
+        "n_images": 1466,
+        "n_bboxes": 12020,
+        "empty_labels": 6,
+        "per_source_images": {
+          "cantho": 466,
+          "soict24_day": 1000
+        },
+        "per_source_cls_bbox": {
+          "cantho": {
+            "1": 777,
+            "0": 1282,
+            "3": 83,
+            "2": 12
+          },
+          "soict24_day": {
+            "0": 5852,
+            "3": 1913,
+            "2": 447,
+            "1": 1654
+          }
+        },
+        "per_source_size_bbox": {
+          "cantho": {
+            "medium": 1154,
+            "small": 884,
+            "large": 116
+          },
+          "soict24_day": {
+            "medium": 5630,
+            "large": 2076,
+            "small": 2160
+          }
+        },
+        "overall_cls_bbox": {
+          "1": 2431,
+          "0": 7134,
+          "3": 1996,
+          "2": 459
+        },
+        "overall_size_bbox": {
+          "medium": 6784,
+          "small": 3044,
+          "large": 2192
+        },
+        "issue_counts": {
+          "malformed_lines": 0,
+          "bad_class_id": 0,
+          "coords_out_of_range": 0,
+          "duplicate_bboxes": 0,
+          "images_without_labels": 0,
+          "labels_without_images": 0
+        },
+        "issues_sample": {
+          "malformed_lines": [],
+          "bad_class_id": [],
+          "coords_out_of_range": [],
+          "duplicate_bboxes": [],
+          "images_without_labels": [],
+          "labels_without_images": []
+        }
+      },
+      "test": {
+        "dataset": "V5+",
+        "split": "test",
+        "n_images": 1500,
+        "n_bboxes": 49444,
+        "empty_labels": 1,
+        "per_source_images": {
+          "soict24_day": 1500
+        },
+        "per_source_cls_bbox": {
+          "soict24_day": {
+            "1": 8031,
+            "0": 39807,
+            "2": 754,
+            "3": 852
+          }
+        },
+        "per_source_size_bbox": {
+          "soict24_day": {
+            "large": 3714,
+            "medium": 38057,
+            "small": 7673
+          }
+        },
+        "overall_cls_bbox": {
+          "1": 8031,
+          "0": 39807,
+          "2": 754,
+          "3": 852
+        },
+        "overall_size_bbox": {
+          "large": 3714,
+          "medium": 38057,
+          "small": 7673
+        },
+        "issue_counts": {
+          "malformed_lines": 0,
+          "bad_class_id": 0,
+          "coords_out_of_range": 0,
+          "duplicate_bboxes": 2,
+          "images_without_labels": 0,
+          "labels_without_images": 0
+        },
+        "issues_sample": {
+          "malformed_lines": [],
+          "bad_class_id": [],
+          "coords_out_of_range": [],
+          "duplicate_bboxes": [
+            "soict24_cam_10_00135_jpg.rf.af8d99dd8b1ad9e95f1bda965c6fe9a9.txt:43  ['2', '0.605859375', '0.5069444444444444', '0.11171875', '0.2388888888888889']",
+            "soict24_cam_10_00136_jpg.rf.15da5eac0d751d6cc7cb7875f5d840d2.txt:46  ['2', '0.57421875', '0.40625', '0.0921875', '0.1736111111111111']"
+          ],
+          "images_without_labels": [],
+          "labels_without_images": []
+        }
+      },
+      "leakage_across_splits": {
+        "n_leaks": 0,
+        "leaks": []
+      }
+    },
+    "VN_Aerial": {
+      "val": {
+        "dataset": "VN_Aerial",
+        "split": "val",
+        "n_images": 486,
+        "n_bboxes": 4822,
+        "empty_labels": 0,
+        "per_source_images": {
+          "OTHER": 486
+        },
+        "per_source_cls_bbox": {
+          "OTHER": {
+            "1": 2232,
+            "3": 785,
+            "0": 1654,
+            "2": 151
+          }
+        },
+        "per_source_size_bbox": {
+          "OTHER": {
+            "medium": 1299,
+            "small": 3233,
+            "large": 290
+          }
+        },
+        "overall_cls_bbox": {
+          "1": 2232,
+          "3": 785,
+          "0": 1654,
+          "2": 151
+        },
+        "overall_size_bbox": {
+          "medium": 1299,
+          "small": 3233,
+          "large": 290
+        },
+        "issue_counts": {
+          "malformed_lines": 0,
+          "bad_class_id": 0,
+          "coords_out_of_range": 0,
+          "duplicate_bboxes": 3,
+          "images_without_labels": 0,
+          "labels_without_images": 0
+        },
+        "issues_sample": {
+          "malformed_lines": [],
+          "bad_class_id": [],
+          "coords_out_of_range": [],
+          "duplicate_bboxes": [
+            "20260320_101057_frame_000238_jpg.rf.6feb809fd2039fa5d1eb685f8e974605.txt:11  ['1', '0.539800', '0.188240', '0.029660', '0.064040']",
+            "20260320_101057_frame_000283_jpg.rf.7ed669e4a174b1f195639aff07e0e96d.txt:6  ['1', '0.407000', '0.099200', '0.014830', '0.024220']",
+            "20260320_101057_frame_000296_jpg.rf.cd98227e0bc7e680916611566ad0e38b.txt:8  ['3', '0.595280', '0.491370', '0.075760', '0.156240']"
+          ],
+          "images_without_labels": [],
+          "labels_without_images": []
+        }
+      },
+      "test": {
+        "dataset": "VN_Aerial",
+        "split": "test",
+        "n_images": 149,
+        "n_bboxes": 2042,
+        "empty_labels": 0,
+        "per_source_images": {
+          "OTHER": 149
+        },
+        "per_source_cls_bbox": {
+          "OTHER": {
+            "0": 768,
+            "3": 482,
+            "1": 766,
+            "2": 26
+          }
+        },
+        "per_source_size_bbox": {
+          "OTHER": {
+            "medium": 481,
+            "small": 1470,
+            "large": 91
+          }
+        },
+        "overall_cls_bbox": {
+          "0": 768,
+          "3": 482,
+          "1": 766,
+          "2": 26
+        },
+        "overall_size_bbox": {
+          "medium": 481,
+          "small": 1470,
+          "large": 91
+        },
+        "issue_counts": {
+          "malformed_lines": 0,
+          "bad_class_id": 0,
+          "coords_out_of_range": 0,
+          "duplicate_bboxes": 1,
+          "images_without_labels": 0,
+          "labels_without_images": 0
+        },
+        "issues_sample": {
+          "malformed_lines": [],
+          "bad_class_id": [],
+          "coords_out_of_range": [],
+          "duplicate_bboxes": [
+            "20260320_100648_frame_000046_jpg.rf.2c56ff5ed1ea9ce06ce276fbc56c99a4.txt:16  ['1', '0.463260', '0.058550', '0.014050', '0.025770']"
+          ],
+          "images_without_labels": [],
+          "labels_without_images": []
+        }
+      },
+      "leakage_across_splits": {
+        "n_leaks": 0,
+        "leaks": []
+      }
+    }
+  }
+}
