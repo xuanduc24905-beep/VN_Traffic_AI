@@ -1,0 +1,218 @@
+{
+  "YOLOv8s-COCO (zero-shot)": {
+    "status": "ok",
+    "weights": "yolov8s.pt",
+    "per_dataset": {
+      "V5+ test (CCTV, 1.500)": {
+        "mAP50": 0.09215302418049223,
+        "mAP50_95": 0.022147755273342555,
+        "precision": 0.12806359067050044,
+        "recall": 0.1630923521355542,
+        "AP50": {
+          "motorcycle": 0.3637583554442948,
+          "car": 1.4619883040935671e-05,
+          "bus": 0.004838978655759742,
+          "truck": 1.427388735048103e-07
+        }
+      },
+      "VN Aerial test (149)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      },
+      "VN Aerial val (486)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      }
+    }
+  },
+  "V5 honest (640)": {
+    "status": "ok",
+    "weights": "runs/detect/train_v8s_v5_honest/weights/best.pt",
+    "per_dataset": {
+      "V5+ test (CCTV, 1.500)": {
+        "mAP50": 0.6647987437753621,
+        "mAP50_95": 0.3398751804669275,
+        "precision": 0.7265070084777084,
+        "recall": 0.6160203919756672,
+        "AP50": {
+          "motorcycle": 0.6214146974663203,
+          "car": 0.8132295251647359,
+          "bus": 0.6943417629549586,
+          "truck": 0.5302089895154336
+        }
+      },
+      "VN Aerial test (149)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      },
+      "VN Aerial val (486)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      }
+    }
+  },
+  "V5+ 960px": {
+    "status": "ok",
+    "weights": "runs/detect/train_v8s_v5plus_960/weights/best.pt",
+    "per_dataset": {
+      "V5+ test (CCTV, 1.500)": {
+        "mAP50": 0.7819177342044896,
+        "mAP50_95": 0.4133905960090476,
+        "precision": 0.7677251049565506,
+        "recall": 0.7073090862954721,
+        "AP50": {
+          "motorcycle": 0.8405610825606495,
+          "car": 0.8838982790465584,
+          "bus": 0.7164038762588469,
+          "truck": 0.6868076989519035
+        }
+      },
+      "VN Aerial test (149)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      },
+      "VN Aerial val (486)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      }
+    }
+  },
+  "p4_scale (cuối)": {
+    "status": "ok",
+    "weights": "runs/detect/p4_scale_from_baseline/weights/best.pt",
+    "per_dataset": {
+      "V5+ test (CCTV, 1.500)": {
+        "mAP50": 0.786927783745695,
+        "mAP50_95": 0.42349229103418207,
+        "precision": 0.7590372403405363,
+        "recall": 0.7324808682364429,
+        "AP50": {
+          "motorcycle": 0.8616059252998127,
+          "car": 0.8850752007017344,
+          "bus": 0.7216939052427371,
+          "truck": 0.6793361037384956
+        }
+      },
+      "VN Aerial test (149)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      },
+      "VN Aerial val (486)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      }
+    }
+  },
+  "p4_imgsz1280": {
+    "status": "ok",
+    "weights": "runs/detect/p4_imgsz1280_from_baseline/weights/best.pt",
+    "per_dataset": {
+      "V5+ test (CCTV, 1.500)": {
+        "mAP50": 0.7744562163025789,
+        "mAP50_95": 0.4178596556261982,
+        "precision": 0.7286868844549426,
+        "recall": 0.7430803999290585,
+        "AP50": {
+          "motorcycle": 0.8624334153353514,
+          "car": 0.8888434479552548,
+          "bus": 0.7417790821266852,
+          "truck": 0.6047689197930238
+        }
+      },
+      "VN Aerial test (149)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      },
+      "VN Aerial val (486)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      }
+    }
+  },
+  "V6 pseudo": {
+    "status": "ok",
+    "weights": "runs/detect/train_v8s_v6_pseudo/weights/best.pt",
+    "per_dataset": {
+      "V5+ test (CCTV, 1.500)": {
+        "mAP50": 0.760821900865426,
+        "mAP50_95": 0.4111306944844452,
+        "precision": 0.7536715019496422,
+        "recall": 0.7093088330816073,
+        "AP50": {
+          "motorcycle": 0.8165230331237097,
+          "car": 0.8499700514367211,
+          "bus": 0.7427016158771097,
+          "truck": 0.634092903024164
+        }
+      },
+      "VN Aerial test (149)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      },
+      "VN Aerial val (486)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      }
+    }
+  },
+  "r_p2 (ablation)": {
+    "status": "ok",
+    "weights": "runs/detect/r_p2/weights/best.pt",
+    "per_dataset": {
+      "V5+ test (CCTV, 1.500)": {
+        "mAP50": 0.7530296464473599,
+        "mAP50_95": 0.3949815666198079,
+        "precision": 0.7416643862699496,
+        "recall": 0.7070751911648517,
+        "AP50": {
+          "motorcycle": 0.8385489998290308,
+          "car": 0.8839560968644147,
+          "bus": 0.74485146554716,
+          "truck": 0.5447620235488345
+        }
+      },
+      "VN Aerial test (149)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      },
+      "VN Aerial val (486)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      }
+    }
+  },
+  "r_clspw (ablation)": {
+    "status": "ok",
+    "weights": "runs/detect/r_clspw/weights/best.pt",
+    "per_dataset": {
+      "V5+ test (CCTV, 1.500)": {
+        "mAP50": 0.7927401651509656,
+        "mAP50_95": 0.42255645563684785,
+        "precision": 0.7444841919653175,
+        "recall": 0.7350542763125606,
+        "AP50": {
+          "motorcycle": 0.835414138078725,
+          "car": 0.8718849632410297,
+          "bus": 0.764680628549691,
+          "truck": 0.6989809307344163
+        }
+      },
+      "VN Aerial test (149)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      },
+      "VN Aerial val (486)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      }
+    }
+  },
+  "r_progressive (ablation)": {
+    "status": "ok",
+    "weights": "runs/detect/r_progressive/weights/best.pt",
+    "per_dataset": {
+      "V5+ test (CCTV, 1.500)": {
+        "mAP50": 0.771077862572529,
+        "mAP50_95": 0.41470617520404734,
+        "precision": 0.7407656939524874,
+        "recall": 0.7212566842517126,
+        "AP50": {
+          "motorcycle": 0.8719799381679394,
+          "car": 0.8777110669599364,
+          "bus": 0.72094385618215,
+          "truck": 0.6136765889800906
+        }
+      },
+      "VN Aerial test (149)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      },
+      "VN Aerial val (486)": {
+        "error": "data/data_vn_aerial.yaml 'train:' key missing ❌.\n'train' and 'val' are required in all data YAMLs."
+      }
+    }
+  }
+}
