@@ -39,11 +39,11 @@ MODELS = [
     ("YOLOv8s-COCO (zero-shot)", "yolov8s.pt",                                             960),
     ("V5 honest (640)",          "runs/detect/train_v8s_v5_honest/weights/best.pt",         640),
     ("V5+ 960px",                "runs/detect/train_v8s_v5plus_960/weights/best.pt",        960),
-    ("p4_scale (cuối)",          "runs/detect/p4_scale_from_baseline/weights/best.pt",      960),
+    ("p4_scale",                 "runs/detect/p4_scale_from_baseline/weights/best.pt",      960),
     ("p4_imgsz1280",             "runs/detect/p4_imgsz1280_from_baseline/weights/best.pt", 1280),
     ("V6 pseudo",                "runs/detect/train_v8s_v6_pseudo/weights/best.pt",         960),
     ("r_p2 (ablation)",          "runs/detect/r_p2/weights/best.pt",                        960),
-    ("r_clspw (ablation)",       "runs/detect/r_clspw/weights/best.pt",                     960),
+    ("r_clspw (mô hình cuối)",   "runs/detect/r_clspw/weights/best.pt",                     960),
     ("r_progressive (ablation)", "runs/detect/r_progressive/weights/best.pt",              1280),
 ]
 
@@ -93,7 +93,7 @@ lines = [
     "",
     "## Bảng chính: mAP@0.5 trên các bộ test",
     "",
-    "| Mô hình | V5+ test (CCTV) | Aerial test | Aerial val | Gap CCTV→Aerial |",
+    "| Mô hình | V5+ test (CCTV) | Aerial test | Aerial val | Gap CCTV→Aerial test |",
     "|---|---|---|---|---|",
 ]
 def fmt(x): return f"{x:.4f}" if isinstance(x, (int, float)) else "—"
@@ -106,7 +106,7 @@ for mname, r in results.items():
     v5p = pd.get("V5+ test (CCTV, 1.500)", {}).get("mAP50")
     aerial_t = pd.get("VN Aerial test (149)", {}).get("mAP50")
     aerial_v = pd.get("VN Aerial val (486)", {}).get("mAP50")
-    gap = (v5p - aerial_v) if (v5p and aerial_v) else None
+    gap = (v5p - aerial_t) if (v5p and aerial_t) else None
     gap_str = f"{gap:+.4f}" if gap is not None else "—"
     lines.append(f"| {mname} | {fmt(v5p)} | {fmt(aerial_t)} | {fmt(aerial_v)} | {gap_str} |")
 

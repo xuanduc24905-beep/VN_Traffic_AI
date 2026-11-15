@@ -46,7 +46,8 @@ FIGURE_IMAGES = {
     "Hình 3.7": "fig_3_7_original.png",   # YOLO coord system
     # Ch4 charts
     "Hình 4.1": "fig_4_training_curves_v5plus.png",
-    "Hình 4.2": "fig_4_confusion_matrix_p4scale.png",
+    "Hình 4.2": "fig_4_ablation_full.png",
+    "Hình 4.3": "fig_4_cross_domain.png",
     "Hình 4.5": "fig_4_model_comparison.png",
     "Hình 4.6": "fig_4_per_class_ap.png",
     "Hình 4.7": "fig_4_yolo_vs_frcnn.png",

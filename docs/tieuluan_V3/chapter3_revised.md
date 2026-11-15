@@ -138,12 +138,12 @@ Việc xác định `video_id` được thực hiện bằng cách parse tên fi
 |---|---|---|---|
 | Train | 7.237 | 71% | V5 base (2.833) + Vietnam Vehicles v10 (4.404) |
 | Validation | 1.466 | 14% | V5 val (giữ nguyên từ V5 base) |
-| Test | 1.500 | 15% | V5 test (giữ nguyên từ V5 base) |
+| Test | 1.500 | 15% | SOICT24 cam_09 (1.000) và cam_10 (500), ban ngày |
 | **Tổng** | **10.203** | **100%** | |
 
 Val và test giữ nguyên từ V5 base (không bổ sung từ v10) để các kết quả có thể so sánh công bằng với V5 honest baseline. Toàn bộ v10 (4.404 ảnh) được thêm vào train.
 
-Tập test bao gồm cả cảnh ngày (SOICT 2024, Cần Thơ) và cảnh đêm (SOICT Night) để kết quả đánh giá không phụ thuộc duy nhất vào một điều kiện ánh sáng. Với tập test có 1.500 ảnh phủ nhiều scene khác nhau, kết quả mAP có độ tin cậy cao hơn so với chia 2 video test của V5 ban đầu.
+Tập test chỉ gồm hai camera SOICT24 ban ngày: cam_09 có 1.000 ảnh và cam_10 có 500 ảnh. Không có nguồn camera nào khác trong test. Giới hạn này được ghi nhận khi diễn giải kết quả; khả năng tổng quát hóa sang góc nhìn khác được đo riêng bằng VN Aerial.
 
 ### 3.3.4 Chiến lược lấy mẫu để giảm dư thừa
 
@@ -199,89 +199,128 @@ Phương pháp kết hợp các phép tăng cường mặc định của Ultraly
 
 | Tham số | Giá trị | Ý nghĩa |
 |---|---|---|
-| hsv_h | 0.015 | Dao động Hue ±1.5% |
-| hsv_s | 0.7 | Dao động Saturation ±70% |
-| hsv_v | 0.4 | Dao động Value ±40% |
-| degrees | 0.0 | Không xoay (giữ hướng xe thật) |
-| translate | 0.1 | Dịch chuyển tối đa 10% kích thước |
-| scale | 0.5 | Co giãn ±50% |
-| fliplr | 0.5 | Xác suất lật ngang 50% |
-| flipud | 0.0 | Không lật dọc (phi thực tế) |
-| mosaic | 1.0 | Ghép 4 ảnh (mặc định on) |
+| hsv_h | 0,015 | Dao động Hue ±1,5% |
+| hsv_s | 0,7 | Dao động Saturation ±70% |
+| hsv_v | 0,4 | Dao động Value ±40% |
+| degrees | 0,0 | Không xoay (giữ hướng xe thật) |
+| translate | 0,1 | Dịch chuyển tối đa 10% kích thước |
+| scale | 0,5 | Co giãn ±50% |
+| fliplr | 0,5 | Xác suất lật ngang 50% |
+| flipud | 0,0 | Không lật dọc (phi thực tế) |
+| mosaic | 1,0 | Ghép 4 ảnh (mặc định on) |
 
 **Bảng 3.7** Thiết lập bổ sung và điều chỉnh cho dữ liệu Việt Nam.
 
-| Tham số | V5+ baseline | Mô hình cuối p4_scale | Lý do |
+| Tham số | V5+ baseline | Mô hình cuối r_clspw | Lý do |
 |---|---|---|---|
-| mixup [21] | 0.1 | 0.1 | Giúp mô hình học overlap xe trong cảnh đông |
-| cos_lr [22] | True | True | Cosine schedule giảm LR mượt hơn |
-| close_mosaic | 10 epoch cuối | 10 epoch cuối | Tắt mosaic ở epoch cuối để học distribution gốc |
-| scale | 0.5 | **0.7** | Tăng robust với xe ở xa |
-| translate | 0.1 | **0.15** | Tăng robust với vị trí xe trong frame |
-| copy_paste | 0.3 | **0.0** | copy_paste không có tác dụng cho bbox (chỉ segmentation) |
+| mixup [21] | 0,1 | 0,1 | Giúp mô hình học trường hợp che khuất trong cảnh đông |
+| cos_lr [22] | True | True | Cosine schedule giảm learning rate mượt hơn |
+| close_mosaic | 10 epoch cuối | 5 epoch cuối | Cho mô hình quay về phân phối ảnh gốc trước khi kết thúc |
+| scale | 0,5 | 0,5 | Giữ chính sách nền để cô lập ảnh hưởng của class weighting |
+| translate | 0,1 | 0,1 | Giữ chính sách nền để cô lập ảnh hưởng của class weighting |
+| copy_paste | 0,3 | 0,0 | copy_paste không có tác dụng trực tiếp với nhãn bounding box |
 
 Validation và test chỉ áp dụng letterbox resize, chuyển kênh và chuẩn hóa; không áp dụng mixup, mosaic, flip hay bất kỳ augmentation nào.
 
-## 3.5 Mô hình phát hiện chính YOLOv8s
+## 3.5 Chiến lược huấn luyện YOLOv8s và năm cải tiến
 
-### 3.5.1 Lý do chọn YOLOv8s
+YOLOv8s được chọn vì cân bằng giữa độ chính xác và chi phí tính toán, có kiến trúc anchor-free và tích hợp trực tiếp với ByteTrack. Thay vì chỉ báo cáo một cấu hình tốt nhất, đề tài xây dựng một baseline V5+ rồi kiểm chứng năm hướng cải tiến. Cấu hình thực tế của từng lần chạy được lưu cùng checkpoint trong `args.yaml`; các giả thuyết dưới đây được kiểm chứng bằng kết quả test ở Chương 4.
 
-YOLOv8s là phiên bản small trong họ YOLOv8 của Ultralytics [6]. Lý do chọn:
-- **Số tham số**: 11,1 triệu — nhỏ gọn, phù hợp triển khai trên thiết bị có cấu hình hạn chế.
-- **GFLOPs**: 28,6 — chi phí tính toán thấp, cho phép đạt FPS cao trên GPU laptop.
-- **Kiến trúc**: anchor-free, backbone CSPDarknet, neck PAN-FPN [23], [24], head decoupled.
-- **Cân bằng tốc độ–độ chính xác**: nhanh hơn YOLOv8m/l và đủ chính xác cho bài toán 4 lớp.
-- **Hệ sinh thái Ultralytics**: tích hợp sẵn ByteTrack cho tracking, hỗ trợ ONNX export, API Python đơn giản.
+### 3.5.1 Baseline: V5 honest 640 → V5+ 960
 
-### 3.5.2 Chiến lược huấn luyện ba giai đoạn
+V5 honest là mốc đánh giá sau khi khắc phục rò rỉ dữ liệu, dùng 2.833 ảnh train và đầu vào 640 pixel. V5+ mở rộng tập train lên 7.237 ảnh, tăng đầu vào lên 960 pixel, bật cosine learning rate và mixup=0,1. Hai yếu tố dữ liệu và cấu hình thay đổi đồng thời nên chênh lệch giữa hai mốc không được xem là ablation thuần của riêng độ phân giải.
 
-Thay vì huấn luyện một lần duy nhất, đề tài áp dụng chiến lược ba giai đoạn tăng dần:
+**Bảng 3.8** Cấu hình hai baseline.
 
-**Giai đoạn 1 — V5 honest baseline** (imgsz=640):
-- Fine-tune YOLOv8s từ trọng số pretrained COCO
-- imgsz = 640, batch = 32, epochs = 40, lr0 = 0.01
-- Mục tiêu: baseline tối giản không có augmentation nâng cao
+| Tham số | V5 honest | V5+ baseline |
+|---|---|---|
+| Khởi tạo | `yolov8s.pt` | `yolov8s.pt` |
+| Số ảnh train | 2.833 | 7.237 |
+| imgsz | 640 | 960 |
+| batch | 16 | 16 |
+| epochs tối đa | 40 | 40 |
+| lr0 | 0,01 | 0,005 |
+| cos_lr | False | True |
+| mixup | 0,0 | 0,1 |
+| scale / translate | 0,5 / 0,1 | 0,5 / 0,1 |
 
-**Giai đoạn 2 — V5+ 960px baseline** (imgsz=960):
-- Fine-tune YOLOv8s từ COCO với cấu hình nâng cao
-- imgsz = 960, batch = 16, epochs = 40, lr0 = 0.005, cos_lr=True
-- Augmentation: mixup=0.1, scale=0.5, translate=0.1
-- Mục tiêu: khai thác độ phân giải cao hơn cho xe máy nhỏ
+**Giả thuyết**: dữ liệu V5+ đa dạng hơn kết hợp ảnh 960 pixel sẽ cải thiện khả năng phát hiện vật nhỏ và các lớp ít mẫu so với V5 honest. Cấu hình thực: `runs/detect/train_v8s_v5_honest/args.yaml` và `runs/detect/train_v8s_v5plus_960/args.yaml`.
 
-**Giai đoạn 3 — p4_scale finetune** (mô hình cuối):
-- Fine-tune tiếp từ best.pt của V5+ 960px (warm-start)
-- imgsz = 960, batch = 6, epochs = 40, **lr0 = 0.0005** (giảm 10×)
-- Augmentation mạnh hơn: **scale = 0.7, translate = 0.15**, copy_paste = 0.0
-- Mục tiêu: tăng robustness với scale variation
+### 3.5.2 Cải tiến 1 — Fine-tuning với augmentation không gian mạnh hơn (p4_scale)
 
-**Bảng 3.8** Cấu hình huấn luyện ba giai đoạn YOLOv8s.
+Biến thiên kích thước và vị trí của phương tiện giữa các camera có thể làm mô hình phụ thuộc vào bố cục tập train. `p4_scale` warm-start từ checkpoint baseline, tăng biên co giãn và tịnh tiến để mô phỏng phương tiện ở khoảng cách và vị trí đa dạng hơn.
 
-| Tham số | V5 honest | V5+ 960px | p4_scale (cuối) |
-|---|---|---|---|
-| init | yolov8s.pt (COCO) | yolov8s.pt (COCO) | V5+ best.pt |
-| imgsz | 640 | 960 | 960 |
-| batch | 32 | 16 | 6 |
-| epochs | 40 | 40 | 40 |
-| lr0 | 0.01 | 0.005 | 0.0005 |
-| lr schedule | linear | cosine | cosine |
-| optimizer | SGD | SGD | SGD |
-| momentum | 0.937 | 0.937 | 0.937 |
-| weight_decay | 0.0005 | 0.0005 | 0.0005 |
-| warmup_epochs | 3 | 3 | 3 |
-| close_mosaic | 10 | 10 | 10 |
-| mixup | 0 | 0.1 | 0.1 |
-| scale | 0.5 | 0.5 | 0.7 |
-| translate | 0.1 | 0.1 | 0.15 |
-| patience | 15 | 15 | 15 |
-| seed | 42 | 42 | 42 |
+| Tham số | V5+ baseline | p4_scale |
+|---|---|---|
+| Khởi tạo | `yolov8s.pt` | V5+ `best.pt` |
+| imgsz / batch | 960 / 16 | 960 / 6 |
+| epochs tối đa | 40 | 40 |
+| lr0 | 0,005 | 0,0005 |
+| scale | 0,5 | 0,7 |
+| translate | 0,1 | 0,15 |
 
-### 3.5.3 Hàm mất mát
+**Giả thuyết**: augmentation không gian mạnh hơn sẽ tăng recall và giảm phụ thuộc vào góc đặt camera. Do đồng thời warm-start và giảm learning rate, kết quả được diễn giải là hiệu quả của toàn bộ recipe `p4_scale`, không quy tuyệt đối cho một tham số riêng lẻ. Cấu hình thực: `runs/detect/p4_scale_from_baseline/args.yaml`.
 
-YOLOv8 sử dụng ba thành phần loss kết hợp [12], [25], [26]: box loss (CIoU), classification loss (BCE với class weights), DFL loss. Trọng số mặc định `box=7.5, cls=0.5, dfl=1.5` được giữ nguyên.
+### 3.5.3 Cải tiến 2 — Tăng độ phân giải đầu vào (p4_imgsz1280)
 
-### 3.5.4 Tiêu chí lựa chọn checkpoint
+Đầu vào 1.280 pixel giữ nhiều chi tiết hơn cho xe máy và phương tiện ở xa, nhưng làm tăng số điểm ảnh và buộc giảm batch. Recipe này warm-start từ baseline và giữ augmentation nền.
 
-Checkpoint tốt nhất được chọn dựa trên **mAP@0.5 trên tập validation**, đồng thời xem xét AP của từng lớp để tránh chọn mô hình có kết quả trung bình cao nhưng yếu ở các lớp quan trọng (bus, truck). Tập test **không tham gia** quá trình chọn checkpoint, nhằm tránh selection bias.
+| Tham số | V5+ baseline | p4_imgsz1280 |
+|---|---|---|
+| Khởi tạo | `yolov8s.pt` | V5+ `best.pt` |
+| imgsz | 960 | 1.280 |
+| batch | 16 | 6 |
+| lr0 | 0,005 | 0,0005 |
+| scale / translate | 0,5 / 0,1 | 0,5 / 0,1 |
+
+**Giả thuyết**: tăng độ phân giải sẽ cải thiện AP của đối tượng nhỏ, đổi lại chi phí tính toán cao hơn. Cấu hình thực: `runs/detect/p4_imgsz1280_from_baseline/args.yaml`.
+
+### 3.5.4 Cải tiến 3 — Kiến trúc YOLOv8s-P2 cho vật nhỏ (r_p2)
+
+YOLOv8s mặc định dự đoán trên các mức stride 8/16/32. `r_p2` thêm đầu dự đoán stride 4 để giữ đặc trưng không gian chi tiết hơn. Do kiến trúc head thay đổi, mô hình được khởi tạo từ phần trọng số COCO tương thích thay vì warm-start toàn bộ từ V5+.
+
+| Tham số | V5+ baseline | r_p2 |
+|---|---|---|
+| Kiến trúc | YOLOv8s, stride 8/16/32 | YOLOv8s-P2, stride 4/8/16/32 |
+| Khởi tạo | `yolov8s.pt` | `yolov8s.pt` phần tương thích |
+| imgsz / batch | 960 / 16 | 960 / 16 |
+| epochs tối đa | 40 | 25 |
+| patience | 15 | 8 |
+
+**Giả thuyết**: P2 head sẽ tăng AP cho xe máy nhỏ; ngược lại, head bổ sung có thể làm tối ưu khó hơn và tăng chi phí tính toán. Cấu hình thực: `runs/detect/r_p2/args.yaml`.
+
+### 3.5.5 Cải tiến 4 — Class-weighted loss cho lớp hiếm (r_clspw)
+
+Tập V5+ mất cân bằng lớp, vì vậy `r_clspw` đặt `cls_pw=0,5`. Bản Ultralytics 8.4.142 dùng số instance train n_c để tính trọng số w_c = (1/n_c)^0,5, sau đó chuẩn hóa để trung bình bốn trọng số bằng 1. Các trọng số thực ghi trong log là `[0,571; 0,860; 1,629; 0,940]` theo thứ tự motorcycle, car, bus, truck. BCE classification loss của từng lớp được nhân với trọng số tương ứng; box loss và DFL không đổi.
+
+| Tham số | V5+ baseline | r_clspw |
+|---|---|---|
+| Khởi tạo | `yolov8s.pt` | V5+ `best.pt` |
+| cls_pw | 0,0 | 0,5 |
+| imgsz / batch | 960 / 16 | 960 / 16 |
+| epochs tối đa | 40 | 15 |
+| lr0 / lrf | 0,005 / 0,01 | 0,001 / 0,1 |
+| close_mosaic | 10 | 5 |
+
+**Giả thuyết**: giảm đóng góp tương đối của lớp phổ biến và tăng đóng góp của lớp hiếm trong BCE sẽ cải thiện AP bus/truck và mAP tổng. Đây là mô hình cuối sau khi kiểm chứng ở Chương 4. Cấu hình thực: `runs/detect/r_clspw/args.yaml`.
+
+### 3.5.6 Cải tiến 5 — Progressive resolution curriculum (r_progressive)
+
+Recipe progressive huấn luyện giai đoạn 1 ở 960 pixel để học biểu diễn ổn định, sau đó chuyển checkpoint tốt nhất sang 1.280 pixel để tinh chỉnh chi tiết. Cách này nhằm tránh tối ưu trực tiếp ở độ phân giải cao ngay từ đầu.
+
+| Tham số | Giai đoạn 1 | Giai đoạn 2 |
+|---|---|---|
+| Khởi tạo | `yolov8s.pt` | `r_progressive_s1/best.pt` |
+| imgsz / batch | 960 / 16 | 1.280 / 8 |
+| epochs | 20 | 10 |
+| lr0 | 0,005 | 0,002 |
+| close_mosaic | 10 | 5 |
+
+**Giả thuyết**: curriculum 960→1.280 sẽ giữ khả năng hội tụ của baseline và bổ sung chi tiết cho vật nhỏ ở giai đoạn cuối. Cấu hình thực: `runs/detect/r_progressive_s1/args.yaml` và `runs/detect/r_progressive/args.yaml`.
+
+### 3.5.7 Tiêu chí lựa chọn mô hình cuối
+
+Checkpoint trong từng run được chọn trên validation. Việc chọn recipe cuối dựa trên ba lớp bằng chứng: mAP@0.5 và mAP@0.5:0.95 trên test V5+ độc lập; AP theo bốn lớp; và khả năng tổng quát hóa trên VN Aerial. Test không được dùng để cập nhật trọng số. `r_clspw` được chọn làm mô hình cuối vì đạt mAP@0.5 cao nhất trên test V5+, trong khi kết quả cross-domain được báo cáo riêng để làm rõ trade-off thay vì che giấu việc `p4_scale` tổng quát hóa tốt hơn trên góc nhìn aerial.
 
 ## 3.6 Mô hình đối chứng Faster R-CNN ResNet50-FPN
 
@@ -382,6 +421,8 @@ Mô hình phát hiện được đánh giá bằng các chỉ số chuẩn COCO 
 
 Per-class AP được báo cáo để thấy ảnh hưởng của mất cân bằng lớp thay vì chỉ dùng số trung bình.
 
+Ngoài test V5+ gồm 1.500 ảnh từ hai camera SOICT24 ban ngày (cam_09 và cam_10), các mô hình YOLO còn được đánh giá cross-domain trên VN Aerial gồm 486 ảnh validation và 149 ảnh test. Bộ VN Aerial chỉ dùng để đánh giá, không tham gia huấn luyện; kiểm tra MD5 xác nhận không có ảnh trùng với V5+.
+
 ### 3.8.2 Chỉ số đếm
 
 Đánh giá đếm bằng sai số giữa số sự kiện dự đoán và ground truth đếm tay trên các đoạn video kiểm thử:
@@ -413,10 +454,10 @@ FPS (frames per second) được đo trên 100 khung hình đầu sau warm-up v�
 Chương này đã trình bày phương pháp đề xuất một cách hệ thống:
 - **Dữ liệu**: V5+ gồm 10.203 ảnh hợp nhất từ 5 nguồn Roboflow (SOICT 2024, SOICT Night, Cần Thơ, VNv3, Vietnam Vehicles v10), schema 4 lớp thống nhất.
 - **Chia tập theo video**: 7.237 train / 1.466 val / 1.500 test, kiểm tra tự động xác nhận 0% leak.
-- **Tiền xử lý và augmentation**: letterbox 960×960 + augmentation mặc định Ultralytics + bổ sung mixup, cos_lr, scale=0.7.
-- **Mô hình chính**: YOLOv8s fine-tune ba giai đoạn (V5 honest → V5+ 960 → p4_scale).
+- **Tiền xử lý và augmentation**: letterbox 960×960 + augmentation mặc định Ultralytics + bổ sung mixup, cos_lr, scale=0,7.
+- **Mô hình chính**: YOLOv8s `r_clspw` với class-weighted loss, được chọn sau khi so sánh năm recipe cải tiến trên cùng test V5+.
 - **Mô hình đối chứng**: Faster R-CNN ResNet50-FPN với cấu hình chuẩn TorchVision, cùng dữ liệu V5+.
 - **Theo vết và đếm**: ByteTrack + thuật toán giao cắt vạch với anti-duplicate counting.
-- **Đánh giá**: mAP@0.5, mAP@0.5:0.95, AP per class cho detection; MAE/MAPE cho counting; phân tích lỗi TP/FP/FN theo nhiều chiều.
+- **Đánh giá**: mAP@0.5, mAP@0.5:0.95, AP per class trên V5+ và VN Aerial; MAE/MAPE cho counting; phân tích lỗi TP/FP/FN theo nhiều chiều.
 
 Chương 4 trình bày môi trường thực nghiệm, kết quả huấn luyện, so sánh giữa các cấu hình YOLOv8s (ablation), so sánh với Faster R-CNN và phân tích lỗi chi tiết.

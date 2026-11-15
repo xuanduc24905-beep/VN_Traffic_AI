@@ -42,8 +42,9 @@ Panel sidebar cho phép chọn model từ danh sách các checkpoint đã huấn
 
 | Model | mAP@0.5 test | Mô tả |
 |---|---|---|
-| ⭐ **p4_scale (mặc định)** | **0,787** | Mô hình cuối — khuyến nghị cho mọi đánh giá |
-| V5+ 960px | 0,782 | Baseline mạnh thứ hai, imgsz=960 |
+| ⭐ **r_clspw (mặc định)** | **0,7927** | Mô hình cuối cho test V5+; class-weighted loss |
+| p4_scale | 0,7869 | Khuyến nghị khi camera có góc nhìn cross-domain/aerial |
+| V5+ 960px | 0,7819 | Baseline, imgsz=960 |
 | V6 pseudo | 0,761 | Motor cải thiện (dù mAP tổng thấp hơn) |
 | V5 honest | 0,665 | Baseline honest split 640 |
 

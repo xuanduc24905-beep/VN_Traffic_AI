@@ -127,7 +127,7 @@ data = json.loads(Path("/home/xuand/vn_traffic_ai/docs/report/assets/cross_domai
 
 MODELS_ORDER = [
     "YOLOv8s-COCO (zero-shot)", "V5 honest (640)", "V5+ 960px",
-    "p4_scale (cuối)", "r_p2 (ablation)", "r_clspw (ablation)",
+    "p4_scale", "r_p2 (ablation)", "r_clspw (mô hình cuối)",
     "r_progressive (ablation)", "V6 pseudo"
 ]
 
@@ -158,7 +158,7 @@ if v5plus:
     print(f"✓ fig_4_cross_domain.png")
 
 # ── Chart 2: Full ablation (if r_p2 done) ──
-ablation_models = ["V5+ 960px", "p4_scale (cuối)", "r_p2 (ablation)", "r_clspw (ablation)", "r_progressive (ablation)"]
+ablation_models = ["V5+ 960px", "p4_scale", "p4_imgsz1280", "r_p2 (ablation)", "r_clspw (mô hình cuối)", "r_progressive (ablation)"]
 vals = []; labels = []
 for m in ablation_models:
     if m in data and data[m].get("status") == "ok":
@@ -213,12 +213,12 @@ def get(m, dataset, metric="mAP50"):
 def fmt(x, n=3):
     return f"{x:.{n}f}" if isinstance(x, (int, float)) else "—"
 
-p4 = get("p4_scale (cuối)", "V5+ test (CCTV, 1.500)")
-p4_95 = get("p4_scale (cuối)", "V5+ test (CCTV, 1.500)", "mAP50_95")
+p4 = get("p4_scale", "V5+ test (CCTV, 1.500)")
+p4_95 = get("p4_scale", "V5+ test (CCTV, 1.500)", "mAP50_95")
 r_p2 = get("r_p2 (ablation)", "V5+ test (CCTV, 1.500)")
 r_p2_95 = get("r_p2 (ablation)", "V5+ test (CCTV, 1.500)", "mAP50_95")
 r_p2_aerial = get("r_p2 (ablation)", "VN Aerial val (486)")
-p4_aerial = get("p4_scale (cuối)", "VN Aerial val (486)")
+p4_aerial = get("p4_scale", "VN Aerial val (486)")
 
 r_p2_wins = (r_p2 is not None and p4 is not None and r_p2 > p4)
 print(f"r_p2 wins: {r_p2_wins} (r_p2={r_p2}, p4_scale={p4})")
@@ -237,7 +237,7 @@ section_43_5 = f"""
 |---|---|---|---|---|
 """
 for m in ["YOLOv8s-COCO (zero-shot)", "V5 honest (640)", "V5+ 960px",
-          "p4_scale (cuối)", "r_p2 (ablation)", "r_clspw (ablation)",
+          "p4_scale", "r_p2 (ablation)", "r_clspw (mô hình cuối)",
           "r_progressive (ablation)"]:
     v5 = get(m, "V5+ test (CCTV, 1.500)")
     av = get(m, "VN Aerial val (486)")
@@ -378,9 +378,9 @@ def get(m, dataset="V5+ test (CCTV, 1.500)", metric="mAP50"):
     if m not in data or data[m].get("status") != "ok": return None
     return data[m].get("per_dataset", {}).get(dataset, {}).get(metric)
 
-p4 = get("p4_scale (cuối)")
+p4 = get("p4_scale")
 r_p2 = get("r_p2 (ablation)")
-r_clspw = get("r_clspw (ablation)")
+r_clspw = get("r_clspw (mô hình cuối)")
 r_prog = get("r_progressive (ablation)")
 
 print("\n═══ MODEL RANKINGS trên V5+ test ═══")

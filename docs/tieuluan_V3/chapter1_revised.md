@@ -30,7 +30,7 @@ Xây dựng và đánh giá một hệ thống phát hiện, phân loại và đ
 
 - Xây dựng bộ dữ liệu V5+ gồm 10.203 ảnh (train 7.237, validation 1.466, test 1.500) hợp nhất từ 5 nguồn Roboflow công khai; gán nhãn 4 lớp theo chuẩn YOLO.
 - Chuẩn hóa dữ liệu và chia train/validation/test theo video_id, áp dụng kiểm tra rò rỉ tự động xác nhận 0% leak giữa các tập.
-- Tinh chỉnh YOLOv8s từ trọng số pretrained COCO qua ba giai đoạn (V5 honest 640px, V5+ 960px, p4_scale finetune) và huấn luyện Faster R-CNN ResNet50-FPN trên cùng tập dữ liệu để so sánh.
+- Tinh chỉnh YOLOv8s từ trọng số pretrained COCO, kiểm chứng năm chiến lược cải tiến trên nền V5+ và chọn `r_clspw` làm mô hình cuối; huấn luyện Faster R-CNN ResNet50-FPN trên cùng tập dữ liệu để so sánh.
 - Đánh giá Precision, Recall, mAP@0.5, mAP@0.5:0.95 tổng thể và theo từng lớp trên tập test độc lập.
 - Đo FPS và độ trễ inference trên GPU RTX 3500 Ada Laptop cho cả hai mô hình trong điều kiện thống nhất.
 - Xây dựng hệ thống đếm phương tiện dựa trên tracker ByteTrack và vạch đếm ảo; đánh giá bằng MAE và MAPE trên các đoạn video có nhãn đếm tay.
@@ -44,7 +44,7 @@ Xây dựng và đánh giá một hệ thống phát hiện, phân loại và đ
 
 **Câu hỏi 3.** Các lỗi nhận dạng nào xuất hiện phổ biến đối với phương tiện nhỏ, bị che khuất hoặc trong điều kiện ánh sáng yếu? Các lỗi thuộc nhóm định vị sai, nhầm lớp hay bỏ sót?
 
-**Câu hỏi 4.** Mô hình cuối (p4_scale) có đạt mục tiêu mAP@0.5 ≥ 0,75 trên tập test hay không, và mức độ cải thiện so với baseline COCO zero-shot và V5 honest là bao nhiêu điểm phần trăm?
+**Câu hỏi 4.** Mô hình cuối (`r_clspw`) có đạt mục tiêu mAP@0.5 ≥ 0,75 trên tập test hay không, và mức độ cải thiện so với baseline COCO zero-shot và V5 honest là bao nhiêu điểm tuyệt đối?
 
 **Câu hỏi 5.** Hệ thống đếm phương tiện xây dựng trên nền ByteTrack đạt sai số MAE và MAPE bao nhiêu trên các đoạn video kiểm thử có nhãn đếm tay? Lỗi đếm tập trung ở lớp xe nào và trong điều kiện nào?
 
@@ -82,8 +82,8 @@ Hệ thống đếm sử dụng thuật toán tracker ByteTrack [19] để liên
 Đề tài đã hoàn thành bốn sản phẩm chính:
 
 - **Bộ dữ liệu V5+** gồm 10.203 ảnh với nhãn chuẩn YOLO 4 lớp, được kiểm tra rò rỉ tự động xác nhận 0% leak và lưu trữ công khai tại thư mục `data/merged_v5plus/`.
-- **Pipeline huấn luyện có đối chứng** gồm 8 recipe trong `scripts/pipelines/train.py`, cho phép chạy ablation đồng nhất; đã huấn luyện và đánh giá 5 mô hình YOLOv8s (V5 honest, V5+, p4_scale, p4_imgsz1280, V6 pseudo) và 1 mô hình Faster R-CNN ResNet50-FPN.
-- **Mô hình phát hiện tốt nhất p4_scale** đạt mAP@0.5 = 0,787 và mAP@0.5:0.95 = 0,423 trên tập test V5+ 1.500 ảnh, cao hơn mô hình đối chứng Faster R-CNN tương ứng 0,146 và 0,062 điểm.
+- **Pipeline huấn luyện có đối chứng** gồm 8 recipe trong `scripts/pipelines/train.py`, cho phép chạy ablation đồng nhất; đã đánh giá V5 honest, V5+, năm chiến lược cải tiến, V6 pseudo và Faster R-CNN ResNet50-FPN.
+- **Mô hình phát hiện tốt nhất `r_clspw`** đạt mAP@0.5 = 0,7927 và mAP@0.5:0.95 = 0,4226 trên tập test V5+ 1.500 ảnh, cao hơn Faster R-CNN tương ứng 15,19 và 6,20 điểm tuyệt đối.
 - **Ứng dụng demo Streamlit** (`ui/streamlit_app.py`) cho phép tải video, cấu hình vạch đếm, chạy phát hiện kết hợp ByteTrack và xuất bảng đếm theo lớp dạng CSV.
 
 ## 1.9 Ý nghĩa và đóng góp đã đạt được
@@ -91,6 +91,8 @@ Hệ thống đếm sử dụng thuật toán tracker ByteTrack [19] để liên
 **Về mặt phương pháp.** Đề tài đã xác định và khắc phục được hiện tượng rò rỉ dữ liệu ở mức video — một lỗi phổ biến nhưng ít được báo cáo trong các công trình phát hiện phương tiện trước đây. Kết quả cho thấy việc chuyển từ chia tập theo khung hình sang chia theo video_id làm giảm mAP@0.5 từ mức ảo 0,95 (V1–V4) xuống 0,665 (V5 honest) nhưng phản ánh đúng khả năng tổng quát hóa của mô hình.
 
 **Về mặt thực nghiệm.** Đề tài đã cung cấp bộ số liệu đối chiếu giữa YOLOv8s và Faster R-CNN ResNet50-FPN trên cùng tập test V5+ với 1.500 ảnh, thể hiện rõ sự khác biệt giữa hai triết lý thiết kế detector trong bối cảnh dữ liệu giao thông Việt Nam dày đặc xe máy.
+
+Đề tài đồng thời chỉ ra trade-off giữa độ chính xác trong miền và khả năng tổng quát hóa: `r_clspw` tốt nhất trên V5+, trong khi `p4_scale` tốt nhất trên VN Aerial. Kết quả này giúp lựa chọn mô hình theo bối cảnh camera thay vì chỉ dựa vào một chỉ số duy nhất.
 
 **Về mặt ứng dụng.** Hệ thống đếm phương tiện được xây dựng có thể triển khai lên các camera giám sát hiện có để tổng hợp cơ cấu phương tiện theo thời gian, hỗ trợ các bài toán quy hoạch và điều phối giao thông.
 
