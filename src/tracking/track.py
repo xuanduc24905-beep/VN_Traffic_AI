@@ -24,7 +24,8 @@ def track_stream(weights: str | YOLO, source: str,
                  conf: float = 0.25, iou: float = 0.5,
                  imgsz: int = 640, device: str | int | None = None,
                  half: bool = False,
-                 classes: list[int] | None = None):
+                 classes: list[int] | None = None,
+                 agnostic_nms: bool = False):
     """Yield từng frame result có `.boxes.id` (tracking ID).
 
     result.boxes có các thuộc tính:
@@ -46,6 +47,7 @@ def track_stream(weights: str | YOLO, source: str,
         "stream": True,
         "persist": True,
         "verbose": False,
+        "agnostic_nms": agnostic_nms,
     }
     selected_device = resolve_device(device)
     kwargs["device"] = selected_device

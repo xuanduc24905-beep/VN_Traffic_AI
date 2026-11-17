@@ -66,3 +66,9 @@ __pycache__/
 *.swp
 data/pseudo_v6/
 data/merged_v6/
+
+# V5fix / MIO-TCD: du lieu lon, chi giu script + manifest
+data/*.tar
+data/ext_benchmark/
+outputs/review_missing_labels/
+reports/*/videos/

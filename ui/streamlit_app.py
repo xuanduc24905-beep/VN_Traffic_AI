@@ -157,7 +157,9 @@ WEIGHTS_DIR = ROOT / "weights"
 available_weights = sorted([str(p.relative_to(ROOT)) for p in WEIGHTS_DIR.rglob("*.pt")])
 runs_weights = sorted([str(p.relative_to(ROOT))
                        for p in (ROOT / "runs").rglob("best.pt")]) if (ROOT / "runs").exists() else []
-all_weights = available_weights + runs_weights
+# yolov8s.pt gốc COCO (đối chứng) nằm ở thư mục gốc repo
+coco_weights = ["yolov8s.pt"] if (ROOT / "yolov8s.pt").exists() else []
+all_weights = coco_weights + available_weights + runs_weights
 
 if not all_weights:
     st.sidebar.error("Không tìm thấy file .pt nào trong weights/ hoặc runs/")
@@ -165,11 +167,29 @@ if not all_weights:
 
 # ---------- Model priority (hiện trên top + default) ----------
 # Mapping path → (nhãn hiển thị, mô tả, thứ tự ưu tiên)
+COCO_VEHICLE_IDS = [1, 2, 3, 5, 7]  # bicycle, car, motorcycle, bus, truck (COCO 80 lớp)
+
+
+def _det_classes(w):
+    """yolov8s.pt gốc COCO có 80 lớp: chỉ giữ phương tiện, nếu không tracker sẽ theo cả người/đèn."""
+    return COCO_VEHICLE_IDS if Path(w).name == "yolov8s.pt" and Path(w).parent == Path(".") else None
+
+
 FEATURED_MODELS = {
+    "yolov8s.pt": (
+        "yolov8s COCO gốc (đối chứng, chưa fine-tune)",
+        "Trọng số COCO 80 lớp chưa huấn luyện thêm; chỉ giữ car/motorcycle/bus/truck/bicycle. "
+        "Dùng để so với các model fine-tune trên cùng video.", 0.7,
+    ),
     "runs/detect/r_clspw_v2/weights/best.pt": (
-        "⭐ r_clspw_v2 — mô hình cuối V5+ (mAP@50 0.798)",
+        "r_clspw_v2 — mô hình cuối V5+ (mAP@50 0.798)",
         "Fine-tune class-weighted (cls_pw=0.5) từ exp_baseline trên 7,237 ảnh V5+. "
-        "Cao nhất in-domain, tốt cho CCTV Việt Nam.", 0,
+        "Cao nhất in-domain (test SOICT) nhưng hụt ô tô xa và có hộp khổng lồ trên video ngoài.", 0.5,
+    ),
+    "runs/detect/v5fix_d1_freeze10/weights/best.pt": (
+        "⭐ v5fix D1 (freeze=10) — mặc định, tốt nhất trên camera ngoài",
+        "Backbone COCO đóng băng, 60 epoch trên V5fix (7.179 ảnh). Bắt ô tô/xe buýt ở camera "
+        "ngoài tốt hơn r_clspw_v2, không còn hộp khổng lồ. mAP@50 SOICT 0.779. Xem reports/v5fix/results.json.", 0,
     ),
     "runs/detect/exp_baseline/weights/best.pt": (
         "V5+ baseline (exp_baseline) — mAP@50 0.793",
@@ -210,15 +230,16 @@ pipeline_choice = st.sidebar.radio(
 )
 pipeline_kind = "improved_pipeline" if pipeline_choice.startswith("Improved") else "baseline_pipeline"
 
-# Dùng model winner (r_clspw_v2) làm default. Thứ tự fallback theo mAP V5+ test giảm dần.
+# Default = v5fix D1 (tốt nhất trên camera ngoài, reports/v5fix/results.json); sau đó fallback theo mAP V5+ test.
 _preferred = [
+    "runs/detect/v5fix_d1_freeze10/weights/best.pt",       # D1 freeze=10 (0.779 SOICT, ext VN 0.79)
     "runs/detect/r_clspw_v2/weights/best.pt",              # r_clspw_v2 winner (0.7984 mAP@0.5)
     "runs/detect/exp_baseline/weights/best.pt",             # V5+ baseline đúng (0.7930)
     "runs/detect/p4_scale_from_baseline/weights/best.pt",   # cross-domain winner
     "runs/detect/train_v8s_v6_pseudo/weights/best.pt",     # V6 pseudo fallback
     "runs/detect/train_v8s_v5_honest/weights/best.pt",     # V5 honest fallback
 ]
-_default_idx = next((i for i, w in enumerate(all_weights) if w in _preferred), 0)
+_default_idx = next((all_weights.index(w) for w in _preferred if w in all_weights), 0)
 weights_path = st.sidebar.selectbox(
     "Model weights",
     all_weights,
@@ -231,11 +252,13 @@ if weights_path in FEATURED_MODELS:
     st.sidebar.caption(FEATURED_MODELS[weights_path][1])
 tracker = st.sidebar.radio("Tracker", ["bytetrack.yaml", "botsort.yaml"],
                            help="Chỉ áp dụng cho Improved pipeline. Baseline pipeline dùng ByteTrack mặc định.")
-conf = st.sidebar.slider("Confidence threshold", 0.1, 0.9, 0.3, 0.05)
+conf = st.sidebar.slider("Confidence threshold", 0.1, 0.9, 0.2, 0.05,
+                         help="0.2 khi ghép ByteTrack: tracker tự lọc vết nhiễu qua 2 tầng.")
 iou = st.sidebar.slider("IoU threshold (NMS)", 0.1, 0.9, 0.5, 0.05)
 _imgsz_options = [320, 416, 512, 640, 768, 960, 1280]
 _recommended_imgsz = 1280 if "v7_1280" in weights_path else (
-    960 if "v5plus_960" in weights_path else 640)
+    960 if (weights_path in FEATURED_MODELS or "v5plus" in weights_path
+            or "v5pc" in weights_path) else 640)
 imgsz = st.sidebar.selectbox(
     "Image size", _imgsz_options,
     index=_imgsz_options.index(_recommended_imgsz),
@@ -308,8 +331,8 @@ with tab_run:
             (i for i, w in enumerate(all_weights)
              if "v5_honest" in w), 0)
         _im_default = next(
-            (i for i, w in enumerate(all_weights)
-             if "v6_pseudo" in w), 0)
+            (i for key in ("v5fix_d1_freeze10", "v6_pseudo")
+             for i, w in enumerate(all_weights) if key in w), 0)
         PIPELINE_OPTIONS = [
             "Baseline (giáo viên) — 1 line, không direction, không log event",
             "Improved (nhóm) — nhiều line + direction + log event + stats",
@@ -397,6 +420,7 @@ with tab_run:
                         lines=[line],
                         tracker=tracker,
                         conf=conf, iou=iou, imgsz=imgsz, half=use_half,
+                        classes=_det_classes(wpath),
                         out_csv=str(paths[tag]["csv"]),
                         out_video=str(paths[tag]["video"]),
                         progress_cb=_cb,
@@ -575,6 +599,7 @@ with tab_run:
                     lines=[line],
                     tracker=tracker,
                     conf=conf, iou=iou, imgsz=imgsz, half=use_half,
+                    classes=_det_classes(weights_path),
                     out_csv=str(out_csv),
                     out_video=str(out_video),
                     progress_cb=_cb,
