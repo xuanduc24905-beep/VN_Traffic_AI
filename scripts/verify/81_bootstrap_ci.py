@@ -112,6 +112,10 @@ def main():
                              ("ctrl_cw0_s0", "exp_baseline"), ("r_clspw_v2", "frcnn_300"),
                              ("exp_baseline", "frcnn_300")],
              "aerial_test": [("r_clspw_v2", "exp_baseline"), ("r_clspw_v2", "frcnn_300")]}
+    if (D / "pred_v5plus_test_frcnn_v5plus_300.npz").exists():  # Faster R-CNN train lai tren V5+
+        pairs["v5plus_test"] += [("r_clspw_v2", "frcnn_v5plus_300"), ("exp_baseline", "frcnn_v5plus_300")]
+        pairs["aerial_test"] += [("r_clspw_v2", "frcnn_v5plus_300")]
+        pairs["aerial_val"] = [("r_clspw_v2", "frcnn_v5plus_300")]
     rng = np.random.default_rng(0)
     for sname, prs in pairs.items():
         gt = load_gt(sname); n = len(gt)

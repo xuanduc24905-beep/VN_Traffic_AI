@@ -20,7 +20,15 @@ gpu_busy = subprocess.run(["nvidia-smi", "--query-compute-apps=pid,process_name,
 res = {"gpu_processes_before": gpu_busy,
        "cw_fp16_960": sb.bench_yolo_model_only(CW, 960, True),
        "cw_fp32_960": sb.bench_yolo_model_only(CW, 960, False),
-       "frcnn_fp32": sb.bench_frcnn_model_only()}
+       "frcnn_fp32": None}
+# Faster R-CNN: dung diem luu train lai tren V5+ neu co (cung kien truc R50-FPN)
+_fr_ck = "weights/trained/frcnn_v5plus/best.pt" if (ROOT / "weights/trained/frcnn_v5plus/best.pt").exists() else "weights/trained/frcnn/best.pt"
+_fsrc = Path(spec.origin).read_text().split("def bench_frcnn_model_only")[1].split("\ndef bench_pipeline_end_to_end")[0]
+_ns = {}
+exec("import json, time, random\nimport numpy as np\nfrom pathlib import Path\nROOT = Path('/home/xuand/vn_traffic_ai')\ndef bench_frcnn_model_only"
+     + _fsrc.replace('"weights/trained/frcnn/best.pt"', repr(_fr_ck)), _ns)
+res["frcnn_fp32"] = _ns["bench_frcnn_model_only"]()
+assert res["frcnn_fp32"]["ckpt"] == _fr_ck
 # pipeline: thay diem luu trong ham goc bang r_clspw_v2
 src = Path(spec.origin).read_text()
 assert 'weights = "runs/detect/r_clspw/weights/best.pt"' in src
