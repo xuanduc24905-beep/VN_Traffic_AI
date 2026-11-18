@@ -72,3 +72,4 @@ data/*.tar
 data/ext_benchmark/
 outputs/review_missing_labels/
 reports/*/videos/
+data/colab/
