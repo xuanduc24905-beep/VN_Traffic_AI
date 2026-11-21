@@ -35,9 +35,9 @@
 | Tổng số bảng | 31 |
 | Tổng số token số đã rà | 2.021 |
 | Số lượng **KHỚP** (≤ ngưỡng sai số) | ~150 (toàn bộ Bảng 4.3–4.7, 4.9, 3.1, 3.4, 3.5, 3.6, 3.7, 3.8–3.14, 4.2; Bảng 4.5 ĐÚNG sau khi verify source ultralytics) |
-| **LỆCH** cần sửa báo cáo | 3 việc: (1) đổi V5+ baseline trong Bảng 3.8/4.1/4.2 sang `exp_baseline`; (2) ghi rõ FRCNN train trên V6 (có pseudo-label) ở Mục 3.6; (3) Bảng 4.8 không có dữ liệu |
-| **MỚI** đã đo | Toàn bộ Section 4.7 (phân tích lỗi), Bảng 5.3 (tốc độ), Bảng 4.8 demo_traffic |
-| **KHÔNG CÓ DỮ LIỆU** | Chỉ còn Bảng 4.8 (counting 412 xe — cần video GT mới); Bảng 3.5 stride (chỉ documentation) |
+| **LỆCH** cần sửa báo cáo | Đã xử lý baseline `exp_baseline`, `r_clspw_v2`, Bảng 4.8 demo và các bảng kết quả liên quan |
+| **MỚI** đã đo | Toàn bộ Section 4.7 (phân tích lỗi), Bảng 5.3 (tốc độ), Bảng 4.8 bằng `r_clspw_v2` trên demo_traffic |
+| **KHÔNG CÓ DỮ LIỆU** | Bảng 3.5 stride chỉ có documentation; counting mới có 1 video GT nên chưa đại diện nhiều camera |
 
 ---
 
@@ -58,7 +58,7 @@
 | 1 | Bảng 3.8 cột V5+ baseline (train 7.237, batch 16) | 7.237 ảnh, batch 16 | 7.237 ảnh, batch **6** (exp_baseline) | **CẦN SỬA** | Hướng B: đổi checkpoint baseline. Xem Mục 6B. |
 | 2 | Bảng 3.1 dòng tổng bbox | 60.401 / 16.383 / 2.867 / 7.809 | 60.394 / 16.383 / 2.864 / 7.808 | KHỚP (dedup 11) | Giữ nguyên |
 | 3 | Bảng 4.2 V5+ baseline "29 phút 13 giây" | 29 phút 13 giây | **1 giờ 27 phút 30 giây** (exp_baseline, 40 epoch batch=6) | **CẦN SỬA** | 40 epoch, batch=6 → 5250s. Cũ 29m13s ứng với run 2.833-ảnh. Xem Mục 14B. |
-| 4 | Bảng 4.8 (toàn bộ 5 hàng) | GT=412; sys=391; MAE=4,6 | **KHÔNG CÓ DỮ LIỆU** | **CẦN SỬA** | Demo_traffic chỉ có GT=87. Số 412 không thể phát sinh từ dữ liệu repo. |
+| 4 | Bảng 4.8 (toàn bộ 5 hàng) | GT=412; sys=391; MAE=4,6 | **r_clspw_v2: GT=87; sys=93; MAE/lớp=2,00; sai số tổng=6,90%** | **ĐÃ SỬA** | Đo trực tiếp trên demo_traffic.mp4 bằng mô hình cuối; chỉ có 1 video GT. |
 | 5 | Section 5.4.3 "Giới hạn tải lên" | — (không khẳng định) | Mặc định Streamlit 200 MB | Không coi là lệch | `.streamlit/config.toml` không tồn tại. |
 | **6 (SAU RETRAIN)** | Chapter 4 "r_clspw là best" | +1,08 điểm so với baseline | **+0,54 điểm** so với exp_baseline (0,7984 vs 0,7930) sau retrain fair | **KHỚP ĐỊNH TÍNH** — gain positive, chỉ nhỏ hơn số cũ | r_clspw_v2 train lại từ exp_baseline/best.pt. Thắng baseline trên cả 3 bộ. Xem Mục 15B. |
 | ~~7~~ (ĐÃ SỬA SAI) | ~~Mục 3.5.5 + Bảng 4.5 "class-weighted loss"~~ | ~~4 trọng số per-class~~ | Thực tế: Ultralytics 8.4.126 tự compute `(1/n_c)^cls_pw` chuẩn hoá mean=1 → áp per-class vào BCE loss. **Báo cáo đúng.** | KHỚP | Mình đã sai lúc đầu — kiểm tra lại source ultralytics tại `models/yolo/detect/train.py:162` và `utils/loss.py:439`. Log training mới cũng in `Class weights: [0.571 0.86 1.629 0.94]`. Xem Mục 17 phiên bản đã sửa. |
@@ -529,37 +529,32 @@ Mỗi loại 3 ảnh khác nhau. Box đỏ = bbox lỗi.
 
 ---
 
-## 21. Bảng 4.8 — Kết quả đếm phương tiện  **KHÔNG CÓ DỮ LIỆU**
+## 21. Bảng 4.8 — Kết quả đếm phương tiện bằng r_clspw_v2
 
-**Chú ý về FPS trong báo cáo:** Mục 21 (counting eval) đo với r_clspw v1 ở cold-start = 38,2 FPS. Mục 25 (b) đo với r_clspw_v2 ở cả hai trạng thái: cold = 37,8 FPS và warm = 80,4 FPS. Số v1 và v2 gần như trùng (±0,4 FPS) vì track_stream dominates. **Dùng 37,8 FPS cold** (đo với mô hình cuối r_clspw_v2) cho báo cáo end-user Streamlit.
-
-
-**Tình trạng:** repo chỉ có **1 video + GT**: `data/test_videos/raw/demo_traffic.mp4` với ground-truth `data/test_videos/ground_truth/demo_traffic.json`:
+**Tình trạng:** repo có **1 video + GT**: `data/test_videos/raw/demo_traffic.mp4` với ground-truth `data/test_videos/ground_truth/demo_traffic.json`:
 
 - GT: motorcycle 0, car 80, bus 1, truck 6 → **tổng 87**.
 
-Báo cáo nói tổng GT = 412, motor 298, car 86, bus 11, truck 17. **Các số này không thể phát sinh từ dữ liệu trong repo.** Thiếu 4+ video và GT đi kèm.
-
-**MỚI — đo lại trên demo_traffic.mp4:** pipeline `track_stream` + `Counter` (ByteTrack, conf=0,3, iou=0,5, imgsz=960, FP16, r_clspw **v1** `best.pt` — đo trước khi retrain), vạch ngang `y = ih/2 = 474`, direction=both. Chạy lại với r_clspw_v2 có thể cho kết quả tương đương vì demo_traffic rất ngắn (178 frame) và count chủ yếu phụ thuộc tracking.
+Đo lại bằng pipeline `track_stream` + `Counter`: ByteTrack, conf=0,3, iou=0,5, imgsz=960, FP16, checkpoint **`runs/detect/r_clspw_v2/weights/best.pt`**, vạch ngang `y=474`, direction=both. Nguồn: `outputs/verify/counting_eval_r_clspw_v2.json`.
 
 | Lớp | GT | Hệ thống | Sai số tuyệt đối |
 |---|---|---|---|
 | motorcycle | 0 | 0 | 0 |
-| car | 80 | 80 | 0 |
+| car | 80 | 87 | 7 |
 | bus | 1 | 0 | 1 |
 | truck | 6 | 6 | 0 |
-| **Tổng** | **87** | **86** | **1** |
+| **Tổng** | **87** | **93** | **6** |
 
-- MAE/lớp = 0,25.
-- MAPE tổng = 1,15%.
-- Overall accuracy (1 − err/total) = 98,85%.
-- FPS end-to-end = **38,2** (178 khung hình trong 4,66 s).
+- MAE/lớp = **2,00** (tổng sai số tuyệt đối theo lớp = 8, chia 4 lớp).
+- Sai số tổng lượt = **6,90%** (`|93−87|/87`).
+- Benchmark tốc độ chuẩn riêng của r_clspw_v2: **37,8 FPS cold-start**, **80,4 FPS warm** không ghi video, **45,1 FPS warm** có ghi MP4.
+- Lần chạy counting-eval này cho 9,16 FPS do gồm cold initialization trong môi trường kiểm tra; không thay thế benchmark tốc độ chuẩn ở Mục 25.
 
 **Để có số đo giống Bảng 4.8 bạn cần:** ≥ 5 đoạn video thực tế + file `ground_truth/<name>.json` theo schema `data/test_videos/ground_truth/demo_traffic.json`. Nếu cần, mình có thể:
 1. Dùng pipeline đếm trên các đoạn `.mp4` có sẵn (nếu bạn copy vào `data/test_videos/raw/`).
 2. Chạy tracking + so sánh với tay đếm (hoặc semi-auto bằng ByteTrack trên r_clspw).
 
-Hiện tại **GIỮ NGUYÊN Bảng 4.8 trong báo cáo = số ảo**, cần gỡ bỏ hoặc thay bằng bảng 1 dòng demo_traffic cho tới khi có GT thật.
+Kết quả này là số thật của mô hình cuối nhưng mới có một video GT, nên chỉ dùng để minh họa pipeline, chưa khái quát cho nhiều camera.
 
 ---
 
@@ -591,9 +586,9 @@ Nguồn kiểm chứng: `ui/streamlit_app.py` dòng 169–216.
 
 | Mô hình | Vai trò nghiên cứu | Trạng thái tích hợp app |
 |---|---|---|
-| **r_clspw_v2** | **mAP@0.5 V5+ cao nhất: 0,7984 — mô hình cuối cho in-domain** | Cần thêm vào `_preferred` ở vị trí #1 |
-| **p4_scale** | **mAP@0.5 VN Aerial test cao nhất: 0,6374 — mô hình cho cross-domain** | Cần thêm vào `_preferred` ở vị trí #2 |
-| V5+ baseline (exp_baseline) | Baseline 7.237 ảnh: 0,7930 mAP@0.5 | Có thể thêm làm fallback |
+| **r_clspw_v2** | **mAP@0.5 V5+ cao nhất: 0,7984 — mô hình cuối cho in-domain** | Đã là `_preferred` #1 và checkpoint mặc định |
+| **p4_scale** | **mAP@0.5 VN Aerial test cao nhất: 0,6374 — mô hình cho cross-domain** | Đã có trong `_preferred` sau exp_baseline |
+| V5+ baseline (exp_baseline) | Baseline 7.237 ảnh: 0,7930 mAP@0.5 | Đã là fallback #2 |
 | V6 pseudo | Thử nghiệm bổ sung; không phải mô hình cuối | Đang có trong `_preferred` |
 | V5 honest | Fallback từ COCO | Đang có |
 | Faster R-CNN | Đối chứng Chương 4 (thua YOLO +15,76 điểm) | Không có adapter UI (chỉ YOLO loader) |
@@ -700,7 +695,7 @@ Không có số liệu tốc độ cụ thể trong Bảng 2.3 — chuyển về
 
 | Vị trí | Thiếu gì | Cần gì để có |
 |---|---|---|
-| Bảng 4.8 (toàn bộ 5 hàng counting GT=412) | Video/GT cho 412 phương tiện qua vạch | 5–10 đoạn video `.mp4` + file `ground_truth/<name>.json` theo schema demo_traffic. Có GT rồi chạy `scripts/verify/40_counting_eval.py` sẽ ra. |
+| Bảng 4.8 | Đã có số thật cho 1 video: r_clspw_v2 đếm 93/87 lượt | Cần thêm 5–10 video GT để đánh giá đa camera. |
 | ~~Bảng 3.1 cột "số camera"~~ ĐÃ CÓ | Đã đếm bằng script | Xem Mục 2. Khớp 4/5 nguồn, VN v10 lệch 9 so với báo cáo. |
 | Bảng 3.5 stride lấy mẫu | Script tách khung hình gốc | Dataset Roboflow đã tách sẵn; stride 5/10 chỉ là mô tả. |
 | ~~Hình 4.1~~ ĐÃ CÓ | Đã sinh lại từ `exp_baseline/results.csv` | [outputs/verify/fig_4_1_training_curves_exp_baseline.png](outputs/verify/fig_4_1_training_curves_exp_baseline.png) + so sánh baseline vs r_clspw_v2: [outputs/verify/fig_4_1b_baseline_vs_r_clspw_v2.png](outputs/verify/fig_4_1b_baseline_vs_r_clspw_v2.png) |

@@ -77,3 +77,7 @@ data/colab/
 # anh minh hoa sinh trong qua trinh lam viec
 outputs/cantho_sample/
 outputs/che_xam/
+
+# du lieu sinh lai duoc / cache cua Ultralytics (symlink tuyet doi, khong dung duoc tren may khac)
+data/eval_extended_2135/
+*.cache
