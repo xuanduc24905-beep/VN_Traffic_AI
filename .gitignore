@@ -81,3 +81,12 @@ outputs/che_xam/
 # du lieu sinh lai duoc / cache cua Ultralytics (symlink tuyet doi, khong dung duoc tren may khac)
 data/eval_extended_2135/
 *.cache
+
+# Cac bo data dung gan day: dua len repo (anh that, khong symlink); bo cache .npy cua Ultralytics
+!data/merged_v5plus/
+!data/merged_v5fix/
+!data/merged_v5fix_mio/
+!data/merged_v5fix_mio_mask/
+!data/merged_v5fix_mio_ctmask/
+!data/ext_benchmark/
+data/**/*.npy

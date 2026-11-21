@@ -1,0 +1,43 @@
+{
+  "teacher": "yolov8x.pt",
+  "imgsz": 1280,
+  "conf": 0.3,
+  "labels_status": "DRAFT - chua sua tay",
+  "clips": [
+    {
+      "group": "india",
+      "clip": "c0919",
+      "source": "Screen Recording 2026-09-19 231332.mp4",
+      "frames": 40,
+      "draft_boxes": 561
+    },
+    {
+      "group": "india",
+      "clip": "c0920",
+      "source": "Screen Recording 2026-09-20 194658.mp4",
+      "frames": 120,
+      "draft_boxes": 2043
+    },
+    {
+      "group": "vncctv",
+      "clip": "c1024",
+      "source": "Screen Recording 2026-10-24 220935.mp4",
+      "frames": 20,
+      "draft_boxes": 38
+    },
+    {
+      "group": "vncctv",
+      "clip": "c1105",
+      "source": "Screen Recording 2026-11-05 033122.mp4",
+      "frames": 40,
+      "draft_boxes": 440
+    },
+    {
+      "group": "vncctv",
+      "clip": "c1108",
+      "source": "Screen Recording 2026-11-08 042445.mp4",
+      "frames": 30,
+      "draft_boxes": 76
+    }
+  ]
+}
