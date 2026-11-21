@@ -88,5 +88,9 @@ data/eval_extended_2135/
 !data/merged_v5fix_mio/
 !data/merged_v5fix_mio_mask/
 !data/merged_v5fix_mio_ctmask/
+!data/merged_v6final/
+!data/merged_v6final_mio/
+!data/merged_v6split/
 !data/ext_benchmark/
 data/**/*.npy
+outputs/anh_thieu_nhan/

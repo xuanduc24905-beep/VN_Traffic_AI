@@ -1,0 +1,12 @@
+# V6split — chia val/test theo camera (build_v6split.py). test = test
+path: /home/xuand/vn_traffic_ai/data/merged_v6split
+train: images/train
+val:   images/val
+test:  images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck

@@ -1,0 +1,13 @@
+# V6final (gồm 3.000 ảnh MIO-TCD cũ) + 4.500 ảnh MIO-TCD mới (ô tô nhỏ, bán tải/van, xe tải, xe buýt) — sinh bởi build_v6final_mio.py
+# MIO-TCD: CC BY-NC-SA 4.0. Val/test giống hệt V6final, V5fix, V5+.
+path: /home/xuand/vn_traffic_ai/data/merged_v6final_mio
+train: images/train
+val:   images/val
+test:  images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck

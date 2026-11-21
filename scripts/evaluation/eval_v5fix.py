@@ -31,6 +31,12 @@ MODELS = {
     "v5fixmio_mask_e30": "runs/detect/v5fixmio_mask_e30/weights/best.pt",
     "v5fixmio_mask_e15c": "runs/detect/v5fixmio_mask_e15c/weights/best.pt",
     "v5fixmio_mask_e60": "runs/detect/v5fixmio_mask_e60/weights/best.pt",
+    "v6final_f1_freeze10": "runs/detect/v6final_f1_freeze10/weights/best.pt",
+    "v6final_f2_nofreeze": "runs/detect/v6final_f2_nofreeze/weights/best.pt",
+    "v6finalmio_f1_freeze10": "runs/detect/v6finalmio_f1_freeze10/weights/best.pt",
+    "v6finalmio_f2_nofreeze": "runs/detect/v6finalmio_f2_nofreeze/weights/best.pt",
+    "v6split_f1_freeze10": "runs/detect/v6split_f1_freeze10/weights/best.pt",
+    "v6split_f2_nofreeze": "runs/detect/v6split_f2_nofreeze/weights/best.pt",
 }
 COCO_TO_V5 = {3: 0, 2: 1, 5: 2, 7: 3}
 NAMES = ["motorcycle", "car", "bus", "truck"]
@@ -104,13 +110,17 @@ def main():
         if not is_coco:
             entry["soict_test"] = map_val(w, "data/data_v5fix.yaml", "test")
             entry["ext_map"] = map_val(w, "data/data_ext_benchmark.yaml", "test")
+            # V6split: test phụ v10 (điểm quay rút khỏi train)
+            entry["vn_v10"] = map_val(w, "data/data_v6split_vn_v10.yaml", "test")
         res[name] = entry
         OUT.parent.mkdir(parents=True, exist_ok=True)
         OUT.write_text(json.dumps(res, indent=1, ensure_ascii=False))
         e = entry["ext"]
         print(f"{name}: india car={e['india']['recall'].get('car')} all={e['india']['recall_all']} "
               f"| vncctv all={e['vncctv']['recall_all']} | giant={sum(v['giant_boxes'] for v in e.values())} "
-              f"| SOICT mAP50={entry.get('soict_test', {}).get('mAP50')}", flush=True)
+              f"| SOICT mAP50={entry.get('soict_test', {}).get('mAP50')} "
+              f"| v10 mAP50={entry.get('vn_v10', {}).get('mAP50')}",
+              flush=True)
 
 
 if __name__ == "__main__":
