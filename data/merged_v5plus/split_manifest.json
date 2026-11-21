@@ -1,0 +1,23 @@
+{
+  "counts": {
+    "v5_train": 2833,
+    "v5_val": 1466,
+    "v5_test": 1500,
+    "vehicle_v10_added": 4404,
+    "vehicle_v10_dropped_empty": 420,
+    "vehicle_v10_name_collisions": 0,
+    "bbox_before_remap": 6245,
+    "bbox_after_remap": 5713,
+    "bbox_dropped_xe_ba_gac": 532
+  },
+  "total_train": 7237,
+  "vehicle_v10_pct_in_train": 60.85,
+  "class_map": {
+    "0": 3,
+    "1": 1,
+    "2": null,
+    "3": 2,
+    "4": 0,
+    "5": 3
+  }
+}
