@@ -28,6 +28,9 @@ MODELS = {
     "v5fix_d2_unfreeze": "runs/detect/v5fix_d2_unfreeze/weights/best.pt",
     "v5fix_c_nofreeze": "runs/detect/v5fix_c_nofreeze/weights/best.pt",
     "v5fixmio_d1_freeze10": "runs/detect/v5fixmio_d1_freeze10/weights/best.pt",
+    "v5fixmio_mask_e30": "runs/detect/v5fixmio_mask_e30/weights/best.pt",
+    "v5fixmio_mask_e15c": "runs/detect/v5fixmio_mask_e15c/weights/best.pt",
+    "v5fixmio_mask_e60": "runs/detect/v5fixmio_mask_e60/weights/best.pt",
 }
 COCO_TO_V5 = {3: 0, 2: 1, 5: 2, 7: 3}
 NAMES = ["motorcycle", "car", "bus", "truck"]

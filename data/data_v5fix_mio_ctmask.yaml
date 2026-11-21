@@ -1,0 +1,12 @@
+# V5fix + MIO-TCD + tô xám 35% trái ảnh Cần Thơ — sinh bởi scripts/data_prep/build_v5fix_mio_ctmask.py
+path: /home/xuand/vn_traffic_ai/data/merged_v5fix_mio_ctmask
+train: images/train
+val:   images/val
+test:  images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck
