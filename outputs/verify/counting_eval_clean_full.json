@@ -1,0 +1,62 @@
+[
+  {
+    "video": "data/test_videos/raw/demo_traffic.mp4",
+    "gt": {
+      "motorcycle": 0,
+      "car": 80,
+      "bus": 1,
+      "truck": 6
+    },
+    "pred": {
+      "car": 83,
+      "truck": 5
+    },
+    "per_class": {
+      "bus": {
+        "pred": 0,
+        "gt": 1,
+        "abs_err": 1
+      },
+      "car": {
+        "pred": 83,
+        "gt": 80,
+        "abs_err": 3
+      },
+      "motorcycle": {
+        "pred": 0,
+        "gt": 0,
+        "abs_err": 0
+      },
+      "truck": {
+        "pred": 5,
+        "gt": 6,
+        "abs_err": 1
+      }
+    },
+    "total_gt": 87,
+    "total_pred": 88,
+    "MAE_per_class": 1.25,
+    "overall_MAPE_%": 1.15,
+    "frames": 178,
+    "runtime_sec": 3.92,
+    "fps_end_to_end": 45.43,
+    "line": {
+      "name": "mid",
+      "p1": [
+        100,
+        474
+      ],
+      "p2": [
+        1664,
+        474
+      ],
+      "direction": "both"
+    },
+    "weights": "runs/detect/train_v8s_v5pc_full_s42/weights/best.pt",
+    "tracker": "bytetrack.yaml",
+    "imgsz": 960,
+    "conf": 0.3,
+    "iou": 0.5,
+    "half": true
+  }
+]

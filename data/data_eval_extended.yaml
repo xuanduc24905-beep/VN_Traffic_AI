@@ -1,0 +1,15 @@
+# Tập đánh giá mở rộng: V5+ test (1.500) + toàn bộ VN Aerial (486 val + 149 test)
+# Chỉ dùng để đánh giá; không dùng để huấn luyện hoặc chọn checkpoint.
+
+path: /home/xuand/vn_traffic_ai/data/eval_extended_2135
+# Hai key này là placeholder bắt buộc của Ultralytics; không dùng để train trong pipeline này.
+train: /home/xuand/vn_traffic_ai/data/merged_v5plus/images/train
+val: /home/xuand/vn_traffic_ai/data/merged_v5plus/images/val
+test: images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck

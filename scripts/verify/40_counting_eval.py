@@ -2,7 +2,7 @@
 """BƯỚC 4 — Counting eval.
 
 Runs the pipeline (YOLO detection → ByteTrack → line counter) on every available
-(video, GT) pair in data/test_videos/ with the r_clspw checkpoint. Reports:
+(video, GT) pair in data/test_videos/ with the final r_clspw_v2 checkpoint. Reports:
 
 - Pred vs GT counts per class.
 - Per-video MAE/MAPE.
@@ -27,7 +27,7 @@ sys.path.insert(0, str(ROOT))
 from src.tracking.counter import Line, Counter  # noqa: E402
 from src.tracking.track import track_stream  # noqa: E402
 
-WEIGHTS = "runs/detect/r_clspw/weights/best.pt"
+WEIGHTS = "runs/detect/r_clspw_v2/weights/best.pt"
 TRACKER = "bytetrack.yaml"
 
 
@@ -121,10 +121,11 @@ def main():
             print(f"    {c:10s} pred={v['pred']:3d} gt={v['gt']:3d} err={v['abs_err']:3d}")
         print(f"    MAE/class={r['MAE_per_class']}  overall MAPE={r['overall_MAPE_%']}%  FPS={r['fps_end_to_end']}")
 
-    (ROOT / "outputs/verify/counting_eval.json").write_text(
-        json.dumps(results, indent=2, ensure_ascii=False)
-    )
+    payload = json.dumps(results, indent=2, ensure_ascii=False)
+    (ROOT / "outputs/verify/counting_eval.json").write_text(payload)
+    (ROOT / "outputs/verify/counting_eval_r_clspw_v2.json").write_text(payload)
     print("Wrote outputs/verify/counting_eval.json")
+    print("Wrote outputs/verify/counting_eval_r_clspw_v2.json")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,14 @@
+{
+  "ckpt": "runs/detect/train_v8s_v5pc_full_s42/weights/best.pt",
+  "imgsz": 960,
+  "precision": "FP16",
+  "device": "NVIDIA RTX 3500 Ada Generation Laptop GPU",
+  "warmup": 20,
+  "measured": 200,
+  "mean_ms": 10.254,
+  "median_ms": 10.154,
+  "p95_ms": 11.849,
+  "fps_mean": 97.53,
+  "fps_total": 97.53,
+  "note": "model.predict(): preprocess + inference + NMS; no I/O"
+}
