@@ -92,6 +92,8 @@ Hệ thống đếm sử dụng thuật toán tracker ByteTrack [19] để liên
 
 **Về mặt thực nghiệm.** Đề tài đã cung cấp bộ số liệu đối chiếu giữa YOLOv8s và Faster R-CNN ResNet50-FPN trên cùng tập test V5+ với 1.500 ảnh, thể hiện rõ sự khác biệt giữa hai triết lý thiết kế detector trong bối cảnh dữ liệu giao thông Việt Nam dày đặc xe máy.
 
+**Về cải tiến mô hình.** Đề tài đã xây dựng và kiểm chứng năm chiến lược trên cùng nền V5+, gồm augmentation không gian, tăng độ phân giải, kiến trúc P2, class-weighted loss và progressive resolution. Trong đó, `r_clspw` với `cls_pw=0,5` đạt mAP@0.5 = 0,7927, cao hơn V5+ baseline 1,08 điểm tuyệt đối và cao hơn `p4_scale` 0,58 điểm tuyệt đối. AP của bus tăng 4,83 điểm và truck tăng 1,22 điểm so với baseline. Đóng góp của đề tài là áp dụng, cấu hình và kiểm chứng class-weighted loss cho dữ liệu phương tiện Việt Nam mất cân bằng; đề tài không tuyên bố phát minh một hàm mất mát mới.
+
 Đề tài đồng thời chỉ ra trade-off giữa độ chính xác trong miền và khả năng tổng quát hóa: `r_clspw` tốt nhất trên V5+, trong khi `p4_scale` tốt nhất trên VN Aerial. Kết quả này giúp lựa chọn mô hình theo bối cảnh camera thay vì chỉ dựa vào một chỉ số duy nhất.
 
 **Về mặt ứng dụng.** Hệ thống đếm phương tiện được xây dựng có thể triển khai lên các camera giám sát hiện có để tổng hợp cơ cấu phương tiện theo thời gian, hỗ trợ các bài toán quy hoạch và điều phối giao thông.

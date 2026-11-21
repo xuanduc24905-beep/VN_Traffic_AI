@@ -2,15 +2,17 @@
 
 ## 1. Tổng kết đóng góp
 
-Đồ án đã hoàn thành việc xây dựng một hệ thống phát hiện, phân loại và đếm phương tiện giao thông Việt Nam từ video sử dụng mô hình CNN. Qua quá trình thực hiện, nhóm đã đạt được bốn đóng góp chính:
+Đồ án đã hoàn thành việc xây dựng một hệ thống phát hiện, phân loại và đếm phương tiện giao thông Việt Nam từ video sử dụng mô hình CNN. Qua quá trình thực hiện, nhóm đã đạt được năm đóng góp chính:
 
 **Đóng góp 1 — Phát hiện và khắc phục hiện tượng rò rỉ dữ liệu cấp video**. Nhóm đã nhận diện được một lỗi phổ biến nhưng ít được báo cáo trong các công trình phát hiện phương tiện: chia tập ngẫu nhiên theo khung hình thay vì theo video_id. Trong các phiên bản đầu của đề tài (V1–V4), hiện tượng này đã gây ra mAP ảo khoảng 0,95 trên test. Sau khi rebuild dataset V5 theo nguyên tắc chia cấp video và áp dụng kiểm tra tự động, mAP honest giảm xuống 0,665 nhưng phản ánh đúng khả năng tổng quát hóa. Đây là bài học methodology quan trọng cho các nghiên cứu phát hiện phương tiện sử dụng dữ liệu video.
 
 **Đóng góp 2 — Xây dựng và công bố bộ dữ liệu V5+ sạch**. Bộ dữ liệu V5+ gồm 10.203 ảnh hợp nhất từ năm nguồn Roboflow công khai với schema 4 lớp thống nhất, chia tập theo video_id và kiểm tra rò rỉ tự động xác nhận 0% leak. Bộ dữ liệu này có thể làm baseline cho các nghiên cứu tiếp theo về phát hiện phương tiện giao thông Việt Nam.
 
-**Đóng góp 3 — So sánh định lượng YOLOv8s và Faster R-CNN trên dữ liệu VN**. Trên cùng tập test V5+ với 1.500 ảnh, mô hình YOLOv8s `r_clspw` đạt mAP@0.5 = 0,7927, vượt Faster R-CNN ResNet50-FPN 15,19 điểm tuyệt đối (0,6408). `r_clspw` cũng cao hơn `p4_scale` 0,58 điểm tuyệt đối (0,74% tương đối), qua đó xác nhận đóng góp của recipe class-weighted loss cho bài toán mất cân bằng lớp.
+**Đóng góp 3 — So sánh định lượng YOLOv8s và Faster R-CNN trên dữ liệu VN**. Trên cùng tập test V5+ với 1.500 ảnh, mô hình YOLOv8s `r_clspw` đạt mAP@0.5 = 0,7927, vượt Faster R-CNN ResNet50-FPN 15,19 điểm tuyệt đối (0,6408). Kết quả cung cấp bằng chứng thực nghiệm cho việc lựa chọn detector một giai đoạn trong bối cảnh giao thông Việt Nam.
 
-**Đóng góp 4 — Ứng dụng demo có thể sử dụng**. Hệ thống đã được đóng gói thành ứng dụng Streamlit hỗ trợ đầy đủ pipeline từ detection, tracking (ByteTrack), đếm phương tiện qua vạch ảo đa chiều, đến xuất CSV sự kiện và video chú thích. Tốc độ xử lý ~30 FPS đủ cho ứng dụng thời gian thực. Sai số đếm MAPE tổng là 5,1% trên các đoạn video kiểm thử có ground truth đếm tay.
+**Đóng góp 4 — Áp dụng và kiểm chứng class-weighted loss cho dữ liệu mất cân bằng**. Đề tài kiểm chứng năm chiến lược cải tiến trên cùng nền V5+, gồm augmentation không gian, tăng độ phân giải, kiến trúc P2, class-weighted loss và progressive resolution. Cấu hình `r_clspw` với `cls_pw=0,5` đạt mAP@0.5 = 0,7927, cao hơn V5+ baseline 1,08 điểm tuyệt đối và cao hơn `p4_scale` 0,58 điểm tuyệt đối (0,74% tương đối). AP bus tăng 4,83 điểm và AP truck tăng 1,22 điểm so với baseline. Đóng góp này nằm ở việc áp dụng, cấu hình và kiểm chứng thực nghiệm class-weighted loss cho dữ liệu phương tiện Việt Nam; không phải đề xuất một hàm mất mát hoàn toàn mới.
+
+**Đóng góp 5 — Ứng dụng demo có thể sử dụng**. Hệ thống đã được đóng gói thành ứng dụng Streamlit hỗ trợ đầy đủ pipeline từ detection, tracking (ByteTrack), đếm phương tiện qua vạch ảo đa chiều, đến xuất CSV sự kiện và video chú thích. Tốc độ xử lý ~30 FPS đủ cho ứng dụng thời gian thực. Sai số đếm MAPE tổng là 5,1% trên các đoạn video kiểm thử có ground truth đếm tay.
 
 ## 2. Hạn chế của đề tài
 

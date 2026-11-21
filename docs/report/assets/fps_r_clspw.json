@@ -1,0 +1,15 @@
+{
+  "weight": "runs/detect/r_clspw/weights/best.pt",
+  "device": "NVIDIA RTX 3500 Ada Generation Laptop GPU",
+  "imgsz": 960,
+  "precision": "FP16",
+  "warmup": 20,
+  "measured": 100,
+  "mean_ms": 10.61,
+  "median_ms": 9.62,
+  "p95_ms": 14.52,
+  "fps_mean_per_image": 94.25,
+  "fps_batch_total": 94.24,
+  "total_sec": 1.06,
+  "note": "end-to-end: preprocess + inference + NMS (ultralytics .predict); khong bao gom I/O video/ghi file"
+}

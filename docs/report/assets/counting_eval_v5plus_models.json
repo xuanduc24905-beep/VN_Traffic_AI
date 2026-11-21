@@ -1,0 +1,169 @@
+{
+  "gt": {
+    "motorcycle": 0,
+    "car": 80,
+    "bus": 1,
+    "truck": 6
+  },
+  "video": "demo_traffic.mp4",
+  "line": {
+    "p1": [
+      100,
+      474
+    ],
+    "p2": [
+      1664,
+      474
+    ],
+    "direction": "both"
+  },
+  "runs": {
+    "r_clspw": {
+      "weights": "runs/detect/r_clspw/weights/best.pt",
+      "pred": {
+        "car": 80,
+        "truck": 6
+      },
+      "gt": {
+        "motorcycle": 0,
+        "car": 80,
+        "bus": 1,
+        "truck": 6
+      },
+      "frames": 178,
+      "runtime_sec": 4.81,
+      "fps_end_to_end": 37.03,
+      "report": {
+        "per_class": {
+          "bus": {
+            "pred": 0,
+            "gt": 1,
+            "abs_err": 1,
+            "accuracy": 0.0
+          },
+          "car": {
+            "pred": 80,
+            "gt": 80,
+            "abs_err": 0,
+            "accuracy": 1.0
+          },
+          "motorcycle": {
+            "pred": 0,
+            "gt": 0,
+            "abs_err": 0,
+            "accuracy": 1.0
+          },
+          "truck": {
+            "pred": 6,
+            "gt": 6,
+            "abs_err": 0,
+            "accuracy": 1.0
+          }
+        },
+        "total_pred": 86,
+        "total_gt": 87,
+        "MAE": 0.25,
+        "MAPE_percent": 33.333333333333336,
+        "overall_accuracy": 0.9885057471264368
+      }
+    },
+    "p4_scale": {
+      "weights": "runs/detect/p4_scale_from_baseline/weights/best.pt",
+      "pred": {
+        "car": 82,
+        "truck": 5
+      },
+      "gt": {
+        "motorcycle": 0,
+        "car": 80,
+        "bus": 1,
+        "truck": 6
+      },
+      "frames": 178,
+      "runtime_sec": 2.17,
+      "fps_end_to_end": 81.95,
+      "report": {
+        "per_class": {
+          "bus": {
+            "pred": 0,
+            "gt": 1,
+            "abs_err": 1,
+            "accuracy": 0.0
+          },
+          "car": {
+            "pred": 82,
+            "gt": 80,
+            "abs_err": 2,
+            "accuracy": 0.975
+          },
+          "motorcycle": {
+            "pred": 0,
+            "gt": 0,
+            "abs_err": 0,
+            "accuracy": 1.0
+          },
+          "truck": {
+            "pred": 5,
+            "gt": 6,
+            "abs_err": 1,
+            "accuracy": 0.8333333333333334
+          }
+        },
+        "total_pred": 87,
+        "total_gt": 87,
+        "MAE": 1.0,
+        "MAPE_percent": 39.72222222222222,
+        "overall_accuracy": 1.0
+      }
+    },
+    "V5+ baseline": {
+      "weights": "runs/detect/train_v8s_v5plus_960/weights/best.pt",
+      "pred": {
+        "car": 76,
+        "truck": 5
+      },
+      "gt": {
+        "motorcycle": 0,
+        "car": 80,
+        "bus": 1,
+        "truck": 6
+      },
+      "frames": 178,
+      "runtime_sec": 2.11,
+      "fps_end_to_end": 84.4,
+      "report": {
+        "per_class": {
+          "bus": {
+            "pred": 0,
+            "gt": 1,
+            "abs_err": 1,
+            "accuracy": 0.0
+          },
+          "car": {
+            "pred": 76,
+            "gt": 80,
+            "abs_err": 4,
+            "accuracy": 0.95
+          },
+          "motorcycle": {
+            "pred": 0,
+            "gt": 0,
+            "abs_err": 0,
+            "accuracy": 1.0
+          },
+          "truck": {
+            "pred": 5,
+            "gt": 6,
+            "abs_err": 1,
+            "accuracy": 0.8333333333333334
+          }
+        },
+        "total_pred": 81,
+        "total_gt": 87,
+        "MAE": 1.5,
+        "MAPE_percent": 40.555555555555564,
+        "overall_accuracy": 0.9310344827586207
+      }
+    }
+  }
+}
