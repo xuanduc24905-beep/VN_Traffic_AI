@@ -1,0 +1,560 @@
+% Biên dịch: tectonic -X compile QuyTrinh_EndToEnd_NCKH.tex   (XeLaTeX, font DejaVu)
+\documentclass[11pt,a4paper]{article}
+\usepackage{fontspec}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}[Scale=0.82]
+\usepackage[margin=2cm]{geometry}
+\usepackage{booktabs,longtable,array,tabularx,multirow}
+\usepackage{xcolor,enumitem,titlesec,fancyhdr,microtype}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,shapes.geometric,fit,backgrounds}
+\usepackage[hidelinks]{hyperref}
+\urlstyle{tt}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.18}
+\setlist{itemsep=2pt,topsep=3pt}
+
+\definecolor{c1}{HTML}{1F4E79}
+\definecolor{c2}{HTML}{2E75B6}
+\definecolor{okg}{HTML}{2E7D32}
+\definecolor{warn}{HTML}{B45309}
+\definecolor{bad}{HTML}{B91C1C}
+\definecolor{soft}{HTML}{F3F6FA}
+
+\titleformat{\section}{\Large\bfseries\color{c1}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{c2}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.5em}{}
+
+\pagestyle{fancy}\fancyhf{}
+\lhead{\small\color{gray}Quy trình end-to-end — đồ án NCKH Nhóm 02}
+\rhead{\small\color{gray}\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+\newcommand{\f}[1]{\path{#1}}           % đường dẫn file / thư mục
+\newcommand{\num}[1]{\textbf{#1}}
+
+\lstset{basicstyle=\sffamily\footnotesize,backgroundcolor=\color{soft},frame=single,
+  rulecolor=\color{gray!40},breaklines=true,columns=fullflexible,keepspaces=true,
+  xleftmargin=4pt,xrightmargin=4pt,aboveskip=6pt,belowskip=6pt}
+
+\newtcolorbox{qa}[1]{colback=white,colframe=c2,fonttitle=\bfseries\small,
+  title={#1},boxrule=0.6pt,arc=2pt,left=6pt,right=6pt,top=4pt,bottom=4pt,breakable}
+\newtcolorbox{luuy}{colback=warn!6,colframe=warn,boxrule=0.6pt,arc=2pt,
+  left=6pt,right=6pt,top=4pt,bottom=4pt,breakable,fonttitle=\bfseries\small,title={Cần biết khi bị hỏi}}
+\newtcolorbox{tomtat}{colback=soft,colframe=c1,boxrule=0.6pt,arc=2pt,
+  left=6pt,right=6pt,top=4pt,bottom=4pt,breakable}
+
+\begin{document}
+\sloppy\setlength{\emergencystretch}{3em}
+
+\begin{titlepage}
+\centering
+\vspace*{2.5cm}
+{\Huge\bfseries\color{c1} Quy trình end-to-end của đồ án NCKH\par}
+\vspace{0.6cm}
+{\Large Phát hiện phương tiện giao thông Việt Nam bằng YOLOv8s:\\ so sánh với Faster R-CNN trong miền và ngoài miền\par}
+\vspace{1cm}
+{\large Tài liệu ôn tập phản biện — từng bước, từng file code, từng con số\par}
+\vspace{1.5cm}
+\begin{tomtat}
+\textbf{Phạm vi.} Chỉ pipeline của bài báo SSRC v3 và báo cáo NCKH (bộ V5+, YOLOv8s, các recipe cải tiến, YOLOv8s-CW và đối chứng ba hạt giống, Faster R-CNN, đánh giá trong/ngoài miền, phân tích lỗi, tốc độ, ứng dụng đếm). Không gồm các thử nghiệm V5fix / UA-DETRAC / MIO-TCD / che xám làm sau cho project cuối kì.
+
+\textbf{Cách đọc.} Mỗi bước có: \emph{mục đích} → \emph{file code} → \emph{đầu vào/đầu ra} → \emph{con số chính} → \emph{câu hỏi phản biện có thể gặp}. Mọi con số đã được đối chiếu lại với file kết quả gốc trong repo ngày 19–20/11/2026. Phụ lục A là bảng truy vết số liệu, Phụ lục B là danh sách chỗ bài viết và code chưa khớp.
+
+\textbf{Thư mục gốc dự án:} \f{/home/xuand/vn_traffic_ai}. Mọi đường dẫn trong tài liệu là tương đối so với thư mục này.
+\end{tomtat}
+\vfill
+{\small Nhóm 02 — Phạm Minh Hùng, Đặng Xuân Đức; GVHD: Lê Thị Vĩnh Thanh\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+%==========================================================
+\section{Bức tranh tổng thể}
+%==========================================================
+\subsection{Bài toán và câu hỏi nghiên cứu}
+Bài toán: phát hiện và phân loại 4 lớp phương tiện (\texttt{motorcycle}, \texttt{car}, \texttt{bus}, \texttt{truck}) trên ảnh camera giao thông Việt Nam, rồi ghép với bộ theo vết để đếm xe qua vạch. Đóng góp của bài \textbf{không phải} kiến trúc mới mà là một đánh giá có phương pháp:
+\begin{enumerate}
+\item Dữ liệu V5+ chia theo video, có kiểm tra rò rỉ và nêu rõ giới hạn (validation còn trùng khung cảnh).
+\item So sánh YOLOv8s (một giai đoạn) với Faster R-CNN ResNet50-FPN (hai giai đoạn) bằng \emph{cùng công cụ}, cùng kiểu NMS, kèm khoảng tin cậy bootstrap.
+\item Đánh giá ngoài miền trên VN Aerial và báo cáo cả các cải tiến \emph{không} hiệu quả.
+\item Đối chứng ba hạt giống cho trọng số lớp \texttt{cls\_pw}.
+\end{enumerate}
+
+\subsection{Sơ đồ pipeline}
+\begin{center}
+\begin{tikzpicture}[node distance=5mm and 7mm, font=\small,
+  box/.style={draw=c2, fill=soft, rounded corners=2pt, align=center, minimum width=31mm, minimum height=9mm, text width=31mm},
+  arr/.style={-{Stealth[length=2mm]}, thick, c1}]
+\node[box] (raw) {Nguồn Roboflow\\ SOICT, Night, Cần Thơ,\\ VNv3, v10};
+\node[box, right=of raw] (imp) {Nhập + quy đổi\\ 4 lớp\\ \scriptsize import\_*.py};
+\node[box, right=of imp] (v3) {Gộp V3 (lịch sử,\\ chia theo khung)\\ \scriptsize merge\_v3.py};
+\node[box, right=of v3] (v5) {V5 chia\\ theo video\\ \scriptsize rebuild\_v5\_by\_video.py};
+\node[box, below=of v5] (v5p) {V5+ = V5 + v10\\ \scriptsize build\_v5plus\_merged.py};
+\node[box, left=of v5p] (chk) {Kiểm tra nhãn,\\ rò rỉ, camera\\ \scriptsize validate/audit/10/70/87};
+\node[box, left=of chk] (tr) {Huấn luyện\\ cơ sở + 5 recipe\\ + đối chứng + FRCNN};
+\node[box, left=of tr] (ev) {Đánh giá: val(),\\ pycocotools,\\ bootstrap, Aerial};
+\node[box, below=of ev] (err) {Phân tích lỗi\\ + tốc độ};
+\node[box, right=of err] (app) {ByteTrack + đếm\\ + Streamlit};
+\node[box, right=of app] (paper) {Bài báo SSRC v3\\ + báo cáo NCKH};
+\draw[arr] (raw)--(imp); \draw[arr] (imp)--(v3); \draw[arr] (v3)--(v5); \draw[arr] (v5)--(v5p);
+\draw[arr] (v5p)--(chk); \draw[arr] (chk)--(tr); \draw[arr] (tr)--(ev); \draw[arr] (ev)--(err);
+\draw[arr] (err)--(app); \draw[arr] (app)--(paper);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Môi trường chạy (hay bị hỏi khi so sánh số liệu)}
+\begin{longtable}{p{3.4cm}p{5.6cm}p{6.6cm}}
+\toprule
+\textbf{Môi trường} & \textbf{Phiên bản} & \textbf{Dùng cho}\\\midrule
+conda \texttt{yolov8\_ft} & Python 3.10.20, PyTorch 2.5.1+cu124, Ultralytics 8.4.142 & Huấn luyện cơ sở V5+ (\texttt{exp\_baseline}), \texttt{p4\_scale}, \texttt{p4\_imgsz1280}, \texttt{r\_p2}, \texttt{r\_progressive}\\
+conda \texttt{vehicle\_env} & Python 3.10.20, PyTorch 2.7.1+cu118, TorchVision 0.22.1, Ultralytics 8.4.126 & Huấn luyện YOLOv8s-CW và 6 lượt đối chứng; \textbf{mọi phép đánh giá} trong bài\\
+Google Colab & Tesla T4, Python 3.13, PyTorch 2.7.1, TorchVision 0.22.1 & Huấn luyện Faster R-CNN (\f{weights/trained/frcnn_v5plus/env.json})\\
+GPU cục bộ & NVIDIA RTX 3500 Ada Laptop 12 GB & Mọi lượt YOLO, mọi đánh giá, đo tốc độ\\
+\bottomrule
+\end{longtable}
+
+\begin{luuy}
+Hai môi trường cho kết quả chấm lại lệch rất nhỏ: trên 24 cặp chấm lại cùng một checkpoint (\f{REPORT_NUMBERS.md}), mAP@0,5 lệch tối đa khoảng 0,07 điểm. Vì thế bài quy định mọi phép \emph{đánh giá} chạy trong \texttt{vehicle\_env} để số liệu nhất quán.
+\end{luuy}
+
+%==========================================================
+\section{Giai đoạn 1 — Dữ liệu}
+%==========================================================
+\subsection{Bước 1.1: Nhập các nguồn và quy đổi về 4 lớp}
+\textbf{Mục đích:} mỗi nguồn Roboflow có thứ tự lớp khác nhau; phải quy đổi về cùng lược đồ \texttt{0 motorcycle, 1 car, 2 bus, 3 truck}.
+
+\begin{longtable}{p{5.2cm}p{10.4cm}}
+\toprule
+\textbf{File} & \textbf{Chức năng}\\\midrule
+\f{scripts/data_prep/import_soict.py} & SOICT 2024: lớp gốc \texttt{[car, motorbike, tourist bus, truck]} → ánh xạ \texttt{\{0:1, 1:0, 2:2, 3:3\}}. SOICT Night: lớp gốc tên \texttt{'4'..'7'}, ánh xạ đồng nhất \texttt{0..3} — docstring ghi rõ thứ tự lớp đêm được \emph{suy ra theo kích thước/tỉ lệ hộp}. Ghi ra \f{data/raw_soict_canonical/} với tiền tố \texttt{soict24\_}, \texttt{soictnight\_}.\\
+\f{scripts/data_prep/import_cantho_vn.py} & Cần Thơ: \texttt{bus→2, car→1, motorbike→0, truck→3}; đổi tên split \texttt{valid→val}.\\
+\f{scripts/data_prep/import_vnv3.py} & Vietnamese Vehicle v3: lớp gốc \texttt{0 car→1, 1 motorcycle→0, 2 truck→3, 3 (không dùng)→2}; tiền tố \texttt{vnv3\_}.\\
+\f{scripts/data_prep/build_v5plus_merged.py} & Vietnam Vehicles v10 (6 lớp): \texttt{container→truck, oto→car, xe\_khach→bus, xe\_may→motorcycle, xe\_tai→truck}; \texttt{xe\_ba\_gac} bị bỏ hộp, ảnh còn 0 hộp bị bỏ ảnh (xem Bước 1.4).\\
+\bottomrule
+\end{longtable}
+
+\begin{qa}{Câu hỏi có thể gặp: “Làm sao biết quy đổi lớp đúng?”}
+Kiểm tra bằng 3 cách: (1) đối chiếu tên lớp trong \texttt{data.yaml} của từng nguồn; (2) \f{scripts/data_prep/validate_labels.py} chặn mọi \texttt{class\_id} ngoài \texttt{[0,3]}; (3) xem ảnh vẽ nhãn. \textbf{Điểm yếu cần thừa nhận:} thứ tự lớp của SOICT Night được suy ra theo kích thước hộp, nên nên trả lời là đã kiểm tra bằng mắt trên ảnh mẫu (và nếu chưa thì nói thẳng là chưa kiểm định thống kê).
+\end{qa}
+
+\subsection{Bước 1.2: Lịch sử V1–V4 và lý do phải chia theo video}
+\begin{itemize}
+\item \f{scripts/data_prep/merge_v3.py}, \f{scripts/data_prep/merge_v4.py}: gộp các nguồn và \emph{chia ngẫu nhiên theo khung hình} (dùng split sẵn của Roboflow). V3/V4 cho mAP@0,5 khoảng 0,95.
+\item \f{scripts/data_prep/audit_leak.py}: đọc \texttt{video\_id} từ tên tệp, đếm khung theo (video, split) và tính \% khung val/test có video nguồn cũng nằm trong train. Kết quả: V1–V4 rò rỉ cấp video gần như toàn bộ → mô hình “nhớ cảnh”, con số 0,95 là lạc quan.
+\end{itemize}
+
+\begin{qa}{Câu hỏi: “Vì sao không giữ con số 0,95?”}
+Khung hình liên tiếp từ camera cố định gần như giống hệt nhau; chia theo khung đặt bản sao của cùng cảnh vào cả train và test, nên test đo khả năng nhớ cảnh. Bài \emph{không} coi chênh lệch 0,95 → khoảng 0,80 là phép đo riêng của rò rỉ, vì dữ liệu và cấu hình cũng thay đổi cùng lúc.
+\end{qa}
+
+\subsection{Bước 1.3: V5 — chia theo video}
+\textbf{File:} \f{scripts/data_prep/rebuild_v5_by_video.py}. Gom mọi khung của V3, nhóm theo \texttt{video\_id}, gán \emph{cả video} vào đúng một split theo bảng \texttt{SPLIT\_PLAN}, lấy mẫu thưa video dày bằng \texttt{stride}, rồi tạo symlink sang \f{data/merged_v5/} và \f{data/data_v5.yaml}.
+
+{\small\begin{longtable}{p{5.6cm}p{1.2cm}p{1.2cm}p{6.0cm}}
+\toprule
+\textbf{Video} & \textbf{Split} & \textbf{Stride} & \textbf{Ghi chú}\\\midrule
+soictnight\_cam\_03 / 05 / 08 & train & 10 & video đêm dày\\
+soict24\_cam\_01 / 02 / 04 / 06 & train & 5 & video ngày\\
+cantho\_CoopMart-8h-8h30 & train & 1 & video nhỏ, giữ hết\\
+cantho\_CoopMart-8h10-8h30 & train & 5 & \\
+vnv3 & train & 5 & tập ảnh đa nguồn\\\midrule
+soict24\_cam\_07 & val & 1 & 1.000 ảnh\\
+cantho\_CoopMart-8h30-9h00,\newline cantho\_camDLHB-13h20-13h57 & val & 1 & 466 ảnh\\\midrule
+soict24\_cam\_09, soict24\_cam\_10 & test & 1 & 1.000 + 500 ảnh\\
+\bottomrule
+\end{longtable}}
+Kết quả V5: train \num{2.833}, val \num{1.466}, test \num{1.500} ảnh.
+
+\begin{luuy}
+Câu trong bài “video ngày lấy mẫu mỗi 5 khung, video đêm mỗi 10 khung” là \textbf{đúng cho tập train} (có trong \texttt{SPLIT\_PLAN}). Val và test giữ \emph{toàn bộ} khung (\texttt{stride = 1}), và một video Cần Thơ train cũng giữ hết. Hệ quả: 1.500 ảnh test là khung liên tiếp của 2 camera, rất giống nhau — điều này liên quan tới câu hỏi về bootstrap (Mục 4.3).
+\end{luuy}
+
+\subsection{Bước 1.4: V5+ = V5 + Vietnam Vehicles v10}
+\textbf{File:} \f{scripts/data_prep/build_v5plus_merged.py}. Đưa \emph{toàn bộ} 4.404 ảnh v10 (sau quy đổi lớp) vào \emph{train}; val/test giữ nguyên của V5 để so sánh công bằng. Đầu ra: \f{data/merged_v5plus/}, \f{data/data_v5plus.yaml}, \f{data/merged_v5plus/split_manifest.json}.
+
+{\small\setlength{\tabcolsep}{4pt}\begin{longtable}{lrrrrrr}
+\toprule
+\textbf{Nguồn} & \textbf{Ảnh} & \textbf{Camera} & \textbf{Xe máy} & \textbf{Ô tô} & \textbf{Buýt} & \textbf{Tải}\\\midrule
+SOICT 2024 (ngày) & 3.379 & 7 & 49.691 & 11.260 & 1.779 & 4.605\\
+SOICT Night & 1.385 & 3* & 4.751 & 2.578 & 748 & 844\\
+Cần Thơ & 725 & 1** & 2.152 & 1.710 & 19 & 140\\
+Vietnamese Vehicle v3 & 310 & $\sim$310 & 471 & 570 & 68 & 361\\
+Vietnam Vehicles v10 & 4.404 & 44 (33 địa điểm) & 3.336 & 265 & 253 & 1.859\\\midrule
+\textbf{Tổng V5+} & \textbf{10.203} & & \textbf{60.401} & \textbf{16.383} & \textbf{2.867} & \textbf{7.809}\\
+\bottomrule
+\end{longtable}}
+{\small * Ba camera đêm quay cùng khung cảnh với camera ngày (cam\_03 với cam\_01/02, cam\_05 với cam\_04, cam\_08 với cam\_07). ** Bài viết đang ghi “4 camera”; thực tế 4 video của cùng 1 camera (Phụ lục B).}
+
+Chia tập V5+: train \num{7.237} ảnh (2.833 V5 + 4.404 v10; \num{25.994} hộp: 13.460 xe máy, 5.921 ô tô, 1.652 buýt, 4.961 tải), val \num{1.466}, test \num{1.500} (\num{49.446} hộp). Tổng \num{87.460} hộp.
+
+\subsection{Bước 1.5: Kiểm tra chất lượng và rò rỉ}
+\begin{longtable}{p{5.4cm}p{10.2cm}}
+\toprule
+\textbf{File} & \textbf{Chức năng / kết quả}\\\midrule
+\f{scripts/data_prep/validate_labels.py} & 7 ràng buộc cấp hộp: có file nhãn, \texttt{class\_id} hợp lệ, toạ độ trong [0,1], w,h $>0$, không trùng hộp, … Hàm chính \texttt{check\_label\_file}, \texttt{validate\_split}.\\
+\f{scripts/data_prep/audit_leak.py} & Rò rỉ cấp video theo tên tệp: V5/V5+ không có video nào nằm ở hai split.\\
+\f{scripts/verify/10_data_audit.py} & Đếm ảnh/hộp theo split, nguồn, lớp, kích thước COCO; kiểm tra toàn vẹn; ra \f{outputs/verify/data_audit.json} (đếm hộp \emph{không trùng}, nên ra 25.985/49.444 thay vì 25.994/49.446 — do 2 hộp trùng ở test).\\
+\f{scripts/verify/70_count_cameras.py} & Đếm camera/khung cảnh theo tên tệp từng nguồn.\\
+\f{scripts/verify/87_camera_compare_sheet.py} & Vẽ bảng ảnh camera SOICT ngày và đêm theo cặp (\f{outputs/verify/cam_compare_*.jpg}) để kiểm tra bằng mắt việc trùng khung cảnh.\\
+\f{scripts/data_prep/audit_v10/} & Kiểm tra riêng v10: trùng MD5/pHash, rò rỉ camera/xe/thời gian, nhãn thiếu, overlay vẽ sẵn (\f{reports/v10_audit_summary.md}).\\
+\f{scripts/data_prep/build_v5plus_clean.py}, \f{verify_v5plus_clean.py} & Phát hiện 466 ảnh val Cần Thơ cùng camera với train và 102 cặp ảnh gần trùng train–val (\f{reports/v5plus_clean_datasheet.md}).\\
+\bottomrule
+\end{longtable}
+
+\begin{tomtat}
+\textbf{Kết luận rò rỉ (phải thuộc lòng):} chia theo video \emph{giảm thiểu} nhưng \emph{chưa loại bỏ} rò rỉ. Toàn bộ 1.466 ảnh val trùng khung cảnh với train (466 ảnh Cần Thơ cùng camera; 1.000 ảnh cam\_07 cùng khung cảnh với camera đêm cam\_08 trong train). Hai camera test cam\_09, cam\_10 không xuất hiện trong train/val. Vì vậy: con số test đáng tin hơn val; việc chọn checkpoint theo val có thể lạc quan.
+\end{tomtat}
+
+\subsection{Bước 1.6: Tập ngoài miền VN Aerial}
+\textbf{File:} \f{scripts/data_prep/download_vn_aerial.py}. Tải split val (486 ảnh) và test (149 ảnh) của bộ “Vietnam Vehicles” góc nhìn trên cao từ Ultralytics Platform (\f{data/vietnam-vehicles.ndjson}), ghi \f{data/vn_vehicles_aerial/} và \f{data/data_vn_aerial.yaml}. Hàm tính MD5 mọi ảnh V5+ (cache \f{data/v5plus_md5.json}) và xác nhận \textbf{0 ảnh trùng}. Chỉ dùng để đánh giá, không dùng để huấn luyện.
+
+%==========================================================
+\section{Giai đoạn 2 — Huấn luyện}
+%==========================================================
+\subsection{Bước 2.1: Mô hình cơ sở V5+ (\texttt{exp\_baseline})}
+\textbf{File:} \f{scripts/training/v8_experiments.py}, preset \texttt{baseline} (tên run \texttt{exp\_<preset>}). Hàm \texttt{local\_data\_yaml} tạo \f{runs/detect/_data_v5plus_local.yaml}; \texttt{build\_cfg} ghép cấu hình nền với phần ghi đè của preset.
+
+Cấu hình thật (\f{runs/detect/exp_baseline/args.yaml}): khởi tạo \texttt{yolov8s.pt} (COCO), 40 epoch, \texttt{imgsz=960}, \texttt{batch=6}, SGD, \texttt{lr0=0.005}, \texttt{lrf=0.01}, cosine LR, \texttt{mixup=0.1}, \texttt{copy\_paste=0.3}, \texttt{close\_mosaic=10}, seed 42. Checkpoint tốt nhất ở \textbf{epoch 26}; thời gian 1 giờ 27 phút 31 giây.
+
+\begin{luuy}
+\textbf{Batch 6 vì VRAM 12 GB ở 960 px.} Ultralytics có \texttt{nbs=64} (nominal batch size) nên tự tích luỹ gradient tới khoảng 64 ảnh trước mỗi bước cập nhật — batch nhỏ không làm nhiễu bước tối ưu như người hỏi có thể nghĩ.\\
+\textbf{copy\_paste = 0,3 không có tác dụng:} trong Ultralytics 8.4.126, lớp \texttt{CopyPaste} trả nguyên nhãn khi không có nhãn đa giác (segments). Nhãn của đề tài chỉ là hộp, nên tham số này vô hiệu (đã đọc mã nguồn \texttt{ultralytics/data/augment.py}).\\
+\textbf{Fitness chọn best.pt} của Ultralytics 8.4 = 0,1·mAP@0,5 + 0,9·mAP@0,5:0,95 trên val.
+\end{luuy}
+
+\subsection{Bước 2.2: Năm recipe cải tiến}
+\textbf{File:} \f{scripts/pipelines/train.py} (bảng \texttt{RECIPES}: \texttt{scale}, \texttt{imgsz1280}, \texttt{p2}, \texttt{progressive}, \texttt{clspw}, …; tham số \texttt{--init} để khởi tạo ấm), chạy tuần tự bằng \f{scripts/pipelines/run_ablation_overnight.sh}. Cấu hình thật đọc từ từng \f{runs/detect/<run>/args.yaml}:
+
+{\small\setlength{\tabcolsep}{4pt}\begin{longtable}{p{3.3cm}p{2.3cm}p{1.6cm}p{1.2cm}p{1.0cm}p{1.2cm}p{3.0cm}}
+\toprule
+\textbf{Run} & \textbf{Khởi tạo} & \textbf{Epoch} & \textbf{Ảnh} & \textbf{Batch} & \textbf{lr0} & \textbf{Thay đổi chính}\\\midrule
+\texttt{p4\_scale\_}\newline\texttt{from\_baseline} & exp\_baseline & 28 (best 13) & 960 & 6 & 0,0005 & scale 0,7; translate 0,15\\
+\texttt{p4\_imgsz1280\_}\newline\texttt{from\_baseline} & exp\_baseline & 40 & 1.280 & 6 & 0,0005 & độ phân giải cao\\
+\texttt{r\_p2} & COCO (phần tương thích) & 25 (best 22) & 960 & 16 & 0,005 & \texttt{yolov8s-p2.yaml}, đầu stride 4\\
+\texttt{r\_progressive\_s1}\newline + \texttt{r\_progressive} & COCO & 20 + 10 & 960 → 1.280 & 16 / 8 & 0,005 / 0,002 & curriculum độ phân giải\\
+\texttt{r\_clspw\_v2} (YOLOv8s-CW) & exp\_baseline & 10 / 15 (best 2) & 960 & 16 & 0,001 & \texttt{cls\_pw=0.5}\\
+\bottomrule
+\end{longtable}}
+
+\subsection{Bước 2.3: YOLOv8s-CW (mô hình cuối)}
+\textbf{File:} \f{scripts/verify/60_train_r_clspw_v2.py} — huấn luyện lại \texttt{r\_clspw} nhưng khởi tạo từ \f{runs/detect/exp_baseline/weights/best.pt} (cơ sở thật 7.237 ảnh). Tham số: \texttt{cls\_pw=0.5}, \texttt{lr0=0.001}, \texttt{lrf=0.1}, \texttt{batch=16}, seed 0, tối đa 15 epoch, \texttt{patience=8}, \texttt{close\_mosaic=5}.
+
+\textbf{Trọng số lớp} (Ultralytics 8.4.126 tự tính trong \texttt{ultralytics/utils/loss.py}): $w_c \propto n_c^{-\gamma}$, chuẩn hoá trung bình bằng 1. Với $\gamma = 0{,}5$ và số hộp train 13.460 / 5.921 / 1.652 / 4.961: $w$ = 0,571 (xe máy), 0,860 (ô tô), 1,629 (buýt), 0,940 (tải). Chỉ mất mát phân loại BCE được nhân trọng số.
+
+\begin{luuy}
+\textbf{Mosaic chưa từng được tắt ở YOLOv8s-CW.} Ultralytics tắt mosaic khi \texttt{epoch == epochs − close\_mosaic}, tức epoch thứ 11 của lịch 15. Run dừng sớm sau 10 epoch nên mosaic bật suốt; best.pt ở epoch 2. Các lượt đối chứng chạy đủ 10 epoch nên được tắt mosaic ở 5 epoch cuối. Bài đã sửa câu này (Mục IV-B, V-A, VI điểm 2).
+\end{luuy}
+
+\subsection{Bước 2.4: Đối chứng trọng số lớp (ba hạt giống)}
+\textbf{File:} \f{scripts/verify/62_clspw_control.py} (hàm \texttt{train}, \texttt{evaluate}; tham số \texttt{--only cw05\_s0}). Hai điều kiện \texttt{cls\_pw = 0} và \texttt{0,5}, mỗi điều kiện seed 0/1/2, cùng khởi tạo \texttt{exp\_baseline}, cùng lr/batch/mixup/copy\_paste/close\_mosaic, \emph{cố định 10 epoch} (\texttt{patience=100}). Kết quả: \f{outputs/verify/clspw_control/cw0_s*.json}, \f{cw05_s*.json}; run tương ứng \f{runs/detect/ctrl_cw0_s0..s2}, \f{ctrl_cw05_s0..s2}.
+
+\subsection{Bước 2.5: Nhãn giả V6 (kết quả âm tính)}
+\begin{itemize}
+\item \f{scripts/data_prep/pseudo_label_vn_cctv.py} (\texttt{--conf}, \texttt{--stride}): dùng mô hình 2.833 ảnh nhãn thật gán nhãn khung vn\_cctv, giữ hộp conf $\ge$ 0,75, lấy thưa → 402 ảnh, 1.079 hộp.
+\item \f{scripts/data_prep/build_v6_merged.py}: V5 train + 402 ảnh nhãn giả; val/test giữ nguyên.
+\item \f{scripts/training/v6_pseudo_lbl.py}: huấn luyện cùng cấu hình; \f{scripts/verify/83_eval_v6_pseudo_pair.py}: chấm lại cặp so sánh.
+\item Kết quả: mAP@0,5 từ 0,7812 xuống 0,7608 (−2,04 điểm).
+\end{itemize}
+
+\subsection{Bước 2.6: Faster R-CNN ResNet50-FPN (đối chứng)}
+\textbf{File:} \f{notebooks/colab_frcnn_v5plus.ipynb} (Colab, Tesla T4). Cấu hình ở \f{weights/trained/frcnn_v5plus/config.json}: khởi tạo COCO (\texttt{weights=DEFAULT}), 8 epoch, batch 4 + tích luỹ 2 bước, SGD Nesterov (momentum 0,9, weight decay 0,0005), lr 0,005 với 2 epoch khởi động rồi cosine, AMP, cạnh ngắn 800 / dài 1.333, lật ngang + màu, seed 42. Chọn best theo mAP@0,5 trên toàn bộ val mỗi epoch (torchmetrics). Nhật ký \f{weights/trained/frcnn_v5plus/train_log.csv}: best ở \textbf{epoch 8} (val mAP@0,5 = 0,830), tổng 2 giờ 52 phút 24 giây. Số tham số (4 lớp + nền): \textbf{41,4 triệu}, gấp $\sim$3,7 lần YOLOv8s (11,1 triệu).
+
+\begin{qa}{Câu hỏi: “So sánh có công bằng không khi Faster R-CNN chỉ 8 epoch, GPU khác?”}
+Trả lời thẳng: chưa tinh chỉnh ngang nhau. Best rơi vào epoch cuối nên ngân sách dài hơn có thể còn tăng; YOLO được thử nhiều cấu hình hơn; hai mô hình khác cỡ (3,7 lần). Bài chỉ kết luận “ngang nhau trong miền” và ghi rõ đây là bằng chứng sơ bộ (Mục VI điểm 5).
+\end{qa}
+
+%==========================================================
+\section{Giai đoạn 3 — Đánh giá}
+%==========================================================
+\subsection{Bước 3.1: So các cấu hình YOLO bằng Ultralytics \texttt{model.val()}}
+\textbf{File:} \f{scripts/verify/30_detector_eval.py} (6 mô hình × 3 tập: test V5+, VN Aerial val/test; \texttt{conf=0.001}, \texttt{iou=0.7}, batch 16, FP16, imgsz theo checkpoint), \f{32_eval_exp_baseline.py}, \f{61_eval_r_clspw_v2.py}, \f{82_eval_ctrl_ultralytics.py}. Đầu ra: \f{outputs/verify/detector_eval.json}, \f{exp_baseline_eval.json}, \f{r_clspw_v2_eval.json}.
+
+{\small\begin{longtable}{lrrrr}
+\toprule
+\textbf{Mô hình (test V5+)} & \textbf{mAP@0,5} & \textbf{mAP@0,5:0,95} & \textbf{Precision} & \textbf{Recall}\\\midrule
+Cơ sở V5+ & 0,7930 & 0,4279 & 0,7643 & 0,7283\\
+p4\_scale & 0,7871 & 0,4236 & 0,7581 & 0,7327\\
+p4\_imgsz1280 & 0,7741 & 0,4175 & 0,7285 & 0,7427\\
+r\_p2 & 0,7528 & 0,3944 & 0,7409 & 0,7075\\
+r\_progressive & 0,7710 & 0,4148 & 0,7405 & 0,7211\\
+\textbf{YOLOv8s-CW} & \textbf{0,7984} & 0,4283 & 0,7648 & 0,7445\\
+cls\_pw = 0 (TB 3 seed) & 0,8003 ± 0,0042 & 0,4301 & 0,7701 & 0,7377\\
+cls\_pw = 0,5 (TB 3 seed) & 0,8008 ± 0,0031 & 0,4304 & 0,7698 & 0,7370\\
+YOLOv8s COCO gốc & 0,4514 & 0,2311 & & \\
+\bottomrule
+\end{longtable}}
+
+\begin{longtable}{lrrrr}
+\toprule
+\textbf{AP@0,5 theo lớp} & \textbf{Xe máy} & \textbf{Ô tô} & \textbf{Xe buýt} & \textbf{Xe tải}\\\midrule
+Cơ sở V5+ & 0,8611 & 0,8976 & 0,7458 & 0,6675\\
+p4\_scale & 0,8608 & 0,8854 & 0,7218 & 0,6802\\
+p4\_imgsz1280 & 0,8612 & 0,8886 & 0,7417 & 0,6049\\
+r\_p2 & 0,8376 & 0,8838 & 0,7448 & 0,5448\\
+r\_progressive & 0,8707 & 0,8778 & 0,7209 & 0,6147\\
+\textbf{YOLOv8s-CW} & 0,8608 & 0,8961 & 0,7462 & 0,6907\\
+cls\_pw = 0 (TB 3 seed) & 0,8651 & 0,9003 & 0,7580 & 0,6778\\
+cls\_pw = 0,5 (TB 3 seed) & 0,8658 & 0,9006 & 0,7580 & 0,6789\\
+YOLOv8s COCO & 0,1972 & 0,7435 & 0,6053 & 0,2596\\
+\bottomrule
+\end{longtable}
+
+\begin{tomtat}
+\textbf{Ý chính:} YOLOv8s-CW hơn cơ sở 0,54 điểm, hơn p4\_scale 1,13 điểm, tăng chủ yếu ở xe tải (+2,32). Nhưng đối chứng 3 hạt giống cho thấy \texttt{cls\_pw = 0,5} chỉ hơn \texttt{cls\_pw = 0} 0,05 điểm — nhỏ hơn độ lệch giữa các hạt giống (0,31–0,42 điểm). \textbf{Mức tăng đến từ việc tinh chỉnh thêm, không phải trọng số lớp.} COCO zero-shot (\f{scripts/evaluation/eval_coco_baseline_remap.py}, ánh xạ nhãn 0→3, 1→2, 2→5, 3→7) chỉ đạt 0,4514; xe máy AP 0,20.
+\end{tomtat}
+
+\subsection{Bước 3.2: So YOLO với Faster R-CNN bằng cùng pycocotools}
+\begin{longtable}{p{5.6cm}p{10cm}}
+\toprule
+\textbf{File} & \textbf{Chức năng}\\\midrule
+\f{scripts/verify/80_unified_coco_eval.py} & Chuyển nhãn YOLO sang COCO (\texttt{build\_gt}), sinh dự đoán Faster R-CNN (\texttt{frcnn\_predict}, ngưỡng 0,001, 300 hộp), chấm bằng pycocotools (\texttt{coco\_eval}), lưu \texttt{.npz} để dùng lại. Ra \f{outputs/verify/unified_eval/unified_eval.json}.\\
+\f{scripts/verify/90_regen_yolo_val_preds.py} & Sinh lại dự đoán YOLO bằng \texttt{model.val(save\_json=True)} (NMS \emph{đa nhãn}), thay cho dự đoán \texttt{predict()} một nhãn.\\
+\f{scripts/verify/89_val_json_pycoco.py} & Tìm nguyên nhân chênh giữa \texttt{val()} và pycocotools.\\
+\f{scripts/verify/88_ultralytics_metric_on_preds.py} & Áp công thức chỉ số Ultralytics lên dự đoán đã lưu để đưa Faster R-CNN vào cùng thước đo.\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}{lrrrr}
+\toprule
+\textbf{Mô hình (pycocotools)} & \textbf{V5+ @0,5} & \textbf{V5+ @0,5:0,95} & \textbf{Aerial val} & \textbf{Aerial test}\\\midrule
+Cơ sở V5+ & 0,7895 & 0,4276 & 0,6188 & 0,5990\\
+YOLOv8s-CW & \textbf{0,7950} & 0,4279 & 0,6354 & 0,6007\\
+cls\_pw=0 (TB 3) & 0,7968 & 0,4296 & 0,6292 & 0,6095\\
+cls\_pw=0,5 (TB 3) & 0,7973 & 0,4299 & 0,6309 & 0,6134\\
+Faster R-CNN R50-FPN & 0,7916 & 0,4244 & 0,5640 & 0,5242\\
+\bottomrule
+\end{longtable}
+
+\begin{qa}{Câu hỏi then chốt: “Vì sao bản trước YOLO thua Faster R-CNN 4 điểm, giờ lại hơn?”}
+Do cách hậu xử lý, không phải công cụ đo. File \f{outputs/verify/unified_eval/multilabel_isolation.json}:
+\begin{itemize}
+\item \texttt{predict()} NMS một nhãn → pycocotools 0,7513;
+\item \texttt{val()} NMS một nhãn → 0,7641;
+\item \texttt{val()} NMS đa nhãn → 0,7950 (Ultralytics tự chấm 0,7984).
+\end{itemize}
+Faster R-CNN của TorchVision chạy NMS theo từng lớp (một vùng giữ được nhiều lớp), nên so công bằng phải dùng NMS đa nhãn cho YOLO. Khi triển khai bằng \texttt{predict()} mặc định, độ chính xác thực tế của YOLO gần 0,7513. Phần 0,7513 so với 0,7641 (khác giữa \texttt{predict()} và \texttt{val()}) bài chưa tách riêng nguyên nhân.
+\end{qa}
+
+\subsection{Bước 3.3: Khoảng tin cậy bootstrap}
+\textbf{File:} \f{scripts/verify/81_bootstrap_ci.py} (hiệu số mAP@0,5 giữa hai mô hình; lấy mẫu có hoàn lại 1.500 ảnh, 1.000 lần, khoảng phân vị 2,5–97,5\%), \f{scripts/verify/84_bootstrap_clspw_seeds.py} (trung bình 3 seed mỗi điều kiện). Đầu ra \f{bootstrap_ci.json}, \f{bootstrap_clspw_seeds.json}.
+
+\begin{longtable}{lrr}
+\toprule
+\textbf{Hiệu số mAP@0,5} & \textbf{Điểm} & \textbf{KTC 95\%}\\\midrule
+YOLOv8s-CW − Faster R-CNN (test V5+) & +0,34 & [−0,46; +1,29]\\
+TB cls\_pw=0,5 − Faster R-CNN & +0,57 & [−0,25; +1,51]\\
+YOLOv8s-CW − cơ sở & +0,55 & [+0,20; +0,92]\\
+TB cls\_pw=0,5 − TB cls\_pw=0 & +0,05 & [0,00; +0,11]\\
+TB cls\_pw=0 − cơ sở & +0,73 & [+0,48; +0,98]\\
+YOLOv8s-CW − Faster R-CNN (Aerial val) & +7,13 & [+5,49; +8,85]\\
+YOLOv8s-CW − Faster R-CNN (Aerial test, 149 ảnh) & +7,66 & [+2,69; +13,40]\\
+\bottomrule
+\end{longtable}
+
+\begin{qa}{Câu hỏi: “Bootstrap có đáng tin khi 1.500 ảnh là khung liên tiếp của 2 camera?”}
+Đây là điểm yếu thật. Bootstrap lấy mẫu từng ảnh như thể độc lập, nhưng test giữ mọi khung của cam\_09/cam\_10 (stride 1) nên ảnh kề nhau gần giống nhau; số mẫu hiệu dụng nhỏ hơn 1.500 nhiều → khoảng tin cậy \emph{hẹp hơn thực tế}. Kết luận “ngang nhau” vẫn đứng (khoảng đã chứa 0, rộng ra vẫn chứa 0); các khoảng hẹp không chứa 0 thì kém chắc hơn. Cách khắc phục: bootstrap theo khối (đoạn video liền nhau) hoặc theo camera. Khoảng này cũng không phản ánh dao động giữa các lần huấn luyện.
+\end{qa}
+
+\subsection{Bước 3.4: Đánh giá ngoài miền VN Aerial}
+\textbf{File:} \f{scripts/pipelines/eval_cross_domain.sh} (chấm các checkpoint trên test V5+ và VN Aerial), số liệu nằm trong \f{outputs/verify/*_eval.json} và \f{docs/report/assets/cross_domain_results.json}.
+
+\begin{longtable}{lrrrr}
+\toprule
+\textbf{Mô hình (Ultralytics)} & \textbf{V5+ test} & \textbf{Aerial val} & \textbf{Aerial test} & \textbf{Chênh (điểm)}\\\midrule
+Cơ sở V5+ & 0,7930 & 0,6200 & 0,5996 & 19,34\\
+p4\_scale & 0,7871 & \textbf{0,6476} & \textbf{0,6374} & 14,97\\
+p4\_imgsz1280 & 0,7741 & 0,6377 & 0,6008 & 17,33\\
+r\_p2 & 0,7528 & 0,5525 & 0,5380 & 21,48\\
+r\_progressive & 0,7710 & 0,6287 & 0,6100 & 16,10\\
+YOLOv8s-CW & 0,7984 & 0,6368 & 0,6018 & 19,66\\
+YOLOv8s COCO & 0,4514 & – & 0,4893 & –\\
+\bottomrule
+\end{longtable}
+Ý chính: không có cấu hình nào tốt nhất mọi nơi — tinh chỉnh thêm tốt nhất trong miền, p4\_scale tốt nhất ngoài miền.
+
+\subsection{Bước 3.5: Phân tích lỗi}
+\textbf{File:} \f{scripts/verify/31_error_analysis.py} → \f{outputs/verify/error_analysis_r_clspw_v2.json}; \f{scripts/verify/86_plot_confusion_vi.py} vẽ ma trận nhầm lẫn tiếng Việt; \f{src/evaluation/det_analysis.py} chứa hàm ghép dự đoán/nhãn theo kích thước. Cài đặt: \texttt{predict()} (NMS một nhãn như triển khai), conf 0,25, NMS IoU 0,7, ghép IoU $\ge$ 0,5.
+
+\begin{longtable}{lrrrrr}
+\toprule
+\textbf{Lớp} & \textbf{TP} & \textbf{FP} & \textbf{FN} & \textbf{P} & \textbf{R}\\\midrule
+Xe máy & 29.517 & 4.290 & 10.290 & 0,8731 & 0,7415\\
+Ô tô & 7.241 & 2.751 & 790 & 0,7247 & 0,9016\\
+Xe buýt & 497 & 148 & 259 & 0,7705 & 0,6574\\
+Xe tải & 538 & 278 & 314 & 0,6593 & 0,6315\\
+\bottomrule
+\end{longtable}
+Recall xe máy theo kích thước: nhỏ 49,5\%, vừa 79,2\%, lớn 95,4\%; xe tải vừa 48,2\% so với lớn 86,1\%. Nhầm lớp hai chiều: ô tô–buýt 145, ô tô–tải 106, buýt–tải 65; xe máy 47.
+
+\subsection{Bước 3.6: Đo tốc độ}
+\begin{longtable}{p{5.2cm}p{10.4cm}}
+\toprule
+\textbf{File} & \textbf{Chức năng}\\\midrule
+\f{scripts/verify/50_speed_benchmark.py} & Khung đo gốc: \texttt{bench\_yolo\_model\_only} (batch 1, 20 ảnh khởi động, 200 ảnh đo, \texttt{predict()}), \texttt{bench\_frcnn\_model\_only}, \texttt{bench\_pipeline\_end\_to\_end}.\\
+\f{scripts/verify/85_speed_cw.py} & Đo lại với YOLOv8s-CW trong cùng phiên → \f{outputs/verify/speed_cw.json} (chế độ triển khai: \texttt{predict()}, NMS một nhãn; Faster R-CNN ngưỡng mặc định 0,05 / 100 hộp).\\
+\f{scripts/verify/86_speed_eval_mode.py} & \textbf{Số đang dùng trong bài.} Đo ở \emph{đúng chế độ chấm độ chính xác}: YOLO qua \texttt{model.val()} (NMS đa nhãn, conf 0,001, 300 hộp) cộng thời gian letterbox; Faster R-CNN ngưỡng 0,001, 300 hộp; cả hai trên 1.500 ảnh, cùng phiên, cùng phạm vi (không tính đọc ảnh). → \f{outputs/verify/speed_eval_mode.json}.\\
+\bottomrule
+\end{longtable}
+
+{\small\begin{longtable}{p{4.6cm}p{5.6cm}p{4.6cm}}
+\toprule
+\textbf{Chế độ} & \textbf{YOLOv8s-CW (FP32)} & \textbf{Faster R-CNN (FP32)}\\\midrule
+Chấm điểm (dùng trong bài) & 6,66 ms (letterbox 0,70 + tiền xử lý 0,66 + suy luận 4,42 + NMS 0,88) & 42,36 ms → \textbf{nhanh hơn $\sim$6,4 lần}\\
+Triển khai \texttt{predict()} (phiên khác, có đọc ảnh) & 9,75 ms & 47,66 ms\\
+Pipeline ByteTrack + vạch đếm, video 178 khung & 77,1 khung/giây (không ghi video), 41,8 khung/giây (có ghi video) & –\\
+\bottomrule
+\end{longtable}}
+
+\begin{qa}{Câu hỏi: “Vì sao trước ghi 4,9 lần, giờ 6,4 lần?”}
+Lần đo cũ lệch chế độ ở cả hai mô hình: YOLO đo bằng \texttt{predict()} (NMS một nhãn, có đọc ảnh) trong khi độ chính xác 0,7950 dùng NMS đa nhãn; Faster R-CNN đo với ngưỡng mặc định thay vì ngưỡng chấm điểm. Lần đo mới ghép đúng độ chính xác với tốc độ của cùng một chế độ. Lưu ý FP16 (7,06 ms) không nhanh hơn FP32 trong phép đo này; độ trễ tuyệt đối có thể dao động 20–30\% giữa các phiên nên chỉ so tỉ lệ trong cùng phiên.
+\end{qa}
+
+\subsection{Bước 3.7: Các file hỗ trợ báo cáo}
+\f{scripts/verify/20_training_config.py} (đọc \texttt{args.yaml}, \texttt{results.csv} mọi run → \f{outputs/verify/training_config.json}), \f{scripts/verify/71_plot_training_curves.py} (Hình 4.1: loss và mAP theo epoch của \texttt{exp\_baseline}), \f{scripts/verify/01_inventory.py} (liệt kê checkpoint, YAML, SHA-256), \f{scripts/verify/00_extract_docx.py}, \f{02_summarize_report.py} (trích bảng số từ Word để đối chiếu).
+
+%==========================================================
+\section{Giai đoạn 4 — Hệ thống ứng dụng}
+%==========================================================
+\begin{longtable}{p{4.6cm}p{11cm}}
+\toprule
+\textbf{File} & \textbf{Chức năng}\\\midrule
+\f{src/tracking/track.py} & \texttt{track\_stream}: gọi \texttt{model.track()} của Ultralytics với \texttt{bytetrack.yaml} hoặc \texttt{botsort.yaml}, trả từng khung kèm \texttt{track\_id}; nhận \texttt{conf}, \texttt{iou}, \texttt{imgsz}, \texttt{half}, \texttt{classes}, \texttt{agnostic\_nms}.\\
+\f{src/tracking/counter.py} & Lớp \texttt{Counter} đếm qua vạch (xem thuật toán thật ở dưới); \texttt{load\_lines} đọc cấu hình vạch.\\
+\f{src/pipeline/run.py} & \texttt{run\_pipeline}: ghép phát hiện + theo vết + đếm; xuất CSV sự kiện (\texttt{frame, time\_sec, line, direction, track\_id, class\_name}, UTF-8-BOM) và video chú thích; có thể chạy dòng lệnh \texttt{python -m src.pipeline.run}.\\
+\f{src/stats/aggregator.py}, \f{visualize.py} & Gom sự kiện thành bảng đếm theo lớp/vạch/hướng, lưu lượng theo thời gian, khoảng cao điểm; vẽ biểu đồ.\\
+\f{src/evaluation/metrics.py}, \f{compare.py} & MAE, MAPE, độ chính xác đếm khi có ground truth đếm tay.\\
+\f{ui/streamlit_app.py} & Giao diện: tải video, chọn model (mặc định YOLOv8s-CW), chọn tracker, vạch, hướng; hai pipeline Baseline/Improved; tab thống kê và đánh giá.\\
+\f{scripts/verify/40_counting_eval.py} & Chạy pipeline trên cặp (video, ground truth) để tính MAE/MAPE — \textbf{chưa có video Việt Nam có nhãn đếm tay}, nên bài không báo cáo độ chính xác đếm.\\
+\bottomrule
+\end{longtable}
+
+\subsection{Thuật toán đếm thật trong code}
+\begin{enumerate}
+\item Mỗi track lấy một \emph{điểm neo} của hộp (mặc định \texttt{bottom\_center} — đáy giữa hộp, gần vị trí bánh xe chạm đường).
+\item Tính khoảng cách có dấu từ điểm neo tới vạch; chỉ coi là ở một phía khi vượt \emph{vùng chết} \texttt{hysteresis\_px} = 3 px (chống rung hộp).
+\item Lưu phía ổn định gần nhất cho từng cặp (vạch, track). Khi track chuyển sang phía ổn định đối diện \emph{và} đoạn nối hai điểm neo cắt đoạn vạch → một sự kiện đếm; hướng xác định bằng dấu tích có hướng.
+\item Mỗi cặp (vạch, track) chỉ đếm một lần; nếu track mất dấu quá \texttt{max\_track\_gap} = 30 khung thì xoá trạng thái để không nối hai quan sát xa nhau.
+\item Lớp của xe = lớp được \emph{bỏ phiếu theo tổng độ tin cậy} qua các khung, không phải lớp của khung cuối.
+\end{enumerate}
+\begin{luuy}
+Bài viết mô tả đơn giản hơn (“tâm hộp”, “đoạn nối tâm cũ với tâm mới cắt vạch”). Nếu hội đồng hỏi chi tiết, trả lời theo code ở trên: điểm neo đáy hộp, vùng chết 3 px, bỏ phiếu lớp theo độ tin cậy.
+\end{luuy}
+
+%==========================================================
+\section{Câu hỏi phản biện thường gặp và gợi ý trả lời}
+%==========================================================
+\begin{qa}{1. Đóng góp khoa học là gì khi không có kiến trúc mới?}
+Một đánh giá có phương pháp trên dữ liệu Việt Nam: chia theo video và nêu rõ phần rò rỉ còn lại; so sánh hai họ bộ phát hiện bằng cùng công cụ và cùng kiểu NMS; đánh giá ngoài miền; báo cáo cả kết quả âm tính; đối chứng đa hạt giống cho trọng số lớp. Phát hiện “thứ hạng đảo khi đổi NMS” là kết quả có giá trị thực hành.
+\end{qa}
+
+\begin{qa}{2. Vì sao chọn YOLOv8s mà không phải YOLOv8m/l?}
+Cân bằng tốc độ/độ chính xác cho ứng dụng gần thời gian thực và vừa VRAM 12 GB ở 960 px. Đã thử YOLOv8m trong giai đoạn đầu (\f{scripts/training/v3_yolov8m.py}, \f{v5_v8m_960.py}) nhưng không đưa vào so sánh chính. Thừa nhận: so sánh với Faster R-CNN là khác cỡ.
+\end{qa}
+
+\begin{qa}{3. Vì sao gọi là YOLOv8s-CW nếu trọng số lớp không có tác dụng?}
+Tên giữ theo cấu hình đã huấn luyện. Bài kết luận rõ mức tăng là do tinh chỉnh thêm; mô hình cuối có thể hiểu là “cơ sở được tinh chỉnh thêm”. Việc chọn nó là hậu nghiệm (đã xem test và VN Aerial) — bài đã ghi ở Mục VI điểm 4.
+\end{qa}
+
+\begin{qa}{4. Chọn checkpoint bằng val bị rò rỉ thì kết quả test có hỏng không?}
+Test không bị rò rỉ (cam\_09/10 không có trong train/val), nên số test vẫn là ước lượng ngoài khung cảnh. Val rò rỉ chỉ làm việc chọn checkpoint có thể lạc quan. Hướng sửa: chia lại theo khung cảnh camera, chọn bằng val độc lập (đã chuẩn bị ở \f{reports/v5plus_clean_datasheet.md}).
+\end{qa}
+
+\begin{qa}{5. Nhãn có thiếu không? Ảnh hưởng thế nào?}
+Kiểm tra bằng detector COCO: khoảng 2,7\% số xe ở val/test V5 không có nhãn (cận dưới), xuất hiện ở 37\% số ảnh (\f{reports/v10_label_completeness.json}). Nhãn thiếu làm tăng FP và giảm precision của mọi mô hình như nhau; không đổi thứ hạng nhưng làm số tuyệt đối thấp hơn thực.
+\end{qa}
+
+\begin{qa}{6. Vì sao P2 và độ phân giải cao lại kém?}
+Không kết luận P2 vô ích: \texttt{r\_p2} và \texttt{r\_progressive} khởi tạo từ COCO với 25 và 30 epoch, ít hơn 40 epoch của cơ sở; ngân sách không đều (Mục VI điểm 6). p4\_imgsz1280 dùng batch 6 và lr nhỏ.
+\end{qa}
+
+\begin{qa}{7. Mô hình có chạy tốt ngoài thực tế không?}
+Trong miền tốt (0,7984). Ngoài miền giảm mạnh (khoảng 19–20 điểm trên VN Aerial). Phép đếm chưa được đánh giá vì chưa có video Việt Nam gán nhãn đếm tay. Thử nghiệm thêm trên video ngoài cho thấy mô hình có thể bỏ sót ô tô ở xa và đôi khi sinh hộp quá lớn — đây là hướng của giai đoạn tiếp theo.
+\end{qa}
+
+\begin{qa}{8. Chênh lệch nào thì coi là có ý nghĩa?}
+Ba nguồn dao động: chấm lại cùng checkpoint (mAP@0,5 lệch tối đa $\sim$0,07 điểm); chọn ảnh test (khoảng bootstrap, có thể hẹp hơn thực); hạt giống huấn luyện (độ lệch chuẩn 0,31–0,42 điểm). Với cấu hình chỉ chạy một seed, chênh dưới khoảng 1 điểm chưa đủ để xếp hạng.
+\end{qa}
+
+%==========================================================
+\appendix
+\section{Phụ lục A — Bảng truy vết số liệu}
+{\small\begin{longtable}{p{4.8cm}p{4.9cm}p{5.4cm}}
+\toprule
+\textbf{Con số trong bài} & \textbf{File kết quả} & \textbf{Script sinh ra}\\\midrule
+10.203 ảnh, 87.460 hộp, Bảng I & \f{outputs/verify/data_audit.json} (+ đếm nhãn trên đĩa) & \f{scripts/verify/10_data_audit.py}\\
+0,7984 / 0,4283 (CW, Ultralytics) & \f{outputs/verify/r_clspw_v2_eval.json} & \f{scripts/verify/61_eval_r_clspw_v2.py}\\
+0,7930 (cơ sở) & \f{outputs/verify/exp_baseline_eval.json} & \f{scripts/verify/32_eval_exp_baseline.py}\\
+p4\_scale, p4\_imgsz1280, r\_p2, r\_progressive & \f{outputs/verify/detector_eval.json} & \f{scripts/verify/30_detector_eval.py}\\
+0,8008 ± 0,0031 / 0,8003 ± 0,0042 & \f{outputs/verify/clspw_control/*.json} & \f{scripts/verify/62_clspw_control.py}\\
+0,7950 / 0,7916 (pycocotools) & \f{outputs/verify/unified_eval/unified_eval.json} & \f{80_unified_coco_eval.py}, \f{90_regen_yolo_val_preds.py}\\
+0,7513 / 0,7641 / 0,7950 & \f{unified_eval/multilabel_isolation.json} & \f{scripts/verify/89_val_json_pycoco.py}\\
+Khoảng tin cậy & \f{unified_eval/bootstrap_ci.json}, \f{bootstrap_clspw_seeds.json} & \f{81_bootstrap_ci.py}, \f{84_bootstrap_clspw_seeds.py}\\
+0,4514 / 0,4893 (COCO) & \f{results/coco_baseline_remap/results.json} & \f{scripts/evaluation/eval_coco_baseline_remap.py} (\textbf{chưa commit})\\
+Bảng TP/FP/FN, kích thước, nhầm lớp & \f{outputs/verify/error_analysis_r_clspw_v2.json} & \f{scripts/verify/31_error_analysis.py}\\
+6,66 / 42,36 ms, 6,4 lần & \f{outputs/verify/speed_eval_mode.json} & \f{scripts/verify/86_speed_eval_mode.py} (\textbf{chưa commit})\\
+77,1 / 41,8 FPS; 9,75 / 47,66 ms & \f{outputs/verify/speed_cw.json} & \f{scripts/verify/85_speed_cw.py}\\
+0,7812 → 0,7608 (nhãn giả) & \f{outputs/verify/unified_eval/v6_pseudo_pair.json} & \f{scripts/verify/83_eval_v6_pseudo_pair.py}\\
+Thời gian huấn luyện, epoch tốt nhất & \f{runs/detect/<run>/results.csv} & \f{scripts/verify/20_training_config.py}\\
+Faster R-CNN 8 epoch, 2 giờ 52 phút 24 giây & \f{weights/trained/frcnn_v5plus/train_log.csv} & \f{notebooks/colab_frcnn_v5plus.ipynb}\\
+\bottomrule
+\end{longtable}}
+
+\section{Phụ lục B — Chỗ bài viết và code/dữ liệu chưa khớp (nên sửa trước khi bảo vệ)}
+{\small\begin{longtable}{p{0.4cm}p{3.4cm}p{4.6cm}p{6.0cm}}
+\toprule
+\textbf{\#} & \textbf{Vị trí trong bài} & \textbf{Bài ghi} & \textbf{Thực tế}\\\midrule
+1 & Mục III-A, Bảng I & Cần Thơ 4 camera; tổng 368 & 1 camera (4 video); camera đêm trùng khung cảnh camera ngày\\
+2 & Mục III-B & v10 “tên tệp không chứa mã camera” & Tên tệp có mã camera; đọc được 44 camera (33 địa điểm) trên 4.404/4.404 ảnh\\
+3 & Mục III-A & Loại bỏ xe đạp, xe ba gác, xe van, người & Chỉ xe ba gác (v10) thật sự bị loại; không nguồn nào có lớp van/xe đạp/người\\
+4 & Mục III-A & Ảnh chỉ còn nhãn bị loại được giữ làm ảnh nền & Bị bỏ; train có 0 ảnh không nhãn. Ảnh có xe ba gác cùng xe khác vẫn giữ → xe ba gác thành xe không nhãn\\
+5 & Mục III-B & Video ngày mỗi 5, đêm mỗi 10 khung & Đúng cho train; val/test giữ toàn bộ khung; một video Cần Thơ train giữ hết\\
+6 & Mục IV-E và các câu “nằm trong sai số đo (dưới 0,3 điểm)” & Chấm lại lệch dưới 0,003 coi là trùng khớp & Dao động đo thật của mAP@0,5 chỉ $\sim$0,07 điểm. Nên viết các chênh lệch giữa điều kiện là “nhỏ hơn dao động giữa các hạt giống (0,31–0,42 điểm)”\\
+7 & Mục V-B (bootstrap) & Khoảng tin cậy theo ảnh & Ảnh test không độc lập → khoảng hẹp hơn thực; nên nêu giới hạn\\
+8 & Mục VI điểm 3 & “Ở bản trước…”, “4,7 điểm trước đây” & Người đọc không biết bản trước; nên viết thành so sánh \texttt{predict()} với \texttt{val()}\\
+9 & Mục IV-F (đếm) & Tâm hộp, đoạn nối tâm cắt vạch & Code dùng điểm neo đáy hộp, vùng chết 3 px, bỏ phiếu lớp theo độ tin cậy\\
+\bottomrule
+\end{longtable}}
+
+\section{Phụ lục C — Lệnh tái lập chính}
+\begin{Verbatim}[fontsize=\footnotesize,formatcom=\sffamily,frame=single,framesep=6pt,rulecolor=\color{gray!50}]
+# Dữ liệu (môi trường yolov8_ft)
+python scripts/data_prep/rebuild_v5_by_video.py
+python scripts/data_prep/build_v5plus_merged.py
+python scripts/data_prep/validate_labels.py --dataset data/merged_v5plus --nc 4 \
+       --out outputs/verify/labels_v5plus.json
+python scripts/data_prep/audit_leak.py --datasets data/merged_v5plus \
+       --out outputs/verify/leak_v5plus.json
+python scripts/data_prep/download_vn_aerial.py
+
+# Huấn luyện
+python scripts/training/v8_experiments.py --preset baseline --batch 6     # exp_baseline
+# p4_scale / p4_imgsz1280 / r_p2 / r_progressive: scripts/pipelines/train.py
+#   (chạy qua run_ablation_overnight.sh); tham số thật: runs/detect/<run>/args.yaml
+python scripts/verify/60_train_r_clspw_v2.py     # YOLOv8s-CW (vehicle_env)
+python scripts/verify/62_clspw_control.py        # 6 lượt đối chứng
+# Faster R-CNN: notebooks/colab_frcnn_v5plus.ipynb trên Colab
+
+# Đánh giá (vehicle_env)
+python scripts/verify/30_detector_eval.py
+python scripts/verify/61_eval_r_clspw_v2.py
+python scripts/verify/80_unified_coco_eval.py
+python scripts/verify/90_regen_yolo_val_preds.py
+python scripts/verify/81_bootstrap_ci.py
+python scripts/verify/84_bootstrap_clspw_seeds.py
+python scripts/verify/31_error_analysis.py
+python scripts/verify/86_speed_eval_mode.py
+python scripts/evaluation/eval_coco_baseline_remap.py
+
+# Ứng dụng
+streamlit run ui/streamlit_app.py
+\end{Verbatim}
+{\small Ghi chú: các lệnh huấn luyện dùng đúng tham số dòng lệnh có trong script; cấu hình chi tiết của từng run đã chạy nằm trong \f{runs/detect/<run>/args.yaml} — khi bị hỏi “chạy thế nào”, mở file này là bằng chứng chính xác nhất.}
+
+\end{document}
