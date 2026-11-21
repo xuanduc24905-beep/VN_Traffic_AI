@@ -73,3 +73,7 @@ data/ext_benchmark/
 outputs/review_missing_labels/
 reports/*/videos/
 data/colab/
+
+# anh minh hoa sinh trong qua trinh lam viec
+outputs/cantho_sample/
+outputs/che_xam/
