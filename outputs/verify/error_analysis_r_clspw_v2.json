@@ -10,16 +10,16 @@
     "motorcycle": {
       "tp": 29517,
       "fp": 4290,
-      "fn": 10206,
+      "fn": 10290,
       "precision": 0.8731032034785695,
-      "recall": 0.7430707650479571
+      "recall": 0.7415027507724772
     },
     "car": {
       "tp": 7241,
       "fp": 2751,
-      "fn": 777,
+      "fn": 790,
       "precision": 0.7246797437950361,
-      "recall": 0.9030930406585184
+      "recall": 0.9016311791806749
     },
     "bus": {
       "tp": 497,
@@ -51,8 +51,8 @@
         "truck": 0
       },
       "fn": {
-        "motorcycle": 3625,
-        "car": 95,
+        "motorcycle": 3677,
+        "car": 103,
         "bus": 6,
         "truck": 0
       }
@@ -65,14 +65,14 @@
         "truck": 248
       },
       "fp": {
-        "motorcycle": 2737,
-        "car": 1138,
-        "bus": 71,
-        "truck": 89
+        "motorcycle": 2736,
+        "car": 1178,
+        "bus": 80,
+        "truck": 113
       },
       "fn": {
-        "motorcycle": 6537,
-        "car": 549,
+        "motorcycle": 6569,
+        "car": 554,
         "bus": 178,
         "truck": 267
       }
@@ -86,9 +86,9 @@
       },
       "fp": {
         "motorcycle": 86,
-        "car": 105,
-        "bus": 20,
-        "truck": 46
+        "car": 120,
+        "bus": 40,
+        "truck": 68
       },
       "fn": {
         "motorcycle": 44,
@@ -107,14 +107,14 @@
         "truck": 538
       },
       "fp": {
-        "motorcycle": 4280,
-        "car": 2468,
-        "bus": 92,
-        "truck": 135
+        "motorcycle": 4279,
+        "car": 2523,
+        "bus": 121,
+        "truck": 181
       },
       "fn": {
-        "motorcycle": 10206,
-        "car": 777,
+        "motorcycle": 10290,
+        "car": 790,
         "bus": 259,
         "truck": 314
       }
@@ -158,37 +158,37 @@
     "matrix": [
       [
         29517,
-        10,
+        11,
         0,
         0,
-        4280
+        4279
       ],
       [
-        33,
+        32,
         7241,
-        172,
-        78,
-        2468
+        131,
+        65,
+        2523
       ],
       [
         1,
-        35,
+        14,
         497,
-        20,
-        92
+        12,
+        121
       ],
       [
         3,
-        57,
-        83,
+        41,
+        53,
         538,
-        135
+        181
       ],
       [
-        10206,
-        777,
-        259,
-        314,
+        10254,
+        724,
+        75,
+        237,
         0
       ]
     ]
@@ -406,12 +406,6 @@
         "iou": 0.5481432543130283
       },
       {
-        "img": "data/merged_v5plus/images/test/soict24_cam_09_00021_jpg.rf.ff49f410ef955f5053f7a4382c160728.jpg",
-        "pred_class": "car",
-        "gt_class": "bus",
-        "iou": 0.6237815276918877
-      },
-      {
         "img": "data/merged_v5plus/images/test/soict24_cam_09_00022_jpg.rf.bfb238fc9ea18849fe5669059a335607.jpg",
         "pred_class": "car",
         "gt_class": "motorcycle",
@@ -458,6 +452,12 @@
         "pred_class": "car",
         "gt_class": "motorcycle",
         "iou": 0.7954829462703517
+      },
+      {
+        "img": "data/merged_v5plus/images/test/soict24_cam_09_00066_jpg.rf.9040b879021153b984e0accfd30e6429.jpg",
+        "pred_class": "car",
+        "gt_class": "motorcycle",
+        "iou": 0.8193287851871923
       }
     ]
   }

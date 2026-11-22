@@ -1,0 +1,25 @@
+{
+ "purpose": "Cham lai p4_imgsz1280 va r_progressive o imgsz 960 (cung kich thuoc voi cac cau hinh khac) de bo sung cho Bang III/V/VI. So trong bai hien tai cua hai mo hinh nay la cham o 1280 (detector_eval.json).",
+ "date": "2026-11-21",
+ "env": {"python_env": "vehicle_env", "ultralytics": "8.4.126", "torch": "2.7.1+cu118", "gpu": "NVIDIA RTX 3500 Ada Generation Laptop GPU"},
+ "settings": {"call": "YOLO(ckpt).val()", "imgsz": 960, "batch": 16, "conf": 0.001, "iou": 0.7, "half": true, "max_det": 300},
+ "note": "Gia tri lam tron 4 chu so, chep tu log chay; cung lan chay nay cham lai p4_scale, r_p2 va exp_baseline (imgsz goc) ra trung khop 4 chu so voi detector_eval.json va exp_baseline_eval.json.",
+ "class_order": ["motorcycle", "car", "bus", "truck"],
+ "results": {
+  "p4_imgsz1280": {
+   "ckpt": "runs/detect/p4_imgsz1280_from_baseline/weights/best.pt",
+   "V5+_test": {"mAP50": 0.7849, "mAP50_95": 0.4215, "P": 0.7738, "R": 0.7214, "AP50_per_class": [0.8436, 0.8939, 0.7467, 0.6556]},
+   "VN_Aerial_val": {"mAP50": 0.6293, "mAP50_95": 0.3076, "P": 0.7283, "R": 0.5777, "AP50_per_class": [0.6929, 0.7069, 0.4758, 0.6418]},
+   "VN_Aerial_test": {"mAP50": 0.5965, "mAP50_95": 0.3034, "P": 0.693, "R": 0.5559, "AP50_per_class": [0.5391, 0.7192, 0.4683, 0.6593]}
+  },
+  "r_progressive": {
+   "ckpt": "runs/detect/r_progressive/weights/best.pt",
+   "V5+_test": {"mAP50": 0.7841, "mAP50_95": 0.4191, "P": 0.7622, "R": 0.7232, "AP50_per_class": [0.8583, 0.8821, 0.7472, 0.6489]},
+   "VN_Aerial_val": {"mAP50": 0.6215, "mAP50_95": 0.3081, "P": 0.7082, "R": 0.557, "AP50_per_class": [0.6502, 0.7453, 0.4654, 0.6251]},
+   "VN_Aerial_test": {"mAP50": 0.5729, "mAP50_95": 0.2797, "P": 0.6534, "R": 0.542, "AP50_per_class": [0.5368, 0.721, 0.3851, 0.6487]}
+  }
+ },
+ "reproduced_at_original_imgsz": {
+  "p4_scale@960": 0.7871, "r_p2@960": 0.7528, "exp_baseline@960": 0.7930, "p4_imgsz1280@1280": 0.7741, "r_progressive@960_vs_paper@1280": [0.7841, 0.7710]
+ }
+}

@@ -139,18 +139,24 @@ def main():
                     tp_dn[daynight][pc] += 1
                     cm[pc, pc] += 1
 
-            # For remaining FP: try to find any overlapping gt of different class (IoU>=0.5)
-            # Only once per pred: wrong_cls OR fp(bg).
+            # For remaining FP: try to find an overlapping gt of different class (IoU>=0.5)
+            # that is still unmatched and not yet claimed by another wrong-class pred.
+            # Only once per pred: wrong_cls OR fp(bg). Moi GT chi xuat hien dung mot lan trong
+            # ma tran nham lan (cheo, lech cheo hoac hang nen), nen tong cot = so hop that.
+            claimed_gt = set()
             for pi, (pc, pb) in enumerate(preds):
                 if pi in matched_pred:
                     continue
-                # Any gt (any class) with IoU>=0.5?
-                if gts:
-                    ious_all = box_iou(pb, np.stack([g[1] for g in gts]))
-                    best = int(np.argmax(ious_all))
-                    if ious_all[best] >= 0.5 and gts[best][0] != pc:
+                free = [gi for gi, g in enumerate(gts)
+                        if gi not in matched_gt and gi not in claimed_gt and g[0] != pc]
+                if free:
+                    ious_all = box_iou(pb, np.stack([gts[gi][1] for gi in free]))
+                    k = int(np.argmax(ious_all))
+                    if ious_all[k] >= 0.5:
                         # wrong class
+                        best = free[k]
                         gc = gts[best][0]
+                        claimed_gt.add(best)
                         cm[pc, gc] += 1
                         fp[pc] += 1  # counted as FP for the predicted class
                         # not a FN for gc yet unless gt is otherwise unmatched; handled below
@@ -159,7 +165,7 @@ def main():
                                 "img": str(img_path.relative_to(ROOT)),
                                 "pred_class": CLASS_NAMES[pc],
                                 "gt_class": CLASS_NAMES[gc],
-                                "iou": float(ious_all[best]),
+                                "iou": float(ious_all[k]),
                             })
                         continue
                 # pure background FP
@@ -188,7 +194,8 @@ def main():
                 sb = size_bin(*gb)
                 fn_by_size[sb][gc] += 1
                 fn_dn[daynight][gc] += 1
-                cm[4, gc] += 1
+                if gi not in claimed_gt:  # GT bi nham lop da nam o o lech cheo
+                    cm[4, gc] += 1
                 # Accept FIRST missed per image, then skip to encourage diversity
                 if len(examples["missed"]) < 10 and all(
                     ex["img"] != str(img_path.relative_to(ROOT)) for ex in examples["missed"]
@@ -198,7 +205,7 @@ def main():
                         "gt_class": CLASS_NAMES[gc],
                         "bbox_xyxy": [float(x) for x in gb],
                     })
-                    break  # at most 1 missed example per image
+                    # (da bo lenh break o day: no thoat ca vong dem FN, lam mat 97 hop bo sot)
 
         if (batch_start // 32) % 5 == 0:
             print(f"  {batch_start+len(batch_paths)}/{len(images)}", flush=True)

@@ -1,0 +1,159 @@
+{
+  "YOLOv8s-COCO (zero-shot)": {
+    "status": "ok",
+    "weights": "yolov8s.pt",
+    "dataset": "Extended test (V5+ 1.500 + VN Aerial 635 = 2.135)",
+    "imgsz": 960,
+    "mAP50": 0.439526849286165,
+    "mAP50_95": 0.23462080863889737,
+    "precision": 0.4493589345137554,
+    "recall": 0.4342356615548295,
+    "AP50": {
+      "motorcycle": 0.19780982336285796,
+      "car": 0.7329662424611232,
+      "bus": 0.5518072576010742,
+      "truck": 0.2755240737196045
+    },
+    "note": "Cham lai voi remap nhan 0->3,1->2,2->5,3->7 va classes=[2,3,5,7] (scripts/evaluation/eval_coco_baseline_remap.py). Ban cu (khong remap) bi sai ma lop nen khong hop le.",
+    "previous_INVALID_unmapped": {
+      "mAP50": 0.0917955557260689,
+      "mAP50_95": 0.022764731193130345,
+      "precision": 0.12733830885099118,
+      "recall": 0.15215779307713564,
+      "AP50": {
+        "motorcycle": 0.36296928331559297,
+        "car": 5.230125523012552e-06,
+        "bus": 0.00420725398466427,
+        "truck": 4.5547849534197324e-07
+      }
+    }
+  },
+  "V5 honest (640)": {
+    "status": "ok",
+    "weights": "runs/detect/train_v8s_v5_honest/weights/best.pt",
+    "dataset": "Extended test (V5+ 1.500 + VN Aerial 635 = 2.135)",
+    "imgsz": 640,
+    "mAP50": 0.6300072423660381,
+    "mAP50_95": 0.3150614967766855,
+    "precision": 0.7224549495879338,
+    "recall": 0.5836373268207884,
+    "AP50": {
+      "motorcycle": 0.6043092598499343,
+      "car": 0.7483605909607015,
+      "bus": 0.6166427617042967,
+      "truck": 0.5507163569492197
+    }
+  },
+  "V5+ 960px": {
+    "status": "ok",
+    "weights": "runs/detect/train_v8s_v5plus_960/weights/best.pt",
+    "dataset": "Extended test (V5+ 1.500 + VN Aerial 635 = 2.135)",
+    "imgsz": 960,
+    "mAP50": 0.7468854467712303,
+    "mAP50_95": 0.38892110724360923,
+    "precision": 0.7509167303010555,
+    "recall": 0.6841698435385433,
+    "AP50": {
+      "motorcycle": 0.8297078271938203,
+      "car": 0.8376151474152548,
+      "bus": 0.655854810059919,
+      "truck": 0.6643640024159267
+    }
+  },
+  "p4_scale": {
+    "status": "ok",
+    "weights": "runs/detect/p4_scale_from_baseline/weights/best.pt",
+    "dataset": "Extended test (V5+ 1.500 + VN Aerial 635 = 2.135)",
+    "imgsz": 960,
+    "mAP50": 0.7569370632426318,
+    "mAP50_95": 0.40060838798778775,
+    "precision": 0.7576077158414015,
+    "recall": 0.698963044656415,
+    "AP50": {
+      "motorcycle": 0.8526496971345914,
+      "car": 0.8288456797013077,
+      "bus": 0.6739217405545015,
+      "truck": 0.6723311355801262
+    }
+  },
+  "p4_imgsz1280": {
+    "status": "ok",
+    "weights": "runs/detect/p4_imgsz1280_from_baseline/weights/best.pt",
+    "dataset": "Extended test (V5+ 1.500 + VN Aerial 635 = 2.135)",
+    "imgsz": 1280,
+    "mAP50": 0.7465442504951814,
+    "mAP50_95": 0.3960259266316366,
+    "precision": 0.7498233376762626,
+    "recall": 0.6991691861997803,
+    "AP50": {
+      "motorcycle": 0.851883507902526,
+      "car": 0.8294213831666861,
+      "bus": 0.6883335917176076,
+      "truck": 0.6165385191939061
+    }
+  },
+  "V6 pseudo": {
+    "status": "ok",
+    "weights": "runs/detect/train_v8s_v6_pseudo/weights/best.pt",
+    "dataset": "Extended test (V5+ 1.500 + VN Aerial 635 = 2.135)",
+    "imgsz": 960,
+    "mAP50": 0.7216662808501304,
+    "mAP50_95": 0.38523518857783307,
+    "precision": 0.7454216260003923,
+    "recall": 0.6688764469616411,
+    "AP50": {
+      "motorcycle": 0.8008565332240445,
+      "car": 0.799025797239173,
+      "bus": 0.6652252792807232,
+      "truck": 0.621557513656581
+    }
+  },
+  "r_p2 (ablation)": {
+    "status": "ok",
+    "weights": "runs/detect/r_p2/weights/best.pt",
+    "dataset": "Extended test (V5+ 1.500 + VN Aerial 635 = 2.135)",
+    "imgsz": 960,
+    "mAP50": 0.7246452812922716,
+    "mAP50_95": 0.3707401344278554,
+    "precision": 0.7534469677932901,
+    "recall": 0.6748590224771364,
+    "AP50": {
+      "motorcycle": 0.8218543703791739,
+      "car": 0.8280428728149173,
+      "bus": 0.6711337004796217,
+      "truck": 0.5775501814953734
+    }
+  },
+  "r_clspw (mô hình cuối)": {
+    "status": "ok",
+    "weights": "runs/detect/r_clspw/weights/best.pt",
+    "dataset": "Extended test (V5+ 1.500 + VN Aerial 635 = 2.135)",
+    "imgsz": 960,
+    "mAP50": 0.7585047392084099,
+    "mAP50_95": 0.38777034372750235,
+    "precision": 0.7505022352511075,
+    "recall": 0.6995953424344155,
+    "AP50": {
+      "motorcycle": 0.8167225886040274,
+      "car": 0.8427821591526554,
+      "bus": 0.6907543385599932,
+      "truck": 0.6837598705169634
+    }
+  },
+  "r_progressive (ablation)": {
+    "status": "ok",
+    "weights": "runs/detect/r_progressive/weights/best.pt",
+    "dataset": "Extended test (V5+ 1.500 + VN Aerial 635 = 2.135)",
+    "imgsz": 1280,
+    "mAP50": 0.7422129070912628,
+    "mAP50_95": 0.39168445079578984,
+    "precision": 0.7381225388151452,
+    "recall": 0.6873683651801763,
+    "AP50": {
+      "motorcycle": 0.860163313404487,
+      "car": 0.8337746421843117,
+      "bus": 0.6672415663991005,
+      "truck": 0.607672106377152
+    }
+  }
+}

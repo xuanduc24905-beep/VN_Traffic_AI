@@ -157,7 +157,10 @@ WEIGHTS_DIR = ROOT / "weights"
 available_weights = sorted([str(p.relative_to(ROOT)) for p in WEIGHTS_DIR.rglob("*.pt")])
 runs_weights = sorted([str(p.relative_to(ROOT))
                        for p in (ROOT / "runs").rglob("best.pt")]) if (ROOT / "runs").exists() else []
-all_weights = available_weights + runs_weights
+# Model COCO gốc (đối chứng, chưa fine-tune) nằm ở thư mục gốc repo
+COCO_ROOT_WEIGHTS = ["yolov8s.pt", "yolov8x.pt"]
+coco_weights = [w for w in COCO_ROOT_WEIGHTS if (ROOT / w).exists()]
+all_weights = coco_weights + available_weights + runs_weights
 
 if not all_weights:
     st.sidebar.error("Không tìm thấy file .pt nào trong weights/ hoặc runs/")
@@ -165,11 +168,39 @@ if not all_weights:
 
 # ---------- Model priority (hiện trên top + default) ----------
 # Mapping path → (nhãn hiển thị, mô tả, thứ tự ưu tiên)
+COCO_VEHICLE_IDS = [1, 2, 3, 5, 7]  # bicycle, car, motorcycle, bus, truck (COCO 80 lớp)
+
+
+def _det_classes(w):
+    """Model COCO gốc có 80 lớp: chỉ giữ phương tiện, nếu không tracker sẽ theo cả người/đèn."""
+    return COCO_VEHICLE_IDS if w in COCO_ROOT_WEIGHTS else None
+
+
 FEATURED_MODELS = {
+    "yolov8x.pt": (
+        "yolov8x COCO gốc (đối chứng lớn nhất, chậm)",
+        "Bản lớn nhất của YOLOv8 (khoảng 68 triệu tham số, gấp khoảng 6 lần v8s), trọng số COCO chưa fine-tune; "
+        "chỉ giữ car/motorcycle/bus/truck/bicycle. Dùng làm mốc trên của COCO, chạy chậm hơn nhiều.", 1.8,
+    ),
+    "yolov8s.pt": (
+        "yolov8s COCO gốc (đối chứng, chưa fine-tune)",
+        "Trọng số COCO 80 lớp chưa huấn luyện thêm; chỉ giữ car/motorcycle/bus/truck/bicycle. "
+        "Dùng để so với các model fine-tune trên cùng video.", 1.7,
+    ),
     "runs/detect/r_clspw_v2/weights/best.pt": (
-        "⭐ r_clspw_v2 — mô hình cuối V5+ (mAP@50 0.798)",
-        "Fine-tune class-weighted (cls_pw=0.5) từ exp_baseline trên 7,237 ảnh V5+. "
-        "Cao nhất in-domain, tốt cho CCTV Việt Nam.", 0,
+        "⭐ YOLOv8s-CW (r_clspw_v2) — mô hình cuối, mAP@50 0.798",
+        "Mô hình cuối của báo cáo: tinh chỉnh cls_pw=0.5 từ exp_baseline trên 7.237 ảnh V5+, imgsz 960. "
+        "Cao nhất trên test V5+; trên video ngoài miền có thể hụt ô tô ở xa.", 0,
+    ),
+    "runs/detect/v5fix_d1_freeze10/weights/best.pt": (
+        "v5fix D1 (freeze=10) — thử nghiệm cuối kì, tốt trên camera VN ngoài",
+        "Backbone COCO đóng băng, 60 epoch trên V5fix (7.179 ảnh). Bắt ô tô/xe buýt ở camera "
+        "ngoài tốt hơn r_clspw_v2, không còn hộp khổng lồ. mAP@50 SOICT 0.779. Xem reports/v5fix/results.json.", 1.2,
+    ),
+    "runs/detect/v5fixmio_d1_freeze10/weights/best.pt": (
+        "v5fix M1 (freeze=10) + MIO-TCD — mAP@50 0.789",
+        "Như D1 nhưng thêm 3.000 ảnh MIO-TCD (ô tô/xe buýt/xe tải). Hơn D1 trên test SOICT (0.789) "
+        "và ô tô ở camera nước ngoài; kém D1 khoảng 2 điểm ở camera Việt Nam ngoài. Xem reports/v5fix/results.json.", 1.3,
     ),
     "runs/detect/exp_baseline/weights/best.pt": (
         "V5+ baseline (exp_baseline) — mAP@50 0.793",
@@ -210,15 +241,15 @@ pipeline_choice = st.sidebar.radio(
 )
 pipeline_kind = "improved_pipeline" if pipeline_choice.startswith("Improved") else "baseline_pipeline"
 
-# Dùng model winner (r_clspw_v2) làm default. Thứ tự fallback theo mAP V5+ test giảm dần.
+# Default = YOLOv8s-CW (r_clspw_v2), mô hình cuối của báo cáo; sau đó fallback theo mAP V5+ test.
 _preferred = [
-    "runs/detect/r_clspw_v2/weights/best.pt",              # r_clspw_v2 winner (0.7984 mAP@0.5)
+    "runs/detect/r_clspw_v2/weights/best.pt",              # YOLOv8s-CW, mô hình cuối (0.7984 mAP@0.5)
     "runs/detect/exp_baseline/weights/best.pt",             # V5+ baseline đúng (0.7930)
     "runs/detect/p4_scale_from_baseline/weights/best.pt",   # cross-domain winner
     "runs/detect/train_v8s_v6_pseudo/weights/best.pt",     # V6 pseudo fallback
     "runs/detect/train_v8s_v5_honest/weights/best.pt",     # V5 honest fallback
 ]
-_default_idx = next((i for i, w in enumerate(all_weights) if w in _preferred), 0)
+_default_idx = next((all_weights.index(w) for w in _preferred if w in all_weights), 0)
 weights_path = st.sidebar.selectbox(
     "Model weights",
     all_weights,
@@ -231,11 +262,13 @@ if weights_path in FEATURED_MODELS:
     st.sidebar.caption(FEATURED_MODELS[weights_path][1])
 tracker = st.sidebar.radio("Tracker", ["bytetrack.yaml", "botsort.yaml"],
                            help="Chỉ áp dụng cho Improved pipeline. Baseline pipeline dùng ByteTrack mặc định.")
-conf = st.sidebar.slider("Confidence threshold", 0.1, 0.9, 0.3, 0.05)
+conf = st.sidebar.slider("Confidence threshold", 0.1, 0.9, 0.2, 0.05,
+                         help="0.2 khi ghép ByteTrack: tracker tự lọc vết nhiễu qua 2 tầng.")
 iou = st.sidebar.slider("IoU threshold (NMS)", 0.1, 0.9, 0.5, 0.05)
 _imgsz_options = [320, 416, 512, 640, 768, 960, 1280]
 _recommended_imgsz = 1280 if "v7_1280" in weights_path else (
-    960 if "v5plus_960" in weights_path else 640)
+    960 if (weights_path in FEATURED_MODELS or "v5plus" in weights_path
+            or "v5pc" in weights_path) else 640)
 imgsz = st.sidebar.selectbox(
     "Image size", _imgsz_options,
     index=_imgsz_options.index(_recommended_imgsz),
@@ -257,12 +290,48 @@ count_direction = st.sidebar.radio(
 st.title(" VN Traffic AI — Đếm và phân loại phương tiện")
 st.caption("Detection + Tracking (ByteTrack/BoT-SORT) + Counting theo line")
 
-tab_run, tab_stats, tab_eval = st.tabs(["▶ Chạy pipeline", " Thống kê", " Đánh giá"])
+# ---------- Nút xoá input ----------
+# file_uploader không xoá được trực tiếp: đổi key (nonce) để Streamlit tạo uploader mới, rỗng.
+st.session_state.setdefault("nonce_video", 0)
+st.session_state.setdefault("nonce_img", 0)
+_VIDEO_STATE_KEYS = ("tmp_video", "video_meta", "out_video", "events_csv", "totals",
+                     "class_names", "compare_results", "stats_source_tag")
+
+
+def _clear_video():
+    for _k in _VIDEO_STATE_KEYS:
+        st.session_state.pop(_k, None)
+    st.session_state["nonce_video"] += 1
+
+
+def _clear_images():
+    st.session_state.pop("img_batch", None)
+    st.session_state["nonce_img"] += 1
+
+
+def _clear_all():
+    _clear_video()
+    _clear_images()
+
+
+st.sidebar.markdown("---")
+st.sidebar.button("🗑 Xoá toàn bộ input & kết quả", on_click=_clear_all, key="clear_all",
+                  help="Xoá video, ảnh đã upload và mọi kết quả đang hiển thị (giữ nguyên cấu hình sidebar).")
+
+tab_run, tab_img, tab_stats, tab_eval = st.tabs(
+    ["▶ Chạy pipeline", "🖼 Ảnh hàng loạt", " Thống kê", " Đánh giá"])
 
 # ---------- Tab 1: Run ----------
 with tab_run:
-    uploaded = st.file_uploader("Upload video giao thông (mp4/avi/mov)",
-                                type=["mp4", "avi", "mov"])
+    _u1, _u2 = st.columns([5, 1])
+    with _u1:
+        uploaded = st.file_uploader("Upload video giao thông (mp4/avi/mov)",
+                                    type=["mp4", "avi", "mov"],
+                                    key=f"video_upload_{st.session_state['nonce_video']}")
+    with _u2:
+        st.write("")
+        st.button("🗑 Xoá video", on_click=_clear_video, key="clear_video", width="stretch",
+                  help="Xoá video đã upload và kết quả chạy, thống kê, đánh giá.")
 
     col_a, col_b = st.columns([1, 1])
     with col_a:
@@ -308,8 +377,8 @@ with tab_run:
             (i for i, w in enumerate(all_weights)
              if "v5_honest" in w), 0)
         _im_default = next(
-            (i for i, w in enumerate(all_weights)
-             if "v6_pseudo" in w), 0)
+            (i for key in ("r_clspw_v2", "v6_pseudo")
+             for i, w in enumerate(all_weights) if key in w), 0)
         PIPELINE_OPTIONS = [
             "Baseline (giáo viên) — 1 line, không direction, không log event",
             "Improved (nhóm) — nhiều line + direction + log event + stats",
@@ -397,6 +466,7 @@ with tab_run:
                         lines=[line],
                         tracker=tracker,
                         conf=conf, iou=iou, imgsz=imgsz, half=use_half,
+                        classes=_det_classes(wpath),
                         out_csv=str(paths[tag]["csv"]),
                         out_video=str(paths[tag]["video"]),
                         progress_cb=_cb,
@@ -575,6 +645,7 @@ with tab_run:
                     lines=[line],
                     tracker=tracker,
                     conf=conf, iou=iou, imgsz=imgsz, half=use_half,
+                    classes=_det_classes(weights_path),
                     out_csv=str(out_csv),
                     out_video=str(out_video),
                     progress_cb=_cb,
@@ -829,6 +900,120 @@ with tab_eval:
                 st.download_button("Download eval report (JSON)",
                                    json.dumps(rep, indent=2, ensure_ascii=False),
                                    file_name="eval_report.json")
+
+# ---------- Tab: Ảnh hàng loạt (gán nhãn + so sánh 2 model) ----------
+@st.cache_resource(show_spinner=False)
+def _load_yolo(path: str):
+    from ultralytics import YOLO
+    return YOLO(path)
+
+
+with tab_img:
+    from ui.image_batch import (build_zip, decode_image, draw, is_coco_weights,
+                                predict_images)
+
+    st.markdown("Upload nhiều ảnh một lúc: model vẽ hộp và gán nhãn từng ảnh. "
+                "Chọn thêm **Model B** để xem hai model cạnh nhau trên cùng ảnh.")
+    _i1, _i2 = st.columns([5, 1])
+    with _i1:
+        img_files = st.file_uploader("Ảnh (jpg / png / webp / bmp) — có thể chọn nhiều ảnh",
+                                     type=["jpg", "jpeg", "png", "webp", "bmp"],
+                                     accept_multiple_files=True,
+                                     key=f"img_batch_files_{st.session_state['nonce_img']}")
+    with _i2:
+        st.write("")
+        st.button("🗑 Xoá ảnh", on_click=_clear_images, key="clear_images", width="stretch",
+                  help="Xoá toàn bộ ảnh đã upload và kết quả gán nhãn.")
+    _NONE = "(không so sánh)"
+    _c1, _c2 = st.columns(2)
+    with _c1:
+        img_wa = st.selectbox("Model A", all_weights, index=all_weights.index(weights_path),
+                              format_func=_label_for, key="img_wa")
+    with _c2:
+        _opts_b = [_NONE] + all_weights
+        _def_b = _opts_b.index("yolov8s.pt") if ("yolov8s.pt" in _opts_b and img_wa != "yolov8s.pt") else 0
+        img_wb = st.selectbox("Model B", _opts_b, index=_def_b, key="img_wb",
+                              format_func=lambda w: w if w == _NONE else _label_for(w))
+    _c3, _c4, _c5, _c6 = st.columns(4)
+    img_agnostic = _c3.checkbox("Agnostic NMS", value=True, key="img_agn",
+                                help="Tránh 1 xe bị vẽ 2 hộp khác lớp (bus + truck).")
+    img_use_giant = _c4.checkbox("Bỏ hộp quá lớn", value=True, key="img_giant",
+                                 help="Loại hộp chiếm quá nhiều diện tích ảnh (thường là toà nhà, mặt đường).")
+    img_giant_pct = _c5.slider("Ngưỡng hộp lớn (% ảnh)", 10, 60, 25, 5, key="img_giant_pct",
+                               disabled=not img_use_giant)
+    img_show_conf = _c6.checkbox("Hiện độ tin cậy", value=True, key="img_conf")
+    st.caption(f"Dùng conf = {conf}, IoU NMS = {iou}, imgsz = {imgsz} ở sidebar.")
+
+    if st.button("Chạy gán nhãn", type="primary", disabled=not img_files, key="img_run"):
+        _images, _bad = {}, []
+        for _f in img_files:
+            _im = decode_image(_f.getvalue())
+            if _im is None:
+                _bad.append(_f.name)
+                continue
+            _name = _f.name
+            while _name in _images:  # trùng tên file
+                _name = "_" + _name
+            _images[_name] = _im
+        _runs, _wmap = {}, {"A": img_wa}
+        if img_wb != _NONE:
+            _wmap["B"] = img_wb
+        _prog = st.progress(0.0, text="Đang chạy…")
+        for _k, (_tag, _w) in enumerate(_wmap.items()):
+            _prog.progress(_k / len(_wmap), text=f"Model {_tag}: {_label_for(_w)}")
+            _runs[_tag] = predict_images(
+                _load_yolo(str(ROOT / _w)), list(_images.items()), coco=is_coco_weights(_w),
+                conf=conf, iou=iou, imgsz=imgsz, half=use_half, agnostic_nms=img_agnostic,
+                max_box_frac=img_giant_pct / 100 if img_use_giant else None)
+        _prog.progress(1.0, text="Xong")
+        st.session_state["img_batch"] = {"images": _images, "runs": _runs, "weights": _wmap, "bad": _bad,
+                                         "show_conf": img_show_conf}
+
+    _ib = st.session_state.get("img_batch")
+    if _ib:
+        if _ib["bad"]:
+            st.warning("Không đọc được: " + ", ".join(_ib["bad"]))
+        _classes = ["motorcycle", "car", "bus", "truck", "bicycle"]
+        _rows = []
+        for _tag, _results in _ib["runs"].items():
+            _tot = {c: sum(r.counts().get(c, 0) for r in _results) for c in _classes}
+            _rows.append({"Model": f"{_tag}: {_label_for(_ib['weights'][_tag])}", **_tot,
+                          "Tổng": sum(_tot.values()),
+                          "TB / ảnh": round(sum(_tot.values()) / max(len(_results), 1), 1),
+                          "Hộp lớn đã bỏ": sum(r.n_removed_giant for r in _results)})
+        st.markdown(f"#### Tổng hợp trên {len(_ib['images'])} ảnh")
+        _df_sum = pd.DataFrame(_rows)
+        _df_sum = _df_sum.loc[:, (_df_sum != 0).any(axis=0)]
+        st.dataframe(_df_sum, width="stretch", hide_index=True)
+
+        _per = []
+        for _i, _name in enumerate(_ib["images"]):
+            _row = {"Ảnh": _name}
+            for _tag, _results in _ib["runs"].items():
+                _row[f"Số xe {_tag}"] = len(_results[_i].classes)
+            if len(_ib["runs"]) == 2:
+                _row["B − A"] = _row["Số xe B"] - _row["Số xe A"]
+            _per.append(_row)
+        with st.expander("Số xe từng ảnh", expanded=len(_per) <= 12):
+            st.dataframe(pd.DataFrame(_per), width="stretch", hide_index=True)
+
+        st.download_button("Tải kết quả (.zip: ảnh đã vẽ hộp + nhãn YOLO 4 lớp mỗi model)",
+                           build_zip(_ib["images"], _ib["runs"]), file_name="gan_nhan_hang_loat.zip",
+                           mime="application/zip", key="img_zip")
+
+        _names = list(_ib["images"])
+        _per_page = 10
+        _pages = (len(_names) - 1) // _per_page + 1
+        _page = st.number_input("Trang", 1, _pages, 1, key="img_page") if _pages > 1 else 1
+        for _i in range((_page - 1) * _per_page, min(_page * _per_page, len(_names))):
+            _name = _names[_i]
+            st.markdown(f"**{_i + 1}. {_name}**")
+            _cols = st.columns(len(_ib["runs"]))
+            for _col, (_tag, _results) in zip(_cols, _ib["runs"].items()):
+                _r = _results[_i]
+                _cnt = ", ".join(f"{k} {v}" for k, v in sorted(_r.counts().items())) or "không có xe"
+                _col.image(draw(_ib["images"][_name], _r, _ib["show_conf"]), width="stretch",
+                           caption=f"{_tag} — {Path(_ib['weights'][_tag]).parts[-3] if 'runs' in _ib['weights'][_tag] else _ib['weights'][_tag]}: {_cnt}")
 
 st.markdown("---")
 st.caption("VN Traffic AI · Chủ đề 10 — Detection + Tracking + Counting")

@@ -1,0 +1,14 @@
+{
+ "exp_baseline": {
+  "val_mAP50": 0.7930176419849436,
+  "pycoco_on_val_preds_mAP50": 0.7894680418646377,
+  "n_preds": 231202,
+  "max_per_img": 161
+ },
+ "r_clspw_v2": {
+  "val_mAP50": 0.7984286268897476,
+  "pycoco_on_val_preds_mAP50": 0.7949663876847144,
+  "n_preds": 200568,
+  "max_per_img": 134
+ }
+}

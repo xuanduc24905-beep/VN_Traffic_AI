@@ -1,0 +1,5 @@
+# Ghi ten file anh SAI (box lech / class sai / miss nhieu)
+# Moi dong 1 file
+# Vi du:
+#   0042__xxx.jpg   # xe_may bi danh thanh xe_ba_gac
+#   0100__yyy.jpg   # miss 2 xe trong frame

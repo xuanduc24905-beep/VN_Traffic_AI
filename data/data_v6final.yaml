@@ -1,0 +1,13 @@
+# V6final — sinh bởi scripts/data_prep/build_v6final.py (bỏ Cần Thơ, bù nhãn, lấy lại xe tải v10)
+# Val/test giống hệt V5fix và V5+ (test SOICT cam_09/10)
+path: /home/xuand/vn_traffic_ai/data/merged_v6final
+train: images/train
+val:   images/val
+test:  images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck

@@ -1,0 +1,39 @@
+{
+ "gpu_processes_before": "",
+ "env": {
+  "torch": "2.7.1+cu118",
+  "device": "NVIDIA RTX 3500 Ada Generation Laptop GPU"
+ },
+ "yolo_letterbox_ms": 0.699,
+ "yolo_fp32": {
+  "precision": "FP32",
+  "mode": "model.val(): NMS đa nhãn, conf 0,001, IoU 0,7, max_det 300, rect",
+  "images": 1500,
+  "ms_preprocess": 0.658,
+  "ms_inference": 4.421,
+  "ms_postprocess": 0.881,
+  "ms_total": 5.961,
+  "mAP50_ultralytics": 0.7984,
+  "ms_total_incl_letterbox": 6.66
+ },
+ "yolo_fp16": {
+  "precision": "FP16",
+  "mode": "model.val(): NMS đa nhãn, conf 0,001, IoU 0,7, max_det 300, rect",
+  "images": 1500,
+  "ms_preprocess": 0.709,
+  "ms_inference": 4.722,
+  "ms_postprocess": 0.931,
+  "ms_total": 6.362,
+  "mAP50_ultralytics": 0.7984,
+  "ms_total_incl_letterbox": 7.061
+ },
+ "frcnn_fp32": {
+  "precision": "FP32",
+  "mode": "score_thresh 0,001, NMS IoU 0,5, 300 hộp, cạnh 800/1.333",
+  "images": 1500,
+  "ms_mean": 42.363,
+  "ms_median": 42.295,
+  "ms_p95": 44.539
+ },
+ "ratio_frcnn_over_yolo_fp32": 6.36
+}

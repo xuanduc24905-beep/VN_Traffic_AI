@@ -153,11 +153,17 @@ def run_pipeline(video: str, weights: str, lines: list,
                  anchor_mode: str = "bottom_center",
                  crossing_hysteresis: float = 3.0,
                  max_track_gap: int = 30,
-                 classes: list[int] | None = None):
+                 classes: list[int] | None = None,
+                 agnostic_nms: bool = True,
+                 max_box_frac: float | None = 0.25):
     """Chạy pipeline. Trả về (events list, counter.to_dict(), class_names).
 
     events là list dict với schema:
         frame, time_sec, line, direction, track_id, class_name
+
+    agnostic_nms: NMS không phân lớp — tránh 1 xe bị vẽ 2 hộp khác lớp (bus+truck).
+    max_box_frac: bỏ hộp có diện tích > tỉ lệ này của khung hình (hộp "khổng lồ"
+        phủ toà nhà/mặt đường). None = tắt.
     """
     metadata = probe_video(video)
     fps = metadata.fps
@@ -192,7 +198,8 @@ def run_pipeline(video: str, weights: str, lines: list,
         for frame_idx, res in enumerate(track_stream(
                 weights, video, tracker=tracker,
                 conf=conf, iou=iou, imgsz=imgsz, half=half,
-                device=device, classes=classes)):
+                device=device, classes=classes,
+                agnostic_nms=agnostic_nms)):
 
             if class_names is None:
                 class_names = res.names
@@ -205,6 +212,12 @@ def run_pipeline(video: str, weights: str, lines: list,
                 ids = [None] * len(boxes)
             else:
                 ids = res.boxes.id.cpu().numpy()
+            if max_box_frac is not None and len(boxes):
+                area = (boxes[:, 2] - boxes[:, 0]) * (boxes[:, 3] - boxes[:, 1])
+                keep = area <= max_box_frac * (w * h)
+                boxes, detected_classes = boxes[keep], detected_classes[keep]
+                confidences = confidences[keep]
+                ids = [i for i, k in zip(ids, keep) if k]
 
             frame_events = counter.update(
                 frame_idx, boxes, ids, detected_classes, confidences)

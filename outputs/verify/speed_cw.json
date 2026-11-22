@@ -1,0 +1,62 @@
+{
+ "gpu_processes_before": "",
+ "cw_fp16_960": {
+  "ckpt": "runs/detect/r_clspw_v2/weights/best.pt",
+  "imgsz": 960,
+  "precision": "FP16",
+  "device": "NVIDIA RTX 3500 Ada Generation Laptop GPU",
+  "warmup": 20,
+  "measured": 200,
+  "mean_ms": 9.001,
+  "median_ms": 8.793,
+  "p95_ms": 10.482,
+  "fps_mean": 111.1,
+  "fps_total": 111.1,
+  "note": "model.predict(): preprocess + inference + NMS; no I/O"
+ },
+ "cw_fp32_960": {
+  "ckpt": "runs/detect/r_clspw_v2/weights/best.pt",
+  "imgsz": 960,
+  "precision": "FP32",
+  "device": "NVIDIA RTX 3500 Ada Generation Laptop GPU",
+  "warmup": 20,
+  "measured": 200,
+  "mean_ms": 9.749,
+  "median_ms": 9.519,
+  "p95_ms": 11.827,
+  "fps_mean": 102.57,
+  "fps_total": 102.57,
+  "note": "model.predict(): preprocess + inference + NMS; no I/O"
+ },
+ "frcnn_fp32": {
+  "ckpt": "weights/trained/frcnn_v5plus/best.pt",
+  "input": "orig (variable)",
+  "precision": "FP32",
+  "device": "NVIDIA RTX 3500 Ada Generation Laptop GPU",
+  "warmup": 20,
+  "measured": 200,
+  "mean_ms": 47.657,
+  "median_ms": 47.325,
+  "p95_ms": 50.889,
+  "fps_mean": 20.98,
+  "fps_total": 20.98,
+  "note": "FRCNN model-only forward pass; no NMS post-filter"
+ },
+ "pipeline_no_write": {
+  "video": "data/test_videos/raw/demo_traffic.mp4",
+  "write_video": false,
+  "frames": 178,
+  "wall_time_sec": 2.308,
+  "fps_end_to_end": 77.13,
+  "output_video": null
+ },
+ "pipeline_with_write": {
+  "video": "data/test_videos/raw/demo_traffic.mp4",
+  "write_video": true,
+  "frames": 178,
+  "wall_time_sec": 4.26,
+  "fps_end_to_end": 41.78,
+  "output_video": "outputs/verify/pipeline_render.mp4"
+ },
+ "frcnn_over_cw_fp32": 4.8883988101343725
+}

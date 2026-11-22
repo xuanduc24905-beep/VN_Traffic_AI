@@ -1,0 +1,20 @@
+{
+ "val multi_label=False": {
+  "ultralytics_mAP50": 0.767,
+  "pycoco_mAP50": 0.7641,
+  "n": 170877
+ },
+ "predict multi_label=False": {
+  "pycoco_mAP50": 0.7513,
+  "n": 197694
+ },
+ "val multi_label=True": {
+  "ultralytics_mAP50": 0.7984,
+  "pycoco_mAP50": 0.795,
+  "n": 200568
+ },
+ "predict multi_label=True": {
+  "pycoco_mAP50": 0.7813,
+  "n": 232542
+ }
+}

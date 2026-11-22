@@ -1,0 +1,119 @@
+{
+ "built_at": "2026-11-22T03:13:55",
+ "base": "data/merged_v6final_mio",
+ "counts": {
+  "train": 14913,
+  "val": 646,
+  "test": 1500,
+  "test_vn_v10": 627
+ },
+ "boxes": {
+  "train": {
+   "car": 60741,
+   "motorcycle": 10844,
+   "bus": 6301,
+   "truck": 7463
+  },
+  "val": {
+   "motorcycle": 2517,
+   "car": 694,
+   "truck": 835,
+   "bus": 192
+  },
+  "test": {
+   "motorcycle": 39807,
+   "car": 8031,
+   "bus": 756,
+   "truck": 852
+  },
+  "test_vn_v10": {
+   "motorcycle": 577,
+   "truck": 209,
+   "bus": 107,
+   "car": 87
+  }
+ },
+ "test_sites_v10": [
+  "nga3duong",
+  "nga4hamthang",
+  "comkimngan",
+  "cafeminghouse",
+  "hungvuong"
+ ],
+ "val_sites_v10": [
+  "hoaphu",
+  "docvinhhanh",
+  "cafestart",
+  "nga3muitau"
+ ],
+ "danang": "đã bỏ (camera thấp, ngoài phạm vi, nhãn thiếu nhiều)",
+ "v10_mask_stats": {
+  "test_vn_v10_masked_boxes": 19,
+  "test_vn_v10_masked_images": 17,
+  "val_masked_boxes": 1,
+  "val_masked_images": 1
+ },
+ "v10_note": "95% ảnh v10 có khung/chữ vẽ sẵn của hệ thống camera gốc; test_vn_v10 chỉ là test phụ",
+ "train_removed_v10": {
+  "v10": 460,
+  "v10r": 105
+ },
+ "train_backfill_v10": 460,
+ "sources": {
+  "train": [
+   "soict24:cam_01",
+   "soict24:cam_02",
+   "soict24:cam_04",
+   "soict24:cam_06",
+   "soict:cam_03:night",
+   "soict:cam_05:night",
+   "soict:cam_08:night",
+   "v10:benxetp",
+   "v10:caubentang",
+   "v10:caunamprc",
+   "v10:chophuocvinh",
+   "v10:congcahuyen",
+   "v10:dendo",
+   "v10:garagecuong",
+   "v10:hodabac",
+   "v10:nga3baude",
+   "v10:nga3doclap",
+   "v10:nga3huyendoi",
+   "v10:nga3phuocthe",
+   "v10:nga5lienhuong",
+   "v10:ngabathomo",
+   "v10:nguyenvantroi",
+   "v10:nhatholetrang",
+   "v10:quancomhai",
+   "v10:quangcaoquangha",
+   "v10:quangtrung",
+   "v10:tranhungdao",
+   "v10:tranquangdieu",
+   "v10:ubnhandan",
+   "v10:xom7vinhtan"
+  ],
+  "val": [
+   "soict24:cam_07",
+   "v10:cafestart",
+   "v10:docvinhhanh",
+   "v10:hoaphu",
+   "v10:nga3muitau"
+  ],
+  "test": [
+   "soict24:cam_09",
+   "soict24:cam_10"
+  ],
+  "test_vn_v10": [
+   "v10:cafeminghouse",
+   "v10:comkimngan",
+   "v10:hungvuong",
+   "v10:nga3duong",
+   "v10:nga4hamthang"
+  ]
+ },
+ "label_note": "v10 val/test: che xám xe yolov8x thấy mà nhãn không có (conf 0.5)",
+ "licenses": {
+  "v10": "CC BY 4.0",
+  "MIO-TCD": "CC BY-NC-SA 4.0"
+ }
+}

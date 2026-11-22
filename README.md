@@ -179,6 +179,8 @@ vn_traffic_ai/
 
 ## Cài đặt
 
+> 📘 **Hướng dẫn đầy đủ để chạy trên máy khác (venv/conda, chọn bản PyTorch, tải weights, sửa đường dẫn tuyệt đối, xử lý lỗi): xem [INSTALL.md](INSTALL.md).** Phần dưới là bản tóm tắt.
+
 ### Yêu cầu
 - Ubuntu 20.04+ / Windows 10/11 WSL2 / macOS 12+
 - Python 3.10 hoặc 3.11

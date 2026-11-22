@@ -1,0 +1,13 @@
+# V5fix + MIO-TCD — sinh boi scripts/data_prep/build_v5fix_mio.py
+# MIO-TCD: CC BY-NC-SA 4.0 (phi thuong mai, ghi nguon). Val/test giong het V5fix.
+path: /home/xuand/vn_traffic_ai/data/merged_v5fix_mio
+train: images/train
+val:   images/val
+test:  images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck

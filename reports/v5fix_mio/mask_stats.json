@@ -1,0 +1,10 @@
+{
+ "masked_boxes_soict24": 753,
+ "images_soict24": 410,
+ "masked_boxes_soictnight": 234,
+ "images_soictnight": 187,
+ "masked_boxes_cantho": 346,
+ "images_cantho": 259,
+ "masked_boxes_vnv3": 537,
+ "images_vnv3": 149
+}

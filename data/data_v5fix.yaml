@@ -1,0 +1,14 @@
+# V5fix — sinh boi scripts/data_prep/build_v5fix.py
+# Train = V5 train + v10 (bo hop khong lo, khung 960) + UA-DETRAC (car/van->car, bus)
+# Val/test = giong het V5+clean (val cam_07, test V5)
+path: /home/xuand/vn_traffic_ai/data/merged_v5fix
+train: images/train
+val:   images/val
+test:  images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck
