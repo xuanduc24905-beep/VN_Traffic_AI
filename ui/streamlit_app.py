@@ -202,6 +202,17 @@ FEATURED_MODELS = {
         "Như D1 nhưng thêm 3.000 ảnh MIO-TCD (ô tô/xe buýt/xe tải). Hơn D1 trên test SOICT (0.789) "
         "và ô tô ở camera nước ngoài; kém D1 khoảng 2 điểm ở camera Việt Nam ngoài. Xem reports/v5fix/results.json.", 1.3,
     ),
+    "runs/detect/v6split_f2_nofreeze/weights/best.pt": (
+        "V6split S2 (không freeze) — cuối kì, cân bằng nhất",
+        "YOLOv8s từ COCO, không đóng băng, 30 epoch trên V6split (14.913 ảnh: SOICT/VNv3 đã sửa nhãn, v10, "
+        "DETRAC, 7.500 ảnh MIO-TCD). SOICT mAP@50 0.790, xe tải tốt nhất, mAP tập ngoài 0.431. "
+        "Xem reports/v5fix/results.json.", 1.05,
+    ),
+    "runs/detect/v6split_f1_freeze10/weights/best.pt": (
+        "V6split S1 (freeze=10) — cuối kì, bắt ô tô xa tốt nhất",
+        "Như S2 nhưng đóng băng 10 lớp đầu. Recall ô tô video Ấn Độ 0.42 (S2 0.36, COCO 0.56), "
+        "ít hộp khổng lồ; xe tải trên SOICT kém (AP50 0.55). SOICT mAP@50 0.767.", 1.1,
+    ),
     "runs/detect/exp_baseline/weights/best.pt": (
         "V5+ baseline (exp_baseline) — mAP@50 0.793",
         "YOLOv8s train trực tiếp 40 epoch trên V5+ (7,237 ảnh, batch=6, imgsz=960).", 1,
