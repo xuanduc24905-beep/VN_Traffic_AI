@@ -94,3 +94,8 @@ data/eval_extended_2135/
 !data/ext_benchmark/
 data/**/*.npy
 outputs/anh_thieu_nhan/
+
+# Bo do trien khai (video iStock co ban quyen, khung cat ra)
+data/deploy_videos/
+data/deploy_frames/
+weights/wise/
