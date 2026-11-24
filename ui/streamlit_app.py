@@ -202,6 +202,18 @@ FEATURED_MODELS = {
         "Như D1 nhưng thêm 3.000 ảnh MIO-TCD (ô tô/xe buýt/xe tải). Hơn D1 trên test SOICT (0.789) "
         "và ô tô ở camera nước ngoài; kém D1 khoảng 2 điểm ở camera Việt Nam ngoài. Xem reports/v5fix/results.json.", 1.3,
     ),
+    "runs/detect/cq_l2sp_mid/weights/best.pt": (
+        "⭐ L2-SP λ=5,1 — cuối kì, giữ kiến thức COCO, cân bằng nhất",
+        "Như S2 (V6split, không freeze) nhưng loss có thêm phạt kéo trọng số backbone/neck về COCO (L2-SP). "
+        "Ngã tư đông xe máy: bắt 0,68 (S2 0,48, COCO 0,94); SOICT mAP@50 0.800; ít hộp khổng lồ như COCO; "
+        "xe tải SOICT 0,67. Xem reports/chong_quen/results.md.", 1.0,
+    ),
+    "weights/wise/wise_S2_a0.5.pt": (
+        "WiSE S2 α=0,5 — trộn backbone S2 với COCO (không train)",
+        "Backbone = 0,5·S2 + 0,5·COCO, hiệu chỉnh lại BN; neck/head của S2. Bắt xe máy ngã tư 0,72, ô tô "
+        "Ấn Độ 0,52 (gần COCO), SOICT 0.801, nhưng nhiều hộp khổng lồ (52). Chỉ có trên máy đã chạy "
+        "scripts/training/chong_quen_wise.py.", 1.02,
+    ),
     "runs/detect/v6split_f2_nofreeze/weights/best.pt": (
         "V6split S2 (không freeze) — cuối kì, cân bằng nhất",
         "YOLOv8s từ COCO, không đóng băng, 30 epoch trên V6split (14.913 ảnh: SOICT/VNv3 đã sửa nhãn, v10, "
