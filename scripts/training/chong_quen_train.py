@@ -5,6 +5,7 @@ Mọi run dùng đúng cấu hình S2 (V6split, không freeze, 30 epoch, imgsz 9
   lowlr    : như S2 nhưng lr0 = 0.002 (S2 dùng 0.01)
   l2sp_lo/mid/hi : loss + λ·Σ(w − w_COCO)² trên backbone + neck (layer 0..21), λ = 0.1 / 1 / 10 × λ_c
   ewc      : loss + λ_mid·Σ F̂·(w − w_COCO)²,  F̂ = Fisher (tính trên ảnh COCO) chuẩn hoá về trung bình 1
+  l2sp_coco5k : như l2sp_mid nhưng train trên V6split + 5.000 ảnh COCO (replay, build_v6split_coco.py)
   probe    : chạy ngắn với λ = 0 để đo λ_c (xem dưới) và kiểm tra trainer
 
 Cài đặt: phạt được cộng trực tiếp vào gradient trong optimizer_step (sau khi unscale AMP, trước clip/step):
@@ -32,6 +33,7 @@ sys.path.insert(0, str(ROOT / "scripts" / "training"))
 from v5plus_clean_train import RECIPE  # noqa: E402
 
 DATA = ROOT / "data" / "data_v6split.yaml"
+DATA_COCO = ROOT / "data" / "data_v6split_coco.yaml"  # V6split + 5.000 ảnh COCO (replay)
 RUNS = ROOT / "runs" / "detect"
 COCO = ROOT / "yolov8s.pt"
 S2_BEST = ROOT / "runs" / "detect" / "v6split_f2_nofreeze" / "weights" / "best.pt"
@@ -46,6 +48,7 @@ RUNS_CFG = {
     "l2sp_mid": dict(name="cq_l2sp_mid", lam=1.0),
     "l2sp_hi": dict(name="cq_l2sp_hi", lam=10.0),
     "ewc": dict(name="cq_ewc", lam=1.0, fisher=True),
+    "l2sp_coco5k": dict(name="cq_l2sp_mid_coco5k", lam=1.0, data=DATA_COCO),
     "probe": dict(name="cq_probe", lam=0.0, probe=True),
 }
 
@@ -142,7 +145,7 @@ def run(key: str):
     if last.exists() and not probe:
         YOLO(str(last)).train(resume=True, trainer=trainer)
     else:
-        YOLO(str(COCO)).train(data=str(DATA), seed=SEED, patience=EPOCHS, freeze=None, project=str(RUNS),
+        YOLO(str(COCO)).train(data=str(cfg.get("data", DATA)), seed=SEED, patience=EPOCHS, freeze=None, project=str(RUNS),
                               name=cfg["name"], trainer=trainer, **recipe)
     if trainer is not None and not probe:
         (out / "chong_quen_cfg.json").write_text(json.dumps(
