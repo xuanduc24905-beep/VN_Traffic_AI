@@ -1197,5 +1197,100 @@
     "truck": 0.2372
    }
   }
+ },
+ "l2sp_mid_coco5k": {
+  "weights": "runs/detect/cq_l2sp_mid_coco5k/weights/best.pt",
+  "deploy": {
+   "0.25": {
+    "recall_moto": 0.8907,
+    "recall_car": 0.798,
+    "n_pred": 778,
+    "n_ref": {
+     "moto": 183,
+     "car": 391
+    }
+   },
+   "0.1": {
+    "recall_moto": 0.9617,
+    "recall_car": 0.8977,
+    "n_pred": 1346,
+    "n_ref": {
+     "moto": 183,
+     "car": 391
+    }
+   }
+  },
+  "ext": {
+   "india": {
+    "recall": {
+     "motorcycle": 0.4553,
+     "car": 0.701,
+     "bus": 0.9048,
+     "truck": 0.8247
+    },
+    "recall_all": 0.6732,
+    "n_gt": {
+     "motorcycle": 459,
+     "car": 1833,
+     "bus": 21,
+     "truck": 291
+    },
+    "n_pred": 2317,
+    "giant_boxes": 0
+   },
+   "vncctv": {
+    "recall": {
+     "motorcycle": 0.6066,
+     "car": 0.8052,
+     "bus": 0.8824,
+     "truck": 0.9189
+    },
+    "recall_all": 0.8032,
+    "n_gt": {
+     "motorcycle": 61,
+     "car": 385,
+     "bus": 34,
+     "truck": 74
+    },
+    "n_pred": 851,
+    "giant_boxes": 9
+   }
+  },
+  "soict_test": {
+   "mAP50": 0.773,
+   "mAP50_95": 0.412,
+   "precision": 0.7159,
+   "recall": 0.6945,
+   "AP50": {
+    "motorcycle": 0.8871,
+    "car": 0.8741,
+    "bus": 0.7457,
+    "truck": 0.5849
+   }
+  },
+  "vn_v10": {
+   "mAP50": 0.7418,
+   "mAP50_95": 0.528,
+   "precision": 0.701,
+   "recall": 0.7048,
+   "AP50": {
+    "motorcycle": 0.9207,
+    "car": 0.6528,
+    "bus": 0.5919,
+    "truck": 0.8021
+   }
+  },
+  "ext_map": {
+   "mAP50": 0.4779,
+   "mAP50_95": 0.3164,
+   "precision": 0.5482,
+   "recall": 0.4688,
+   "AP50": {
+    "motorcycle": 0.2953,
+    "car": 0.7244,
+    "bus": 0.5723,
+    "truck": 0.3197
+   }
+  }
  }
 }

@@ -46,6 +46,7 @@ MODELS.update({
     "l2sp_lam_mid": f"{R}/cq_l2sp_mid/weights/best.pt",
     "l2sp_lam_hi": f"{R}/cq_l2sp_hi/weights/best.pt",
     "ewc": f"{R}/cq_ewc/weights/best.pt",
+    "l2sp_mid_coco5k": f"{R}/cq_l2sp_mid_coco5k/weights/best.pt",
 })
 
 
