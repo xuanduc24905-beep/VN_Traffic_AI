@@ -111,6 +111,43 @@ def deploy_recall(weights: str, is_coco: bool, ims, ref) -> dict:
     return out
 
 
+# Nhóm hạt giống: cùng cấu hình, khác seed → bảng trung bình ± độ lệch chuẩn (SD mẫu, n-1)
+SEED_GROUPS = {
+    "t2_truckx2 (seed 42, 0, 1)": ["t2_truckx2", "t2_truckx2_s0", "t2_truckx2_s1"],
+}
+NOTES = OUT / "nhan_xet.md"  # nhận xét viết tay, được nối vào cuối results.md
+
+
+def metric_row(e: dict) -> dict:
+    d, x = e.get("deploy", {}), e.get("ext", {})
+    s, v = e.get("soict_test", {}), e.get("vn_v10", {})
+    return {"Ngã tư xe máy 0,25": d.get("0.25", {}).get("recall_moto"), "Ngã tư xe máy 0,1": d.get("0.1", {}).get("recall_moto"),
+            "Ngã tư ô tô": d.get("0.25", {}).get("recall_car"), "SOICT mAP50": s.get("mAP50"),
+            "Xe máy SOICT": s.get("AP50", {}).get("motorcycle"), "Xe tải SOICT": s.get("AP50", {}).get("truck"),
+            "Test v10": v.get("mAP50"), "Ấn Độ ô tô": x.get("india", {}).get("recall", {}).get("car"),
+            "Camera VN": x.get("vncctv", {}).get("recall_all"),
+            "Hộp khổng lồ": sum(g["giant_boxes"] for g in x.values()) if x else None,
+            "mAP tập ngoài": e.get("ext_map", {}).get("mAP50")}
+
+
+def seed_table(res: dict) -> str:
+    out = []
+    for title, names in SEED_GROUPS.items():
+        if not all(n in res for n in names):
+            continue
+        rows = [metric_row(res[n]) for n in names]
+        out.append(f"\n## Độ dao động theo hạt giống — {title}\n\n| Chỉ số | " + " | ".join(names) +
+                   " | Trung bình ± SD |\n|---|" + "---|" * (len(names) + 1))
+        for k in rows[0]:
+            vals = [r[k] for r in rows]
+            if any(v is None for v in vals):
+                continue
+            a = np.array(vals, float)
+            fmt = (lambda z: f"{z:.0f}") if k == "Hộp khổng lồ" else (lambda z: f"{z:.3f}")
+            out.append(f"| {k} | " + " | ".join(fmt(z) for z in a) + f" | {fmt(a.mean())} ± {fmt(a.std(ddof=1))} |")
+    return "\n".join(out) + ("\n" if out else "")
+
+
 def write_md(res: dict):
     rows = ["| Model | Ngã tư xe máy (0,25 / 0,1) | Ngã tư ô tô (0,25) | SOICT mAP50 | Xe máy / Xe tải SOICT | "
             "Test v10 | Ấn Độ ô tô | Camera VN | Hộp khổng lồ | mAP tập ngoài |",
@@ -125,17 +162,23 @@ def write_md(res: dict):
             f"{f(s.get('AP50', {}).get('motorcycle'))} / {f(s.get('AP50', {}).get('truck'))} | {f(v.get('mAP50'))} | "
             f"{f(x.get('india', {}).get('recall', {}).get('car'))} | {f(x.get('vncctv', {}).get('recall_all'))} | "
             f"{sum(g['giant_boxes'] for g in x.values()) if x else '–'} | {f(e.get('ext_map', {}).get('mAP50'))} |")
+    notes = NOTES.read_text() if NOTES.exists() else ""
     (OUT / "results.md").write_text(
         "# So sánh các cách chống quên\n\nNgã tư: tỉ lệ bắt trúng xe yolov8x thấy (mốc thiên về COCO). "
-        "SOICT, v10: nhãn người gán. Ấn Độ, camera VN: nhãn nháp yolov8x.\n\n" + "\n".join(rows) + "\n")
+        "SOICT, v10: nhãn người gán. Ấn Độ, camera VN: nhãn nháp yolov8x.\n\n" + "\n".join(rows) + "\n"
+        + seed_table(res) + ("\n" + notes if notes else ""))
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--models", nargs="*", default=list(MODELS))
+    ap.add_argument("--md-only", action="store_true", help="chỉ viết lại results.md từ results.json")
     args = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     rj = OUT / "results.json"
+    if args.md_only:
+        write_md(json.loads(rj.read_text()))
+        return
     res = json.loads(rj.read_text()) if rj.exists() else {}
     ims, ref = prepare_frames()
     for name in args.models:
