@@ -51,6 +51,12 @@ MODELS.update({
     "t2_truckx2": f"{R}/cq_l2sp_coco5k_truckx2/weights/best.pt",
     "t2_truckx2_s0": f"{R}/cq_l2sp_coco5k_truckx2_s0/weights/best.pt",
     "t2_truckx2_s1": f"{R}/cq_l2sp_coco5k_truckx2_s1/weights/best.pt",
+    "t2_pseudo": f"{R}/ck_t2_pseudo60/weights/best.pt",
+    "t2_pseudo50": f"{R}/ck_t2_pseudo50/weights/best.pt",
+    "t2_pseudo70": f"{R}/ck_t2_pseudo70/weights/best.pt",
+    "t2_ghep": f"{R}/ck_t2_ghep60/weights/best.pt",
+    "t2_ghep50": f"{R}/ck_t2_ghep50/weights/best.pt",
+    "t2_ghep70": f"{R}/ck_t2_ghep70/weights/best.pt",
 })
 
 
