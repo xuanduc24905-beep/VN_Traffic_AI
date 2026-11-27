@@ -47,6 +47,10 @@ MODELS.update({
     "l2sp_lam_hi": f"{R}/cq_l2sp_hi/weights/best.pt",
     "ewc": f"{R}/cq_ewc/weights/best.pt",
     "l2sp_mid_coco5k": f"{R}/cq_l2sp_mid_coco5k/weights/best.pt",
+    "t1_bigtruck": f"{R}/cq_l2sp_coco5k_bigtruck/weights/best.pt",
+    "t2_truckx2": f"{R}/cq_l2sp_coco5k_truckx2/weights/best.pt",
+    "t2_truckx2_s0": f"{R}/cq_l2sp_coco5k_truckx2_s0/weights/best.pt",
+    "t2_truckx2_s1": f"{R}/cq_l2sp_coco5k_truckx2_s1/weights/best.pt",
 })
 
 

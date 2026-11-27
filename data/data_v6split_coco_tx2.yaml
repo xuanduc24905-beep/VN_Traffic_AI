@@ -1,0 +1,12 @@
+# T2: V6split + 5.000 COCO + nhân đôi ảnh VN có xe tải — build_v6split_coco_truckx2.py
+path: /home/xuand/vn_traffic_ai/data/merged_v6split_coco_tx2
+train: images/train
+val:   images/val
+test:  images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck

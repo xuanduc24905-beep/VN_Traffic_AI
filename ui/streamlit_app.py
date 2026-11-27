@@ -202,6 +202,12 @@ FEATURED_MODELS = {
         "Như D1 nhưng thêm 3.000 ảnh MIO-TCD (ô tô/xe buýt/xe tải). Hơn D1 trên test SOICT (0.789) "
         "và ô tô ở camera nước ngoài; kém D1 khoảng 2 điểm ở camera Việt Nam ngoài. Xem reports/v5fix/results.json.", 1.3,
     ),
+    "runs/detect/cq_l2sp_coco5k_truckx2/weights/best.pt": (
+        "⭐ T2: L2-SP + COCO 5k + nhân đôi ảnh xe tải VN — ứng viên cuối kì",
+        "Như L2-SP + COCO 5k, thêm bản sao 2.218 ảnh VN có xe tải. Ngã tư xe máy 0,91 (COCO 0,94), ô tô Ấn Độ 0,66 "
+        "(COCO 0,56), camera VN 0,82, SOICT mAP@50 0.786, ít hộp khổng lồ (7). Xe tải SOICT 0,60 (hay nhầm thùng "
+        "lửng với bán tải). Xem reports/chong_quen/results.md.", 0.8,
+    ),
     "runs/detect/cq_l2sp_mid_coco5k/weights/best.pt": (
         "⭐ L2-SP λ=5,1 + 5.000 ảnh COCO — tổng quát nhất, gần COCO ở cảnh lạ",
         "Như L2-SP λ=5,1 nhưng trộn thêm 5.000 ảnh COCO (replay, nhãn đổi theo quy ước SOICT). Ngã tư xe máy 0,89 "
