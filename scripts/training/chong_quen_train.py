@@ -6,6 +6,8 @@ Mọi run dùng đúng cấu hình S2 (V6split, không freeze, 30 epoch, imgsz 9
   l2sp_lo/mid/hi : loss + λ·Σ(w − w_COCO)² trên backbone + neck (layer 0..21), λ = 0.1 / 1 / 10 × λ_c
   ewc      : loss + λ_mid·Σ F̂·(w − w_COCO)²,  F̂ = Fisher (tính trên ảnh COCO) chuẩn hoá về trung bình 1
   l2sp_coco5k : như l2sp_mid nhưng train trên V6split + 5.000 ảnh COCO (replay, build_v6split_coco.py)
+  t1_bigtruck : như l2sp_coco5k, giữ xe tải COCO cỡ lớn (build_v6split_coco.py --keep-big-trucks)
+  t2_truckx2  : như l2sp_coco5k, nhân đôi ảnh VN có xe tải (build_v6split_coco_truckx2.py)
   probe    : chạy ngắn với λ = 0 để đo λ_c (xem dưới) và kiểm tra trainer
 
 Cài đặt: phạt được cộng trực tiếp vào gradient trong optimizer_step (sau khi unscale AMP, trước clip/step):
@@ -34,6 +36,8 @@ from v5plus_clean_train import RECIPE  # noqa: E402
 
 DATA = ROOT / "data" / "data_v6split.yaml"
 DATA_COCO = ROOT / "data" / "data_v6split_coco.yaml"  # V6split + 5.000 ảnh COCO (replay)
+DATA_COCO_TK = ROOT / "data" / "data_v6split_coco_tk.yaml"  # T1: + giữ xe tải COCO cỡ lớn
+DATA_COCO_TX2 = ROOT / "data" / "data_v6split_coco_tx2.yaml"  # T2: + nhân đôi ảnh VN có xe tải
 RUNS = ROOT / "runs" / "detect"
 COCO = ROOT / "yolov8s.pt"
 S2_BEST = ROOT / "runs" / "detect" / "v6split_f2_nofreeze" / "weights" / "best.pt"
@@ -49,6 +53,8 @@ RUNS_CFG = {
     "l2sp_hi": dict(name="cq_l2sp_hi", lam=10.0),
     "ewc": dict(name="cq_ewc", lam=1.0, fisher=True),
     "l2sp_coco5k": dict(name="cq_l2sp_mid_coco5k", lam=1.0, data=DATA_COCO),
+    "t1_bigtruck": dict(name="cq_l2sp_coco5k_bigtruck", lam=1.0, data=DATA_COCO_TK),
+    "t2_truckx2": dict(name="cq_l2sp_coco5k_truckx2", lam=1.0, data=DATA_COCO_TX2),
     "probe": dict(name="cq_probe", lam=0.0, probe=True),
 }
 
@@ -119,7 +125,7 @@ def drift_s2() -> float:
     return tot / n
 
 
-def run(key: str):
+def run(key: str, seed: int = SEED):
     import ultralytics
     from ultralytics import YOLO
 
@@ -140,13 +146,14 @@ def run(key: str):
         fisher = torch.load(FISHER_PT, map_location="cpu")
     trainer = make_trainer(lam_abs, fisher, probe) if (cfg["lam"] is not None) else None
 
-    out = RUNS / cfg["name"]
+    name = cfg["name"] if seed == SEED else f'{cfg["name"]}_s{seed}'  # seed khác → run riêng
+    out = RUNS / name
     last = out / "weights" / "last.pt"
     if last.exists() and not probe:
         YOLO(str(last)).train(resume=True, trainer=trainer)
     else:
-        YOLO(str(COCO)).train(data=str(cfg.get("data", DATA)), seed=SEED, patience=EPOCHS, freeze=None, project=str(RUNS),
-                              name=cfg["name"], trainer=trainer, **recipe)
+        YOLO(str(COCO)).train(data=str(cfg.get("data", DATA)), seed=seed, patience=EPOCHS, freeze=None, project=str(RUNS),
+                              name=name, trainer=trainer, **recipe)
     if trainer is not None and not probe:
         (out / "chong_quen_cfg.json").write_text(json.dumps(
             {"lambda_rel": cfg["lam"], "lambda_abs": lam_abs, "fisher": bool(fisher),
@@ -165,4 +172,6 @@ def run(key: str):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", choices=list(RUNS_CFG), required=True)
-    run(ap.parse_args().run)
+    ap.add_argument("--seed", type=int, default=SEED, help="mặc định 42; seed khác lưu vào <tên run>_s<seed>")
+    a = ap.parse_args()
+    run(a.run, a.seed)

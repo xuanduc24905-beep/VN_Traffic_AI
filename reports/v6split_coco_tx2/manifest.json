@@ -1,0 +1,23 @@
+{
+ "built_at": "2026-11-25T23:38:33",
+ "base": "data/merged_v6split_coco",
+ "counts": {
+  "train": 22131,
+  "val": 646,
+  "test": 1500,
+  "test_vn_v10": 627
+ },
+ "train_boxes": {
+  "truck": 11394,
+  "car": 83787,
+  "motorcycle": 22821,
+  "bus": 9554
+ },
+ "duplicated_vn_truck_images": {
+  "soict24": 638,
+  "soictnight": 550,
+  "v10": 395,
+  "v10r": 470,
+  "vnv3": 165
+ }
+}

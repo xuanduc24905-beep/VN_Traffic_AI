@@ -9,7 +9,9 @@ Chọn ảnh (không lấy val2017):
       Người lái = hộp person có phần ngang trùng >= 50% bề rộng người, đáy người nằm trong khoảng chiều cao xe,
       đỉnh người cao hơn đỉnh xe.
   - car → car, bus → bus
-  - truck: COCO gộp cả xe bán tải (SOICT gọi là car) → KHÔNG dùng làm nhãn, tô xám (114) vùng đó
+  - truck: COCO gộp cả xe bán tải (SOICT gọi là car) → mặc định KHÔNG dùng làm nhãn, tô xám (114) vùng đó.
+      Bản T1 (--keep-big-trucks): giữ xe tải cạnh tương đương >= 96 px và rộng >= cao (ước lượng: khả năng
+      là xe tải thật), còn lại vẫn tô xám → data/merged_v6split_coco_tk
   - vùng iscrowd của car/motorcycle/bus/truck → tô xám
   - bicycle, person, ...: giữ nguyên ảnh, không gán nhãn (SOICT cũng không gán)
 Kết quả: data/merged_v6split_coco (V6split hardlink + coco_*.jpg), data/data_v6split_coco.yaml,
@@ -40,12 +42,15 @@ BASE = ROOT / "data" / "merged_v6split"
 OUT = ROOT / "data" / "merged_v6split_coco"
 YAML = ROOT / "data" / "data_v6split_coco.yaml"
 REPORT = ROOT / "reports" / "v6split_coco"
+# --keep-big-trucks (bản T1): giữ xe tải COCO cỡ lớn làm nhãn truck thay vì tô xám hết
+KEEP_BIG_TRUCKS = False
+BIG_TRUCK_MIN_SIDE = 96  # cạnh tương đương sqrt(w*h) tính bằng px
 URL = "http://images.cocodataset.org/train2017/{:012d}.jpg"
 
 SEED = 0
 N_MOTO, N_CAR, N_BUS = 2500, 1700, 800
 CAT = {"person": 1, "bicycle": 2, "car": 3, "motorcycle": 4, "bus": 6, "truck": 8}
-TO_V = {3: 1, 4: 0, 6: 2}  # car, motorcycle, bus
+TO_V = {3: 1, 4: 0, 6: 2, 8: 3}  # car, motorcycle, bus, truck (truck chỉ dùng khi KEEP_BIG_TRUCKS)
 MASK_CATS = {8}  # truck
 VEH = {3, 4, 6, 8}
 GRAY = (114, 114, 114)
@@ -141,7 +146,10 @@ def main():
                 if c not in VEH:
                     continue
                 x, y, bw, bh = a["bbox"]
-                if a["iscrowd"] or c in MASK_CATS:
+                big_truck = (KEEP_BIG_TRUCKS and c == 8 and math.sqrt(bw * bh) >= BIG_TRUCK_MIN_SIDE and bw >= bh)
+                if big_truck:
+                    st["kept_big_truck"] += 1
+                if a["iscrowd"] or (c in MASK_CATS and not big_truck):
                     cv2.rectangle(img, (int(x), int(y)), (int(math.ceil(x + bw)), int(math.ceil(y + bh))), GRAY, -1)
                     st["masked_crowd" if a["iscrowd"] else "masked_truck"] += 1
                     continue
@@ -208,4 +216,14 @@ def main():
 
 
 if __name__ == "__main__":
+    import argparse
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--keep-big-trucks", action="store_true",
+                    help="T1: giữ xe tải COCO cạnh tương đương >= 96 px và dài hơn cao; còn lại vẫn tô xám")
+    if ap.parse_args().keep_big_trucks:
+        KEEP_BIG_TRUCKS = True
+        OUT = ROOT / "data" / "merged_v6split_coco_tk"
+        YAML = ROOT / "data" / "data_v6split_coco_tk.yaml"
+        REPORT = ROOT / "reports" / "v6split_coco_tk"
     main()
