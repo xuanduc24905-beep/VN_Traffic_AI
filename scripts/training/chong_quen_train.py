@@ -11,7 +11,7 @@ Mọi run dùng đúng cấu hình S2 (V6split, không freeze, 30 epoch, imgsz 9
   t2_pseudo / t2_pseudo50 / t2_pseudo70 : như t2_truckx2 + khung VN nhãn giả yolov8x ngưỡng 0.6 / 0.5 / 0.7
                 (build_v6split_pseudo.py)
   t2_ghep / t2_ghep50 / t2_ghep70 : như t2_truckx2 + cùng khung VN đó với nhãn NGƯỜI GÁN gốc + bù hộp yolov8x
-                không trùng (build_v6split_pseudo.py --mode ghep)
+                không trùng (build_v6split_pseudo.py --mode ghep); t2_ghep_nocctv: bỏ khung Đà Nẵng (--no-cctv)
   probe    : chạy ngắn với λ = 0 để đo λ_c (xem dưới) và kiểm tra trainer
 
 Cài đặt: phạt được cộng trực tiếp vào gradient trong optimizer_step (sau khi unscale AMP, trước clip/step):
@@ -71,6 +71,8 @@ RUNS_CFG = {
     "t2_ghep": dict(name="ck_t2_ghep60", lam=1.0, data=DATA_GHEP),
     "t2_ghep50": dict(name="ck_t2_ghep50", lam=1.0, data=DATA_GHEP_50),
     "t2_ghep70": dict(name="ck_t2_ghep70", lam=1.0, data=DATA_GHEP_70),
+    "t2_ghep_nocctv": dict(name="ck_t2_ghep60_nocctv", lam=1.0,
+                           data=ROOT / "data" / "data_v6split_pseudo_ghep_nocctv.yaml"),  # bỏ khung Đà Nẵng
     "probe": dict(name="cq_probe", lam=0.0, probe=True),
 }
 

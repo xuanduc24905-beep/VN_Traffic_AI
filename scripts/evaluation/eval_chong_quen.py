@@ -57,6 +57,7 @@ MODELS.update({
     "t2_ghep": f"{R}/ck_t2_ghep60/weights/best.pt",
     "t2_ghep50": f"{R}/ck_t2_ghep50/weights/best.pt",
     "t2_ghep70": f"{R}/ck_t2_ghep70/weights/best.pt",
+    "t2_ghep_nocctv": f"{R}/ck_t2_ghep60_nocctv/weights/best.pt",
 })
 
 

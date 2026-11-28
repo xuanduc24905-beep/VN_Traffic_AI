@@ -1,0 +1,12 @@
+# T2 + khung VN nhãn người gán + bù yolov8x (conf >= 0.6) — build_v6split_pseudo.py --mode ghep
+path: /home/xuand/vn_traffic_ai/data/merged_v6split_pseudo_ghep_nocctv
+train: images/train
+val:   images/val
+test:  images/test
+
+nc: 4
+names:
+  0: motorcycle
+  1: car
+  2: bus
+  3: truck

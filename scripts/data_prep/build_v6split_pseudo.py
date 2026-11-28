@@ -40,6 +40,7 @@ chạy lại yolov8x.
 
 Chạy: python scripts/data_prep/build_v6split_pseudo.py [--conf 0.6] [--mode gia|ghep]
   --mode ghep → thêm hậu tố _ghep vào tên bộ / yaml / báo cáo
+  --no-cctv   → bỏ khung camera Đà Nẵng (hậu tố _nocctv); dùng để tách ảnh hưởng của nguồn này
   conf 0.6 → data/merged_v6split_pseudo,       data/data_v6split_pseudo.yaml
   conf 0.5 → data/merged_v6split_pseudo_c50,   data/data_v6split_pseudo_c50.yaml (tương tự 0.7 → _c70)
 Báo cáo: reports/v6split_pseudo[_cXX]/manifest.json + preview_*.jpg
@@ -275,8 +276,9 @@ def make_label(img, dets, thr, st, hb: np.ndarray | None = None):
     return rows, keep
 
 
-def main(thr: float, mode: str = "gia"):
-    sfx = ("" if abs(thr - 0.6) < 1e-6 else f"_c{int(round(thr * 100))}") + ("_ghep" if mode == "ghep" else "")
+def main(thr: float, mode: str = "gia", no_cctv: bool = False):
+    sfx = ("" if abs(thr - 0.6) < 1e-6 else f"_c{int(round(thr * 100))}") + ("_ghep" if mode == "ghep" else "") \
+        + ("_nocctv" if no_cctv else "")
     out = ROOT / "data" / f"merged_v6split_pseudo{sfx}"
     yaml = ROOT / "data" / f"data_v6split_pseudo{sfx}.yaml"
     report = ROOT / "reports" / f"v6split_pseudo{sfx}"
@@ -285,6 +287,9 @@ def main(thr: float, mode: str = "gia"):
     assert BASE.exists(), "Chưa có bộ T2 (build_v6split_coco_truckx2.py)"
 
     frames, sel_stats = select_frames()
+    if no_cctv:
+        frames = [f for f in frames if f[0] != "vn_cctv"]
+        sel_stats.pop("vn_cctv", None)
     print(f"[1/5] chọn {len(frames)} khung:", sel_stats, flush=True)
     frames, dropped, n_held = dedup(frames)
     print(f"[2/5] bỏ {len(dropped)} khung gần trùng với {n_held} ảnh chấm điểm", flush=True)
@@ -328,7 +333,7 @@ def main(thr: float, mode: str = "gia"):
                     f"path: {out}\ntrain: images/train\nval:   images/val\ntest:  images/test\n\n"
                     "nc: 4\nnames:\n  0: motorcycle\n  1: car\n  2: bus\n  3: truck\n")
     man = {"built_at": datetime.now().isoformat(timespec="seconds"), "base": str(BASE.relative_to(ROOT)),
-           "mode": mode, "teacher": TEACHER, "imgsz": IMGSZ, "label_conf": thr, "gray_conf": [LOW, thr],
+           "mode": mode, "no_cctv": no_cctv, "teacher": TEACHER, "imgsz": IMGSZ, "label_conf": thr, "gray_conf": [LOW, thr],
            "rules": {"car/bus/motorcycle": f"conf >= {thr} → nhãn; {LOW}–{thr} → tô xám",
                      "motorcycle": "gộp hộp person ngồi trên xe (rider_union)",
                      "truck": "tô xám mọi hộp (COCO gộp bán tải)",
@@ -364,5 +369,6 @@ if __name__ == "__main__":
     ap.add_argument("--conf", type=float, default=0.6, help="ngưỡng conf để gán nhãn (dưới ngưỡng, trên 0,3 → tô xám)")
     ap.add_argument("--mode", choices=["gia", "ghep"], default="gia",
                     help="gia: chỉ nhãn giả yolov8x; ghep: nhãn người gán + bù hộp yolov8x không trùng")
+    ap.add_argument("--no-cctv", action="store_true", help="bỏ khung camera Đà Nẵng")
     a = ap.parse_args()
-    main(a.conf, a.mode)
+    main(a.conf, a.mode, a.no_cctv)
