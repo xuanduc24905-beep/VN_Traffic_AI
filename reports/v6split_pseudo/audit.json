@@ -1,0 +1,716 @@
+{
+ "0.5": {
+  "soict_day": {
+   "frames": 878,
+   "recall": {
+    "motorcycle": 0.056,
+    "car": 0.459,
+    "bus": 0.326,
+    "truck": 0.051
+   },
+   "gt_boxes": {
+    "motorcycle": 3977,
+    "car": 1564,
+    "bus": 570,
+    "truck": 1823
+   },
+   "gt_grayed": {
+    "motorcycle": 0.062,
+    "car": 0.205,
+    "bus": 0.202,
+    "truck": 0.342
+   },
+   "precision": {
+    "motorcycle": 0.888,
+    "car": 0.758,
+    "bus": 0.662,
+    "truck": null
+   },
+   "pseudo_boxes": {
+    "motorcycle": 241,
+    "car": 976,
+    "bus": 394,
+    "truck": 0
+   },
+   "confusion_gt_rows_pseudo_cols": [
+    [
+     213,
+     9,
+     2,
+     0
+    ],
+    [
+     1,
+     709,
+     8,
+     0
+    ],
+    [
+     0,
+     14,
+     172,
+     0
+    ],
+    [
+     0,
+     11,
+     82,
+     0
+    ]
+   ]
+  },
+  "soict_night": {
+   "frames": 932,
+   "recall": {
+    "motorcycle": 0.002,
+    "car": 0.124,
+    "bus": 0.129,
+    "truck": 0.016
+   },
+   "gt_boxes": {
+    "motorcycle": 3183,
+    "car": 1705,
+    "bus": 487,
+    "truck": 568
+   },
+   "gt_grayed": {
+    "motorcycle": 0.008,
+    "car": 0.145,
+    "bus": 0.211,
+    "truck": 0.083
+   },
+   "precision": {
+    "motorcycle": 0.667,
+    "car": 0.81,
+    "bus": 0.756,
+    "truck": null
+   },
+   "pseudo_boxes": {
+    "motorcycle": 6,
+    "car": 268,
+    "bus": 90,
+    "truck": 0
+   },
+   "confusion_gt_rows_pseudo_cols": [
+    [
+     4,
+     2,
+     0,
+     0
+    ],
+    [
+     0,
+     205,
+     6,
+     0
+    ],
+    [
+     0,
+     9,
+     54,
+     0
+    ],
+    [
+     0,
+     1,
+     8,
+     0
+    ]
+   ]
+  },
+  "vnv3": {
+   "frames": 241,
+   "recall": {
+    "motorcycle": 0.088,
+    "car": 0.786,
+    "bus": 0.603,
+    "truck": 0.157
+   },
+   "gt_boxes": {
+    "motorcycle": 398,
+    "car": 429,
+    "bus": 73,
+    "truck": 312
+   },
+   "gt_grayed": {
+    "motorcycle": 0.065,
+    "car": 0.11,
+    "bus": 0.11,
+    "truck": 0.41
+   },
+   "precision": {
+    "motorcycle": 0.5,
+    "car": 0.598,
+    "bus": 0.62,
+    "truck": null
+   },
+   "pseudo_boxes": {
+    "motorcycle": 66,
+    "car": 580,
+    "bus": 137,
+    "truck": 0
+   },
+   "confusion_gt_rows_pseudo_cols": [
+    [
+     33,
+     1,
+     1,
+     0
+    ],
+    [
+     0,
+     329,
+     8,
+     0
+    ],
+    [
+     0,
+     7,
+     37,
+     0
+    ],
+    [
+     0,
+     11,
+     38,
+     0
+    ]
+   ]
+  },
+  "vn_cctv": {
+   "frames": 1999,
+   "recall": {
+    "motorcycle": 0.471,
+    "car": 0.836,
+    "bus": 0.559,
+    "truck": 0.309
+   },
+   "gt_boxes": {
+    "motorcycle": 5170,
+    "car": 11054,
+    "bus": 170,
+    "truck": 136
+   },
+   "gt_grayed": {
+    "motorcycle": 0.215,
+    "car": 0.083,
+    "bus": 0.382,
+    "truck": 0.662
+   },
+   "precision": {
+    "motorcycle": 0.7,
+    "car": 0.918,
+    "bus": 0.84,
+    "truck": null
+   },
+   "pseudo_boxes": {
+    "motorcycle": 3487,
+    "car": 10113,
+    "bus": 100,
+    "truck": 0
+   },
+   "confusion_gt_rows_pseudo_cols": [
+    [
+     2424,
+     13,
+     0,
+     0
+    ],
+    [
+     14,
+     9228,
+     2,
+     0
+    ],
+    [
+     0,
+     20,
+     75,
+     0
+    ],
+    [
+     0,
+     34,
+     8,
+     0
+    ]
+   ]
+  }
+ },
+ "0.6": {
+  "soict_day": {
+   "frames": 878,
+   "recall": {
+    "motorcycle": 0.034,
+    "car": 0.371,
+    "bus": 0.289,
+    "truck": 0.038
+   },
+   "gt_boxes": {
+    "motorcycle": 3977,
+    "car": 1564,
+    "bus": 570,
+    "truck": 1823
+   },
+   "gt_grayed": {
+    "motorcycle": 0.084,
+    "car": 0.295,
+    "bus": 0.239,
+    "truck": 0.358
+   },
+   "precision": {
+    "motorcycle": 0.93,
+    "car": 0.826,
+    "bus": 0.704,
+    "truck": null
+   },
+   "pseudo_boxes": {
+    "motorcycle": 142,
+    "car": 718,
+    "bus": 314,
+    "truck": 0
+   },
+   "confusion_gt_rows_pseudo_cols": [
+    [
+     132,
+     4,
+     1,
+     0
+    ],
+    [
+     0,
+     574,
+     6,
+     0
+    ],
+    [
+     0,
+     10,
+     155,
+     0
+    ],
+    [
+     0,
+     8,
+     62,
+     0
+    ]
+   ]
+  },
+  "soict_night": {
+   "frames": 932,
+   "recall": {
+    "motorcycle": 0.002,
+    "car": 0.079,
+    "bus": 0.084,
+    "truck": 0.007
+   },
+   "gt_boxes": {
+    "motorcycle": 3183,
+    "car": 1705,
+    "bus": 487,
+    "truck": 568
+   },
+   "gt_grayed": {
+    "motorcycle": 0.009,
+    "car": 0.191,
+    "bus": 0.261,
+    "truck": 0.092
+   },
+   "precision": {
+    "motorcycle": 0.8,
+    "car": 0.864,
+    "bus": 0.737,
+    "truck": null
+   },
+   "pseudo_boxes": {
+    "motorcycle": 5,
+    "car": 162,
+    "bus": 57,
+    "truck": 0
+   },
+   "confusion_gt_rows_pseudo_cols": [
+    [
+     4,
+     2,
+     0,
+     0
+    ],
+    [
+     0,
+     133,
+     2,
+     0
+    ],
+    [
+     0,
+     5,
+     36,
+     0
+    ],
+    [
+     0,
+     0,
+     4,
+     0
+    ]
+   ]
+  },
+  "vnv3": {
+   "frames": 241,
+   "recall": {
+    "motorcycle": 0.063,
+    "car": 0.723,
+    "bus": 0.548,
+    "truck": 0.119
+   },
+   "gt_boxes": {
+    "motorcycle": 398,
+    "car": 429,
+    "bus": 73,
+    "truck": 312
+   },
+   "gt_grayed": {
+    "motorcycle": 0.09,
+    "car": 0.172,
+    "bus": 0.164,
+    "truck": 0.449
+   },
+   "precision": {
+    "motorcycle": 0.59,
+    "car": 0.639,
+    "bus": 0.652,
+    "truck": null
+   },
+   "pseudo_boxes": {
+    "motorcycle": 39,
+    "car": 490,
+    "bus": 115,
+    "truck": 0
+   },
+   "confusion_gt_rows_pseudo_cols": [
+    [
+     23,
+     1,
+     1,
+     0
+    ],
+    [
+     0,
+     302,
+     8,
+     0
+    ],
+    [
+     0,
+     4,
+     36,
+     0
+    ],
+    [
+     0,
+     7,
+     30,
+     0
+    ]
+   ]
+  },
+  "vn_cctv": {
+   "frames": 1999,
+   "recall": {
+    "motorcycle": 0.365,
+    "car": 0.771,
+    "bus": 0.447,
+    "truck": 0.221
+   },
+   "gt_boxes": {
+    "motorcycle": 5170,
+    "car": 11054,
+    "bus": 170,
+    "truck": 136
+   },
+   "gt_grayed": {
+    "motorcycle": 0.358,
+    "car": 0.151,
+    "bus": 0.494,
+    "truck": 0.75
+   },
+   "precision": {
+    "motorcycle": 0.745,
+    "car": 0.948,
+    "bus": 0.902,
+    "truck": null
+   },
+   "pseudo_boxes": {
+    "motorcycle": 2531,
+    "car": 8990,
+    "bus": 82,
+    "truck": 0
+   },
+   "confusion_gt_rows_pseudo_cols": [
+    [
+     1879,
+     7,
+     0,
+     0
+    ],
+    [
+     9,
+     8516,
+     2,
+     0
+    ],
+    [
+     0,
+     10,
+     66,
+     0
+    ],
+    [
+     0,
+     23,
+     7,
+     0
+    ]
+   ]
+  }
+ },
+ "0.7": {
+  "soict_day": {
+   "frames": 878,
+   "recall": {
+    "motorcycle": 0.014,
+    "car": 0.247,
+    "bus": 0.237,
+    "truck": 0.023
+   },
+   "gt_boxes": {
+    "motorcycle": 3977,
+    "car": 1564,
+    "bus": 570,
+    "truck": 1823
+   },
+   "gt_grayed": {
+    "motorcycle": 0.105,
+    "car": 0.42,
+    "bus": 0.291,
+    "truck": 0.374
+   },
+   "precision": {
+    "motorcycle": 0.964,
+    "car": 0.871,
+    "bus": 0.756,
+    "truck": null
+   },
+   "pseudo_boxes": {
+    "motorcycle": 56,
+    "car": 456,
+    "bus": 221,
+    "truck": 0
+   },
+   "confusion_gt_rows_pseudo_cols": [
+    [
+     54,
+     2,
+     1,
+     0
+    ],
+    [
+     0,
+     382,
+     4,
+     0
+    ],
+    [
+     0,
+     8,
+     127,
+     0
+    ],
+    [
+     0,
+     5,
+     37,
+     0
+    ]
+   ]
+  },
+  "soict_night": {
+   "frames": 932,
+   "recall": {
+    "motorcycle": 0.0,
+    "car": 0.044,
+    "bus": 0.047,
+    "truck": 0.004
+   },
+   "gt_boxes": {
+    "motorcycle": 3183,
+    "car": 1705,
+    "bus": 487,
+    "truck": 568
+   },
+   "gt_grayed": {
+    "motorcycle": 0.011,
+    "car": 0.226,
+    "bus": 0.298,
+    "truck": 0.095
+   },
+   "precision": {
+    "motorcycle": 0.5,
+    "car": 0.962,
+    "bus": 0.774,
+    "truck": null
+   },
+   "pseudo_boxes": {
+    "motorcycle": 2,
+    "car": 79,
+    "bus": 31,
+    "truck": 0
+   },
+   "confusion_gt_rows_pseudo_cols": [
+    [
+     1,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     74,
+     1,
+     0
+    ],
+    [
+     0,
+     2,
+     21,
+     0
+    ],
+    [
+     0,
+     0,
+     2,
+     0
+    ]
+   ]
+  },
+  "vnv3": {
+   "frames": 241,
+   "recall": {
+    "motorcycle": 0.043,
+    "car": 0.657,
+    "bus": 0.507,
+    "truck": 0.067
+   },
+   "gt_boxes": {
+    "motorcycle": 398,
+    "car": 429,
+    "bus": 73,
+    "truck": 312
+   },
+   "gt_grayed": {
+    "motorcycle": 0.111,
+    "car": 0.238,
+    "bus": 0.205,
+    "truck": 0.503
+   },
+   "precision": {
+    "motorcycle": 0.593,
+    "car": 0.684,
+    "bus": 0.655,
+    "truck": null
+   },
+   "pseudo_boxes": {
+    "motorcycle": 27,
+    "car": 414,
+    "bus": 87,
+    "truck": 0
+   },
+   "confusion_gt_rows_pseudo_cols": [
+    [
+     16,
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     277,
+     5,
+     0
+    ],
+    [
+     0,
+     4,
+     33,
+     0
+    ],
+    [
+     0,
+     3,
+     18,
+     0
+    ]
+   ]
+  },
+  "vn_cctv": {
+   "frames": 1999,
+   "recall": {
+    "motorcycle": 0.232,
+    "car": 0.672,
+    "bus": 0.382,
+    "truck": 0.199
+   },
+   "gt_boxes": {
+    "motorcycle": 5170,
+    "car": 11054,
+    "bus": 170,
+    "truck": 136
+   },
+   "gt_grayed": {
+    "motorcycle": 0.547,
+    "car": 0.255,
+    "bus": 0.559,
+    "truck": 0.772
+   },
+   "precision": {
+    "motorcycle": 0.817,
+    "car": 0.976,
+    "bus": 0.926,
+    "truck": null
+   },
+   "pseudo_boxes": {
+    "motorcycle": 1465,
+    "car": 7594,
+    "bus": 68,
+    "truck": 0
+   },
+   "confusion_gt_rows_pseudo_cols": [
+    [
+     1195,
+     2,
+     0,
+     0
+    ],
+    [
+     3,
+     7425,
+     1,
+     0
+    ],
+    [
+     0,
+     7,
+     58,
+     0
+    ],
+    [
+     0,
+     22,
+     5,
+     0
+    ]
+   ]
+  }
+ }
+}

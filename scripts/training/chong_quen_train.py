@@ -8,6 +8,10 @@ Mọi run dùng đúng cấu hình S2 (V6split, không freeze, 30 epoch, imgsz 9
   l2sp_coco5k : như l2sp_mid nhưng train trên V6split + 5.000 ảnh COCO (replay, build_v6split_coco.py)
   t1_bigtruck : như l2sp_coco5k, giữ xe tải COCO cỡ lớn (build_v6split_coco.py --keep-big-trucks)
   t2_truckx2  : như l2sp_coco5k, nhân đôi ảnh VN có xe tải (build_v6split_coco_truckx2.py)
+  t2_pseudo / t2_pseudo50 / t2_pseudo70 : như t2_truckx2 + khung VN nhãn giả yolov8x ngưỡng 0.6 / 0.5 / 0.7
+                (build_v6split_pseudo.py)
+  t2_ghep / t2_ghep50 / t2_ghep70 : như t2_truckx2 + cùng khung VN đó với nhãn NGƯỜI GÁN gốc + bù hộp yolov8x
+                không trùng (build_v6split_pseudo.py --mode ghep)
   probe    : chạy ngắn với λ = 0 để đo λ_c (xem dưới) và kiểm tra trainer
 
 Cài đặt: phạt được cộng trực tiếp vào gradient trong optimizer_step (sau khi unscale AMP, trước clip/step):
@@ -38,6 +42,12 @@ DATA = ROOT / "data" / "data_v6split.yaml"
 DATA_COCO = ROOT / "data" / "data_v6split_coco.yaml"  # V6split + 5.000 ảnh COCO (replay)
 DATA_COCO_TK = ROOT / "data" / "data_v6split_coco_tk.yaml"  # T1: + giữ xe tải COCO cỡ lớn
 DATA_COCO_TX2 = ROOT / "data" / "data_v6split_coco_tx2.yaml"  # T2: + nhân đôi ảnh VN có xe tải
+DATA_PSEUDO = ROOT / "data" / "data_v6split_pseudo.yaml"  # T2 + nhãn giả yolov8x conf >= 0.6
+DATA_PSEUDO_50 = ROOT / "data" / "data_v6split_pseudo_c50.yaml"  # ngưỡng 0.5
+DATA_PSEUDO_70 = ROOT / "data" / "data_v6split_pseudo_c70.yaml"  # ngưỡng 0.7
+DATA_GHEP = ROOT / "data" / "data_v6split_pseudo_ghep.yaml"  # T2 + khung VN nhãn người gán + bù yolov8x 0.6
+DATA_GHEP_50 = ROOT / "data" / "data_v6split_pseudo_c50_ghep.yaml"
+DATA_GHEP_70 = ROOT / "data" / "data_v6split_pseudo_c70_ghep.yaml"
 RUNS = ROOT / "runs" / "detect"
 COCO = ROOT / "yolov8s.pt"
 S2_BEST = ROOT / "runs" / "detect" / "v6split_f2_nofreeze" / "weights" / "best.pt"
@@ -55,6 +65,12 @@ RUNS_CFG = {
     "l2sp_coco5k": dict(name="cq_l2sp_mid_coco5k", lam=1.0, data=DATA_COCO),
     "t1_bigtruck": dict(name="cq_l2sp_coco5k_bigtruck", lam=1.0, data=DATA_COCO_TK),
     "t2_truckx2": dict(name="cq_l2sp_coco5k_truckx2", lam=1.0, data=DATA_COCO_TX2),
+    "t2_pseudo": dict(name="ck_t2_pseudo60", lam=1.0, data=DATA_PSEUDO),
+    "t2_pseudo50": dict(name="ck_t2_pseudo50", lam=1.0, data=DATA_PSEUDO_50),
+    "t2_pseudo70": dict(name="ck_t2_pseudo70", lam=1.0, data=DATA_PSEUDO_70),
+    "t2_ghep": dict(name="ck_t2_ghep60", lam=1.0, data=DATA_GHEP),
+    "t2_ghep50": dict(name="ck_t2_ghep50", lam=1.0, data=DATA_GHEP_50),
+    "t2_ghep70": dict(name="ck_t2_ghep70", lam=1.0, data=DATA_GHEP_70),
     "probe": dict(name="cq_probe", lam=0.0, probe=True),
 }
 
@@ -131,7 +147,7 @@ def run(key: str, seed: int = SEED):
 
     assert ultralytics.__version__ == ULTRA_VERSION, f"Cần Ultralytics {ULTRA_VERSION}, đang có {ultralytics.__version__}"
     cfg = RUNS_CFG[key]
-    recipe = dict(RECIPE, epochs=EPOCHS)
+    recipe = dict(RECIPE, epochs=cfg.get("epochs", EPOCHS))  # close_mosaic 10 giữ nguyên theo RECIPE
     if cfg.get("lr0"):
         recipe["lr0"] = cfg["lr0"]
     probe = cfg.get("probe", False)
@@ -152,7 +168,7 @@ def run(key: str, seed: int = SEED):
     if last.exists() and not probe:
         YOLO(str(last)).train(resume=True, trainer=trainer)
     else:
-        YOLO(str(COCO)).train(data=str(cfg.get("data", DATA)), seed=seed, patience=EPOCHS, freeze=None, project=str(RUNS),
+        YOLO(str(COCO)).train(data=str(cfg.get("data", DATA)), seed=seed, patience=recipe["epochs"], freeze=None, project=str(RUNS),
                               name=name, trainer=trainer, **recipe)
     if trainer is not None and not probe:
         (out / "chong_quen_cfg.json").write_text(json.dumps(
